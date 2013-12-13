@@ -71,7 +71,33 @@ var plist;
           
 var pointArray=new Array();
 for (i=0;i<plist.length;i++){
-	pointArray[i]=new BMap.Point(plist[i]['longitude'], plist[i]['latitude'])
+	p=plist[i];
+	pointArray[i]=new BMap.Point(p['longitude'], p['latitude'])
+	var markertemp = new BMap.Marker(pointArray[i]);
+	var s=Array();
+	s[i]="阀组编号:"+p['groupNO']+"<br>"
+	s[i]=s[i]+"所辖气井号:"+p['wellNO']+"<br>"
+	s[i]=s[i]+"井口大地坐标X:"+p['geodeticCoordinatesX']+"<br>"
+	s[i]=s[i]+"井口大地坐标Y:"+p['geodeticCoordinatesY']+"<br>"
+	s[i]=s[i]+"井口经度:"+p['longitude']+"<br>"
+	s[i]=s[i]+"井口纬度:"+p['latitude']+"<br>"
+	
+	var opts = {
+  	width : 200,     // 信息窗口宽度
+  	height: 600,     // 信息窗口高度
+  	title : "井口坐标" , // 信息窗口标题
+  	enableMessage:true,//设置允许信息窗发送短息
+  	message:""
+	}
+	var infoWindow = new BMap.InfoWindow(s[i], opts);  // 创建信息窗口对象
+	//map.openInfoWindow(infoWindow,pointArray[i]); //开启信息窗口
+	markertemp.setTitle(s[i])
+	markertemp.addEventListener("click",function(data){ 
+			 temp=this.getTitle()
+			 var infoWindow = new BMap.InfoWindow(temp, opts);
+             this.openInfoWindow(infoWindow);  
+          });
+	map.addOverlay(markertemp);
 }
 map.centerAndZoom(pointArray[0], 15);
 var polyline = new BMap.Polyline(pointArray, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
