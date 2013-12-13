@@ -37,24 +37,13 @@ body,html,#allmap {
 
 </head>
 <body>
-	<div id="allmap"></div>
+<div id="allmap"></div>
 </body>
 </html>
 <script type="text/javascript">
 
 
-  $.post("map.action",
-  {
-    name:"ice",
-    
-  },
-  function(data,status){
-    //alert("Data: " + data + "\nStatus: " + status);    
-    list=data.points    
-    alert(list.length)
-	}
-  });
-	var map = new BMap.Map("allmap");            // 创建Map实例
+	var map = new BMap.Map("allmap",{mapType: BMAP_HYBRID_MAP});            // 创建Map实例
 	var point = new BMap.Point(116.404, 39.915);    // 创建点坐标
 	map.centerAndZoom(point,8);                     // 初始化地图,设置中心点坐标和地图级别。
 	map.enableScrollWheelZoom();                            //启用滚轮放大缩小
@@ -68,11 +57,23 @@ map.addControl(new BMap.ScaleControl());
 var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925));  // 创建标注
 map.addOverlay(marker1);
 var point = new BMap.Point(116.404, 39.915);
-var pointArray=new Array(list.length);
-for (i=0;i<list.length;i++){
-	pointArray[i]=new BMap.Point(list[i]['longitude'], list[i]['latitude']),
+var plist; 
+  
+  $.ajax({ 
+          type : "post", 
+          url : "map.action", 
+          data : "point=test", 
+          async : false, 
+          success : function(data){ 
+             plist=data.points ;  
+          } 
+          }); 
+          
+var pointArray=new Array();
+for (i=0;i<plist.length;i++){
+	pointArray[i]=new BMap.Point(plist[i]['longitude'], plist[i]['latitude'])
 }
-map.centerAndZoom(point, 15);
+map.centerAndZoom(pointArray[0], 15);
 var polyline = new BMap.Polyline(pointArray, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
 map.addOverlay(polyline);
 	
