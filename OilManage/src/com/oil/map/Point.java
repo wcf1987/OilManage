@@ -2,6 +2,42 @@ package com.oil.map;
 
 public class Point {
 	String WellNO;
+	public String getWellNO() {
+		return WellNO;
+	}
+	public void setWellNO(String wellNO) {
+		WellNO = wellNO;
+	}
+	public String getGroupNO() {
+		return GroupNO;
+	}
+	public void setGroupNO(String groupNO) {
+		GroupNO = groupNO;
+	}
+	public double getGeodeticCoordinatesX() {
+		return GeodeticCoordinatesX;
+	}
+	public void setGeodeticCoordinatesX(double geodeticCoordinatesX) {
+		GeodeticCoordinatesX = geodeticCoordinatesX;
+	}
+	public double getGeodeticCoordinatesY() {
+		return GeodeticCoordinatesY;
+	}
+	public void setGeodeticCoordinatesY(double geodeticCoordinatesY) {
+		GeodeticCoordinatesY = geodeticCoordinatesY;
+	}
+	public double getLongitude() {
+		return Longitude;
+	}
+	public void setLongitude(double longitude) {
+		Longitude = longitude;
+	}
+	public double getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
 	String  GroupNO;
 	/**
 	 * da di zuo biao 

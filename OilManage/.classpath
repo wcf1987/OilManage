@@ -23,5 +23,7 @@
 	<classpathentry kind="lib" path="libs/ognl-3.0.6.jar"/>
 	<classpathentry kind="lib" path="libs/struts2-core-2.3.15.3.jar"/>
 	<classpathentry kind="lib" path="libs/xwork-core-2.3.15.3.jar"/>
+	<classpathentry kind="lib" path="libs/struts2-json-plugin-2.3.15.3.jar"/>
+	<classpathentry kind="lib" path="libs/json-lib-2.3-jdk15.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

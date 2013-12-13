@@ -3,6 +3,8 @@ package com.oil.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 public class MapAction extends ActionSupport{
@@ -34,11 +36,19 @@ public class MapAction extends ActionSupport{
 		
 		return points.size();
 	}
+	JSONArray jsonArray2;
+	public JSONArray getJsonArray2() {
+		return jsonArray2;
+	}
+	@Override
 	public String execute(){
-		System.out.println("step 4");
+		testinit();
+		System.out.println(points.get(1).latitude);
 		
 		return "SUCCESS";
 	}
+	
+
 	public static void main(String args[]){
 		MapAction a=new MapAction();
 		a.testinit();
