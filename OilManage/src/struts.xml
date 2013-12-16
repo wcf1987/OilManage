@@ -15,5 +15,12 @@
 			 <param name="excludeProperties">id</param>
 			</result>			
 		</action>
+		<action name="uploadMap" class="com.oil.map.UploadAction" method="uploadFile">
+			<param name="savePath">/upload</param> 
+			<result name="SUCCESS" type="json">
+			
+			 <param name="excludeProperties">id</param>
+			</result>			
+		</action>
 	</package>
 </struts>

@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			<h3 class="text-muted" style="color:#4AA4EB;margin-left:20px;">煤层气集输系统</h3>
 	    		    <ul class="nav nav-justified navbar navbar-inverse">
 			          <li><a href="pages/home.jsp">首页</a></li>
-			          <li><a href="pages/home.jsp">地图建模</a></li>
+			          <li><a href="pages/map.jsp">地图建模</a></li>
 			          <li><a href="pages/home.jsp">系统模拟</a></li>
 			          <li><a href="pages/home.jsp">系统优化</a></li>
 			          <li><a href="pages/home.jsp">关于</a></li>
