@@ -36,8 +36,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4bfe7b8632739c89a1b8e95529da1d97"></script>
 <style type="text/css">
 #allmap {
-	width: 80%;
-	height: 80%;
+	width: 100%;
+	height: 100%;
 	overflow: hidden;
 	margin: 5;
 }
@@ -66,7 +66,7 @@ for (i=0;i<plist.length;i++){
 	s[i]=s[i]+"井口纬度:"+p['latitude']+"<br>"
 	
 	var opts = {
-  	width : 200,     // 信息窗口宽度
+  	width : 300,     // 信息窗口宽度
   	height: 300,     // 信息窗口高度
   	title : "井口坐标" , // 信息窗口标题
   	enableMessage:true,//设置允许信息窗发送短息
