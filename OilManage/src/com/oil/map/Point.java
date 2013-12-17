@@ -63,6 +63,9 @@ public class Point {
 		this.GroupNO=groupNO;
 		this.getLatLonFromGeo();
 	}
+	public Point() {
+		// TODO Auto-generated constructor stub
+	}
 	public void getLatLonFromGeo(){
 		double a[]=new CoordinateConversion().utm2LatLon("50 S "+String.valueOf(this.GeodeticCoordinatesX)+" "+String.valueOf(this.GeodeticCoordinatesY));
 		this.latitude=a[0];

@@ -43,16 +43,61 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 }
 </style>
  <script type="text/javascript">
+function uploadComplete(file, data, response){
+    //event,事件对象
+    //id:上传进度队列id
+    //fileObj={"name":"文件名","filePath":"上传后的服务器文件路径","size":"文件的大小","creationDate":"文件创建时间","modificationDate":"文件最后修改时间","type":"扩展名"}
+//response:文件上传后返回的文本，其实也可以在这里返回文件路径比较简单
+//data={"fileCount":"上传队列中还剩下的文件数","speed":"上传的平均速度"}
+var jsonObject = jQuery.parseJSON(data);
+alert(jsonObject['re']);
+var pointArray=new Array();
+var  plist=jsonObject['points']
+for (i=0;i<plist.length;i++){
+	p=plist[i];
+	pointArray[i]=new BMap.Point(p['longitude'], p['latitude'])
+	var markertemp = new BMap.Marker(pointArray[i]);
+	var s=Array();
+	s[i]="阀组编号:"+p['groupNO']+"<br>"
+	s[i]=s[i]+"所辖气井号:"+p['wellNO']+"<br>"
+	s[i]=s[i]+"井口大地坐标X:"+p['geodeticCoordinatesX']+"<br>"
+	s[i]=s[i]+"井口大地坐标Y:"+p['geodeticCoordinatesY']+"<br>"
+	s[i]=s[i]+"井口经度:"+p['longitude']+"<br>"
+	s[i]=s[i]+"井口纬度:"+p['latitude']+"<br>"
+	
+	var opts = {
+  	width : 200,     // 信息窗口宽度
+  	height: 300,     // 信息窗口高度
+  	title : "井口坐标" , // 信息窗口标题
+  	enableMessage:true,//设置允许信息窗发送短息
+  	message:""
+	}
+	var infoWindow = new BMap.InfoWindow(s[i], opts);  // 创建信息窗口对象
+	//map.openInfoWindow(infoWindow,pointArray[i]); //开启信息窗口
+	markertemp.setTitle(s[i])
+	markertemp.addEventListener("click",function(data){ 
+			 temp=this.getTitle()
+			 var infoWindow = new BMap.InfoWindow(temp, opts);
+             this.openInfoWindow(infoWindow);  
+          });
+	map.addOverlay(markertemp);
+}
+map.centerAndZoom(pointArray[0], 15);
+var polyline = new BMap.Polyline(pointArray, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
+map.addOverlay(polyline);
+}
+
         $(document).ready(function() {
             $('#mapfile').uploadify({
                 'swf'       : 'js/upload/uploadify.swf',
                 'uploader'         : 'uploadMap.action',
                 'queueID'        : 'fileQueue',
                 'auto'           : false,
-                'multi'          : true,
+                'multi'          : false,
                 'buttonText'     : '上传地图文件',
-                'fileSizeLimit' : '1MB',
+                'fileSizeLimit' : '5MB',
                 'fileObjName' : 'mapfile',
+         		'onUploadSuccess':uploadComplete,
                 'method' : 'post'
             });
         });
@@ -114,8 +159,9 @@ map.addControl(new BMap.ScaleControl());
 var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925));  // 创建标注
 map.addOverlay(marker1);
 var point = new BMap.Point(116.404, 39.915);
-var plist; 
-  
+
+  /*
+  var plist; 
   $.ajax({ 
           type : "post", 
           url : "map.action", 
@@ -125,8 +171,7 @@ var plist;
              plist=data.points ;  
           } 
           }); 
-          
-var pointArray=new Array();
+          var pointArray=new Array();
 for (i=0;i<plist.length;i++){
 	p=plist[i];
 	pointArray[i]=new BMap.Point(p['longitude'], p['latitude'])
@@ -159,6 +204,8 @@ for (i=0;i<plist.length;i++){
 map.centerAndZoom(pointArray[0], 15);
 var polyline = new BMap.Polyline(pointArray, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
 map.addOverlay(polyline);
+      */    
+
 	
     
 </script>

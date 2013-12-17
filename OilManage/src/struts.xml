@@ -3,6 +3,7 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
 	"http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
+<constant name="struts.multipart.saveDir" value="/upload"></constant>
 	<!--指定action的扩展名 -->
 	<package name="default" extends="struts-default">
 		<action name="ice" class="com.oil.test.iceTest">
