@@ -1,10 +1,11 @@
-package com.oil.map;
+package com.oil.map.action;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.json.JSONArray;
 
+import com.oil.map.business.Point;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class MapAction extends ActionSupport{
@@ -43,7 +44,7 @@ public class MapAction extends ActionSupport{
 	@Override
 	public String execute(){
 		testinit();
-		System.out.println(points.get(1).latitude);
+		System.out.println(points.get(1).getLatitude());
 		
 		return "SUCCESS";
 	}

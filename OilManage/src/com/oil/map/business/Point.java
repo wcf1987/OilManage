@@ -1,4 +1,4 @@
-package com.oil.map;
+package com.oil.map.business;
 
 public class Point {
 	String WellNO;

@@ -1,4 +1,4 @@
-package com.oil.map;
+package com.oil.map.action;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.oil.map.business.Point;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UploadAction  extends ActionSupport{
@@ -48,7 +49,7 @@ public class UploadAction  extends ActionSupport{
 	                Point a=analyzeFile(tempString);
 	                if (a!=null){
 	                	points.add(a);
-	                	System.out.println(a.latitude);
+	                	System.out.println(a.getLatitude());
 	                }else{
 	                	re="文件格式有误";
 	                	break;
