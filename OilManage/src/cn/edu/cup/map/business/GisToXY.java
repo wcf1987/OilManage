@@ -1,4 +1,4 @@
-package com.oil.map.business;
+package cn.edu.cup.map.business;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

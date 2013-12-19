@@ -3,7 +3,7 @@
  *
  * (c) Copyright IBM Corp. 2007
  */
-package com.oil.map.business;
+package cn.edu.cup.map.business;
 
 import java.util.Hashtable;
 import java.util.Map;

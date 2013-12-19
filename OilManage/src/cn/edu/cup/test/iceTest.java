@@ -1,4 +1,4 @@
-package com.oil.test;
+package cn.edu.cup.test;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.DefaultActionInvocation;

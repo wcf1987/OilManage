@@ -1,4 +1,4 @@
-package com.oil.map.action;
+package cn.edu.cup.map.action;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.oil.map.business.Point;
+import cn.edu.cup.map.business.Point;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UploadAction  extends ActionSupport{
