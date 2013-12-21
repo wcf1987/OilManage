@@ -23,5 +23,23 @@
 			 <param name="excludeProperties">id</param>
 			</result>			
 		</action>
+		
+		<action name="testData" class="com.oil.map.action.TableAction">
+			<result name="SUCCESS" type="json">
+			</result>			
+		</action>
+		<action name="tableAdd" class="com.oil.map.action.TableAddAction">
+			<result name="SUCCESS" type="json">				
+			</result>			
+		</action>
+		<action name="tableDelete" class="com.oil.map.action.TableDeleteAction">
+			<result name="SUCCESS" type="json">		
+			</result>			
+		</action>
+		<action name="tableEdit" class="com.oil.map.action.TableEditAction">
+			<result name="SUCCESS" type="json">				
+			</result>			
+		</action>
+		
 	</package>
 </struts>
