@@ -1,4 +1,4 @@
-package com.oil.test;
+package cn.edu.cup.test;
 import java.util.List;
 
 import org.hibernate.Query;

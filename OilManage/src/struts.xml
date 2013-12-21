@@ -6,17 +6,17 @@
 <constant name="struts.multipart.saveDir" value="/upload"></constant>
 	<!--指定action的扩展名 -->
 	<package name="default" extends="struts-default">
-		<action name="ice" class="com.oil.test.iceTest">
+		<action name="ice" class="cn.edu.cup.test.iceTest">
 			<result name="SUCCESS">/test.jsp</result>
 		</action>
 	</package>
 	<package name="json" extends="json-default">
-		<action name="map" class="com.oil.map.action.MapAction">
+		<action name="map" class="cn.edu.cup.map.action.MapAction">
 			<result name="SUCCESS" type="json">
 			 <param name="excludeProperties">id</param>
 			</result>			
 		</action>
-		<action name="uploadMap" class="com.oil.map.action.UploadAction" method="uploadFile">
+		<action name="uploadMap" class="cn.edu.cup.map.action.UploadAction" method="uploadFile">
 			<param name="savePath">/upload</param> 
 			<result name="SUCCESS" type="json">
 			

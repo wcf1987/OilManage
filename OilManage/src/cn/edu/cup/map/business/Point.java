@@ -1,7 +1,24 @@
-package com.oil.map.business;
+package cn.edu.cup.map.business;
 
 public class Point {
 	String WellNO;
+	String Name;
+	public String getName() {
+		return Name;
+	}
+	public void setName(String name) {
+		Name = name;
+	}
+	Type type;
+	public Type getType() {
+		return type;
+	}
+	public void setType(Type type) {
+		this.type = type;
+	}
+	public enum Type {
+        jingkou, jiqizhan,fazu;    
+    }
 	public String getWellNO() {
 		return WellNO;
 	}
@@ -70,5 +87,18 @@ public class Point {
 		double a[]=new CoordinateConversion().utm2LatLon("50 S "+String.valueOf(this.GeodeticCoordinatesX)+" "+String.valueOf(this.GeodeticCoordinatesY));
 		this.latitude=a[0];
 		this.Longitude=a[1];
+	}
+	public void setTypeByInt(String trim) {
+		// TODO Auto-generated method stub
+		if(trim.equalsIgnoreCase("1")){
+			this.type=Type.jingkou;		}
+		
+		
+	if(trim.equalsIgnoreCase("2")){
+		this.type=Type.fazu;		
+	
+	}if(trim.equalsIgnoreCase("3")){
+		this.type=Type.jiqizhan;		}
+	
 	}
 }
