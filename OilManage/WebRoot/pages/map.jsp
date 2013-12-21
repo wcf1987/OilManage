@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="bootstrap/css/justified-nav.css">
+	<link rel="stylesheet" href="css/justified-nav.css">
 	<link rel="stylesheet" href="js/upload/uploadify.css">
 	
 	<!-- 自定义 -->
@@ -113,7 +113,7 @@ map.addOverlay(polyline);
 	    			<h3 class="text-muted" style="color:#4AA4EB;margin-left:20px;">煤层气集输系统</h3>
 	    		    <ul class="nav nav-justified navbar navbar-inverse">
 			          <li><a href="pages/home.jsp">首页</a></li>
-			          <li><a href="pages/home.jsp">地图建模</a></li>
+			          <li><a href="pages/map.jsp">地图建模</a></li>
 			          <li><a href="pages/home.jsp">系统模拟</a></li>
 			          <li><a href="pages/home.jsp">系统优化</a></li>
 			          <li><a href="pages/home.jsp">关于</a></li>
@@ -123,14 +123,18 @@ map.addOverlay(polyline);
 	    </div>
 	    
 	    <div class="jumbotron">
-	 	<div id="fileQueue"></div>
-        <input type="file" name="xxx" id="mapfile" />
-        <p>
-        <a href="javascript:jQuery('#mapfile').uploadify('upload','*')">开始上传</a>&nbsp;
-        
-        </p>
-		 <div id="allmap"></div>
-		 </div>
+	    
+		 	<div id="fileQueue">
+
+		 	</div>
+	        <input type="file" name="xxx" id="mapfile" />
+	        <p>
+	        <a href="javascript:jQuery('#mapfile').uploadify('upload','*')">开始上传</a>&nbsp;
+	        
+	        </p>
+			 <div id="allmap"></div>
+			 
+		</div>
 
 	    <div id="content"></div>
 	    
