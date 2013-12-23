@@ -23,7 +23,27 @@
 			 <param name="excludeProperties">id</param>
 			</result>			
 		</action>
+		<action name="listMap" class="cn.edu.cup.map.action.MapListAction" method="list">
 		
+			<result name="SUCCESS" type="json">
+			
+			 <param name="excludeProperties">id</param>
+			</result>			
+		</action>
+		<action name="viewMap" class="cn.edu.cup.map.action.MapListAction" method="viewMap">
+			
+			<result name="SUCCESS" type="json">
+			
+			 <param name="excludeProperties">id</param>
+			</result>			
+		</action>
+		<action name="addMap" class="cn.edu.cup.map.action.MapListAction" method="add">
+		
+			<result name="SUCCESS" type="json">
+			
+			 <param name="excludeProperties">id</param>
+			</result>			
+		</action>
 		<action name="testData" class="cn.edu.cup.map.action.TableAction">
 			<result name="SUCCESS" type="json">
 			</result>			

@@ -1,4 +1,4 @@
-package cn.edu.cup.map.action;
+package cn.edu.cup.map.business;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -7,21 +7,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.servlet.ServletContext;
 
 import org.apache.struts2.ServletActionContext;
 
-import cn.edu.cup.map.business.Graphi;
-import cn.edu.cup.map.business.Line;
-import cn.edu.cup.map.business.Point;
-
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 
-public class UploadAction  extends ActionSupport{
+public class FileToGraphi {
 	private static final long serialVersionUID = 837481714629791752L;
 	private File mapfile;
 	private String mapfileContentType;
@@ -72,6 +66,63 @@ public class UploadAction  extends ActionSupport{
 	     ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);     
 	     WEB_ROOT_PATH = sc.getRealPath("/"); 
 	     return WEB_ROOT_PATH;
+	}
+	public Graphi FileTrans(String filename){
+		graphi=new Graphi();
+		mapfile=new File(filename);
+		//System.out.println(mapfileFileName);		 
+	     BufferedReader reader = null;
+	        try {
+	           
+	            reader = new BufferedReader(new FileReader(mapfile));
+	            String tempString = null;
+	            int line = 1;
+	            // 一次读入一行，直到读入null为文件结束
+	            while ((tempString = reader.readLine()) != null) {
+	                // 显示行号
+	                //System.out.println("line " + line + ": " + tempString);
+	                line++;
+	                tempString=tempString.trim();
+	                System.out.println( tempString);
+	                if(tempString!=null&&!tempString.trim().equals("")){
+	                if(Integer.valueOf(tempString.substring(0,1))<4){
+	                	Point a=analyzePoint(tempString);
+	                	if (a!=null){
+	                		graphi.addPoint(a);
+	                		//System.out.println(a.getLatitude());
+	                	}else{
+	                		re="文件格式有误";
+	                	break;
+	                	}
+	                }else{
+	                	Line b=analyzeLine(tempString);
+	                	if(b!=null){
+	                		graphi.addLine(b.getStart(), b.getEnd());
+	                	}else{
+	                		
+	                		re="文件格式有误";
+	                	break;
+	                	}
+	                }
+	                re="文件解析成功";
+	                String path=getWebFileRoot()+this.UPLOADPATH;
+	                path=path+String.valueOf(System.currentTimeMillis())+".cvs";
+	                FilePath=path;
+	                
+	                copyFile(mapfile,new File(FilePath));
+	            }}
+	            reader.close();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } finally {
+	            if (reader != null) {
+	                try {
+	                    reader.close();
+	                } catch (IOException e1) {
+	                }
+	            }
+	        }
+	        return graphi;
 	}
 	public String uploadFile() throws Exception {
 		graphi=new Graphi();
