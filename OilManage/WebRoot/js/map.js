@@ -37,10 +37,14 @@ $(function(){
 			onClickButton :addNewPro,
 			id :'mappro',
 			position :"first"
+				
+				
 			 });
 			 
 		
 		});
+
+
 function add(){
 	
 }
@@ -48,13 +52,7 @@ function add(){
  
 
 function addNewPro(){
-	  var consoleDlg = $("#div_Mapdialog");  
-	    var dialogButtonPanel = consoleDlg.siblings(".ui-dialog-buttonpane");  
-	    //consoleDlg.find("input").removeAttr("disabled").val("");  
-	    //dialogButtonPanel.find("button:not(:contains('取消'))").hide();  
-	    //dialogButtonPanel.find("button:contains('添加')").show();  
-	    consoleDlg.dialog("option", "title", "添加员工信息 ").dialog("open");  
-
+	$('#uploadModal').modal();
 };  	
 
 
