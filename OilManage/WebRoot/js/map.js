@@ -1,4 +1,4 @@
-var myjingkou = new BMap.Icon("images/icons/jingkou.jpg", new BMap.Size(50, 50), {    
+var myjingkou = new BMap.Icon("images/icons/jingkou.png", new BMap.Size(30, 30), {    
 // 指定定位位置。   
 // 当标注显示在地图上时，其所指向的地理位置距离图标左上    
 // 角各偏移10像素和25像素。您可以看到在本例中该位置即是   
@@ -9,7 +9,7 @@ var myjingkou = new BMap.Icon("images/icons/jingkou.jpg", new BMap.Size(50, 50),
    // 需要指定大图的偏移位置，此做法与css sprites技术类似。    
    //imageOffset: new BMap.Size(0, 0 - index * 25)   // 设置图片偏移    
  });     
-var myfazu = new BMap.Icon("images/icons/fazu.jpg", new BMap.Size(33, 35), {    
+var myfazu = new BMap.Icon("images/icons/fazu.png", new BMap.Size(40, 40), {    
 	// 指定定位位置。   
 	// 当标注显示在地图上时，其所指向的地理位置距离图标左上    
 	// 角各偏移10像素和25像素。您可以看到在本例中该位置即是   
@@ -20,7 +20,7 @@ var myfazu = new BMap.Icon("images/icons/fazu.jpg", new BMap.Size(33, 35), {
 	   // 需要指定大图的偏移位置，此做法与css sprites技术类似。    
 	   //imageOffset: new BMap.Size(0, 0 - index * 25)   // 设置图片偏移    
 	 }); 
-var myjiqizhan= new BMap.Icon("images/icons/jiqizhan.jpg", new BMap.Size(33, 35), {    
+var myjiqizhan= new BMap.Icon("images/icons/jiqizhan.png", new BMap.Size(50, 50), {    
 	// 指定定位位置。   
 	// 当标注显示在地图上时，其所指向的地理位置距离图标左上    
 	// 角各偏移10像素和25像素。您可以看到在本例中该位置即是   
@@ -198,7 +198,7 @@ function uploadComplete(file, data, response) {
 		var opts = {
 			width : 300, // 信息窗口宽度
 			height : 300, // 信息窗口高度
-			title : "坐标", // 信息窗口标题
+			title : "", // 信息窗口标题
 			enableMessage : true,// 设置允许信息窗发送短息
 			message : ""
 		}
