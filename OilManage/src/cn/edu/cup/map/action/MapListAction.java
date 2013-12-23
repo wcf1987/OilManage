@@ -33,18 +33,37 @@ public class MapListAction extends ActionSupport{
 		return "SUCCESS";
 	}
 	List<MapPro> dataList;
-	private long total;
-	private long page;
-	private long records;
+	private int total;
+	public void setPage(int page) {
+		this.page = page;
+	}
+	private int page;
+	private int records;
+	private int rows;
+	public int getRows() {
+		return rows;
+	}
+
+	public void setRows(int rows) {
+		this.rows = rows;
+	}
+
 	public String list(){		
 		MapDao dao=new MapDao();
-		dataList=dao.list();
+		dataList=dao.list(page,rows);
 		
 		page=1;
 		records=dataList.size();
 		total=10;
 		
 		return "SUCCESS";
+	}
+	public List<MapPro> getDataList() {
+		return dataList;
+	}
+
+	public int getRecords() {
+		return records;
 	}
 	private Graphi graphi;
 	public String viewMap(){

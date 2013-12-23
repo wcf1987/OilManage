@@ -1,9 +1,11 @@
 package cn.edu.cup.map.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -92,9 +94,10 @@ public class MapDao {
 		//sessionFactory.close();
 	}
 
-	public List<MapPro> list() {
-		Query q = session.createSQLQuery("select id,name from Test");
-		
+	public List<MapPro> list(int page,int rows) {
+		SQLQuery q = session.createSQLQuery("select id,proname,filepath,adddate from t_MapPro");
+		q.setFirstResult(page);
+		q.setMaxResults(rows);
 		List l = q.list();
 		List re=new ArrayList<MapPro>();
 		for(int i=0;i<l.size();i++)
@@ -106,7 +109,7 @@ public class MapDao {
 			  Integer id = (Integer)row[0];
 			  String proName = (String)row[1];  
 			  String filePath = (String)row[2];
-			  String addDate= (String)row[3];
+			  String addDate= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((java.sql.Timestamp)row[3]);
 			  MapPro pro=new MapPro();
 			  pro.setId(String.valueOf(id));
 			  pro.setProName(proName);

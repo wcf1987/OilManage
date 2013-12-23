@@ -1,17 +1,17 @@
 $(function(){ 
 		var mapgrid=jQuery("#list2").jqGrid({
-		url:"testData.action",//后端的数据交互程序，改为你的
+		url:"listMap.action",//后端的数据交互程序，改为你的
 		datatype: "json",//前后交互的格式是json数据
 		mtype: 'POST',//交互的方式是发送httpget请求
 		colNames:['id','项目名称','上传时间','地图查看','编辑','删除','下载坐标文件'],//表格的列名
 		colModel:[
-		{name:'id',index:'teacher_name', width:50},//每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
-		{name:'项目名称',index:'organization_name', width:200,align:"right"},
-		{name:'上传时间',index:'organization_name', width:200,align:"right"},
-		{name:'地图查看',index:'organization_name', width:100,align:"right"},
-		{name:'编辑',index:'organization_name', width:100,align:"right"},
-		{name:'删除',index:'organization_name', width:100,align:"right"},
-		{name:'下载坐标文件',index:'organization_name', width:200,align:"right"}
+		{name:'id',index:'id', width:50},//每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
+		{name:'proName',index:'proName', width:200,align:"right"},
+		{name:'addDate',index:'addDate', width:200,align:"right"},
+		{name:'filePath',index:'filePath', width:100,align:"right"},
+		{name:'id',index:'id', width:100,align:"right"},
+		{name:'id',index:'id', width:100,align:"right"},
+		{name:'filePath',index:'filePath', width:200,align:"right"}
 		
 		],
 		rowNum:10,//每一页的行数
@@ -22,7 +22,7 @@ $(function(){
 		viewrecords: true,
 		sortorder: "desc",
 		jsonReader: {//读取后端json数据的格式
-		root: "aaData",//保存详细记录的名称
+		root: "dataList",//保存详细记录的名称
 		//total: "total",//总共有页
 		//page: "page",//当前是哪一页
 		records: "records",//总共记录数
