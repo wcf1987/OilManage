@@ -1,3 +1,63 @@
+$(function(){ 
+		var mapgrid=jQuery("#list2").jqGrid({
+		url:"testData.action",//后端的数据交互程序，改为你的
+		datatype: "json",//前后交互的格式是json数据
+		mtype: 'POST',//交互的方式是发送httpget请求
+		colNames:['id','项目名称','上传时间','地图查看','编辑','删除','下载坐标文件'],//表格的列名
+		colModel:[
+		{name:'id',index:'teacher_name', width:50},//每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
+		{name:'项目名称',index:'organization_name', width:200,align:"right"},
+		{name:'上传时间',index:'organization_name', width:200,align:"right"},
+		{name:'地图查看',index:'organization_name', width:100,align:"right"},
+		{name:'编辑',index:'organization_name', width:100,align:"right"},
+		{name:'删除',index:'organization_name', width:100,align:"right"},
+		{name:'下载坐标文件',index:'organization_name', width:200,align:"right"}
+		
+		],
+		rowNum:10,//每一页的行数
+		height: 'auto',
+		rowList:[10,20,30],
+		pager: '#pager2',
+		sortname: 'id',
+		viewrecords: true,
+		sortorder: "desc",
+		jsonReader: {//读取后端json数据的格式
+		root: "aaData",//保存详细记录的名称
+		//total: "total",//总共有页
+		//page: "page",//当前是哪一页
+		records: "records",//总共记录数
+		repeatitems: false
+		},
+		caption: "地图坐标文件管理"//表格名称
+		});
+		
+		jQuery("#list2").jqGrid('navGrid','#pager2',{edit:false,add:false,del:false}).
+		jqGrid('navButtonAdd',"#pager2",{
+			caption :"添加新的地图文件",
+			onClickButton :addNewPro,
+			id :'mappro',
+			position :"first"
+			 });
+			 
+		
+		});
+function add(){
+	
+}
+//配置对话框  
+ 
+
+function addNewPro(){
+	  var consoleDlg = $("#div_Mapdialog");  
+	    var dialogButtonPanel = consoleDlg.siblings(".ui-dialog-buttonpane");  
+	    //consoleDlg.find("input").removeAttr("disabled").val("");  
+	    //dialogButtonPanel.find("button:not(:contains('取消'))").hide();  
+	    //dialogButtonPanel.find("button:contains('添加')").show();  
+	    consoleDlg.dialog("option", "title", "添加员工信息 ").dialog("open");  
+
+};  	
+
+
 var myjingkou = new BMap.Icon("images/icons/jingkou.png", new BMap.Size(30, 30), {    
 // 指定定位位置。   
 // 当标注显示在地图上时，其所指向的地理位置距离图标左上    
@@ -251,7 +311,7 @@ $(document).ready(function() {
 		'swf' : 'js/upload/uploadify.swf',
 		'uploader' : 'uploadMap.action',
 		'queueID' : 'fileQueue',
-		'auto' : false,
+		'auto' : true,
 		'multi' : false,
 		'buttonText' : '上传地图文件',
 		'fileSizeLimit' : '5MB',
@@ -260,3 +320,4 @@ $(document).ready(function() {
 		'method' : 'post'
 	});
 });
+

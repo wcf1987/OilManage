@@ -21,12 +21,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/justified-nav.css">
 	<link rel="stylesheet" href="js/upload/uploadify.css">
-	
+	<link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/css/jquery-ui-1.10.3.custom.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="js/jqGrid/css/ui.jqgrid.css" />
 	<!-- 自定义 -->
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>
 	
 	<script src="js/jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+	
 	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript"></script>
+	<script src="js/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+	
+	
 	<script type="text/javascript" src="js/upload/jquery.uploadify.min.js"></script>
 	<!-- 自定义 -->
 	<script src="js/global.js"></script>
@@ -66,7 +73,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    </div>
 	    
 	    <div class="jumbotron">
-	    
+	    	<table id="list2"></table>
+	    	<div id="pager2"></div>
 		 	<div id="fileQueue">
 
 		 	</div>
@@ -85,8 +93,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    
 	</div>
 	   
-	
+	<div id="consoleDlg">  
+            <div id="formContainer">  
+                <form id="consoleForm">  
+                    <input type="hidden" id="selectId"/>  
+                    <table class="formTable">  
+                        
+                        <tr>  
+                            <th>项目名称</th>  
+                            <td>  
+                                <input type="text" class="textField" id="proname" name="proname" />  
+                            </td>  
+                        </tr>                          
+                        <tr>  
+                            <th></th>  
+                            <td>  
+                                 <input type="file" name="xxx" id="mapfile" />
+                            </td>  
+                        </tr>                       
+                    </table>  
+                </form>  
+            </div>  
+        </div>  
   </body>
+  
 </html>
 
 <script type="text/javascript">
@@ -106,53 +136,4 @@ map.addControl(new BMap.ScaleControl());
 var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925));  // 创建标注
 map.addOverlay(marker1);
 var point = new BMap.Point(116.404, 39.915);
-
-  /*
-  var plist; 
-  $.ajax({ 
-          type : "post", 
-          url : "map.action", 
-          data : "point=test", 
-          async : false, 
-          success : function(data){ 
-             plist=data.points ;  
-          } 
-          }); 
-          var pointArray=new Array();
-for (i=0;i<plist.length;i++){
-	p=plist[i];
-	pointArray[i]=new BMap.Point(p['longitude'], p['latitude'])
-	var markertemp = new BMap.Marker(pointArray[i]);
-	var s=Array();
-	s[i]="阀组编号:"+p['groupNO']+"<br>"
-	s[i]=s[i]+"所辖气井号:"+p['wellNO']+"<br>"
-	s[i]=s[i]+"井口大地坐标X:"+p['geodeticCoordinatesX']+"<br>"
-	s[i]=s[i]+"井口大地坐标Y:"+p['geodeticCoordinatesY']+"<br>"
-	s[i]=s[i]+"井口经度:"+p['longitude']+"<br>"
-	s[i]=s[i]+"井口纬度:"+p['latitude']+"<br>"
-	
-	var opts = {
-  	width : 200,     // 信息窗口宽度
-  	height: 200,     // 信息窗口高度
-  	title : "井口坐标" , // 信息窗口标题
-  	enableMessage:true,//设置允许信息窗发送短息
-  	message:""
-	}
-	var infoWindow = new BMap.InfoWindow(s[i], opts);  // 创建信息窗口对象
-	//map.openInfoWindow(infoWindow,pointArray[i]); //开启信息窗口
-	markertemp.setTitle(s[i])
-	markertemp.addEventListener("click",function(data){ 
-			 temp=this.getTitle()
-			 var infoWindow = new BMap.InfoWindow(temp, opts);
-             this.openInfoWindow(infoWindow);  
-          });
-	map.addOverlay(markertemp);
-}
-map.centerAndZoom(pointArray[0], 15);
-var polyline = new BMap.Polyline(pointArray, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
-map.addOverlay(polyline);
-      */    
-
-	
-    
 </script>
