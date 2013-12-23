@@ -78,6 +78,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 	<div id="fileQueue">
 
 		 	</div>
+		 
 	        <input type="file" name="xxx" id="mapfile" />
 	        <p>
 	        <a href="javascript:jQuery('#mapfile').uploadify('upload','*')">开始上传</a>&nbsp;
@@ -103,13 +104,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      <div class="modal-body">
 	        <p> 
 	        <!-- 上传文件选择 -->
+	        	  项目名称：<input type="text" name="projectname"/>
 	        <input type="file" name="xxx" id="mapfile" />
 	       
 	        </p>
 	      </div>
 	      <div class="modal-footer">
+	       	<button type="button" class="btn btn-primary">保存 &nbsp;</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	        <!--  <button type="button" class="btn btn-primary"> &nbsp;</button> -->
+	       
 	      </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
