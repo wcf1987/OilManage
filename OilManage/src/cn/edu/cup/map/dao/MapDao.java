@@ -1,5 +1,6 @@
 package cn.edu.cup.map.dao;
 
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,11 @@ public class MapDao {
 		session.close();
 		//sessionFactory.close();
 	}
-
+	public int getMax(){
+		SQLQuery q = session.createSQLQuery("select count(*) from t_MapPro");
+		Integer a=((BigInteger)q.uniqueResult()).intValue();
+		return a;
+	}
 	public List<MapPro> list(int page,int rows) {
 		SQLQuery q = session.createSQLQuery("select id,proname,filepath,adddate from t_MapPro order by adddate desc");
 		q.setFirstResult(page);

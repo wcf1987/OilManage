@@ -54,7 +54,7 @@ public class MapListAction extends ActionSupport{
 		dataList=dao.list(page,rows);
 		
 		page=1;
-		records=dataList.size();
+		records=dao.getMax();
 		total=10;
 		
 		return "SUCCESS";
