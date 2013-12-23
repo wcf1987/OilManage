@@ -24,19 +24,19 @@
 			</result>			
 		</action>
 		
-		<action name="testData" class="com.oil.map.action.TableAction">
+		<action name="testData" class="cn.edu.cup.map.action.TableAction">
 			<result name="SUCCESS" type="json">
 			</result>			
 		</action>
-		<action name="tableAdd" class="com.oil.map.action.TableAddAction">
+		<action name="tableAdd" class="cn.edu.cup.map.action.TableAddAction">
 			<result name="SUCCESS" type="json">				
 			</result>			
 		</action>
-		<action name="tableDelete" class="com.oil.map.action.TableDeleteAction">
+		<action name="tableDelete" class="cn.edu.cup.map.action.TableDeleteAction">
 			<result name="SUCCESS" type="json">		
 			</result>			
 		</action>
-		<action name="tableEdit" class="com.oil.map.action.TableEditAction">
+		<action name="tableEdit" class="cn.edu.cup.map.action.TableEditAction">
 			<result name="SUCCESS" type="json">				
 			</result>			
 		</action>
