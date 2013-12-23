@@ -46,8 +46,20 @@ $(function(){
 
 
 function add(){
-	alert('123');
+	
+	$.ajax({
+		  type: 'POST',
+		  url: 'addMap.action',
+		  data: {proName:$("#projectname").val(),
+			     filePath:$("#hideFilePath").val()
+			     },
+		  success: function(data){
+			  alert('新地图文件上传成功');
+		  }
+		
+		});
 }
+
 //配置对话框  
  
 
@@ -224,7 +236,9 @@ function uploadComplete(file, data, response) {
 	// alert(pMap['JIQIZHAN']['name']);
 	var id = -1;
 	pointMap={};
-	var addfilepath=jsonObject['graphi']['FilePath'];
+	var addfilepath=jsonObject['filePath'];
+	$("#hideFilePath").val(addfilepath);
+	//alert(	$("#mapfile").value);
 	for ( var i in pMap) {
 		id++;
 		p = pMap[i];
@@ -303,7 +317,8 @@ function uploadComplete(file, data, response) {
 	}
 	
 
-}
+};
+
 
 $(document).ready(function() {
 	$('#mapfile').uploadify({

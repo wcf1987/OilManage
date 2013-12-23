@@ -30,6 +30,7 @@ public class MapListAction extends ActionSupport{
 	public String add(){
 		MapDao dao=new MapDao();
 		dao.addPro(proName, filePath);
+		
 		return "SUCCESS";
 	}
 	List<MapPro> dataList;

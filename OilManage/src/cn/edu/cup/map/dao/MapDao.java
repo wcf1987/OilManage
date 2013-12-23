@@ -51,6 +51,7 @@ public class MapDao {
 		q.setParameter(0, ProName);
 		q.setParameter(1, FilePath);
 		int result=q.executeUpdate();
+		tx.commit();
 		return result;
 	}
 	//更新

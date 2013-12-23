@@ -99,7 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      <div class="modal-body">
 	        <p> 
 	        <!-- 上传文件选择 -->
-	        	  项目名称：<input type="text" name="projectname"/>
+	        	  项目名称：<input type="text" name="projectname" id='projectname'/>
 	        	<input type="file" name="xxx" id="mapfile" />   	
 	     
 	        
@@ -112,7 +112,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      <div class="modal-footer">
 	       	<button type="button" class="btn btn-primary" onclick="add()">保存 &nbsp;</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	       
+	       <input type="text" id="hideFilePath" value=""  style="display:none;"/>
 	      </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
