@@ -46,7 +46,7 @@ $(function(){
 
 
 function add(){
-	
+	alert('123');
 }
 //配置对话框  
  
@@ -224,6 +224,7 @@ function uploadComplete(file, data, response) {
 	// alert(pMap['JIQIZHAN']['name']);
 	var id = -1;
 	pointMap={};
+	var addfilepath=jsonObject['graphi']['FilePath'];
 	for ( var i in pMap) {
 		id++;
 		p = pMap[i];

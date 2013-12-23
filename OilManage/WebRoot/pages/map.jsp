@@ -75,15 +75,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    <div class="jumbotron">
 	    	<table id="list2"></table>
 	    	<div id="pager2"></div>
-		 	<div id="fileQueue">
-
-		 	</div>
+		 	
 		 
-	        <input type="file" name="xxx" id="mapfile" />
-	        <p>
-	        <a href="javascript:jQuery('#mapfile').uploadify('upload','*')">开始上传</a>&nbsp;
 	        
-	        </p>
+	        
 			 <div id="allmap"></div>
 			 
 		</div>
@@ -105,12 +100,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <p> 
 	        <!-- 上传文件选择 -->
 	        	  项目名称：<input type="text" name="projectname"/>
-	        <input type="file" name="xxx" id="mapfile" />
-	       
+	        	<input type="file" name="xxx" id="mapfile" />   	
+	     
+	        
+			
+			 
+		</div>
+		
 	        </p>
 	      </div>
 	      <div class="modal-footer">
-	       	<button type="button" class="btn btn-primary">保存 &nbsp;</button>
+	       	<button type="button" class="btn btn-primary" onclick="add()">保存 &nbsp;</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 	       
 	      </div>
@@ -118,28 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
-	<div id="consoleDlg">  
-            <div id="formContainer">  
-                <form id="consoleForm">  
-                    <input type="hidden" id="selectId"/>  
-                    <table class="formTable">  
-                        
-                        <tr>  
-                            <th>项目名称</th>  
-                            <td>  
-                                <input type="text" class="textField" id="proname" name="proname" />  
-                            </td>  
-                        </tr>                          
-                        <tr>  
-                            <th></th>  
-                            <td>  
-                                 <input type="file" name="xxx" id="mapfile" />
-                            </td>  
-                        </tr>                       
-                    </table>  
-                </form>  
-            </div>  
-        </div>  
+	
   </body>
   
 </html>
