@@ -8,10 +8,10 @@ $(function(){
 		{name:'id',index:'id', width:50},//每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
 		{name:'proName',index:'proName', width:200,align:"right"},
 		{name:'addDate',index:'addDate', width:200,align:"right"},
-		{name:'filePath',index:'filePath', width:100,align:"right"},
-		{name:'id',index:'id', width:100,align:"right"},
-		{name:'id',index:'id', width:100,align:"right"},
-		{name:'filePath',index:'filePath', width:200,align:"right"}
+		{name:'filePath',index:'filePath', width:100,align:"right", formatter: function (value, grid, rows, state) { return "<a href=\"#\" style=\"color:#f60\" onclick=\"showMap('"+value+"')\">查看</a>" }},
+		{name:'id',index:'id', width:100,align:"right",formatter: function (value, grid, rows, state) { return "<a href=\"#\" style=\"color:#f60\" onclick=\"showMap('"+value+"')\">编辑</a>" }},
+		{name:'id',index:'id', width:100,align:"right",formatter: function (value, grid, rows, state) { return "<a href=\"#\" style=\"color:#f60\" onclick=\"showMap('"+value+"')\">删除</a>" }},
+		{name:'filePath',index:'filePath', width:200,align:"right",formatter: function (value, grid, rows, state) { return "<a href=\"#\" style=\"color:#f60\" onclick=\"showMap('"+value+"')\">下载</a>" }}
 		
 		],
 		rowNum:10,//每一页的行数
@@ -44,7 +44,9 @@ $(function(){
 		
 		});
 
-
+function showMap(str){
+	alert(str);
+}
 function add(){
 	
 	$.ajax({
