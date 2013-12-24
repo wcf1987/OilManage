@@ -109,7 +109,7 @@ public class MapDao {
 	}
 	public List<MapPro> list(int page,int rows) {
 		SQLQuery q = session.createSQLQuery("select id,proname,filepath,adddate from t_MapPro order by adddate desc");
-		q.setFirstResult(page);
+		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
 		List l = q.list();
 		List re=new ArrayList<MapPro>();

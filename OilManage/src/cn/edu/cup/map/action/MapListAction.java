@@ -80,7 +80,7 @@ public class MapListAction extends ActionSupport{
 		MapDao dao=new MapDao();
 		dataList=dao.list(page,rows);
 		
-		page=1;
+		
 		records=dao.getMax();
 		total=10;
 		for(int i=0;i<dataList.size();i++){
@@ -90,6 +90,9 @@ public class MapListAction extends ActionSupport{
 			m.setFilePath(changePath(fp));
 		}
 		total=records/rows;
+		if(records%rows!=0){
+			total++;
+		}
 		return "SUCCESS";
 	}
 	private String changePath(String AbsolutePath){
