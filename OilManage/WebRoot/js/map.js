@@ -23,8 +23,8 @@ $(function(){
 		sortorder: "desc",
 		jsonReader: {//读取后端json数据的格式
 		root: "dataList",//保存详细记录的名称
-		//total: "total",//总共有页
-		//page: "page",//当前是哪一页
+		total: "total",//总共有页
+		page: "page",//当前是哪一页
 		records: "records",//总共记录数
 		repeatitems: false
 		},
