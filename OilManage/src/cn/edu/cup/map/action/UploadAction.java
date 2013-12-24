@@ -111,7 +111,7 @@ public class UploadAction  extends ActionSupport{
 	                }
 	                re="文件解析成功";
 	                String path=getWebFileRoot()+this.UPLOADPATH;
-	                path=path+String.valueOf(System.currentTimeMillis())+".cvs";
+	                path=path+String.valueOf(System.currentTimeMillis())+".csv";
 	                FilePath=path;
 	                
 	                copyFile(mapfile,new File(FilePath));
