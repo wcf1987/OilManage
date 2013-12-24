@@ -28,7 +28,7 @@ public class UploadAction  extends ActionSupport{
 	private String mapfileFileName;
 	private Graphi graphi;
 	private String FilePath;
-	private static String UPLOADPATH="upload\\";
+	public static String UPLOADPATH="upload\\";
 	private static String   WEB_ROOT_PATH;
 
 	public Graphi getGraphi() {

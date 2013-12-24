@@ -100,6 +100,13 @@ public class MapDao {
 		Integer a=((BigInteger)q.uniqueResult()).intValue();
 		return a;
 	}
+	public String getFilePath(int id){
+		SQLQuery q = session.createSQLQuery("select filepath from t_MapPro where id=?");
+		q.setParameter(0, id);
+		String a=((String)q.uniqueResult());
+		
+		return a;
+	}
 	public List<MapPro> list(int page,int rows) {
 		SQLQuery q = session.createSQLQuery("select id,proname,filepath,adddate from t_MapPro order by adddate desc");
 		q.setFirstResult(page);
@@ -123,6 +130,16 @@ public class MapDao {
 			  pro.setAddDate(addDate);
 			  re.add(pro);
 		}
+		
 		return re;
+	}
+
+	public int deleteMap(int id) {
+		SQLQuery q = session.createSQLQuery("delete from t_MapPro where id=?");
+		q.setParameter(0, id);
+		int re=q.executeUpdate();
+		tx.commit();
+		return re;
+		
 	}
 }

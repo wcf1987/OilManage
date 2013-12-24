@@ -37,6 +37,12 @@
 			 <param name="excludeProperties">id</param>
 			</result>			
 		</action>
+				<action name="delMap" class="cn.edu.cup.map.action.MapListAction" method="delete">
+			
+			<result name="SUCCESS" type="json">
+			
+			</result>			
+		</action>
 		<action name="addMap" class="cn.edu.cup.map.action.MapListAction" method="add">
 		
 			<result name="SUCCESS" type="json">
