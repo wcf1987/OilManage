@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	margin: 5;
+	margin-top:20px;
 }
 </style>
 
@@ -79,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 
 	        
 	        
-			 <div id="allmap"></div>
+			 <div id="allmap" ></div>
 			 
 		</div>
 

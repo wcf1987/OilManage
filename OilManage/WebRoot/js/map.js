@@ -1,3 +1,4 @@
+
 $(function() {
 	var mapgrid = jQuery("#list2")
 			.jqGrid(
@@ -69,16 +70,24 @@ $(function() {
 												+ value
 												+ "\" target=\"_blank\" style=\"color:#f60\")\">下载</a>"
 									}
-								}
-
-						],
-						rowNum : 10,// 每一页的行数
-						height : 'auto',
-						rowList : [ 10, 20, 30 ],
-						pager : '#pager2',
-						sortname : 'id',
-						viewrecords : true,
-						sortorder : "desc",
+								}			
+					
+					
+						rowNum:10,//每一页的行数
+						height: 'auto',
+						rowList:[10,20,30],
+						pager: '#pager2',
+						sortname: 'id',
+						viewrecords: true,
+						sortorder: "desc",
+						jsonReader: {//读取后端json数据的格式
+						root: "dataList",//保存详细记录的名称
+						total: "total",//总共有页
+						page: "page",//当前是哪一页
+						records: "records",//总共记录数
+						repeatitems: false
+						},
+						caption: "地图坐标文件管理"//表格名称
 						jsonReader : {// 读取后端json数据的格式
 							root : "dataList",// 保存详细记录的名称
 							// total: "total",//总共有页
