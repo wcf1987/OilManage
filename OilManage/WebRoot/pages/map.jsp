@@ -18,18 +18,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	
 	<!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/justified-nav.css">
+   
+	<!--  <link rel="stylesheet" href="css/justified-nav.css">
+	-->
 	<link rel="stylesheet" href="js/upload/uploadify.css">
+	 
 	<link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/css/jquery-ui-1.10.3.custom.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="js/jqGrid/css/ui.jqgrid.css" />
+	 
+	
+	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqGrid/css/ui.jqgrid.css" />
+	 
+	 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+	 <link rel="stylesheet" type="text/css" href="bootstrap/css/carousel.css">
 	<!-- 自定义 -->
+	
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+	  
 	
 	<script src="js/jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
 	
 	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="bootstrap/js/holder.min.js"></script>
+	 
 	<script src="js/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript"></script>
 	<script src="js/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 	
@@ -49,19 +60,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	overflow: hidden;
 	margin-top:20px;
 }
+
+
+
 </style>
 
 
   </head>
   
-  <body >
-	  <div class="container">
-	  
-	    <div id="header">
-	    	<!--  <div id="banner"><a href="#" ><img src="images/banner.jpg" alt="主页" title="" /></a></div>-->
+  <body style="background-color:#CCCCCC;">
+  		<!--  
+ 	    <div id="header" class="navbar-wrapper">
+	    	
 	    	<div id="nav" class="masthead">
 	    			<h3 class="text-muted" style="color:#4AA4EB;margin-left:20px;">煤层气集输系统</h3>
-	    		    <ul class="nav nav-justified navbar navbar-inverse">
+	    		    <ul class="nav nav-justified navbar navbar-inverse" style="color:#4AA4EB;">
 			          <li><a href="pages/home.jsp">首页</a></li>
 			          <li><a href="pages/map.jsp">地图建模</a></li>
 			          <li><a href="pages/home.jsp">系统模拟</a></li>
@@ -72,23 +85,143 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	</div>
 	    </div>
 	    
-	    <div class="jumbotron">
-	    	<table id="list2"></table>
-	    	<div id="pager2"></div>
-		 	
-		 
-	        
-	        
-			 <div id="allmap" ></div>
-			 
-		</div>
+	  -->
+ 	
+	   	
+	  <div class="navbar-wrapper">
+	      <div class="container">
+	        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+	          <div class="container">
+	            <div class="navbar-header">
+	              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	              </button>
+	              <a class="navbar-brand" href="#"><div style="font-color:#99CCFF;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统</div></a>
+	            </div>
+	            <div class="navbar-collapse collapse">
+	              <ul class="nav navbar-nav">
+	                <li><a href="#">首页</a></li>
+	                <li class="active"><a href="pages/map.jsp">地图建模</a></li>
+	                <li><a href="#contact">系统模拟</a></li>
+	                <li><a href="pages/home.jsp">系统优化</a></li>
+			        <li><a href="pages/home.jsp">关于</a></li>
+			        <li><a href="pages/home.jsp">联系方式</a></li>
+	                <li class="dropdown">
+	                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+	                  <ul class="dropdown-menu">
+	                    <li><a href="#">Action</a></li>
+	                    <li><a href="#">Another action</a></li>
+	                    <li><a href="#">Something else here</a></li>
+	                    <li class="divider"></li>
+	                    <li class="dropdown-header">Nav header</li>
+	                    <li><a href="#">Separated link</a></li>
+	                    <li><a href="#">One more separated link</a></li>
+	                  </ul>
+	                </li>
+	              </ul>
+	            </div>
+	          </div>
+	        </div>
+	
+	      </div>
+	    </div>
+	 
+		    
+		    <!-- Carousel
+	    ================================================== -->
+	    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+	      <!-- Indicators -->
+	      <ol class="carousel-indicators">
+	        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+	        <li data-target="#myCarousel" data-slide-to="1"></li>
+	        <li data-target="#myCarousel" data-slide-to="2"></li>
+	      </ol>
+	      <div class="carousel-inner">
+	        <div class="item active">
+	          <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:地图建模" alt="地图建模">
+	          <div class="container">
+	            <div class="carousel-caption">
+	              <h1>与GIS接口</h1>
+	              <p>与地理信息系统的接口，提供地图呈现和实际管网展现功能。</p>
+	              <p></p>
+	              <!-- <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p> -->
+	            </div>
+	          </div>
+	        </div>
+	        <div class="item">
+	          <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:地图建模" alt="地图建模">
+	          <div class="container">
+	            <div class="carousel-caption">
+	              <h1>与3D地形接口</h1>
+	              <p>与3D地形呈现系统的接口，提供数字三维地图的展示。</p>
+	              <p></p>
+	              <!--  <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>-->
+	            </div>
+	          </div>
+	        </div>
+	        <div class="item">
+	          <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:地图建模" alt="地图建模">
+	          <div class="container" style="margin-buttom:10px;">
+	            <div class="carousel-caption">
+	              <h1>与现场数据接口</h1>
+	              <p>与现场采集数据的接口。</p>
+	              <p></p>
+	              <!--  <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>-->
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+	      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+	    </div><!-- /.carousel -->
 
-	    <div id="content"></div>
+    	 <!-- Marketing messaging and featurettes
+	    ================================================== -->
+	    <!-- Wrap the rest of the page in another container to center all the content. -->
+	
+	    <div class="container marketing">
+	
+	      <!-- Three columns of text below the carousel -->
+	      <div class="row" style="margin-bottom:-40px;">
+	      	<table id="list2" class="table table-striped table-bordered table-hover datatable " ></table>
+	      	<div id="pager2" ></div>
+	      </div><!-- /.row -->
+	
+	
+	      <!-- START THE FEATURETTES -->
+	
+	      <hr class="featurette-divider">
+	
+	      <div class="row featurette " style="margin-top:-50px;">
+	      	<div id="allmap" class="img-rounded"></div>
+	      </div>
+	
+	      <hr class="featurette-divider">
+	
+	      <!-- /END THE FEATURETTES -->
+	
+	
+	      <!-- FOOTER -->
+	      <div class="footer">
+	        <p>&copy; 2013 中国石油大学</p>
+	      </div>
+	
+	    </div><!-- /.container -->
 	    
-    	<div class="footer"><p>&copy; 中国石油大学 2013</p></div>
-	    
-	</div>
-	   
+    
+    
+    
+    
+    
+    
+    
+    
+	
+	
+	<!-- 上传文件的模态框 -->   
 	<div id="uploadModal" class="modal fade">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -100,15 +233,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <p> 
 	        <!-- 上传文件选择 -->
 	        	  项目名称：<input type="text" name="projectname" id='projectname'/>
-	        	<input type="file" name="xxx" id="mapfile" />   	
-	     
-	        
-			
-			 
-		</div>
-		
-	        </p>
-	      </div>
+	        	<input type="file" name="xxx" id="mapfile" /> 
+	        </p>  		 
+		  </div>		
 	      <div class="modal-footer">
 	       	<button type="button" class="btn btn-primary" onclick="add()">保存 &nbsp;</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -140,4 +267,7 @@ map.addControl(new BMap.ScaleControl());
 var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925));  // 创建标注
 map.addOverlay(marker1);
 var point = new BMap.Point(116.404, 39.915);
+
+
 </script>
+
