@@ -6,7 +6,8 @@ $(function() {
 						url : "listMap.action",// 后端的数据交互程序，改为你的
 						datatype : "json",// 前后交互的格式是json数据
 						mtype : 'POST',// 交互的方式是发送httpget请求
-						colNames : [ 'id', '项目名称', '上传时间', '地图查看', '编辑', '删除',
+						//colNames : [ 'id', '项目名称', '上传时间', '地图查看', '编辑', '删除',
+						colNames : [ 'id', '项目名称', '上传时间', '地图查看', '删除',
 								'下载坐标文件' ],// 表格的列名
 						colModel : [
 								{
@@ -17,64 +18,65 @@ $(function() {
 								{
 									name : 'proName',
 									index : 'proName',
-									width : 200,
-									align : "right"
+									width : 150,
+									align : "center"
 								},
 								{
 									name : 'addDate',
 									index : 'addDate',
 									width : 200,
-									align : "right"
+									align : "center"
 								},
 								{
 									name : 'id',
 									index : 'filePath',
 									width : 100,
-									align : "right",
+									align : "center",
 									formatter : function(value, grid, rows,
 											state) {
-										return "<a href=\"javascript:void(0)\" style=\"color:#f60\" onclick=\"showMap('"
+										return "<a href=\"javascript:void(0)\" style=\"color:#798991;font-family:\"Microsoft YaHei\";\" onclick=\"showMap('"
 												+ value + "')\">查看</a>"
 									}
 								},
+//								{
+//									name : 'id',
+//									index : 'id',
+//									width : 100,
+//									align : "center",
+//									formatter : function(value, grid, rows,
+//											state) {
+//										return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"showMap('"
+//												+ value + "')\">编辑</a>"
+//									}
+//								},
 								{
 									name : 'id',
 									index : 'id',
 									width : 100,
-									align : "right",
+									align : "center",
 									formatter : function(value, grid, rows,
 											state) {
-										return "<a href=\"javascript:void(0)\" style=\"color:#f60\" onclick=\"showMap('"
-												+ value + "')\">编辑</a>"
-									}
-								},
-								{
-									name : 'id',
-									index : 'id',
-									width : 100,
-									align : "right",
-									formatter : function(value, grid, rows,
-											state) {
-										return "<a href=\"javascript:void(0)\" style=\"color:#f60\" onclick=\"delMap('"
+										return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"delMap('"
 												+ value + "')\">删除</a>"
 									}
 								},
 								{
 									name : 'filePath',
 									index : 'filePath',
-									width : 200,
-									align : "right",
+									width : 100,
+									align : "center",
 									formatter : function(value, grid, rows,
 											state) {
 										return "<a href=\""
 												+ value
-												+ "\" target=\"_blank\" style=\"color:#f60\")\">下载</a>"
+												+ "\" target=\"_blank\" style=\"color:#798991\")\">下载</a>"
 									}
 								}			
 								],
-					
+						autowidth:true,
 						rowNum:10,//每一页的行数
 						height: 'auto',
+						width:'auto',
 						rowList:[10,20,30],
 						pager: '#pager2',
 						sortname: 'id',
@@ -431,3 +433,5 @@ $(document).ready(function() {
 		'method' : 'post'
 	});
 });
+
+
