@@ -331,6 +331,7 @@ function uploadComplete(file, data, response) {
 };
 
 function viewMap(data) {
+	map.clearOverlays();
 	var jsonObject = data;
 	// alert(jsonObject['re']);
 	// alert(jsonObject['graphi']);
