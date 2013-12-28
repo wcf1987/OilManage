@@ -186,8 +186,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	      <!-- Three columns of text below the carousel -->
 	      <div class="row" style="margin-bottom:-40px;">
-	      	<table id="list2" class="table table-striped table-bordered table-hover datatable " ></table>
-	      	<div id="pager2" ></div>
+	      	<div id="allmap" class="img-rounded"></div>
 	      </div><!-- /.row -->
 	
 	
@@ -196,7 +195,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      <hr class="featurette-divider">
 	
 	      <div class="row featurette " style="margin-top:-50px;">
-	      	<div id="allmap" class="img-rounded"></div>
+	      		<table id="list2" class="table table-striped table-bordered table-hover datatable " ></table>
+	      		<div id="pager2" ></div>
 	      </div>
 	
 	      <hr class="featurette-divider">
