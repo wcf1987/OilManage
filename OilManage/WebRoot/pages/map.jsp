@@ -27,6 +27,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 
 	
 	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqGrid/css/ui.jqgrid.css" />
+	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/overcast/jquery.ui.theme.css" />  
+	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/black-tie/jquery.ui.theme.css" />
+	 
 	 
 	 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	 <link rel="stylesheet" type="text/css" href="bootstrap/css/carousel.css">
@@ -133,81 +136,80 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    <!-- Carousel
 	    ================================================== -->
 	    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-	      <!-- Indicators -->
-	      <ol class="carousel-indicators">
-	        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-	        <li data-target="#myCarousel" data-slide-to="1"></li>
-	        <li data-target="#myCarousel" data-slide-to="2"></li>
-	      </ol>
-	      <div class="carousel-inner">
-	        <div class="item active">
-	          <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:地图建模" alt="地图建模">
-	          <div class="container">
-	            <div class="carousel-caption">
-	              <h1>与GIS接口</h1>
-	              <p>与地理信息系统的接口，提供地图呈现和实际管网展现功能。</p>
-	              <p></p>
-	              <!-- <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p> -->
-	            </div>
-	          </div>
-	        </div>
-	        <div class="item">
-	          <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:地图建模" alt="地图建模">
-	          <div class="container">
-	            <div class="carousel-caption">
-	              <h1>与3D地形接口</h1>
-	              <p>与3D地形呈现系统的接口，提供数字三维地图的展示。</p>
-	              <p></p>
-	              <!--  <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>-->
-	            </div>
-	          </div>
-	        </div>
-	        <div class="item">
-	          <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:地图建模" alt="地图建模">
-	          <div class="container" style="margin-buttom:10px;">
-	            <div class="carousel-caption">
-	              <h1>与现场数据接口</h1>
-	              <p>与现场采集数据的接口。</p>
-	              <p></p>
-	              <!--  <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>-->
-	            </div>
-	          </div>
-	        </div>
+	      	<!-- Indicators -->
+			<ol class="carousel-indicators">
+			  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			  <li data-target="#myCarousel" data-slide-to="1"></li>
+			  <li data-target="#myCarousel" data-slide-to="2"></li>
+			</ol>
+			<div class="carousel-inner">
+				<div class="item active">
+				  <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:地图建模" alt="地图建模">
+				  <div class="container">
+				    <div class="carousel-caption">
+				      <!-- <h1>与GIS接口</h1>  -->
+				      <p>与地理信息系统的接口，提供地图呈现和实际管网展现功能。</p>
+				      <p></p>
+				      <!-- <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p> -->
+				    </div>
+				  </div>
+				</div>
+				<div class="item">
+				  <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:地图建模" alt="地图建模">
+				  <div class="container">
+				    <div class="carousel-caption">
+				       <!-- <h1>与3D地形接口</h1> -->
+				      <p>与3D地形呈现系统的接口，提供数字三维地图的展示。</p>
+				      <p></p>
+				      <!--  <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>-->
+				    </div>
+				  </div>
+				</div>
+		        <div class="item">
+		          <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:地图建模" alt="地图建模">
+		          <div class="container">
+		            <div class="carousel-caption">
+		              <!-- <h1>与现场数据接口</h1> -->
+		              <p>与现场采集数据的接口。</p>
+		              <p></p>
+		              <!--  <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>-->
+		            </div>
+		          </div>
+		        </div>
 	      </div>
 	      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
 	      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-	    </div><!-- /.carousel -->
+		</div><!-- /.carousel -->
 
     	 <!-- Marketing messaging and featurettes
 	    ================================================== -->
 	    <!-- Wrap the rest of the page in another container to center all the content. -->
+	    
+		<div class="container marketing" style="width:1200px;">
+	    
+	    	<hr class="featurette-divider" style="margin-top:-25px;margin-bottom:10px;">
+	    	
+	      	<!-- Three columns of text below the carousel -->
+	      	<div class="row" style="margin-bottom:-50px;">
+	      		<!-- 地图 -->
+	      		<div id="allmap" class="img-rounded"></div>
+	      	</div><!-- /.row -->
 	
-	    <div class="container marketing">
+	      	<hr class="featurette-divider"  style="border-top: 1px solid #eee;">
 	
-	      <!-- Three columns of text below the carousel -->
-	      <div class="row" style="margin-bottom:-40px;">
-	      	<div id="allmap" class="img-rounded"></div>
-	      </div><!-- /.row -->
-	
-	
-	      <!-- START THE FEATURETTES -->
-	
-	      <hr class="featurette-divider">
-	
-	      <div class="row featurette " style="margin-top:-50px;">
+	      	<div class="row featurette " style="margin-top:-50px;margin-left:auto;margin-right:auto;">
+	      		<!-- 表格 -->
 	      		<table id="list2" class="table table-striped table-bordered table-hover datatable " ></table>
 	      		<div id="pager2" ></div>
-	      </div>
+	      	</div>
 	
-	      <hr class="featurette-divider">
+	      	<hr class="featurette-divider">
+
 	
-	      <!-- /END THE FEATURETTES -->
-	
-	
-	      <!-- FOOTER -->
-	      <div class="footer">
-	        <p>&copy; 2013 中国石油大学</p>
-	      </div>
+	      	<!-- FOOTER -->
+	      	<div class="footer">
+	        	<p>&copy; 2013 中国石油大学</p>
+	      	</div>
 	
 	    </div><!-- /.container -->
 	    
