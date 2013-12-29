@@ -77,7 +77,7 @@ $(function() {
 //						autowidth:true,
 						rowNum:10,//每一页的行数
 						height: 'auto',
-						width:1200,
+						width:1230,
 						rowList:[10,20,30],
 						pager: '#pager2',
 						sortname: 'id',
