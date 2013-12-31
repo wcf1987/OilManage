@@ -332,6 +332,7 @@ function uploadComplete(file, data, response) {
 
 function viewMap(data) {
 	map.clearOverlays();
+	var markers = [];
 	var jsonObject = data;
 	// alert(jsonObject['re']);
 	// alert(jsonObject['graphi']);
@@ -365,7 +366,7 @@ function viewMap(data) {
 		var markertemp = new BMap.Marker(pointArray[id], {
 			icon : myicon
 		});
-
+		
 		var s = Array();
 		s[i] = "类别:" + typestr + "<br>"
 		s[i] = s[i] + "名称:" + p['name'] + "<br>"
@@ -390,7 +391,10 @@ function viewMap(data) {
 			this.openInfoWindow(infoWindow);
 		});
 		map.addOverlay(markertemp);
+		markers.push(markertemp);
 	}
+	var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers,isAverangeCenter:true,girdSize:120,maxZoom:13});
+
 	map.centerAndZoom(pointArray[0], 15);
 	for ( var lkey in pLine) {
 		var l = pLine[lkey];
@@ -418,8 +422,7 @@ function viewMap(data) {
 			map.addOverlay(polyline);
 			addArrow2(polyline, 5, Math.PI / 7)
 		}
-
-	}
+			}
 }
 $(document).ready(function() {
 	$('#mapfile').uploadify({
