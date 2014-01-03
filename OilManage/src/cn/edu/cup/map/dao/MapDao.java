@@ -3,7 +3,10 @@ package cn.edu.cup.map.dao;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -14,7 +17,10 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
+import cn.edu.cup.map.business.Graphi;
+import cn.edu.cup.map.business.Line;
 import cn.edu.cup.map.business.MapPro;
+import cn.edu.cup.map.business.Point;
 import cn.edu.cup.test.TestHibernate;
 
 public class MapDao {
@@ -46,15 +52,56 @@ public class MapDao {
 		
 		//System.out.println(obj.getUsername());
 	}
-	public int addPro(String ProName,String FilePath){
+	public int addPro(String ProName,String FilePath, Graphi graphi){
 		
 		Query q = session.createSQLQuery("insert into T_MapPro (proname,filepath,adddate) values (?,?,now())");
 		q.setParameter(0, ProName);
 		q.setParameter(1, FilePath);
 		int result=q.executeUpdate();
+		SQLQuery sqlq = session.createSQLQuery("select max(id) from t_mappro");
+
+		Integer proid=((Integer)sqlq.uniqueResult()).intValue();
+		
+		addPoint(proid,graphi);
+		addLine(proid,graphi);
 		tx.commit();
 		return result;
 	}
+	private void addLine(int proid,Graphi graphi) {
+		List<Line> lines=graphi.getLines();
+		for(Iterator<Line> iter=lines.iterator();iter.hasNext();){
+			Line line=iter.next();
+			Query q = session.createSQLQuery("insert into T_MapLine values (?,?,?,?)");
+			q.setParameter(0, proid);
+			q.setParameter(1, line.getStart());
+			q.setParameter(2, line.getEnd());
+			q.setParameter(3, line.getType());
+
+			q.executeUpdate();
+		
+		}
+		
+	}
+
+	private void addPoint(int proid,Graphi graphi) {
+		Map<String, Point> map=graphi.getPoints();
+		Collection<Point> points=map.values();
+		for(Iterator<Point> iter=points.iterator();iter.hasNext();){
+			Point p=iter.next();
+			Query q = session.createSQLQuery("insert into T_MapPoint values (?,?,?,?,?,?,?)");
+			q.setParameter(0, proid);
+			q.setParameter(1, p.getName());
+			q.setParameter(2, p.getType().toString());
+			q.setParameter(3, p.getGeodeticCoordinatesX());
+			q.setParameter(4, p.getGeodeticCoordinatesY());
+			q.setParameter(5, p.getLatitude());
+			q.setParameter(6, p.getLongitude());
+			q.executeUpdate();
+		
+		}
+	
+	}
+
 	//更新
 	public  void update()
 	{

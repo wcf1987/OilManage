@@ -53,8 +53,11 @@ public class MapListAction extends ActionSupport{
 	}
 	public String add(){
 		MapDao dao=new MapDao();
-		dao.addPro(proName, filePath);
-	
+		FileToGraphi a=new FileToGraphi();
+		graphi=a.FileTrans(filePath);
+		dao.addPro(proName, filePath,graphi);
+		
+
 		return "SUCCESS";
 	}
 	
