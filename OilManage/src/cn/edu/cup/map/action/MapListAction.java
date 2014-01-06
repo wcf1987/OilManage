@@ -154,8 +154,9 @@ public class MapListAction extends ActionSupport{
 	public String viewMap(){
 		FileToGraphi a=new FileToGraphi();
 		MapDao dao=new MapDao();
-		filePath=dao.getFilePath(id);
-		graphi=a.FileTrans(filePath);
+		//filePath=dao.getFilePath(id);
+		//graphi=a.FileTrans(filePath);
+		graphi=dao.getGraphiByID(id);
 		return "SUCCESS";
 	}
 

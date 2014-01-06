@@ -20,6 +20,18 @@ public class Point {
 	public enum Type {
         jingkou, jiqizhan,fazu;    
     }
+	public static Type getType(String name){
+		if (name.equalsIgnoreCase("jingkou")){
+			return Type.jingkou;
+		}
+		if (name.equalsIgnoreCase("fazu")){
+			return Type.fazu;
+		}
+		if (name.equalsIgnoreCase("jiqizhan")){
+			return Type.jiqizhan;
+		}
+		return null;
+	}
 	public String getWellNO() {
 		return WellNO;
 	}

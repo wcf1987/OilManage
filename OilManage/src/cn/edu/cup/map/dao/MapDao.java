@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -153,6 +154,62 @@ public class MapDao {
 		String a=((String)q.uniqueResult());
 		
 		return a;
+	}
+	public Graphi getGraphiByID(int id){
+		Graphi a=new Graphi();
+		a.setLines(getLinesByID(id));
+		a.setPoints(getPointsByID(id));
+		
+		return a;
+	}
+	public List<Line> getLinesByID(int id){
+		List<Line> lines=new ArrayList<Line>();
+		SQLQuery q = session.createSQLQuery("select start,end,type from T_MapLine where proid=?");
+		q.setParameter(0, id);
+		List l = q.list();
+		Line temp;
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+			  temp=new Line();
+			  Object[] row = (Object[])l.get(i);;
+			  temp.setStart((String)row[0]);
+			  temp.setEnd((String)row[1]);
+			  temp.setType((Integer)row[2]);
+			  lines.add(temp);
+		}
+		
+		
+		return lines;
+		
+	}
+	public Map<String,Point> getPointsByID(int id){
+		Map<String,Point> points=new HashMap<String, Point>();
+		SQLQuery q = session.createSQLQuery("select pointName,type,GeodeticCoordinatesX,GeodeticCoordinatesY,latitude,Longitude from t_mappoint where proid=?");
+		q.setParameter(0, id);
+		List l = q.list();
+		Point temp;
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+			  temp=new Point();
+			  Object[] row = (Object[])l.get(i);;
+			  String proName=(String)row[0];
+			  temp.setName(proName);
+			  temp.setType(Point.getType((String)row[1]));
+			  temp.setGeodeticCoordinatesX((Double)row[2]);
+			  temp.setGeodeticCoordinatesY((Double)row[3]);
+			  temp.setLatitude((Double)row[4]);
+			  temp.setLongitude((Double)row[5]);
+
+			  points.put(proName, temp);
+		}
+		
+		
+		
+		return points;
 	}
 	public List<MapPro> list(int page,int rows) {
 		SQLQuery q = session.createSQLQuery("select id,proname,filepath,adddate from t_MapPro order by adddate desc");

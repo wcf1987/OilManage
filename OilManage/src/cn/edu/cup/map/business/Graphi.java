@@ -16,6 +16,12 @@ public class Graphi {
 		temp.addAll(lines);
 		return temp;
 	}
+	public void setPoints(Map<String, Point> points) {
+		this.points = points;
+	}
+	public void setLines(List<Line> lines) {
+		this.lines = lines;
+	}
 	public Map<String, Point> getPoints() {
 		return points;
 	}
