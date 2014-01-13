@@ -55,11 +55,11 @@ public class MapDao {
 	}
 	public int addPro(String ProName,String FilePath, Graphi graphi){
 		
-		Query q = session.createSQLQuery("insert into T_MapPro (proname,filepath,adddate) values (?,?,now())");
+		Query q = session.createSQLQuery("insert into T_MapPro (ProName,FilePath,Adddate) values (?,?,now())");
 		q.setParameter(0, ProName);
 		q.setParameter(1, FilePath);
 		int result=q.executeUpdate();
-		SQLQuery sqlq = session.createSQLQuery("select max(id) from t_mappro");
+		SQLQuery sqlq = session.createSQLQuery("select max(ID) from T_MapPro");
 
 		Integer proid=((Integer)sqlq.uniqueResult()).intValue();
 		
@@ -149,7 +149,7 @@ public class MapDao {
 		return a;
 	}
 	public String getFilePath(int id){
-		SQLQuery q = session.createSQLQuery("select filepath from t_MapPro where id=?");
+		SQLQuery q = session.createSQLQuery("select FilePath from t_MapPro where ID=?");
 		q.setParameter(0, id);
 		String a=((String)q.uniqueResult());
 		
@@ -164,7 +164,7 @@ public class MapDao {
 	}
 	public List<Line> getLinesByID(int id){
 		List<Line> lines=new ArrayList<Line>();
-		SQLQuery q = session.createSQLQuery("select start,end,type from T_MapLine where proid=?");
+		SQLQuery q = session.createSQLQuery("select Start,End,Type from T_MapLine where ProID=?");
 		q.setParameter(0, id);
 		List l = q.list();
 		Line temp;
@@ -186,7 +186,7 @@ public class MapDao {
 	}
 	public Map<String,Point> getPointsByID(int id){
 		Map<String,Point> points=new HashMap<String, Point>();
-		SQLQuery q = session.createSQLQuery("select pointName,type,GeodeticCoordinatesX,GeodeticCoordinatesY,latitude,Longitude from t_mappoint where proid=?");
+		SQLQuery q = session.createSQLQuery("select PointName,Type,GeodeticCoordinatesX,GeodeticCoordinatesY,Latitude,Longitude from t_MapPoint where ProID=?");
 		q.setParameter(0, id);
 		List l = q.list();
 		Point temp;
@@ -212,7 +212,7 @@ public class MapDao {
 		return points;
 	}
 	public List<MapPro> list(int page,int rows) {
-		SQLQuery q = session.createSQLQuery("select id,proname,filepath,adddate from t_MapPro order by adddate desc");
+		SQLQuery q = session.createSQLQuery("select ID,ProName,FilePath,AddDate from t_MapPro order by AddDate desc");
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
 		List l = q.list();
@@ -239,7 +239,7 @@ public class MapDao {
 	}
 
 	public int deleteMap(int id) {
-		SQLQuery q = session.createSQLQuery("delete from t_MapPro where id=?");
+		SQLQuery q = session.createSQLQuery("delete from t_MapPro where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
 		tx.commit();
