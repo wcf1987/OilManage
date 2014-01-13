@@ -55,55 +55,41 @@ public class PhysicalDao {
 		
 		//System.out.println(obj.getUsername());
 	}
-	public int addPro(String ProName,String FilePath, Graphi graphi){
+	public int addPhysical(String CName,String EName, String Description,String ISOBasicUnit){
 		
-		Query q = session.createSQLQuery("insert into T_MapPro (ProName,FilePath,Adddate) values (?,?,now())");
-		q.setParameter(0, ProName);
-		q.setParameter(1, FilePath);
+		Query q = session.createSQLQuery("insert into T_Physical (CName,EName,Description,ISOBasicUnit) values (?,?,?,?)");
+		q.setParameter(0, CName);
+		q.setParameter(1, EName);
+		q.setParameter(2, Description);
+		q.setParameter(3, ISOBasicUnit);
 		int result=q.executeUpdate();
-		SQLQuery sqlq = session.createSQLQuery("select max(ID) from T_MapPro");
-
-		Integer proid=((Integer)sqlq.uniqueResult()).intValue();
 		
-		addPoint(proid,graphi);
-		addLine(proid,graphi);
 		tx.commit();
 		return result;
 	}
-	private void addLine(int proid,Graphi graphi) {
-		List<Line> lines=graphi.getLines();
-		for(Iterator<Line> iter=lines.iterator();iter.hasNext();){
-			Line line=iter.next();
-			Query q = session.createSQLQuery("insert into T_MapLine values (?,?,?,?)");
-			q.setParameter(0, proid);
-			q.setParameter(1, line.getStart());
-			q.setParameter(2, line.getEnd());
-			q.setParameter(3, line.getType());
-
-			q.executeUpdate();
-		
-		}
-		
-	}
-
-	private void addPoint(int proid,Graphi graphi) {
-		Map<String, Point> map=graphi.getPoints();
-		Collection<Point> points=map.values();
-		for(Iterator<Point> iter=points.iterator();iter.hasNext();){
-			Point p=iter.next();
-			Query q = session.createSQLQuery("insert into T_MapPoint values (?,?,?,?,?,?,?)");
-			q.setParameter(0, proid);
-			q.setParameter(1, p.getName());
-			q.setParameter(2, p.getType().toString());
-			q.setParameter(3, p.getGeodeticCoordinatesX());
-			q.setParameter(4, p.getGeodeticCoordinatesY());
-			q.setParameter(5, p.getLatitude());
-			q.setParameter(6, p.getLongitude());
-			q.executeUpdate();
-		
-		}
 	
+	
+	
+	
+	
+	
+	private int addMessure(int PhysicalID,String EName,String CName,String Symbol,double RatioA,double RatioB,int styleID) {
+		Query q = session.createSQLQuery("insert into T_Measure (PhysicalID,EName,CName,Symbol,RatioA,RatioB,StyleID) values (?,?,?,?,?,?,?)");
+		q.setParameter(0, PhysicalID);
+		q.setParameter(1, EName);
+		q.setParameter(2, CName);
+		q.setParameter(3, Symbol);
+		q.setParameter(4, RatioA);
+		q.setParameter(5, RatioB);
+		q.setParameter(6, styleID);
+		int result=q.executeUpdate();
+		
+		tx.commit();
+		return result;
+		
 	}
+
+
 
 	//更新
 	public  void update()
@@ -213,12 +199,12 @@ public class PhysicalDao {
 		
 		return points;
 	}
-	public List<Messure> list(int page,int rows) {
+	public List<Messure> getMessureList(int page,int rows) {
 		SQLQuery q = session.createSQLQuery("select t1.ID,t1.CName,t1.EName,t1.RatioA,t1.RatioB,t1.Symbol,t2.ID,t2.CName,t2.EName,t2.Description,t2.ISOBasicUnit,t3.StyleID,t3.StyleName from T_Measure t1,T_Physical t2,T_PhysicalStyle t3 where t1.PhysicalID=t2.ID and t1.StyleID=t3.StyleID order by t1.ID desc");
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
 		List l = q.list();
-		List re=new ArrayList<Messure>();
+		List<Messure> re=new ArrayList<Messure>();
 		for(int i=0;i<l.size();i++)
 		{
 			//TestDb user = (TestDb)l.get(i);
@@ -251,6 +237,36 @@ public class PhysicalDao {
 		return re;
 	}
 
+	public List<Physical> getPhysicalList(int page,int rows) {
+		SQLQuery q = session.createSQLQuery("select t2.ID,t2.CName,t2.EName,t2.Description,t2.ISOBasicUnit from T_Physical t2 order by t2.ID desc");
+		q.setFirstResult((page-1)*rows);
+		q.setMaxResults(rows);
+		List l = q.list();
+		List<Physical> re=new ArrayList<Physical>();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+
+			  Object[] row = (Object[])l.get(i);;
+			  
+			  Integer pid = (Integer)row[0];
+			  String pCName = (String)row[1];  
+			  String pEName = (String)row[2]; 
+			  String Descrip = (String)row[3];  
+			  String punit = (String)row[4]; 
+			  
+			  
+			  
+			  Physical phy=new Physical(pid, pCName, pEName, Descrip, punit);
+			  
+			  
+			  re.add(phy);
+		}
+		
+		return re;
+	}
+	
 	public int deleteMessure(int id) {
 		SQLQuery q = session.createSQLQuery("delete from T_Measure where ID=?");
 		q.setParameter(0, id);
