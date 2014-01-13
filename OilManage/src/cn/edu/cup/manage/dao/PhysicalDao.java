@@ -2,9 +2,7 @@ package cn.edu.cup.manage.dao;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +15,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
-import cn.edu.cup.business.Messure;
-import cn.edu.cup.business.Physical;
-import cn.edu.cup.business.Style;
+import cn.edu.cup.manage.business.Messure;
+import cn.edu.cup.manage.business.Physical;
+import cn.edu.cup.manage.business.Style;
 import cn.edu.cup.map.business.Graphi;
 import cn.edu.cup.map.business.Line;
 import cn.edu.cup.map.business.Point;

@@ -1,4 +1,4 @@
-package cn.edu.cup.business;
+package cn.edu.cup.manage.business;
 
 public class Style {
 	public Style() {

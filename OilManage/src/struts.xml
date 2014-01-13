@@ -3,7 +3,7 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
 	"http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-<constant name="struts.multipart.saveDir" value="/upload"></constant>
+	<constant name="struts.multipart.saveDir" value="/upload"></constant>
 	<!--指定action的扩展名 -->
 	<package name="default" extends="struts-default">
 		<action name="ice" class="cn.edu.cup.test.iceTest">
@@ -13,59 +13,123 @@
 	<package name="json" extends="json-default">
 		<action name="map" class="cn.edu.cup.map.action.MapAction">
 			<result name="SUCCESS" type="json">
-			 <param name="excludeProperties">id</param>
-			</result>			
+				<param name="excludeProperties">id</param>
+			</result>
 		</action>
-		<action name="uploadMap" class="cn.edu.cup.map.action.UploadAction" method="uploadFile">
-			<param name="savePath">/upload</param> 
+		<action name="uploadMap" class="cn.edu.cup.map.action.UploadAction"
+			method="uploadFile">
+			<param name="savePath">/upload</param>
 			<result name="SUCCESS" type="json">
-			
-			 <param name="excludeProperties">id</param>
-			</result>			
+
+				<param name="excludeProperties">id</param>
+			</result>
 		</action>
-		<action name="listMap" class="cn.edu.cup.map.action.MapListAction" method="list">
-		
+		<action name="listMap" class="cn.edu.cup.map.action.MapListAction"
+			method="list">
+
 			<result name="SUCCESS" type="json">
-			
-			 <param name="excludeProperties">id</param>
-			</result>			
+
+				<param name="excludeProperties">id</param>
+			</result>
 		</action>
-		<action name="viewMap" class="cn.edu.cup.map.action.MapListAction" method="viewMap">
-			
+		<action name="viewMap" class="cn.edu.cup.map.action.MapListAction"
+			method="viewMap">
+
 			<result name="SUCCESS" type="json">
-			
-			 <param name="excludeProperties">id</param>
-			</result>			
+
+				<param name="excludeProperties">id</param>
+			</result>
 		</action>
-				<action name="delMap" class="cn.edu.cup.map.action.MapListAction" method="delete">
-			
+		<action name="delMap" class="cn.edu.cup.map.action.MapListAction"
+			method="delete">
+
 			<result name="SUCCESS" type="json">
-			
-			</result>			
+
+			</result>
 		</action>
-		<action name="addMap" class="cn.edu.cup.map.action.MapListAction" method="add">
-		
+		<action name="addMap" class="cn.edu.cup.map.action.MapListAction"
+			method="add">
+
 			<result name="SUCCESS" type="json">
-			
-			 <param name="excludeProperties">id</param>
-			</result>			
+
+				<param name="excludeProperties">id</param>
+			</result>
 		</action>
+
+		<action name="listMessure" class="cn.edu.cup.manage.action.MessureAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="updateMessure" class="cn.edu.cup.manage.action.MessureAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">			</result>
+		</action>
+		<action name="delMessure" class="cn.edu.cup.manage.action.MessureAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addMessure" class="cn.edu.cup.manage.action.MessureAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+
+		<action name="listPhysical" class="cn.edu.cup.manage.action.PhysicalAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updatePhysical" class="cn.edu.cup.manage.action.PhysicalAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+		<action name="delPhysical" class="cn.edu.cup.manage.action.PhysicalAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addPhysical" class="cn.edu.cup.manage.action.PhysicalAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+
+
 		<action name="testData" class="cn.edu.cup.map.action.TableAction">
 			<result name="SUCCESS" type="json">
-			</result>			
+			</result>
 		</action>
 		<action name="tableAdd" class="cn.edu.cup.map.action.TableAddAction">
-			<result name="SUCCESS" type="json">				
-			</result>			
+			<result name="SUCCESS" type="json">
+			</result>
 		</action>
 		<action name="tableDelete" class="cn.edu.cup.map.action.TableDeleteAction">
-			<result name="SUCCESS" type="json">		
-			</result>			
+			<result name="SUCCESS" type="json">
+			</result>
 		</action>
 		<action name="tableEdit" class="cn.edu.cup.map.action.TableEditAction">
-			<result name="SUCCESS" type="json">				
-			</result>			
+			<result name="SUCCESS" type="json">
+			</result>
 		</action>
-		
+
 	</package>
 </struts>
