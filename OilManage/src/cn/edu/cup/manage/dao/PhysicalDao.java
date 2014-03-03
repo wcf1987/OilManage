@@ -15,7 +15,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
-import cn.edu.cup.manage.business.Messure;
+import cn.edu.cup.manage.business.Measure;
 import cn.edu.cup.manage.business.Physical;
 import cn.edu.cup.manage.business.Style;
 import cn.edu.cup.map.business.Graphi;
@@ -197,12 +197,12 @@ public class PhysicalDao {
 		
 		return points;
 	}
-	public List<Messure> getMessureList(int page,int rows) {
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.CName,t1.EName,t1.RatioA,t1.RatioB,t1.Symbol,t2.ID,t2.CName,t2.EName,t2.Description,t2.ISOBasicUnit,t3.StyleID,t3.StyleName from T_Measure t1,T_Physical t2,T_PhysicalStyle t3 where t1.PhysicalID=t2.ID and t1.StyleID=t3.StyleID order by t1.ID desc");
+	public List<Measure> getMessureList(int page,int rows) {
+		SQLQuery q = session.createSQLQuery("select t1.ID mid,t1.CName mCName,t1.EName mEName,t1.RatioA,t1.RatioB,t1.Symbol,t2.ID pid,t2.CName pCName,t2.EName pEName,t2.Description,t2.ISOBasicUnit,t3.StyleID,t3.StyleName from T_Measure t1,T_Physical t2,T_PhysicalStyle t3 where t1.PhysicalID=t2.ID and t1.StyleID=t3.StyleID order by t1.ID desc");
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
 		List l = q.list();
-		List<Messure> re=new ArrayList<Messure>();
+		List<Measure> re=new ArrayList<Measure>();
 		for(int i=0;i<l.size();i++)
 		{
 			//TestDb user = (TestDb)l.get(i);
@@ -226,7 +226,7 @@ public class PhysicalDao {
 			  
 			  Physical phy=new Physical(pid, pCName, pEName, Descrip, punit);
 			  Style style=new Style(sid, sName);
-			  Messure m=new Messure(mid, pid, phy, style, mEName, mCName, mSymbol, ra, rb, sid);
+			  Measure m=new Measure(mid, pid, phy, style, mEName, mCName, mSymbol, ra, rb, sid);
 			  
 			  
 			  re.add(m);

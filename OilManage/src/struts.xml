@@ -4,6 +4,17 @@
 	"http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<constant name="struts.multipart.saveDir" value="/upload"></constant>
+	
+	<package name="user" extends="struts-default">
+		<!-- UserManage Begin -->
+		<action name="login" method="login" class="cn.edu.cup.manage.action.LoginAction">
+			<result name="succ" type="redirect">/pages/data.jsp</result>
+			<result name="fail" type="redirect">/pages/login.jsp</result>
+		</action>
+		
+		<!-- UserManage End -->
+	</package>
+	
 	<!--指定action的扩展名 -->
 	<package name="default" extends="struts-default">
 		<action name="ice" class="cn.edu.cup.test.iceTest">
@@ -56,26 +67,26 @@
 			</result>
 		</action>
 
-		<action name="listMessure" class="cn.edu.cup.manage.action.MessureAction"
+		<action name="listMeasure" class="cn.edu.cup.manage.action.MeasureAction"
 			method="list">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-		<action name="updateMessure" class="cn.edu.cup.manage.action.MessureAction"
+		<action name="updateMeasure" class="cn.edu.cup.manage.action.MeasureAction"
 			method="update">
 
 			<result name="SUCCESS" type="json">			</result>
 		</action>
-		<action name="delMessure" class="cn.edu.cup.manage.action.MessureAction"
+		<action name="delMeasure" class="cn.edu.cup.manage.action.MeasureAction"
 			method="delete">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-		<action name="addMessure" class="cn.edu.cup.manage.action.MessureAction"
+		<action name="addMeasure" class="cn.edu.cup.manage.action.MeasureAction"
 			method="add">
 
 			<result name="SUCCESS" type="json">

@@ -2,14 +2,17 @@ package cn.edu.cup.manage.action;
 
 import java.util.List;
 
-import cn.edu.cup.manage.business.Physical;
+
+
+import cn.edu.cup.manage.business.Measure;
 import cn.edu.cup.manage.dao.PhysicalDao;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class PhysicalAction  extends ActionSupport{
+public class MeasureAction extends ActionSupport{
 	
-	List<Physical> dataList;
+	
+	List<Measure> dataList;
 	private int page;
 	private int records;
 	private int rows;
@@ -63,7 +66,7 @@ public class PhysicalAction  extends ActionSupport{
 		this.total = total;
 	}
 
-	public List<Physical> getDataList() {
+	public List<Measure> getDataList() {
 		return dataList;
 	}
 
@@ -79,7 +82,7 @@ public class PhysicalAction  extends ActionSupport{
 	
 	public String list(){		
 		PhysicalDao dao=new PhysicalDao();
-		dataList=dao.getPhysicalList(page,rows);
+		dataList=dao.getMessureList(page,rows);
 		
 		
 		records=dao.getMax();
@@ -100,4 +103,5 @@ public class PhysicalAction  extends ActionSupport{
 	public String update(){
 		return "SUCCESS"; 
 	}
+	
 }

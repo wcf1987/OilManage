@@ -127,6 +127,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                  </ul>
 	                </li>
 	              </ul>
+	              <div class="text-center" style="margin-top:8px;"><a  class="btn btn-default" href="pages/login.jsp">管理员登陆</a></div>
 	            </div>
 	          </div>
 	        </div>

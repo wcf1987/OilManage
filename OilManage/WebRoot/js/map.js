@@ -391,6 +391,7 @@ function viewMap(data) {
 			this.openInfoWindow(infoWindow);
 		});
 		map.addOverlay(markertemp);
+		map.enableScrollWheelZoom(false);
 		markers.push(markertemp);
 	}
 	var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers,isAverangeCenter:true,girdSize:120,maxZoom:13});

@@ -1,9 +1,9 @@
 package cn.edu.cup.manage.business;
 
-public class Messure {
+public class Measure {
 	int ID;
 	int PhysicalID;
-	public Messure(int iD, int physicalID, Physical phy, Style style,
+	public Measure(int iD, int physicalID, Physical phy, Style style,
 			String eName, String cName, String symbol, double ratioA,
 			double ratioB, int styleID) {
 		super();
@@ -80,7 +80,7 @@ public class Messure {
 	public void setStyleID(int styleID) {
 		StyleID = styleID;
 	}
-	public Messure() {
+	public Measure() {
 		super();
 	}
 	String EName;
