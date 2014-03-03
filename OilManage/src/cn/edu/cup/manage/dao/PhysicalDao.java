@@ -129,8 +129,8 @@ public class PhysicalDao {
 		session.close();
 		//sessionFactory.close();
 	}
-	public int getMax(){
-		SQLQuery q = session.createSQLQuery("select count(*) from t_MapPro");
+	public int getCountMessure(){
+		SQLQuery q = session.createSQLQuery("select count(*) from T_Measure");
 		Integer a=((BigInteger)q.uniqueResult()).intValue();
 		return a;
 	}

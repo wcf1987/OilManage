@@ -21,6 +21,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.manage.business.User;
+import cn.edu.cup.map.business.Line;
 import cn.edu.cup.map.business.MapPro;
 import cn.edu.cup.test.TestHibernate;
 
@@ -37,7 +38,19 @@ public class UserDAO  {
 	public static final String INFO = "info";
 		
 
-
+	public UserDAO()
+	{	
+		Configuration cfg = new Configuration();  
+        cfg.configure();          
+        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
+        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
+                  
+		//sessionFactory = new Configuration().configure().buildSessionFactory();
+		session = sessionFactory.openSession();
+		tx = session.beginTransaction();
+	
+	}
+	
 
 	//遍历
 	public  void all()
@@ -126,14 +139,8 @@ public class UserDAO  {
 	}
 	
 	public User searchUser(String name,String pass,String type){
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+		
+		
 		
 		User userR=null;
 		try {

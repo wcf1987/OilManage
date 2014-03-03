@@ -85,7 +85,7 @@ public class MeasureAction extends ActionSupport{
 		dataList=dao.getMessureList(page,rows);
 		
 		
-		records=dao.getMax();
+		records=dao.getCountMessure();
 
 		total=records/rows;
 		if(records%rows!=0){

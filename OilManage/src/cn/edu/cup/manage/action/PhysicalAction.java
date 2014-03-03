@@ -82,7 +82,7 @@ public class PhysicalAction  extends ActionSupport{
 		dataList=dao.getPhysicalList(page,rows);
 		
 		
-		records=dao.getMax();
+		records=dao.getCountMessure();
 
 		total=records/rows;
 		if(records%rows!=0){
