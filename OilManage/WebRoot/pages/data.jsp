@@ -185,11 +185,49 @@ else{
 	    <!-- Wrap the rest of the page in another container to center all the content. -->
 	    
 		<div class="container marketing" style="width:1200px;">
-	    
+	    	
+	    	<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="tabbable" id="tabs-360872">
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a href="#panel-953728" data-toggle="tab">物理量管理</a>
+								</li>
+								<li>
+									<a href="#panel-468768" data-toggle="tab">物理单位管理</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="panel-953728">
+								
+									<table id="PhysicalList" class="table table-striped table-bordered table-hover datatable " ></table>
+						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
+						      			<div id="PhysicalPager" ></div>
+						      		</div>
+						      		
+								</div>
+								<div class="tab-pane" id="panel-468768">
+									
+									<!-- 表格 -->
+						      		<table id="MeasureList" class="table table-striped table-bordered table-hover datatable " ></table>
+						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
+						      			<div id="MeasurePager" ></div>
+						      		</div>
+	      		
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			  <!-- 
 	    	<hr class="featurette-divider" style="margin-top:-25px;margin-bottom:10px;">
 	    	
+	  
 	      	<div class="row featurette " style="margin-top:-50px;margin-left:-10px;margin-right:auto;">
-	      		<!-- 表格 -->
+	    
+	      		
 	      		<table id="PhysicalList" class="table table-striped table-bordered table-hover datatable " ></table>
 	      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
 	      			<div id="PhysicalPager" ></div>
@@ -200,13 +238,13 @@ else{
 	      	<hr class="featurette-divider"  style="border-top: 1px solid #eee;">
 	
 	      	<div class="row featurette " style="margin-top:-50px;margin-left:-10px;margin-right:auto;">
-	      		<!-- 表格 -->
+	      		
 	      		<table id="MeasureList" class="table table-striped table-bordered table-hover datatable " ></table>
 	      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
 	      			<div id="MeasurePager" ></div>
 	      		</div>
 	      	</div>
-	
+		  -->
 	      	<hr class="featurette-divider">
 
 	
