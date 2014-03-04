@@ -25,8 +25,7 @@ import cn.edu.cup.map.business.Line;
 import cn.edu.cup.map.business.MapPro;
 import cn.edu.cup.test.TestHibernate;
 
-@Entity
-@Table(name = "t_user")
+
 public class UserDAO  {
     
 	//property constants

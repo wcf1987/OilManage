@@ -13,31 +13,36 @@ $(
 									name : 'ID',
 									index : 'id',
 									width : 50,
-									align : "center"
+									align : "center",
+									sortable:true
 								},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
 								{
 									name : 'CName',
 									index : 'CName',
 									width : 150,
-									align : "center"
+									align : "center",
+									sortable:true
 								},
 								{
 									name : 'EName',
 									index : 'EName',
 									width : 200,
-									align : "center"
+									align : "center",
+									sortable:true
 								},
 								{
 									name : 'Description',
 									index : 'Description',
 									width : 200,
-									align : "center"
+									align : "center",
+									sortable:true
 								},
 								{
 									name:'ISOBasicUnit',
 									index:'ISOBasicUnit',
 									width:200,
-									align:'center'
+									align:'center',
+									sortable:true
 								}
 			
 								],
@@ -89,51 +94,60 @@ $(
 				colModel : [
 						{
 							name : 'ID',
-							index : 'id',
+							index : 'ID',
 							width : 50,
-							align : "center"
+							align : "center",
+							sortable:true,
+							sorttype:'int'
 						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
 						{
 							name : 'EName',
 							index : 'EName',
 							width : 150,
-							align : "center"
+							align : "center",
+							sortable:true
 						},
 						{
 							name : 'CName',
 							index : 'CName',
 							width : 200,
-							align : "center"
+							align : "center",
+							sortable:true
 						},
 						{
 							name : 'symbol',
 							index : 'symbol',
 							width : 200,
-							align : "center"
+							align : "center",
+							sortable:true
 						},
 						{
 							name:'phy.CName',
 							index:'phy',
 							width:200,
-							align:'center'
+							align:'center',
+							sortable:true
 						},
 						{
 							name:'style.styleName',
 							index:'style',
 							width:200,
-							align:'center'
+							align:'center',
+							sortable:false
 						},
 						{
 							name:'ratioA',
 							index:'RatioA',
 							width:200,
-							align:'center'
+							align:'center',
+							sortable:true
 						},
 						{
 							name:'ratioB',
 							index:'RatioB',
 							width:200,
-							align:'center'
+							align:'center',
+							sortable:true
 						}
 	
 						],
@@ -147,20 +161,14 @@ $(
 				viewrecords: true,
 				sortorder: "desc",
 				jsonReader: {//读取后端json数据的格式
-				root: "dataList",//保存详细记录的名称
-				total: "total",//总共有页
-				page: "page",//当前是哪一页
-				records: "records",//总共记录数
-				repeatitems: false
+					root: "dataList",//保存详细记录的名称
+					total: "total",//总共有多少页
+					page: "page",//当前是哪一页
+					records: "records",//总共记录数
+					repeatitems: false
 				},
-				caption: "物理单位管理",//表格名称,
-				jsonReader : {// 读取后端json数据的格式
-					root : "dataList",// 保存详细记录的名称
-					// total: "total",//总共有页
-					// page: "page",//当前是哪一页
-					records : "records",// 总共记录数
-					repeatitems : false
-				}
+				caption: "物理单位管理"//表格名称
+				
 			});
 	
 }

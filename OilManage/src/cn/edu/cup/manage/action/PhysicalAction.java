@@ -1,6 +1,7 @@
 package cn.edu.cup.manage.action;
 
 import java.util.List;
+import java.util.Set;
 
 import cn.edu.cup.manage.business.Physical;
 import cn.edu.cup.manage.dao.PhysicalDao;
@@ -15,10 +16,24 @@ public class PhysicalAction  extends ActionSupport{
 	private int rows;
 	private int rowNum;
 	private int total;
-
+	private String sidx;
+	private String sord;
 
 	String re;
+	
+	public void setSidx(String sidx) {
+		this.sidx = sidx;
+	}
+	public String getSidx() {
+		return sidx;
+	}
 
+	public String getSord() {
+		return sord;
+	}
+	public void setSord(String sord) {
+		this.sord = sord;
+	}
 	
 	public String getRe() {
 		return re;
@@ -79,7 +94,7 @@ public class PhysicalAction  extends ActionSupport{
 	
 	public String list(){		
 		PhysicalDao dao=new PhysicalDao();
-		dataList=dao.getPhysicalList(page,rows);
+		dataList=dao.getPhysicalList(page,rows,sidx,sord);
 		
 		
 		records=dao.getCountMessure();
@@ -100,4 +115,5 @@ public class PhysicalAction  extends ActionSupport{
 	public String update(){
 		return "SUCCESS"; 
 	}
+	
 }

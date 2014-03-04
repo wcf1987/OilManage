@@ -192,10 +192,10 @@ else{
 						<div class="tabbable" id="tabs-360872">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<a href="#panel-953728" data-toggle="tab">物理量管理</a>
+									<a href="#panel-953728" data-toggle="tab" style="font-size:12px;">物理量管理</a>
 								</li>
 								<li>
-									<a href="#panel-468768" data-toggle="tab">物理单位管理</a>
+									<a href="#panel-468768" data-toggle="tab" style="font-size:12px;">物理单位管理</a>
 								</li>
 							</ul>
 							<div class="tab-content">
