@@ -144,8 +144,11 @@ public class PhysicalDao {
 
 
 
-	public List<Measure> getMessureList(int page,int rows) {
-		SQLQuery q = session.createSQLQuery("select t1.ID mid,t1.CName mCName,t1.EName mEName,t1.RatioA,t1.RatioB,t1.Symbol,t2.ID pid,t2.CName pCName,t2.EName pEName,t2.Description,t2.ISOBasicUnit,t3.StyleID,t3.StyleName from T_Measure t1,T_Physical t2,T_PhysicalStyle t3 where t1.PhysicalID=t2.ID and t1.StyleID=t3.StyleID order by t1.ID desc");
+
+
+	public List<Measure> getMessureList(int page,int rows,String sidx,String sord) {
+		SQLQuery q = session.createSQLQuery("select t1.ID mid,t1.CName mCName,t1.EName mEName,t1.RatioA,t1.RatioB,t1.Symbol,t2.ID pid,t2.CName pCName,t2.EName pEName,t2.Description,t2.ISOBasicUnit,t3.StyleID,t3.StyleName from T_Measure t1,T_Physical t2,T_PhysicalStyle t3 where t1.PhysicalID=t2.ID and t1.StyleID=t3.StyleID order by t1."+sidx+" "+sord);
+
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
 		List l = q.list();
@@ -182,8 +185,8 @@ public class PhysicalDao {
 		return re;
 	}
 
-	public List<Physical> getPhysicalList(int page,int rows) {
-		SQLQuery q = session.createSQLQuery("select t2.ID,t2.CName,t2.EName,t2.Description,t2.ISOBasicUnit from T_Physical t2 order by t2.ID desc");
+	public List<Physical> getPhysicalList(int page,int rows,String sidx,String sord) {
+		SQLQuery q = session.createSQLQuery("select t2.ID,t2.CName,t2.EName,t2.Description,t2.ISOBasicUnit from T_Physical t2 order by t2."+sidx+" "+sord);
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
 		List l = q.list();
@@ -193,7 +196,7 @@ public class PhysicalDao {
 			//TestDb user = (TestDb)l.get(i);
 			//System.out.println(user.getUsername());
 
-			  Object[] row = (Object[])l.get(i);;
+			  Object[] row = (Object[])l.get(i);
 			  
 			  Integer pid = (Integer)row[0];
 			  String pCName = (String)row[1];  

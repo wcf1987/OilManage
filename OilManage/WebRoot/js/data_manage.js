@@ -1,7 +1,9 @@
 
 $(
+	
 	function() {
-	var mapgrid = jQuery("#PhysicalList")
+
+	var datagrid = jQuery("#PhysicalList")
 			.jqGrid(
 					{
 						url : "listPhysical.action",// 后端的数据交互程序，改为你的
@@ -13,35 +15,41 @@ $(
 									name : 'ID',
 									index : 'id',
 									width : 50,
-									align : "center"
+									align : "center",
+									sortable:true
 								},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
 								{
 									name : 'CName',
 									index : 'CName',
 									width : 150,
-									align : "center"
+									align : "center",
+									sortable:true
 								},
 								{
 									name : 'EName',
 									index : 'EName',
 									width : 200,
-									align : "center"
+									align : "center",
+									sortable:true
 								},
 								{
 									name : 'Description',
 									index : 'Description',
 									width : 200,
-									align : "center"
+									align : "center",
+									sortable:true
 								},
 								{
 									name:'ISOBasicUnit',
 									index:'ISOBasicUnit',
 									width:200,
-									align:'center'
+									align:'center',
+									sortable:true
 								}
 			
 								],
 //						autowidth:true,
+						editurl:"editData.action",
 						rowNum:10,//每一页的行数
 						height: 'auto',
 						width:1230,
@@ -65,21 +73,35 @@ $(
 							records : "records",// 总共记录数
 							repeatitems : false
 						}
-					});
-/*
-	jQuery("#list2").jqGrid('navGrid', '#pager2', {
-		edit : false,
-		add : false,
-		del : false
-	}).jqGrid('navButtonAdd', "#pager2", {
-		caption : "添加新的地图文件",
-		onClickButton : addNewPro,
-		id : 'mappro',
-		position : "first"
-	});
-*/
+					}
+					
+					
+			);
+
+
+	datagrid.jqGrid('navGrid','#PhysicalPager',{
+			edit : false,
+			add : false,
+			del : false}).jqGrid('navButtonAdd',"#PhysicalPager",{
+				title:'添加',
+				caption:"添加",
+				id:"add_PhysicalList",
+				onClickButton : function aa(){
+					// 配置对话框
+
+						$('#add_modal').modal();
+				
+				},
+				position:"first"
+				
+			
+				});
 	
-	var mapgrid = jQuery("#MeasureList")
+
+
+
+	
+	var datagrid = jQuery("#MeasureList")
 	.jqGrid(
 			{
 				url : "listMeasure.action",// 后端的数据交互程序，改为你的
@@ -89,51 +111,60 @@ $(
 				colModel : [
 						{
 							name : 'ID',
-							index : 'id',
+							index : 'ID',
 							width : 50,
-							align : "center"
+							align : "center",
+							sortable:true,
+							sorttype:'int'
 						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
 						{
 							name : 'EName',
 							index : 'EName',
 							width : 150,
-							align : "center"
+							align : "center",
+							sortable:true
 						},
 						{
 							name : 'CName',
 							index : 'CName',
 							width : 200,
-							align : "center"
+							align : "center",
+							sortable:true
 						},
 						{
 							name : 'symbol',
 							index : 'symbol',
 							width : 200,
-							align : "center"
+							align : "center",
+							sortable:true
 						},
 						{
 							name:'phy.CName',
 							index:'phy',
 							width:200,
-							align:'center'
+							align:'center',
+							sortable:true
 						},
 						{
 							name:'style.styleName',
 							index:'style',
 							width:200,
-							align:'center'
+							align:'center',
+							sortable:false
 						},
 						{
 							name:'ratioA',
 							index:'RatioA',
 							width:200,
-							align:'center'
+							align:'center',
+							sortable:true
 						},
 						{
 							name:'ratioB',
 							index:'RatioB',
 							width:200,
-							align:'center'
+							align:'center',
+							sortable:true
 						}
 	
 						],
@@ -147,24 +178,20 @@ $(
 				viewrecords: true,
 				sortorder: "desc",
 				jsonReader: {//读取后端json数据的格式
-				root: "dataList",//保存详细记录的名称
-				total: "total",//总共有页
-				page: "page",//当前是哪一页
-				records: "records",//总共记录数
-				repeatitems: false
+					root: "dataList",//保存详细记录的名称
+					total: "total",//总共有多少页
+					page: "page",//当前是哪一页
+					records: "records",//总共记录数
+					repeatitems: false
 				},
-				caption: "物理单位管理",//表格名称,
-				jsonReader : {// 读取后端json数据的格式
-					root : "dataList",// 保存详细记录的名称
-					// total: "total",//总共有页
-					// page: "page",//当前是哪一页
-					records : "records",// 总共记录数
-					repeatitems : false
-				}
+				caption: "物理单位管理"//表格名称
+				
 			});
+	
 	
 }
 );
+
 
 /*
 function delMap(str) {

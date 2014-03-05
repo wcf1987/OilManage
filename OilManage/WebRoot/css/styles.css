@@ -4,3 +4,6 @@
 
 .backTop:hover{ background:#99CCFF;}
 
+label.error {  
+      color: red;/*错误信息的颜色*/  
+  } 

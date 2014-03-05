@@ -22,7 +22,22 @@ public class MapListAction extends ActionSupport{
 	private int rows;
 	private int rowNum;
 	private int total;
-
+	private String sidx;
+	private String sord;
+	
+	public void setSidx(String sidx) {
+		this.sidx = sidx;
+	}
+	public String getSidx() {
+		return sidx;
+	}
+	
+	public void setSord(String sord) {
+		this.sord = sord;
+	}
+	public String getSord() {
+		return sord;
+	}
 	private Graphi graphi;
 	String re;
 	
@@ -81,7 +96,7 @@ public class MapListAction extends ActionSupport{
 
 	public String list(){		
 		MapDao dao=new MapDao();
-		dataList=dao.list(page,rows);
+		dataList=dao.list(page,rows,sidx,sord);
 		
 		
 		records=dao.getMax();

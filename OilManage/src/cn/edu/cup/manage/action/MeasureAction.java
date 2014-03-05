@@ -92,19 +92,28 @@ public class MeasureAction extends ActionSupport{
 	private int rows;
 	private int rowNum;
 	private int total;
-
-
-	String re;
-
+	private String sidx;
+	private String sord;
+	private int id;
 	
-	public String getRe() {
-		return re;
+	public void setSidx(String sidx){
+		this.sidx=sidx;
 	}
-
+	public String getSidx(String sidx){
+		return sidx;
+	}
+	
+	public void setSord(String sord){
+		this.sord=sord;
+	}
+	public String getSord(String sord){
+		return sord;
+	}
+	
 	public void setPage(int page) {
 		this.page = page;
 	}
-	private int id;
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -160,7 +169,7 @@ public class MeasureAction extends ActionSupport{
 	}
 	public String list(){		
 		PhysicalDao dao=new PhysicalDao();
-		dataList=dao.getMessureList(page,rows);
+		dataList=dao.getMessureList(page,rows,sidx,sord);
 		
 		
 		records=dao.getCountMessure();

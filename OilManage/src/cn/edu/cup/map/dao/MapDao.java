@@ -211,8 +211,8 @@ public class MapDao {
 		
 		return points;
 	}
-	public List<MapPro> list(int page,int rows) {
-		SQLQuery q = session.createSQLQuery("select ID,ProName,FilePath,AddDate from t_MapPro order by AddDate desc");
+	public List<MapPro> list(int page,int rows,String sidx,String sord) {
+		SQLQuery q = session.createSQLQuery("select ID,ProName,FilePath,AddDate from t_MapPro order by "+sidx+" "+sord);
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
 		List l = q.list();

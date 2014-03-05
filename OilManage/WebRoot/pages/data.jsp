@@ -60,16 +60,79 @@ else{
 	
 	
 	<script type="text/javascript" src="js/upload/jquery.uploadify.min.js"></script>
+	<script type="text/javascript" src="js/jquery-validation-1.11.1/dist/jquery.validate.js"></script>
+	
 	<!-- 自定义 -->
 	<script src="js/global.js"></script>
 	
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4bfe7b8632739c89a1b8e95529da1d97"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
-<script type="text/javascript" src="js/data_manage.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4bfe7b8632739c89a1b8e95529da1d97"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+	<script type="text/javascript" src="js/data_manage.js"></script>
 
+<script>
+$(document).ready(function(){
+
+	$("#addForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			CName:{
+				required:true
+			},
+			EName:{
+				required:true
+			},
+			ISOBasicUnit:{
+				required:true
+			}	
+		},
+		messages:{
+			CName:{
+			required:"物理量中文名称不能为空！",
+		
+			},
+			EName:{
+			required:"物理量英文名称不能为空！",
+			},
+			ISOBasicUnit:{
+			required:"ISO基本单位不能为空！"
+			}
+		},
+		submitHandler:function(){
+			add();
+		}
+	});
+});
+
+function add() {
+	$.ajax({
+		type : 'POST',
+		url : 'addPhysical.action',
+		data : {
+			CName:$("#CName").val(),
+			EName:$("#EName").val(),
+			Description:$("#Description").val(),
+			ISOBasicUnit:$("#ISOBasicUnit").val()
+		},
+		dataType:'json',
+		success : function(msg) {
+			alert("添加成功！");
+			$('#add_modal').modal('hide');
+			$("#PhysicalList").trigger("reloadGrid");
+		},
+		error:function(msg){
+			alter(msg);
+			$('#add_modal').modal('hide');
+			$("#PhysicalList").trigger("reloadGrid");
+		}
+	});
+	}
+</script>
 
 
   </head>
@@ -192,10 +255,10 @@ else{
 						<div class="tabbable" id="tabs-360872">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<a href="#panel-953728" data-toggle="tab">物理量管理</a>
+									<a href="#panel-953728" data-toggle="tab" style="font-size:12px;">物理量管理</a>
 								</li>
 								<li>
-									<a href="#panel-468768" data-toggle="tab">物理单位管理</a>
+									<a href="#panel-468768" data-toggle="tab" style="font-size:12px;">物理单位管理</a>
 								</li>
 							</ul>
 							<div class="tab-content">
@@ -221,30 +284,7 @@ else{
 					</div>
 				</div>
 			</div>
-			  <!-- 
-	    	<hr class="featurette-divider" style="margin-top:-25px;margin-bottom:10px;">
-	    	
-	  
-	      	<div class="row featurette " style="margin-top:-50px;margin-left:-10px;margin-right:auto;">
-	    
-	      		
-	      		<table id="PhysicalList" class="table table-striped table-bordered table-hover datatable " ></table>
-	      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-	      			<div id="PhysicalPager" ></div>
-	      		</div>
-	      	</div>
-	      	
-		
-	      	<hr class="featurette-divider"  style="border-top: 1px solid #eee;">
-	
-	      	<div class="row featurette " style="margin-top:-50px;margin-left:-10px;margin-right:auto;">
-	      		
-	      		<table id="MeasureList" class="table table-striped table-bordered table-hover datatable " ></table>
-	      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-	      			<div id="MeasurePager" ></div>
-	      		</div>
-	      	</div>
-		  -->
+
 	      	<hr class="featurette-divider">
 
 	
@@ -255,16 +295,49 @@ else{
 	
 	    </div><!-- /.container -->
 	    
+    		<!-- 添加的模态框 -->   	
+		<div class="modal fade" id="add_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title">添加物理量</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="addForm" action="addPhysical.action" method="post"> 
+		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">
+		      		
+		      			<tr>
+		      				<td><label width="30%" align="right">物理量名称：</label><em>*</em></td>
+				            <td><input id="CName" type="text" class="input2" name="CName" maxlength="30" required/></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right">英文名称：</label><em>*</em></td>
+		      				<td><input id="EName" type="text" class="input2" name="EName" maxlength="10" class="required"/></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right">描述：</label></td>
+		      				<td><input id="Description" type="text" class="input2" style="width:100px" name="Description" maxlength="30" /></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right">ISO基本单位</label><em>*</em></td>
+		      				<td><input id="ISOBasicUnit" type="text" class="input2" style="width:100px" name="ISOBasicUnit" maxlength="30" /></td>
+		      			</tr>				      		
+					   </table>
+					   <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					        <button type="submit" class="btn btn-primary"  >保存</button>
+					   </div>
+				   </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
     
-    
-    
-    
-    
-    
-    
-    
-	
-	
+    	
+   
 	
 	
   </body>
