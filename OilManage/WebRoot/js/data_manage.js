@@ -9,7 +9,7 @@ $(
 						url : "listPhysical.action",// 后端的数据交互程序，改为你的
 						datatype : "json",// 前后交互的格式是json数据
 						mtype : 'POST',// 交互的方式是发送httpget请求						
-						colNames : [ 'id', '物理量名称', '英文名称', '描述', 'ISO基本单位'],// 表格的列名
+						colNames : [ '编号', '物理量名称', '英文名称', '描述', 'ISO基本单位'],// 表格的列名
 						colModel : [
 								{
 									name : 'ID',
@@ -58,6 +58,8 @@ $(
 						sortname: 'id',
 						viewrecords: true,
 						sortorder: "desc",
+						multiselect: true,  //可多选，出现多选框 
+					    multiselectWidth: 35, //设置多选列宽度 
 						jsonReader: {//读取后端json数据的格式
 						root: "dataList",//保存详细记录的名称
 						total: "total",//总共有页
@@ -107,7 +109,7 @@ $(
 				url : "listMeasure.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ 'id', '英文名称', '中文名称', '符号', '物理量','单位体系','转换率A','转换率B'],// 表格的列名
+				colNames : [ '编号', '英文名称', '中文名称', '符号', '物理量','单位体系','转换率A','转换率B'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
