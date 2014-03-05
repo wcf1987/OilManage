@@ -69,34 +69,8 @@ public class PhysicalAction  extends ActionSupport{
 		return page;
 	}
 	
-	private String CName;
-	public void setCName(String cName) {
-		CName = cName;
-	}
-	public String getCName() {
-		return CName;
-	}
-	private String EName;
-	public void setEName(String eName) {
-		EName = eName;
-	}
-	public String getEName() {
-		return EName;
-	}
-	private String Description;
-	public void setDescription(String description) {
-		Description = description;
-	}
-	public String getDescription() {
-		return Description;
-	}
-	private String ISOBasicUnit;
-	public void setISOBasicUnit(String iSOBasicUnit) {
-		ISOBasicUnit = iSOBasicUnit;
-	}
-	public String getISOBasicUnit() {
-		return ISOBasicUnit;
-	}
+	
+	
 	
 	public int getTotal() {
 		return total;
@@ -121,9 +95,16 @@ public class PhysicalAction  extends ActionSupport{
 	}
 	
 	public String list(){		
+
+		PhysicalDao dao=new PhysicalDao();
+		
+		
+		
+
 		dataList=dao.getPhysicalList(page,rows,sidx,sord);
 	
-		records=dao.getCountMessure();
+		records=dao.getCountPhysical();
+
 
 		total=records/rows;
 		if(records%rows!=0){
@@ -131,19 +112,59 @@ public class PhysicalAction  extends ActionSupport{
 		}
 		return "SUCCESS";
 	}
-	
+	String CName;
+	String EName;
+	String Description;
+	String ISOBasicUnit;
+	public String getCName() {
+		return CName;
+	}
+
+	public void setCName(String cName) {
+		CName = cName;
+	}
+
+	public String getEName() {
+		return EName;
+	}
+
+	public void setEName(String eName) {
+		EName = eName;
+	}
+
+	public String getDescription() {
+		return Description;
+	}
+
+	public void setDescription(String description) {
+		Description = description;
+	}
+
+	public String getISOBasicUnit() {
+		return ISOBasicUnit;
+	}
+
+	public void setISOBasicUnit(String iSOBasicUnit) {
+		ISOBasicUnit = iSOBasicUnit;
+	}
+	String ID;
 	public String add(){
+
+		PhysicalDao dao=new PhysicalDao();
+		int re=dao.addPhysical(CName, EName, Description, ISOBasicUnit);
+
 		int result=dao.addPhysical(CName, EName, Description, ISOBasicUnit);
-//		result=0;
-//		if(result!=1){
-//		return "FAIL";
-//		}
+
 		return "SUCCESS";
 	}
 	public String delete(){
+		PhysicalDao dao=new PhysicalDao();
+		dao.deletePhysical(ID);
 		return "SUCCESS";
 	}
 	public String update(){
+		PhysicalDao dao=new PhysicalDao();
+		int re=dao.updatePhysical(ID,CName, EName, Description, ISOBasicUnit);
 		return "SUCCESS"; 
 	}
 	

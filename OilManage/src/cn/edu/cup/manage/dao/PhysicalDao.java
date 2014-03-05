@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.attribute.standard.MediaSize.ISO;
+
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -71,7 +73,7 @@ public class PhysicalDao {
 	
 	
 	
-	private int addMessure(int PhysicalID,String EName,String CName,String Symbol,double RatioA,double RatioB,int styleID) {
+	public int addMessure(String PhysicalID,String EName,String CName,String Symbol,String RatioA,String RatioB,String styleID) {
 		Query q = session.createSQLQuery("insert into T_Measure (PhysicalID,EName,CName,Symbol,RatioA,RatioB,StyleID) values (?,?,?,?,?,?,?)");
 		q.setParameter(0, PhysicalID);
 		q.setParameter(1, EName);
@@ -134,71 +136,19 @@ public class PhysicalDao {
 		Integer a=((BigInteger)q.uniqueResult()).intValue();
 		return a;
 	}
-	public String getFilePath(int id){
-		SQLQuery q = session.createSQLQuery("select FilePath from t_MapPro where ID=?");
-		q.setParameter(0, id);
-		String a=((String)q.uniqueResult());
-		
+	public int getCountPhysical(){
+		SQLQuery q = session.createSQLQuery("select count(*) from T_Physical");
+		Integer a=((BigInteger)q.uniqueResult()).intValue();
 		return a;
 	}
-	public Graphi getGraphiByID(int id){
-		Graphi a=new Graphi();
-		a.setLines(getLinesByID(id));
-		a.setPoints(getPointsByID(id));
-		
-		return a;
-	}
-	public List<Line> getLinesByID(int id){
-		List<Line> lines=new ArrayList<Line>();
-		SQLQuery q = session.createSQLQuery("select Start,End,Type from T_MapLine where ProID=?");
-		q.setParameter(0, id);
-		List l = q.list();
-		Line temp;
-		for(int i=0;i<l.size();i++)
-		{
-			//TestDb user = (TestDb)l.get(i);
-			//System.out.println(user.getUsername());
-			  temp=new Line();
-			  Object[] row = (Object[])l.get(i);;
-			  temp.setStart((String)row[0]);
-			  temp.setEnd((String)row[1]);
-			  temp.setType((Integer)row[2]);
-			  lines.add(temp);
-		}
-		
-		
-		return lines;
-		
-	}
-	public Map<String,Point> getPointsByID(int id){
-		Map<String,Point> points=new HashMap<String, Point>();
-		SQLQuery q = session.createSQLQuery("select PointName,Type,GeodeticCoordinatesX,GeodeticCoordinatesY,Latitude,Longitude from t_MapPoint where ProID=?");
-		q.setParameter(0, id);
-		List l = q.list();
-		Point temp;
-		for(int i=0;i<l.size();i++)
-		{
-			//TestDb user = (TestDb)l.get(i);
-			//System.out.println(user.getUsername());
-			  temp=new Point();
-			  Object[] row = (Object[])l.get(i);;
-			  String proName=(String)row[0];
-			  temp.setName(proName);
-			  temp.setType(Point.getType((String)row[1]));
-			  temp.setGeodeticCoordinatesX((Double)row[2]);
-			  temp.setGeodeticCoordinatesY((Double)row[3]);
-			  temp.setLatitude((Double)row[4]);
-			  temp.setLongitude((Double)row[5]);
 
-			  points.put(proName, temp);
-		}
-		
-		
-		
-		return points;
-	}
+
+
+
+
 	public List<Measure> getMessureList(int page,int rows,String sidx,String sord) {
 		SQLQuery q = session.createSQLQuery("select t1.ID mid,t1.CName mCName,t1.EName mEName,t1.RatioA,t1.RatioB,t1.Symbol,t2.ID pid,t2.CName pCName,t2.EName pEName,t2.Description,t2.ISOBasicUnit,t3.StyleID,t3.StyleName from T_Measure t1,T_Physical t2,T_PhysicalStyle t3 where t1.PhysicalID=t2.ID and t1.StyleID=t3.StyleID order by t1."+sidx+" "+sord);
+
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
 		List l = q.list();
@@ -265,7 +215,7 @@ public class PhysicalDao {
 		return re;
 	}
 	
-	public int deleteMessure(int id) {
+	public int deleteMessure(String  id) {
 		SQLQuery q = session.createSQLQuery("delete from T_Measure where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
@@ -273,4 +223,47 @@ public class PhysicalDao {
 		return re;
 		
 	}
+	public int deletePhysical(String id) {
+		SQLQuery q = session.createSQLQuery("delete from T_Physical where ID=?");
+		q.setParameter(0, id);
+		int re=q.executeUpdate();
+		tx.commit();
+		return re;
+		
+	}
+
+	public int updatePhysical(String iD, String cName, String eName,
+			String description, String iSOBasicUnit) {
+		// TODO Auto-generated method stub
+		SQLQuery q = session.createSQLQuery("update T_Physical t set EName=?,CName=?,description=?,iSOBasicUnit=? where t.ID=?");
+		q.setParameter(0, eName);
+		q.setParameter(1, cName);
+		q.setParameter(2, description);
+		q.setParameter(3, iSOBasicUnit);
+		q.setParameter(4, iD);
+		int re=q.executeUpdate();
+		tx.commit();
+		return re;
+	}
+
+	public int updateMessure(String id, String physicalID, String eName,
+			String cName, String symbol, String ratioA, String ratioB,
+			String styleID) {
+		// TODO Auto-generated method stub
+		SQLQuery q = session.createSQLQuery("update T_Measure set physicalID=?,eName=?,cName=?,symbol=?,ratioA=?,ratioB=?,styleID=? where id=?");
+		q.setParameter(0, physicalID);
+		q.setParameter(1, eName);
+		q.setParameter(2, cName);
+		q.setParameter(3, symbol);
+		q.setParameter(4, ratioA);
+		q.setParameter(0, ratioB);
+		q.setParameter(1, styleID);
+		q.setParameter(2, id);
+		int re=q.executeUpdate();
+		tx.commit();
+		return re;
+		
+	}
+
+
 }
