@@ -82,7 +82,7 @@ public class PhysicalAction  extends ActionSupport{
 		dataList=dao.getPhysicalList(page,rows);
 		
 		
-		records=dao.getCountMessure();
+		records=dao.getCountPhysical();
 
 		total=records/rows;
 		if(records%rows!=0){
@@ -90,14 +90,55 @@ public class PhysicalAction  extends ActionSupport{
 		}
 		return "SUCCESS";
 	}
-	
+	String CName;
+	String EName;
+	String Description;
+	String ISOBasicUnit;
+	public String getCName() {
+		return CName;
+	}
+
+	public void setCName(String cName) {
+		CName = cName;
+	}
+
+	public String getEName() {
+		return EName;
+	}
+
+	public void setEName(String eName) {
+		EName = eName;
+	}
+
+	public String getDescription() {
+		return Description;
+	}
+
+	public void setDescription(String description) {
+		Description = description;
+	}
+
+	public String getISOBasicUnit() {
+		return ISOBasicUnit;
+	}
+
+	public void setISOBasicUnit(String iSOBasicUnit) {
+		ISOBasicUnit = iSOBasicUnit;
+	}
+	String ID;
 	public String add(){
+		PhysicalDao dao=new PhysicalDao();
+		int re=dao.addPhysical(CName, EName, Description, ISOBasicUnit);
 		return "SUCCESS";
 	}
 	public String delete(){
+		PhysicalDao dao=new PhysicalDao();
+		dao.deletePhysical(ID);
 		return "SUCCESS";
 	}
 	public String update(){
+		PhysicalDao dao=new PhysicalDao();
+		int re=dao.updatePhysical(ID,CName, EName, Description, ISOBasicUnit);
 		return "SUCCESS"; 
 	}
 }
