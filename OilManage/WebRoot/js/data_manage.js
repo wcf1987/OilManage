@@ -1,7 +1,9 @@
 
 $(
+	
 	function() {
-	var mapgrid = jQuery("#PhysicalList")
+
+	var datagrid = jQuery("#PhysicalList")
 			.jqGrid(
 					{
 						url : "listPhysical.action",// 后端的数据交互程序，改为你的
@@ -47,6 +49,7 @@ $(
 			
 								],
 //						autowidth:true,
+						editurl:"editData.action",
 						rowNum:10,//每一页的行数
 						height: 'auto',
 						width:1230,
@@ -70,21 +73,35 @@ $(
 							records : "records",// 总共记录数
 							repeatitems : false
 						}
-					});
-/*
-	jQuery("#list2").jqGrid('navGrid', '#pager2', {
-		edit : false,
-		add : false,
-		del : false
-	}).jqGrid('navButtonAdd', "#pager2", {
-		caption : "添加新的地图文件",
-		onClickButton : addNewPro,
-		id : 'mappro',
-		position : "first"
-	});
-*/
+					}
+					
+					
+			);
+
+
+	datagrid.jqGrid('navGrid','#PhysicalPager',{
+			edit : false,
+			add : false,
+			del : false}).jqGrid('navButtonAdd',"#PhysicalPager",{
+				title:'添加',
+				caption:"添加",
+				id:"add_PhysicalList",
+				onClickButton : function aa(){
+					// 配置对话框
+
+						$('#add_modal').modal();
+				
+				},
+				position:"first"
+				
+			
+				});
 	
-	var mapgrid = jQuery("#MeasureList")
+
+
+
+	
+	var datagrid = jQuery("#MeasureList")
 	.jqGrid(
 			{
 				url : "listMeasure.action",// 后端的数据交互程序，改为你的
@@ -171,8 +188,10 @@ $(
 				
 			});
 	
+	
 }
 );
+
 
 /*
 function delMap(str) {
