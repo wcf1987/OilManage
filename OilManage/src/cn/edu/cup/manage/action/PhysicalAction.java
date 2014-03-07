@@ -145,8 +145,8 @@ public class PhysicalAction  extends ActionSupport{
 		return Description;
 	}
 
-	public void setDescription(String Description) {
-		Description = Description;
+	public void setDescription(String description) {
+		Description = description;
 	}
 
 	public String getISOBasicUnit() {
