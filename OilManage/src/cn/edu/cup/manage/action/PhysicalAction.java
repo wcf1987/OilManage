@@ -10,7 +10,6 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class PhysicalAction  extends ActionSupport{
 	
-	PhysicalDao dao=new PhysicalDao();
 	List<Physical> dataList;
 	private int page;
 	private int records;
@@ -161,8 +160,7 @@ public class PhysicalAction  extends ActionSupport{
 	public String add(){
 
 		PhysicalDao dao=new PhysicalDao();
-		int re=dao.addPhysical(CName, EName, Description, ISOBasicUnit);
-
+		
 		int result=dao.addPhysical(CName, EName, Description, ISOBasicUnit);
 
 		return "SUCCESS";
@@ -175,7 +173,7 @@ public class PhysicalAction  extends ActionSupport{
 				dao.deletePhysical(id);
 			}
 		}
-		
+		dao.commit();
 		
 		return "SUCCESS";
 	}

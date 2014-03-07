@@ -8,9 +8,30 @@ public class AlgorithmsCycle {
 	String planID;
 	String outputID;
 	String authorID;
+	String authorName;
+	public String getAuthorName() {
+		return authorName;
+	}
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
 	String Description;
 	Date addDate;
 	Date lastUpdateDate;
+	public AlgorithmsCycle(String id2, String iid, String pid, String oid,
+			String aid, String author, String description2, Date addTime,
+			Date lastUpdateTime) {
+		// TODO Auto-generated constructor stub
+		this.ID=id2;
+		this.inputID=iid;
+		this.planID=pid;
+		this.outputID=oid;
+		this.authorID=aid;
+		this.authorName=author;
+		this.Description=description2;
+		this.addDate=addTime;
+		this.lastUpdateDate=lastUpdateTime;
+	}
 	public Date getAddDate() {
 		return addDate;
 	}

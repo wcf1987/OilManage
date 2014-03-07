@@ -131,6 +131,10 @@ public class PhysicalDao {
 		session.close();
 		//sessionFactory.close();
 	}
+	public void commit(){
+		tx.commit();
+		session.close();
+	}
 	public int getCountMessure(){
 		SQLQuery q = session.createSQLQuery("select count(*) from T_Measure");
 		Integer a=((BigInteger)q.uniqueResult()).intValue();
@@ -227,7 +231,7 @@ public class PhysicalDao {
 		SQLQuery q = session.createSQLQuery("delete from T_Physical where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
-		tx.commit();
+		
 		
 		return re;
 		
