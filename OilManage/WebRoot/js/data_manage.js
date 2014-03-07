@@ -85,21 +85,105 @@ $(
 			edit : false,
 			add : false,
 			del : false}).jqGrid('navButtonAdd',"#PhysicalPager",{
-				title:'添加',
-				caption:"添加",
-				id:"add_PhysicalList",
-				onClickButton : function aa(){
-					// 配置对话框
-
-						$('#add_modal').modal();
-				
-				},
-				position:"first"
+					title:'添加',
+					caption:"添加",
+					id:"add_PhysicalList",
+					onClickButton : function addModal(){
+						// 配置对话框
+	
+							$('#add_modal').modal();
+					
+					},
+					position:"first"
 				
 			
+				}).jqGrid('navButtonAdd',"#PhysicalPager",{
+					title:'删除',
+					caption:"删除",	
+					id:"delete_PhysicalList",
+					onClickButton:deletePhysical,
+					position:"first"
 				});
 	
+	function deletePhysical(str) {
+		/*
+		var gr = jQuery("#PhysicalList").jqGrid('getGridParam','selarrrow');
+		if( gr != null ) jQuery("#PhysicalList").jqGrid('delGridRow',gr,{
+												reloadAfterSubmit:false,
+												caption:"删除记录",
+												bSubmit:"确定",
+												bCancel:"取消",
+												url:"delPhysical.action"
+									
+												});
+		else alert("Please Select Row to delete!");
+		*/
+		
+	        var sels = $("#PhysicalList").jqGrid('getGridParam','selarrrow'); 
+	        if(sels==""){ 
+	           $().message("请选择要删除的项！"); 
+	        }else{ 
+	        	var selectedIDs={};
+	        	$.each(sels,function(i,n){ 
+                  if(sels[i]!=""){ 
+//                      $("#PhysicalList").jqGrid('delRowData',n);  
+                	  var rowData = $("#PhysicalList").jqGrid("getRowData", sels[i]);
+//                	  alert(rowData.ID);
+                	  selectedIDs["ids[" + i + "]"]=rowData.ID;
+//                	  ids.push(rowData.ID);
+                  } 
+	        	}); 
 
+	           if(confirm("您是否确认删除？")){ 
+	            $.ajax({ 
+	              type: "POST", 
+	              url: "delPhysical.action", 
+	              data: selectedIDs, 
+	              beforeSend: function() { 
+	                   $().message("正在请求..."); 
+	              }, 
+	              error:function(){ 
+	                   $().message("请求失败..."); 
+	              }, 
+	              
+	              success: function(msg){ 
+	            	alert("删除成功！");
+	            	alert(msg);
+					$("#PhysicalList").trigger("reloadGrid");
+	                   if(msg!=0){ 
+	                       var arr = msg.split(','); 
+	                       $.each(arr,function(i,n){ 
+	                             if(arr[i]!=""){ 
+	                                 $("#PhysicalList").jqGrid('delRowData',n);  
+	                             } 
+	                       }); 
+	                       $().message("已成功删除!"); 
+	                   }else{ 
+	                       $().message("操作失败！"); 
+	                   } 
+	              } 
+	            }); 
+	           } 
+	        } 
+			
+	    /*
+		if (confirm("确定要删除这条地图记录吗？")) {
+			$.ajax({
+				type : 'POST',
+				url : 'delMap.action',
+				data : {
+					id : str
+
+				},
+				success : function(data) {
+					alert(data['re']);
+					$("#list2").trigger("reloadGrid");
+				}
+
+			});
+		}*/
+
+	}
 
 
 	
@@ -191,8 +275,8 @@ $(
 			});
 	
 	
-}
-);
+}//function结束
+);//$()结束
 
 
 /*

@@ -61,7 +61,7 @@ else{
 	
 	<script type="text/javascript" src="js/upload/jquery.uploadify.min.js"></script>
 	<script type="text/javascript" src="js/jquery-validation-1.11.1/dist/jquery.validate.js"></script>
-	
+	<script type="text/javascript" src="js/jquery/jquery.message.js"></script>
 	<!-- 自定义 -->
 	<script src="js/global.js"></script>
 	

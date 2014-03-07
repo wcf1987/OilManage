@@ -223,11 +223,12 @@ public class PhysicalDao {
 		return re;
 		
 	}
-	public int deletePhysical(String id) {
+	public int deletePhysical(int id) {
 		SQLQuery q = session.createSQLQuery("delete from T_Physical where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
 		tx.commit();
+		
 		return re;
 		
 	}

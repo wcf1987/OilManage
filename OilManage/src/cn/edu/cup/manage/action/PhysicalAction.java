@@ -19,7 +19,21 @@ public class PhysicalAction  extends ActionSupport{
 	private int total;
 	private String sidx;
 	private String sord;
+//	private int id;
+	private List<Integer> ids;
 	
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
+	public List<Integer> getIds() {
+		return ids;
+	}
+//	public void setId(int id) {
+//		this.id = id;
+//	}
+//	public int getId() {
+//		return id;
+//	}
 	String re;
 	
 	public void setSidx(String sidx) {
@@ -42,10 +56,6 @@ public class PhysicalAction  extends ActionSupport{
 
 	public void setPage(int page) {
 		this.page = page;
-	}
-	private int id;
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public int getRows() {
@@ -147,7 +157,7 @@ public class PhysicalAction  extends ActionSupport{
 	public void setISOBasicUnit(String iSOBasicUnit) {
 		ISOBasicUnit = iSOBasicUnit;
 	}
-	String ID;
+
 	public String add(){
 
 		PhysicalDao dao=new PhysicalDao();
@@ -159,9 +169,25 @@ public class PhysicalAction  extends ActionSupport{
 	}
 	public String delete(){
 		PhysicalDao dao=new PhysicalDao();
-		dao.deletePhysical(ID);
+		if(!ids.isEmpty()){
+
+			for(int id:ids){
+				dao.deletePhysical(id);
+			}
+		}
+		
+		
 		return "SUCCESS";
 	}
+	private Object[] rowData;
+	public Object[] getRowData() {
+		return rowData;
+	}
+	public void setRowData(Object[] rowData) {
+		this.rowData = rowData;
+	}
+	
+	private String ID;
 	public String update(){
 		PhysicalDao dao=new PhysicalDao();
 		int re=dao.updatePhysical(ID,CName, EName, Description, ISOBasicUnit);
