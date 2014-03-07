@@ -295,6 +295,48 @@ function add() {
 	
 	    </div><!-- /.container -->
 	    
+	    
+	    	<!-- 查询的模态框 -->   	
+		<div class="modal fade" id="search_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title">添加物理量</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="addForm" action="addPhysical.action" method="post"> 
+		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">
+		      		
+		      			<tr>
+		      				<td><label width="30%" align="right">物理量名称：</label><em>*</em></td>
+				            <td><input id="CName" type="text" class="input2" name="CName" maxlength="30" required/></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right">英文名称：</label><em>*</em></td>
+		      				<td><input id="EName" type="text" class="input2" name="EName" maxlength="10" class="required"/></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right">描述：</label></td>
+		      				<td><input id="Description" type="text" class="input2" style="width:100px" name="Description" maxlength="30" /></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right">ISO基本单位</label><em>*</em></td>
+		      				<td><input id="ISOBasicUnit" type="text" class="input2" style="width:100px" name="ISOBasicUnit" maxlength="30" /></td>
+		      			</tr>				      		
+					   </table>
+					   <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					        <button type="submit" class="btn btn-primary"  >保存</button>
+					   </div>
+				   </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
     		<!-- 添加的模态框 -->   	
 		<div class="modal fade" id="add_modal">
 		  <div class="modal-dialog">

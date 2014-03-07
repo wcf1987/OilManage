@@ -33,7 +33,7 @@ $(
 									sortable:true
 								},
 								{
-									name : 'Description',
+									name : 'description',
 									index : 'Description',
 									width : 200,
 									align : "center",
@@ -105,7 +105,7 @@ $(
 					position:"first"
 				});
 	
-	function deletePhysical(str) {
+	function deletePhysical() {
 		/*
 		var gr = jQuery("#PhysicalList").jqGrid('getGridParam','selarrrow');
 		if( gr != null ) jQuery("#PhysicalList").jqGrid('delGridRow',gr,{
@@ -121,16 +121,15 @@ $(
 		
 	        var sels = $("#PhysicalList").jqGrid('getGridParam','selarrrow'); 
 	        if(sels==""){ 
-	           $().message("请选择要删除的项！"); 
+	           //$().message("请选择要删除的项！"); 
+	           alert("请选择要删除的项!");
 	        }else{ 
 	        	var selectedIDs={};
 	        	$.each(sels,function(i,n){ 
                   if(sels[i]!=""){ 
 //                      $("#PhysicalList").jqGrid('delRowData',n);  
                 	  var rowData = $("#PhysicalList").jqGrid("getRowData", sels[i]);
-//                	  alert(rowData.ID);
                 	  selectedIDs["ids[" + i + "]"]=rowData.ID;
-//                	  ids.push(rowData.ID);
                   } 
 	        	}); 
 
@@ -148,7 +147,7 @@ $(
 	              
 	              success: function(msg){ 
 	            	alert("删除成功！");
-	            	alert(msg);
+//	            	alert(msg);
 					$("#PhysicalList").trigger("reloadGrid");
 	                   if(msg!=0){ 
 	                       var arr = msg.split(','); 
@@ -166,22 +165,6 @@ $(
 	           } 
 	        } 
 			
-	    /*
-		if (confirm("确定要删除这条地图记录吗？")) {
-			$.ajax({
-				type : 'POST',
-				url : 'delMap.action',
-				data : {
-					id : str
-
-				},
-				success : function(data) {
-					alert(data['re']);
-					$("#list2").trigger("reloadGrid");
-				}
-
-			});
-		}*/
 
 	}
 
