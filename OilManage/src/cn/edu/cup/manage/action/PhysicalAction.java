@@ -10,6 +10,10 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class PhysicalAction  extends ActionSupport{
 	
+	String CName;
+	String EName;
+	String Description;
+	String ISOBasicUnit;
 	List<Physical> dataList;
 	private int page;
 	private int records;
@@ -18,7 +22,7 @@ public class PhysicalAction  extends ActionSupport{
 	private int total;
 	private String sidx;
 	private String sord;
-//	private int id;
+	private int id;
 	private List<Integer> ids;
 	
 	public void setIds(List<Integer> ids) {
@@ -27,12 +31,12 @@ public class PhysicalAction  extends ActionSupport{
 	public List<Integer> getIds() {
 		return ids;
 	}
-//	public void setId(int id) {
-//		this.id = id;
-//	}
-//	public int getId() {
-//		return id;
-//	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getId() {
+		return id;
+	}
 	String re;
 	
 	public void setSidx(String sidx) {
@@ -107,24 +111,19 @@ public class PhysicalAction  extends ActionSupport{
 
 		PhysicalDao dao=new PhysicalDao();
 		
-		
-		
-
-		dataList=dao.getPhysicalList(page,rows,sidx,sord);
+		dataList=dao.getPhysicalList(page,rows,sidx,sord,id,CName,EName,Description,ISOBasicUnit);
 	
-		records=dao.getCountPhysical();
+		records=dao.getCountPhysical(id, CName,EName,Description,ISOBasicUnit);
 
-
+		if(records!=0&&rows!=0){
 		total=records/rows;
 		if(records%rows!=0){
 			total++;
 		}
+		}
 		return "SUCCESS";
 	}
-	String CName;
-	String EName;
-	String Description;
-	String ISOBasicUnit;
+
 	public String getCName() {
 		return CName;
 	}

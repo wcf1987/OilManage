@@ -5,34 +5,66 @@ import java.util.List;
 
 
 import cn.edu.cup.manage.business.Measure;
+import cn.edu.cup.manage.business.Style;
 import cn.edu.cup.manage.dao.PhysicalDao;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 public class MeasureAction extends ActionSupport{
-	
-	String EName;
-	String CName;
+	private int mid;
+	String mCName;
+	String mEName;
 	String Symbol;
 	String RatioA;
 	String RatioB;
-	String ID;
 	String PhysicalID;
 	String StyleID;
-	public String getEName() {
-		return EName;
+	String PCName;
+	String StyleName;
+	List<Measure> dataList;
+	private int page;
+	private int records;
+	private int rows;
+	private int rowNum;
+	private int total;
+	private String sidx;
+	private String sord;
+	private int id;
+	
+	public void setStyleName(String styleName) {
+		StyleName = styleName;
+	}
+	public String getStyleName() {
+		return StyleName;
+	}
+	public String getPCName() {
+		return PCName;
+	}
+	public void setPCName(String pCName) {
+		PCName = pCName;
+	}
+	private List<Integer> ids;
+	
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
+	public List<Integer> getIds() {
+		return ids;
+	}
+	public String getMEName() {
+		return mEName;
 	}
 
-	public void setEName(String eName) {
-		EName = eName;
+	public void setMEName(String MEName) {
+		mEName = MEName;
 	}
 
-	public String getCName() {
-		return CName;
+	public String getMCName() {
+		return mCName;
 	}
 
-	public void setCName(String cName) {
-		CName = cName;
+	public void setMCName(String MCName) {
+		mCName = MCName;
 	}
 
 	public String getSymbol() {
@@ -59,12 +91,12 @@ public class MeasureAction extends ActionSupport{
 		RatioB = ratioB;
 	}
 
-	public String getID() {
-		return ID;
+	public int getMid() {
+		return mid;
 	}
 
-	public void setID(String iD) {
-		ID = iD;
+	public void setMid(int Mid) {
+		mid = Mid;
 	}
 
 	public String getPhysicalID() {
@@ -86,16 +118,7 @@ public class MeasureAction extends ActionSupport{
 	public int getId() {
 		return id;
 	}
-	List<Measure> dataList;
-	private int page;
-	private int records;
-	private int rows;
-	private int rowNum;
-	private int total;
-	private String sidx;
-	private String sord;
-	private int id;
-	
+
 	public void setSidx(String sidx){
 		this.sidx=sidx;
 	}
@@ -164,16 +187,13 @@ public class MeasureAction extends ActionSupport{
 	}
 	public String add(){
 		PhysicalDao dao=new PhysicalDao();
-		int re=dao.addMessure(this.PhysicalID,this.EName,this.CName,this.Symbol,this.RatioA,this.RatioB,this.StyleID);
+		int re=dao.addMessure(this.PhysicalID,this.mEName,this.mCName,this.Symbol,this.RatioA,this.RatioB,this.StyleID);
 		return "SUCCESS";
 	}
 	public String list(){		
 		PhysicalDao dao=new PhysicalDao();
-		dataList=dao.getMessureList(page,rows,sidx,sord);
-		
-		
-		records=dao.getCountMessure();
-
+		dataList=dao.getMessureList(page,rows,sidx,sord,mid,mCName,mEName,Symbol,RatioA,RatioB,PCName,StyleName);
+		records=dao.getCountMessure(mid,mCName,mEName,Symbol,RatioA,RatioB,PCName,StyleName);
 		total=records/rows;
 		if(records%rows!=0){
 			total++;
@@ -183,15 +203,34 @@ public class MeasureAction extends ActionSupport{
 	
 
 	public String delete(){	
-	PhysicalDao dao=new PhysicalDao();
-	dao.deleteMessure(ID);
-	return "SUCCESS";
+		PhysicalDao dao=new PhysicalDao();
+		if(!ids.isEmpty()){
+
+			for(int id:ids)
+				dao.deleteMessure(id);
+		}
+		dao.commit();
+		return "SUCCESS";
 	}
+		
 	public String update(){
 		PhysicalDao dao=new PhysicalDao();
-		int re=dao.updateMessure(this.ID,this.PhysicalID,this.EName,this.CName,this.Symbol,this.RatioA,this.RatioB,this.StyleID);
+		int re=dao.updateMessure(this.mid,this.PhysicalID,this.mEName,this.mCName,this.Symbol,this.RatioA,this.RatioB,this.StyleID);
 	
 		return "SUCCESS"; 
+	}
+	
+	List<Style> styleList;
+	public List<Style> getStyleList() {
+		return styleList;
+	}
+	public void setStyleList(List<Style> styleList) {
+		this.styleList = styleList;
+	}
+	public String listPhysicalStyle(){
+		PhysicalDao dao=new PhysicalDao();
+		styleList=dao.getPhysicalStyleList();
+		return "SUCCESS";
 	}
 	
 }

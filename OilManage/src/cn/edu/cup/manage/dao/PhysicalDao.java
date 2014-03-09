@@ -135,23 +135,67 @@ public class PhysicalDao {
 		tx.commit();
 		session.close();
 	}
-	public int getCountMessure(){
-		SQLQuery q = session.createSQLQuery("select count(*) from T_Measure");
+	public int getCountMessure(int mid,String CName,String EName,String Symbol,String RatioA,String RatioB,String PCName,String StyleName){
+		 StringBuilder where = new StringBuilder();
+		 where.append(" where t1.PhysicalID=t2.ID and t1.StyleID=t3.StyleID ");
+			if(mid!=0){
+				if(where.length()!=0)
+					where.append(" and ");
+				else
+					where.append(" where ");
+				where.append("t1.ID=").append(mid);
+			}
+			_joint_string_sql(where,"t1","CName",CName);
+			_joint_string_sql(where,"t1","EName",EName);
+			_joint_string_sql(where,"t1","Symbol",Symbol);
+			_joint_string_sql(where,"t1","RatioA",RatioA);
+			_joint_string_sql(where,"t1","RatioB",RatioB);
+			_joint_string_sql(where,"t2","CName",PCName);
+			_joint_string_sql(where,"t3","StyleName",StyleName);
+		String sql="select count(*) from T_Measure t1,T_Physical t2,T_PhysicalStyle t3 "+where.toString();
+		SQLQuery q = session.createSQLQuery(sql);
 		Integer a=((BigInteger)q.uniqueResult()).intValue();
 		return a;
 	}
-	public int getCountPhysical(){
-		SQLQuery q = session.createSQLQuery("select count(*) from T_Physical");
-		Integer a=((BigInteger)q.uniqueResult()).intValue();
-		return a;
+	
+	public int getCountPhysical(int id, String cName, String eName, String description, String iSOBasicUnit){
+		 StringBuilder where = new StringBuilder();
+			if(id!=0){
+				if(where.length()!=0)
+					where.append(" or ");
+				else
+					where.append(" where ");
+				where.append("t2.ID=").append(id);
+			}
+			_joint_string_sql(where,"t2","CName",cName);
+			_joint_string_sql(where,"t2","EName",eName);
+			_joint_string_sql(where,"t2","Description",description);
+			_joint_string_sql(where,"t2","iSOBasicUnit",iSOBasicUnit);
+		String sql="select count(*) from T_Physical t2 "+where.toString();
+		SQLQuery q = session.createSQLQuery(sql);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
 	}
 
-
-
-
-
-	public List<Measure> getMessureList(int page,int rows,String sidx,String sord) {
-		SQLQuery q = session.createSQLQuery("select t1.ID mid,t1.CName mCName,t1.EName mEName,t1.RatioA,t1.RatioB,t1.Symbol,t2.ID pid,t2.CName pCName,t2.EName pEName,t2.Description,t2.ISOBasicUnit,t3.StyleID,t3.StyleName from T_Measure t1,T_Physical t2,T_PhysicalStyle t3 where t1.PhysicalID=t2.ID and t1.StyleID=t3.StyleID order by t1."+sidx+" "+sord);
+	public List<Measure> getMessureList(int page,int rows,String sidx,String sord,int mid,String CName,String EName,String Symbol,String RatioA,String RatioB,String PCName,String StyleName) {
+		 StringBuilder where = new StringBuilder();
+		 where.append(" where t1.PhysicalID=t2.ID and t1.StyleID=t3.StyleID ");
+		if(mid!=0){
+			if(where.length()!=0)
+				where.append(" and ");
+			else
+				where.append(" where ");
+			where.append("t1.ID=").append(mid);
+		}
+		_joint_string_sql(where,"t1","CName",CName);
+		_joint_string_sql(where,"t1","EName",EName);
+		_joint_string_sql(where,"t1","Symbol",Symbol);
+		_joint_string_sql(where,"t1","RatioA",RatioA);
+		_joint_string_sql(where,"t1","RatioB",RatioB);
+		_joint_string_sql(where,"t2","CName",PCName);
+		_joint_string_sql(where,"t3","StyleName",StyleName);
+		
+		SQLQuery q = session.createSQLQuery("select t1.ID mid,t1.CName mCName,t1.EName mEName,t1.RatioA ratioA,t1.RatioB ratioB,t1.Symbol symbol,t2.ID pid,t2.CName pCName,t2.EName pEName,t2.Description description,t2.ISOBasicUnit ISOBasicUnit,t3.StyleID sid,t3.StyleName styleName from T_Measure t1,T_Physical t2,T_PhysicalStyle t3 "+where.toString()+" order by "+sidx+" "+sord);
 
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
@@ -163,7 +207,7 @@ public class PhysicalDao {
 			//System.out.println(user.getUsername());
 
 			  Object[] row = (Object[])l.get(i);;
-			  Integer mid = (Integer)row[0];
+			  Integer id = (Integer)row[0];
 			  String mCName = (String)row[1];  
 			  String mEName = (String)row[2];  
 			  Double ra=(Double)row[3];
@@ -180,17 +224,60 @@ public class PhysicalDao {
 			  
 			  Physical phy=new Physical(pid, pCName, pEName, Descrip, punit);
 			  Style style=new Style(sid, sName);
-			  Measure m=new Measure(mid, pid, phy, style, mEName, mCName, mSymbol, ra, rb, sid);
+			  Measure m=new Measure(id, pid, phy, style, mEName, mCName, mSymbol, ra, rb, sid);
 			  
 			  
 			  re.add(m);
 		}
-		
 		return re;
 	}
 
-	public List<Physical> getPhysicalList(int page,int rows,String sidx,String sord) {
-		SQLQuery q = session.createSQLQuery("select t2.ID,t2.CName,t2.EName,t2.Description,t2.ISOBasicUnit from T_Physical t2 order by t2."+sidx+" "+sord);
+	public List<Physical> getPhysicalList(int page,int rows,String sidx,String sord, int id, String cName, String eName, String description, String iSOBasicUnit) {
+
+		 StringBuilder where = new StringBuilder();
+		if(id!=0){
+			if(where.length()!=0)
+				where.append(" and ");
+			else
+				where.append(" where ");
+			where.append("t2.ID=").append(id);
+		}
+		_joint_string_sql(where,"t2","CName",cName);
+		_joint_string_sql(where,"t2","EName",eName);
+		_joint_string_sql(where,"t2","Description",description);
+		_joint_string_sql(where,"t2","iSOBasicUnit",iSOBasicUnit);
+		/*
+		if(cName!=null&&!cName.isEmpty()){
+			if(where.length()!=0)
+				where.append(" or ");
+			else
+				where.append(" where ");
+			where.append(" t2.CName=\"").append(cName).append("\"");
+		}
+		if(eName!=null&&!eName.isEmpty()){
+			if(where.length()!=0)
+				where.append(" or ");
+			else
+				where.append(" where ");
+			where.append("t2.EName=\"").append(eName).append("\"");
+		}
+		if(description!=null&&!description.isEmpty()){
+			if(where.length()!=0)
+				where.append(" or ");
+			else
+				where.append(" where ");
+			where.append("t2.Description=\"").append(description).append("\"");
+		}
+		if(iSOBasicUnit!=null&&!iSOBasicUnit.isEmpty()){
+			if(where.length()!=0)
+				where.append(" or ");
+			else
+				where.append(" where ");
+			where.append("t2.ISOBasicUnit=\"").append(iSOBasicUnit).append("\"");
+		}*/
+		System.out.print(where);
+		String sql="select t2.ID,t2.CName,t2.EName,t2.Description,t2.ISOBasicUnit from T_Physical t2 "+where.toString()+" order by t2."+sidx+" "+sord;
+		SQLQuery q = session.createSQLQuery(sql);
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
 		List l = q.list();
@@ -218,12 +305,26 @@ public class PhysicalDao {
 		
 		return re;
 	}
+
+	public List<Style> getPhysicalStyleList() {
+		SQLQuery q = session.createSQLQuery("SELECT t.StyleID,t.StyleName FROM t_physicalstyle t");
+		List l = q.list();
+		List<Style> re=new ArrayList<Style>();
+		for(int i=0;i<l.size();i++)
+		{
+			  Object[] row = (Object[])l.get(i);;
+			  Integer sid = (Integer)row[0];
+			  String sName = (String)row[1];  
+			  Style style=new Style(sid, sName);	 
+			  re.add(style);
+		}
+		return re;
+	}
 	
-	public int deleteMessure(String  id) {
+	public int deleteMessure(int  id) {
 		SQLQuery q = session.createSQLQuery("delete from T_Measure where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
-		tx.commit();
 		return re;
 		
 	}
@@ -231,8 +332,6 @@ public class PhysicalDao {
 		SQLQuery q = session.createSQLQuery("delete from T_Physical where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
-		
-		
 		return re;
 		
 	}
@@ -251,7 +350,7 @@ public class PhysicalDao {
 		return re;
 	}
 
-	public int updateMessure(String id, String physicalID, String eName,
+	public int updateMessure(int id, String physicalID, String eName,
 			String cName, String symbol, String ratioA, String ratioB,
 			String styleID) {
 		// TODO Auto-generated method stub
@@ -269,6 +368,21 @@ public class PhysicalDao {
 		return re;
 		
 	}
-
+	
+	/*
+	 * sql的where条件的字符串拼接，用于条件查询,判断字段是否为空，不为空则加入条件
+	 */
+	private StringBuilder _joint_string_sql(StringBuilder where,String tableName,String fieldName,String param ){
+		if(param!=null&&!param.isEmpty()){
+			if(where.length()!=0)
+				where.append(" and ");
+			else
+				where.append(" where ");
+			param.replaceAll(".*([';]+|(--)+).*\\/\"", " ");//特殊字符的过滤，防注入
+			where.append(tableName).append(".").append(fieldName).append("=\"").append(param).append("\"");
+		}
+		return where;
+	}
+	
 
 }

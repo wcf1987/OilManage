@@ -74,8 +74,9 @@ else{
 
 <script>
 $(document).ready(function(){
-
-	$("#addForm").validate({
+	loadPhysicalStyleOptions();
+	loadPhysicalOptions();
+	$("#addPhysicalForm").validate({
 		debug:true,
 		onsubmit:true,
 		onfocusout:false,
@@ -104,12 +105,73 @@ $(document).ready(function(){
 			}
 		},
 		submitHandler:function(){
-			add();
+			add_physical();
 		}
 	});
-});
+	
+	$("#addMeasureForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			MCName:{
+				required:true
+			},
+			MEName:{
+				required:true
+			},
+			PhysicalID:{
+				required:true
+			},
+			StyleID:{
+				required:true
+			},
+			Symbol:{
+				required:true
+			},
+			RatioA:{
+				number:true,
+				required:true
+			},
+			RatioB:{
+				number:true,
+				required:true
+			}
+		},
+		messages:{
+			MCName:{
+			required:"物理单位中文名称不能为空！",
+			},
+			MEName:{
+			required:"物理单位英文名称不能为空！",
+			},
+			PhysicalID:{
+				required:"请选择物理量！"
+			},
+			StyleID:{
+				required:"请选择单位体系！"
+			},
+			Symbol:{
+				required:"符号不能为空！"
+			},
+			RatioA:{
+				number:"输入必须为数字!",
+				required:"转换率A不能为空!"
+			},
+			RatioB:{
+				number:"输入必须为数字!",
+				required:"转换率B不能为空！"
+			}
+		},
+		submitHandler:function(){
+			add_measure();
+		}
+	});
+	
+});//ready 结束
 
-function add() {
+function add_physical() {
 	$.ajax({
 		type : 'POST',
 		url : 'addPhysical.action',
@@ -122,16 +184,80 @@ function add() {
 		dataType:'json',
 		success : function(msg) {
 			alert("添加成功！");
-			$('#add_modal').modal('hide');
+			$('#add_physical_modal').modal('hide');
 			$("#PhysicalList").trigger("reloadGrid");
 		},
 		error:function(msg){
 			alter(msg);
-			$('#add_modal').modal('hide');
+			$('#add_physical_modal').modal('hide');
 			$("#PhysicalList").trigger("reloadGrid");
 		}
 	});
 	}
+
+function add_measure() {
+	$.ajax({
+		type : 'POST',
+		url : 'addMeasure.action',
+		data : {
+			mCName:$("#MCName").val(),
+			mEName:$("#MEName").val(),
+			Symbol:$("#Symbol").val(),
+			RatioA:$("#RatioA").val(),
+			RatioB:$("#RatioB").val(),
+			PhysicalID:$("#PhysicalID").val(),
+			StyleID:$("#StyleID").val()
+		},
+		dataType:'json',
+		success : function(msg) {
+			alert("添加成功！");
+			$('#add_measure_modal').modal('hide');
+			$("#MeasureList").trigger("reloadGrid");
+		},
+		error:function(msg){
+			alter(msg);
+			$('#add_measure_modal').modal('hide');
+			$("#MeasureList").trigger("reloadGrid");
+		}
+	});
+	}
+	
+function loadPhysicalOptions(){
+	$.ajax({
+		url:'listPhysical.action',
+		type:'post',
+		data : {
+			sidx: 'id',
+			sord: "desc"
+		},
+		dataType:'json',
+		success:function(data){
+		//alert(data.dataList[0].CName);
+			var items="";
+			$.each(data.dataList,function(i,physical){
+				items+= "<option value=\"" + physical.ID + "\">" + physical.CName + "</option>"; 
+			});
+			$("#PhysicalID").html(items);
+		}
+	});
+	}
+
+function loadPhysicalStyleOptions(){
+	$.ajax({
+		url:'listPhysicalStyle.action',
+		type:'post',
+		dataType:'json',
+		success:function(data){
+		//alert(data.dataList[0].CName);
+			var items="";
+			$.each(data.styleList,function(i,style){
+				items+= "<option value=\"" + style.ID + "\">" + style.styleName + "</option>"; 
+			});
+			$("#StyleID").html(items);
+		}
+	});
+	}
+
 </script>
 
 
@@ -255,10 +381,10 @@ function add() {
 						<div class="tabbable" id="tabs-360872">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<a href="#panel-953728" data-toggle="tab" style="font-size:12px;">物理量管理</a>
+									<a href="#panel-953728" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">物理量管理</a>
 								</li>
 								<li>
-									<a href="#panel-468768" data-toggle="tab" style="font-size:12px;">物理单位管理</a>
+									<a href="#panel-468768" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">物理单位管理</a>
 								</li>
 							</ul>
 							<div class="tab-content">
@@ -297,33 +423,33 @@ function add() {
 	    
 	   
 		
-    		<!-- 添加的模态框 -->   	
-		<div class="modal fade" id="add_modal">
+    		<!-- 添加物理量的模态框 -->   	
+		<div class="modal fade" id="add_physical_modal">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title">添加物理量</h4>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加物理量</h4>
 		      </div>
 		      <div class="modal-body">
-		     	 <form id="addForm" action="addPhysical.action" method="post"> 
+		     	 <form id="addPhysicalForm" action="addPhysical.action" method="post"> 
 		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">
 		      		
 		      			<tr>
-		      				<td><label width="30%" align="right">物理量名称：</label><em>*</em></td>
-				            <td><input id="CName" type="text" class="input2" name="CName" maxlength="30" required/></td>
+		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >物理量名称：</label></td>
+				            <td><input id="CName" type="text" class="input2" name="CName" maxlength="30" /><em style="color:red">*</em></td>
 		      			</tr>
 		      			<tr>
-		      				<td><label align="right">英文名称：</label><em>*</em></td>
-		      				<td><input id="EName" type="text" class="input2" name="EName" maxlength="10" class="required"/></td>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >英文名称：</label></td>
+		      				<td><input id="EName" type="text" class="input2" name="EName" maxlength="10"/><em style="color:red">*</em></td>
 		      			</tr>
 		      			<tr>
-		      				<td><label align="right">描述：</label></td>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">描述：</label></td>
 		      				<td><input id="Description" type="text" class="input2" style="width:100px" name="Description" maxlength="30" /></td>
 		      			</tr>
 		      			<tr>
-		      				<td><label align="right">ISO基本单位</label><em>*</em></td>
-		      				<td><input id="ISOBasicUnit" type="text" class="input2" style="width:100px" name="ISOBasicUnit" maxlength="30" /></td>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">ISO基本单位</label></td>
+		      				<td><input id="ISOBasicUnit" type="text" class="input2" style="width:100px" name="ISOBasicUnit" maxlength="30" /><em style="color:red">*</em></td>
 		      			</tr>				      		
 					   </table>
 					   <div class="modal-footer">
@@ -337,6 +463,66 @@ function add() {
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 		
+				
+    		<!-- 添加单位的模态框 -->   	
+		<div class="modal fade" id="add_measure_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加物理单位</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="addMeasureForm" action="addMeasure.action" method="post"> 
+		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">
+		      		
+		      			<tr>
+		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >中文名称：</label></td>
+				            <td><input id="MCName" type="text" class="input2" name="MCName" maxlength="30"/><em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >英文名称：</label></td>
+		      				<td><input id="MEName" type="text" class="input2" name="MEName" maxlength="10" /><em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">符号：</label></td>
+		      				<td><input id="Symbol " type="text" class="input2" style="width:100px" name="Symbol " maxlength="30" /></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">物理量</label></td>
+		      				<td>
+		      				<select id="PhysicalID" name="PhysicalID">		                  
+			                </select>
+		      				<em style="color:red">*</em>
+		      				</td>
+		      			</tr>	
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">单位体系</label></td>
+		      				<td>
+		      				<select id="StyleID" name="StyleID">
+		      				</select>
+		      				<em style="color:red">*</em>
+		      				</td>
+		      			</tr>	
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">转换率A</label></td>
+		      				<td><input id="RatioA" type="text" class="input2" style="width:100px" name="RatioA" maxlength="30" /><em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">转换率B</label></td>
+		      				<td><input id="RatioB" type="text" class="input2" style="width:100px" name="RatioB" maxlength="30" /><em style="color:red">*</em></td>
+		      			</tr>      		
+					   </table>
+					   <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					        <button type="submit" class="btn btn-primary"  >保存</button>
+					   </div>
+				   </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
     
     	
    

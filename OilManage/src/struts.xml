@@ -123,7 +123,12 @@
 
 			</result>
 		</action>
+		<action name="listPhysicalStyle" class="cn.edu.cup.manage.action.MeasureAction"
+			method="listPhysicalStyle">
 
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
 
 		<action name="listParameters" class="cn.edu.cup.manage.action.ParametersManageAction"
 			method="list">

@@ -80,18 +80,18 @@ $(
 					
 			);
 
-
+	datagrid.jqGrid('filterToolbar',{searchOperators:true});			
 	datagrid.jqGrid('navGrid','#PhysicalPager',{
 			edit : false,
 			add : false,
+			search:false,
 			del : false}).jqGrid('navButtonAdd',"#PhysicalPager",{
 					title:'添加',
 					caption:"添加",
 					id:"add_PhysicalList",
 					onClickButton : function addModal(){
 						// 配置对话框
-	
-							$('#add_modal').modal();
+							$('#add_physical_modal').modal();
 					
 					},
 					position:"first"
@@ -127,7 +127,6 @@ $(
 	        	var selectedIDs={};
 	        	$.each(sels,function(i,n){ 
                   if(sels[i]!=""){ 
-//                      $("#PhysicalList").jqGrid('delRowData',n);  
                 	  var rowData = $("#PhysicalList").jqGrid("getRowData", sels[i]);
                 	  selectedIDs["ids[" + i + "]"]=rowData.ID;
                   } 
@@ -169,7 +168,9 @@ $(
 	}
 
 
-	
+	/*
+	 * 单位管理列表
+	 */
 	var datagrid = jQuery("#MeasureList")
 	.jqGrid(
 			{
@@ -180,7 +181,7 @@ $(
 				colModel : [
 						{
 							name : 'ID',
-							index : 'ID',
+							index : 'mid',
 							width : 50,
 							align : "center",
 							sortable:true,
@@ -188,14 +189,14 @@ $(
 						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
 						{
 							name : 'EName',
-							index : 'EName',
+							index : 'mEName',
 							width : 150,
 							align : "center",
 							sortable:true
 						},
 						{
 							name : 'CName',
-							index : 'CName',
+							index : 'mCName',
 							width : 200,
 							align : "center",
 							sortable:true
@@ -209,14 +210,14 @@ $(
 						},
 						{
 							name:'phy.CName',
-							index:'phy',
+							index:'pCName',
 							width:200,
 							align:'center',
 							sortable:true
 						},
 						{
 							name:'style.styleName',
-							index:'style',
+							index:'styleName',
 							width:200,
 							align:'center',
 							sortable:false
@@ -243,9 +244,11 @@ $(
 				width:1230,
 				rowList:[10,20,30],
 				pager: '#MeasurePager',
-				sortname: 'id',
+				sortname: 'mid',
 				viewrecords: true,
 				sortorder: "desc",
+				multiselect: true,  //可多选，出现多选框 
+			    multiselectWidth: 35, //设置多选列宽度 
 				jsonReader: {//读取后端json数据的格式
 					root: "dataList",//保存详细记录的名称
 					total: "total",//总共有多少页
@@ -256,336 +259,99 @@ $(
 				caption: "物理单位管理"//表格名称
 				
 			});
+	datagrid.jqGrid('filterToolbar',{searchOperators:true});
+	datagrid.jqGrid('navGrid','#MeasurePager',{
+		edit : false,
+		add : false,
+		search:false,
+		del : false}).jqGrid('navButtonAdd',"#MeasurePager",{
+				title:'添加',
+				caption:"添加",
+				id:"add_MeasureList",
+				onClickButton : function addModal(){
+					// 配置对话框
+
+						$('#add_measure_modal').modal();
+				
+				},
+				position:"first"
+			
+		
+			}).jqGrid('navButtonAdd',"#MeasurePager",{
+				title:'删除',
+				caption:"删除",	
+				id:"delete_MeasureList",
+				onClickButton:deleteMeasure,
+				position:"first"
+			});
+	
+	function deleteMeasure() {
+		/*
+		var gr = jQuery("#PhysicalList").jqGrid('getGridParam','selarrrow');
+		if( gr != null ) jQuery("#PhysicalList").jqGrid('delGridRow',gr,{
+												reloadAfterSubmit:false,
+												caption:"删除记录",
+												bSubmit:"确定",
+												bCancel:"取消",
+												url:"delPhysical.action"
+									
+												});
+		else alert("Please Select Row to delete!");
+		*/
+		
+	        var sels = $("#MeasureList").jqGrid('getGridParam','selarrrow'); 
+	        if(sels==""){ 
+	           //$().message("请选择要删除的项！"); 
+	           alert("请选择要删除的项!");
+	        }else{ 
+	        	var selectedIDs={};
+	        	$.each(sels,function(i,n){ 
+                  if(sels[i]!=""){ 
+                	  var rowData = $("#MeasureList").jqGrid("getRowData", sels[i]);
+                	  selectedIDs["ids[" + i + "]"]=rowData.ID;
+                  } 
+	        	}); 
+
+	           if(confirm("您是否确认删除？")){ 
+	            $.ajax({ 
+	              type: "POST", 
+	              url: "delMeasure.action", 
+	              data: selectedIDs, 
+	              beforeSend: function() { 
+	                   $().message("正在请求..."); 
+	              }, 
+	              error:function(){ 
+	                   $().message("请求失败..."); 
+	              }, 
+	              
+	              success: function(msg){ 
+	            	alert("删除成功！");
+//	            	alert(msg);
+					$("#MeasureList").trigger("reloadGrid");
+	                   if(msg!=0){ 
+	                       var arr = msg.split(','); 
+	                       $.each(arr,function(i,n){ 
+	                             if(arr[i]!=""){ 
+	                                 $("#MeasureList").jqGrid('delRowData',n);  
+	                             } 
+	                       }); 
+	                       $().message("已成功删除!"); 
+	                   }else{ 
+	                       $().message("操作失败！"); 
+	                   } 
+	              } 
+	            }); 
+	           } 
+	        } 
+			
+
+	}
+
 	
 	
 }//function结束
 );//$()结束
 
 
-/*
-function delMap(str) {
-	if (confirm("确定要删除这条地图记录吗？")) {
-		$.ajax({
-			type : 'POST',
-			url : 'delMap.action',
-			data : {
-				id : str
 
-			},
-			success : function(data) {
-				alert(data['re']);
-				$("#list2").trigger("reloadGrid");
-			}
 
-		});
-	}
-
-}
-function showMap(str) {
-
-	$.ajax({
-		type : 'POST',
-		url : 'viewMap.action',
-		data : {
-			id : str
-
-		},
-		success : function(data) {
-			viewMap(data);
-		}
-
-	});
-
-}
-function add() {
-
-	$.ajax({
-		type : 'POST',
-		url : 'addMap.action',
-		data : {
-			proName : $("#projectname").val(),
-			filePath : $("#hideFilePath").val()
-		},
-		success : function(data) {
-			alert('新地图文件上传成功');
-			$("#list2").trigger("reloadGrid");
-		}
-
-	});
-}
-
-// 配置对话框
-
-function addNewPro() {
-	$('#uploadModal').modal();
-};
-
-var myjingkou = new BMap.Icon("images/icons/jingkou.png",
-		new BMap.Size(30, 30), {
-			// 指定定位位置。
-			// 当标注显示在地图上时，其所指向的地理位置距离图标左上
-			// 角各偏移10像素和25像素。您可以看到在本例中该位置即是
-			// 图标中央下端的尖角位置。
-			anchor : new BMap.Size(15, 15)
-		// 设置图片偏移。
-		// 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
-		// 需要指定大图的偏移位置，此做法与css sprites技术类似。
-		// imageOffset: new BMap.Size(0, 0 - index * 25) // 设置图片偏移
-		});
-var myfazu = new BMap.Icon("images/icons/fazu.png", new BMap.Size(40, 40), {
-	// 指定定位位置。
-	// 当标注显示在地图上时，其所指向的地理位置距离图标左上
-	// 角各偏移10像素和25像素。您可以看到在本例中该位置即是
-	// 图标中央下端的尖角位置。
-	anchor : new BMap.Size(20, 20)
-// 设置图片偏移。
-// 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
-// 需要指定大图的偏移位置，此做法与css sprites技术类似。
-// imageOffset: new BMap.Size(0, 0 - index * 25) // 设置图片偏移
-});
-var myjiqizhan = new BMap.Icon("images/icons/jiqizhan.png", new BMap.Size(50,
-		50), {
-	// 指定定位位置。
-	// 当标注显示在地图上时，其所指向的地理位置距离图标左上
-	// 角各偏移10像素和25像素。您可以看到在本例中该位置即是
-	// 图标中央下端的尖角位置。
-	anchor : new BMap.Size(25, 25)
-// 设置图片偏移。
-// 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
-// 需要指定大图的偏移位置，此做法与css sprites技术类似。
-// imageOffset: new BMap.Size(0, 0 - index * 25) // 设置图片偏移
-});
-function addArrow2(polyline, length, angleValue) { // 绘制箭头的函数
-	var linePoint = polyline.getPath();// 线的坐标串
-	var arrowCount = linePoint.length;
-	for ( var i = 1; i < arrowCount; i++) { // 在拐点处绘制箭头
-		var pixelStart = map.pointToPixel(linePoint[i - 1]);
-		var pixelEnd = map.pointToPixel(linePoint[i]);
-		var angle = angleValue;// 箭头和主线的夹角
-		var r = length; // r/Math.sin(angle)代表箭头长度
-		var delta = 0; // 主线斜率，垂直时无斜率
-		var param = 0; // 代码简洁考虑
-		var pixelTemX, pixelTemY;// 临时点坐标
-		var pixelX, pixelY, pixelX1, pixelY1;// 箭头两个点
-		if (pixelEnd.x - pixelStart.x == 0) { // 斜率不存在是时
-			pixelTemX = pixelEnd.x;
-			if (pixelEnd.y > pixelStart.y) {
-				pixelTemY = pixelEnd.y - r;
-			} else {
-				pixelTemY = pixelEnd.y + r;
-			}
-			// 已知直角三角形两个点坐标及其中一个角，求另外一个点坐标算法
-			pixelX = pixelTemX - r * Math.tan(angle);
-			pixelX1 = pixelTemX + r * Math.tan(angle);
-			pixelY = pixelY1 = pixelTemY;
-		} else // 斜率存在时
-		{
-			delta = (pixelEnd.y - pixelStart.y) / (pixelEnd.x - pixelStart.x);
-			param = Math.sqrt(delta * delta + 1);
-
-			if ((pixelEnd.x - pixelStart.x) < 0) // 第二、三象限
-			{
-				pixelTemX = pixelEnd.x + r / param;
-				pixelTemY = pixelEnd.y + delta * r / param;
-			} else// 第一、四象限
-			{
-				pixelTemX = pixelEnd.x - r / param;
-				pixelTemY = pixelEnd.y - delta * r / param;
-			}
-			// 已知直角三角形两个点坐标及其中一个角，求另外一个点坐标算法
-			pixelX = pixelTemX + Math.tan(angle) * r * delta / param;
-			pixelY = pixelTemY - Math.tan(angle) * r / param;
-
-			pixelX1 = pixelTemX - Math.tan(angle) * r * delta / param;
-			pixelY1 = pixelTemY + Math.tan(angle) * r / param;
-		}
-
-		var pointArrow = map.pixelToPoint(new BMap.Pixel(pixelX, pixelY));
-		var pointArrow1 = map.pixelToPoint(new BMap.Pixel(pixelX1, pixelY1));
-		var Arrow = new BMap.Polyline(
-				[ pointArrow, linePoint[i], pointArrow1 ], {
-					strokeColor : "blue",
-					strokeWeight : 6,
-					strokeOpacity : 0.5
-				});
-		map.addOverlay(Arrow);
-	}
-}
-function addArrow1(polyline, length, angleValue) { // 绘制箭头的函数
-	var linePoint = polyline.getPath();// 线的坐标串
-	var arrowCount = linePoint.length;
-	for ( var i = 1; i < arrowCount; i++) { // 在拐点处绘制箭头
-		var pixelStart = map.pointToPixel(linePoint[i - 1]);
-		var pixelEnd = map.pointToPixel(linePoint[i]);
-		var angle = angleValue;// 箭头和主线的夹角
-		var r = length; // r/Math.sin(angle)代表箭头长度
-		var delta = 0; // 主线斜率，垂直时无斜率
-		var param = 0; // 代码简洁考虑
-		var pixelTemX, pixelTemY;// 临时点坐标
-		var pixelX, pixelY, pixelX1, pixelY1;// 箭头两个点
-		if (pixelEnd.x - pixelStart.x == 0) { // 斜率不存在是时
-			pixelTemX = pixelEnd.x;
-			if (pixelEnd.y > pixelStart.y) {
-				pixelTemY = pixelEnd.y - r;
-			} else {
-				pixelTemY = pixelEnd.y + r;
-			}
-			// 已知直角三角形两个点坐标及其中一个角，求另外一个点坐标算法
-			pixelX = pixelTemX - r * Math.tan(angle);
-			pixelX1 = pixelTemX + r * Math.tan(angle);
-			pixelY = pixelY1 = pixelTemY;
-		} else // 斜率存在时
-		{
-			delta = (pixelEnd.y - pixelStart.y) / (pixelEnd.x - pixelStart.x);
-			param = Math.sqrt(delta * delta + 1);
-
-			if ((pixelEnd.x - pixelStart.x) < 0) // 第二、三象限
-			{
-				pixelTemX = pixelEnd.x + r / param;
-				pixelTemY = pixelEnd.y + delta * r / param;
-			} else// 第一、四象限
-			{
-				pixelTemX = pixelEnd.x - r / param;
-				pixelTemY = pixelEnd.y - delta * r / param;
-			}
-			// 已知直角三角形两个点坐标及其中一个角，求另外一个点坐标算法
-			pixelX = pixelTemX + Math.tan(angle) * r * delta / param;
-			pixelY = pixelTemY - Math.tan(angle) * r / param;
-
-			pixelX1 = pixelTemX - Math.tan(angle) * r * delta / param;
-			pixelY1 = pixelTemY + Math.tan(angle) * r / param;
-		}
-
-		var pointArrow = map.pixelToPoint(new BMap.Pixel(pixelX, pixelY));
-		var pointArrow1 = map.pixelToPoint(new BMap.Pixel(pixelX1, pixelY1));
-		var Arrow = new BMap.Polyline(
-				[ pointArrow, linePoint[i], pointArrow1 ], {
-					strokeColor : "red",
-					strokeWeight : 3,
-					strokeOpacity : 0.5
-				});
-		map.addOverlay(Arrow);
-	}
-}
-function uploadComplete(file, data, response) {
-	// event,事件对象
-	// id:上传进度队列id
-	// fileObj={"name":"文件名","filePath":"上传后的服务器文件路径","size":"文件的大小","creationDate":"文件创建时间","modificationDate":"文件最后修改时间","type":"扩展名"}
-	// response:文件上传后返回的文本，其实也可以在这里返回文件路径比较简单
-	// data={"fileCount":"上传队列中还剩下的文件数","speed":"上传的平均速度"}
-	var tempJson = jQuery.parseJSON(data);
-	viewMap(tempJson);
-
-};
-
-function viewMap(data) {
-	map.clearOverlays();
-	var markers = [];
-	var jsonObject = data;
-	// alert(jsonObject['re']);
-	// alert(jsonObject['graphi']);
-	var pointArray = new Array();
-	var pMap = jsonObject['graphi']['points'];
-	var pLine = jsonObject['graphi']['lines'];
-	// alert(pMap['JIQIZHAN']['name']);
-	var id = -1;
-	pointMap = {};
-	var addfilepath = jsonObject['filePath'];
-	$("#hideFilePath").val(addfilepath);
-	// alert( $("#mapfile").value);
-	for ( var i in pMap) {
-		id++;
-		p = pMap[i];
-
-		pointArray[id] = new BMap.Point(p['longitude'], p['latitude'])
-		pointMap[i] = pointArray[id];
-		if (p['type'] == 'jingkou') {
-			myicon = myjingkou;
-			typestr = '井口'
-		}
-		if (p['type'] == 'fazu') {
-			myicon = myfazu;
-			typestr = '阀组'
-		}
-		if (p['type'] == 'jiqizhan') {
-			myicon = myjiqizhan;
-			typestr = '集气站'
-		}
-		var markertemp = new BMap.Marker(pointArray[id], {
-			icon : myicon
-		});
-		
-		var s = Array();
-		s[i] = "类别:" + typestr + "<br>"
-		s[i] = s[i] + "名称:" + p['name'] + "<br>"
-		s[i] = s[i] + "大地坐标X:" + p['geodeticCoordinatesX'] + "<br>"
-		s[i] = s[i] + "大地坐标Y:" + p['geodeticCoordinatesY'] + "<br>"
-		s[i] = s[i] + "经度:" + p['longitude'] + "<br>"
-		s[i] = s[i] + "纬度:" + p['latitude'] + "<br>"
-
-		var opts = {
-			width : 300, // 信息窗口宽度
-			height : 300, // 信息窗口高度
-			title : "", // 信息窗口标题
-			enableMessage : true,// 设置允许信息窗发送短息
-			message : ""
-		}
-		var infoWindow = new BMap.InfoWindow(s[i], opts); // 创建信息窗口对象
-		// map.openInfoWindow(infoWindow,pointArray[i]); //开启信息窗口
-		markertemp.setTitle(s[i])
-		markertemp.addEventListener("click", function(data) {
-			temp = this.getTitle()
-			var infoWindow = new BMap.InfoWindow(temp, opts);
-			this.openInfoWindow(infoWindow);
-		});
-		map.addOverlay(markertemp);
-		map.enableScrollWheelZoom(false);
-		markers.push(markertemp);
-	}
-	var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers,isAverangeCenter:true,girdSize:120,maxZoom:13});
-
-	map.centerAndZoom(pointArray[0], 15);
-	for ( var lkey in pLine) {
-		var l = pLine[lkey];
-		var pointemp = new Array();
-		if (l['type'] == '1') {
-			// alert(pointMap[l['start']]);
-			pointemp[0] = pointMap[l['start']];
-			pointemp[1] = pointMap[l['end']];
-			var polyline = new BMap.Polyline(pointemp, {
-				strokeColor : "red",
-				strokeWeight : 3,
-				strokeOpacity : 0.5
-			});
-			map.addOverlay(polyline);
-			addArrow1(polyline, 5, Math.PI / 7);
-		}
-		if (l['type'] == '2') {
-			pointemp[0] = pointMap[l['start']];
-			pointemp[1] = pointMap[l['end']];
-			var polyline = new BMap.Polyline(pointemp, {
-				strokeColor : "blue",
-				strokeWeight : 6,
-				strokeOpacity : 0.5
-			});
-			map.addOverlay(polyline);
-			addArrow2(polyline, 5, Math.PI / 7)
-		}
-			}
-}
-$(document).ready(function() {
-	$('#mapfile').uploadify({
-		'swf' : 'js/upload/uploadify.swf',
-		'uploader' : 'uploadMap.action',
-		'queueID' : 'fileQueue',
-		'auto' : true,
-		'multi' : false,
-		'buttonText' : '上传地图文件',
-		'fileSizeLimit' : '5MB',
-		'fileObjName' : 'mapfile',
-		'onUploadSuccess' : uploadComplete,
-		'method' : 'post'
-	});
-});
-
-*/
