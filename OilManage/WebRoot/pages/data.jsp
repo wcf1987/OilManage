@@ -182,12 +182,13 @@ function add_physical() {
 			ISOBasicUnit:$("#ISOBasicUnit").val()
 		},
 		dataType:'json',
-		success : function(msg) {
+		complete : function(msg) {
 			alert("添加成功！");
 			$('#add_physical_modal').modal('hide');
 			$("#PhysicalList").trigger("reloadGrid");
 		},
 		error:function(msg){
+			alert("添加失败！");
 			alter(msg);
 			$('#add_physical_modal').modal('hide');
 			$("#PhysicalList").trigger("reloadGrid");

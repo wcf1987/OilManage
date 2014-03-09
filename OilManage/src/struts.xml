@@ -120,7 +120,8 @@
 			method="add">
 
 			<result name="SUCCESS" type="json">
-
+<param name="excludeProperties">id</param>
+			
 			</result>
 		</action>
 		<action name="listPhysicalStyle" class="cn.edu.cup.manage.action.MeasureAction"
@@ -157,6 +158,71 @@
 
 			</result>
 		</action>
+		
+		
+		<action name="listAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		<action name="listAlgorithmInputs" class="cn.edu.cup.manage.action.AlgorithmInputAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateAlgorithmInput" class="cn.edu.cup.manage.action.AlgorithmInputAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delAlgorithmInput" class="cn.edu.cup.manage.action.AlgorithmInputAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addAlgorithmInput" class="cn.edu.cup.manage.action.AlgorithmInputAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		
+		
+		
+		
+		
+		
+		
 
 		
 		<action name="testData" class="cn.edu.cup.map.action.TableAction">
