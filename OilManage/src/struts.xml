@@ -131,7 +131,7 @@
 			</result>
 		</action>
 
-		<action name="listParameters" class="cn.edu.cup.manage.action.ParametersManageAction"
+		<action name="listParameter" class="cn.edu.cup.manage.action.ParametersManageAction"
 			method="list">
 
 			<result name="SUCCESS" type="json">

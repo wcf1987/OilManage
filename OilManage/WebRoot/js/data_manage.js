@@ -348,6 +348,158 @@ $(
 	}
 
 	
+	/*
+	 * 参数管理列表
+	 */
+	var datagrid = jQuery("#ParameterList")
+	.jqGrid(
+			{
+				url : "listParameter.action",// 后端的数据交互程序，改为你的
+				datatype : "json",// 前后交互的格式是json数据
+				mtype : 'POST',// 交互的方式是发送httppost请求						
+				colNames : [ '编号', '显示', '名称','单位符号'],// 表格的列名
+				colModel : [
+						{
+							name : 'ID',
+							index : 'ID',
+							width : 50,
+							align : "center",
+							sortable:true,
+							sorttype:'int'
+						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
+						{
+							name : 'display',
+							index : 'display',
+							width : 150,
+							align : "center",
+							sortable:true
+						},
+						{
+							name : 'name',
+							index : 'name',
+							width : 200,
+							align : "center",
+							sortable:true
+						},
+						{
+							name : 'measureSymbol',
+							index : 'measureSymbol',
+							width : 200,
+							align : "center",
+							sortable:true
+						}
+						],
+//				autowidth:true,
+				rowNum:10,//每一页的行数
+				height: 'auto',
+				width:1230,
+				rowList:[10,20,30],
+				pager: '#ParameterPager',
+				sortname: 'ID',
+				viewrecords: true,
+				sortorder: "desc",
+				multiselect: true,  //可多选，出现多选框 
+			    multiselectWidth: 35, //设置多选列宽度 
+				jsonReader: {//读取后端json数据的格式
+					root: "dataList",//保存详细记录的名称
+					total: "total",//总共有多少页
+					page: "page",//当前是哪一页
+					records: "records",//总共记录数
+					repeatitems: false
+				},
+				caption: "参数管理"//表格名称
+				
+			});
+	
+	datagrid.jqGrid('filterToolbar',{searchOperators:true});
+	datagrid.jqGrid('navGrid','#ParameterPager',{
+		edit : false,
+		add : false,
+		search:false,
+		del : false}).jqGrid('navButtonAdd',"#ParameterPager",{
+				title:'添加',
+				caption:"添加",
+				id:"add_ParameterList",
+				onClickButton : function addModal(){
+					// 配置对话框
+
+						$('#add_parameter_modal').modal();
+				
+				},
+				position:"first"
+			
+		
+			}).jqGrid('navButtonAdd',"#ParameterPager",{
+				title:'删除',
+				caption:"删除",	
+				id:"delete_ParameterList",
+				onClickButton:deleteParameter,
+				position:"first"
+			});
+	
+	function deleteParameter() {
+		/*
+		var gr = jQuery("#PhysicalList").jqGrid('getGridParam','selarrrow');
+		if( gr != null ) jQuery("#PhysicalList").jqGrid('delGridRow',gr,{
+												reloadAfterSubmit:false,
+												caption:"删除记录",
+												bSubmit:"确定",
+												bCancel:"取消",
+												url:"delPhysical.action"
+									
+												});
+		else alert("Please Select Row to delete!");
+		*/
+		
+	        var sels = $("#ParameterList").jqGrid('getGridParam','selarrrow'); 
+	        if(sels==""){ 
+	           //$().message("请选择要删除的项！"); 
+	           alert("请选择要删除的项!");
+	        }else{ 
+	        	var selectedIDs={};
+	        	$.each(sels,function(i,n){ 
+                  if(sels[i]!=""){ 
+                	  var rowData = $("#ParameterList").jqGrid("getRowData", sels[i]);
+                	  selectedIDs["ids[" + i + "]"]=rowData.ID;
+                  } 
+	        	}); 
+
+	           if(confirm("您是否确认删除？")){ 
+	            $.ajax({ 
+	              type: "POST", 
+	              url: "delParameter.action", 
+	              data: selectedIDs, 
+	              beforeSend: function() { 
+	                   $().message("正在请求..."); 
+	              }, 
+	              error:function(){ 
+	                   $().message("请求失败..."); 
+	              }, 
+	              
+	              success: function(msg){ 
+	            	alert("删除成功！");
+//	            	alert(msg);
+					$("#ParameterList").trigger("reloadGrid");
+	                   if(msg!=0){ 
+	                       var arr = msg.split(','); 
+	                       $.each(arr,function(i,n){ 
+	                             if(arr[i]!=""){ 
+	                                 $("#ParameterList").jqGrid('delRowData',n);  
+	                             } 
+	                       }); 
+	                       $().message("已成功删除!"); 
+	                   }else{ 
+	                       $().message("操作失败！"); 
+	                   } 
+	              } 
+	            }); 
+	           } 
+	        } 
+			
+
+	}
+
+	
 	
 }//function结束
 );//$()结束

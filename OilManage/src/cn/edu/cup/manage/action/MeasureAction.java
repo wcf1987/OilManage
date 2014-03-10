@@ -194,9 +194,11 @@ public class MeasureAction extends ActionSupport{
 		PhysicalDao dao=new PhysicalDao();
 		dataList=dao.getMessureList(page,rows,sidx,sord,mid,mCName,mEName,Symbol,RatioA,RatioB,PCName,StyleName);
 		records=dao.getCountMessure(mid,mCName,mEName,Symbol,RatioA,RatioB,PCName,StyleName);
-		total=records/rows;
-		if(records%rows!=0){
-			total++;
+		if(records!=0&&rows!=0){
+			total=records/rows;
+			if(records%rows!=0){
+				total++;
+			}
 		}
 		return "SUCCESS";
 	}

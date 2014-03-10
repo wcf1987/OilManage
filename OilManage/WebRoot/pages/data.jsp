@@ -74,8 +74,7 @@ else{
 
 <script>
 $(document).ready(function(){
-	loadPhysicalStyleOptions();
-	loadPhysicalOptions();
+	
 	$("#addPhysicalForm").validate({
 		debug:true,
 		onsubmit:true,
@@ -109,6 +108,8 @@ $(document).ready(function(){
 		}
 	});
 	
+	loadPhysicalStyleOptions();
+	loadPhysicalOptions();
 	$("#addMeasureForm").validate({
 		debug:true,
 		onsubmit:true,
@@ -168,6 +169,39 @@ $(document).ready(function(){
 			add_measure();
 		}
 	});
+	loadMeasureOptions();
+	$("#addParameterForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			name:{
+				required:true
+			},
+			display:{
+				required:true
+			},
+			measureID:{
+				required:true
+			}
+		},
+		messages:{
+			name:{
+			required:"名称不能为空！",
+			},
+			display:{
+			required:"中文名称不能为空！",
+			},
+			measureID:{
+				required:"请选择单位！"
+			}
+		},
+		submitHandler:function(){
+			add_parameter();
+		}
+	});
+	
 	
 });//ready 结束
 
@@ -197,6 +231,7 @@ function add_physical() {
 	}
 
 function add_measure() {
+
 	$.ajax({
 		type : 'POST',
 		url : 'addMeasure.action',
@@ -219,6 +254,30 @@ function add_measure() {
 			alter(msg);
 			$('#add_measure_modal').modal('hide');
 			$("#MeasureList").trigger("reloadGrid");
+		}
+	});
+	}
+
+function add_parameter() {
+
+	$.ajax({
+		type : 'POST',
+		url : 'addParameter.action',
+		data : {
+			name:$("#name").val(),
+			display:$("#display").val(),
+			measureID:$("#measureID").val()
+		},
+		dataType:'json',
+		success : function(msg) {
+			alert("添加成功！");
+			$('#add_parameter_modal').modal('hide');
+			$("#ParameterList").trigger("reloadGrid");
+		},
+		error:function(msg){
+			alter(msg);
+			$('#add_measure_modal').modal('hide');
+			$("#ParameterList").trigger("reloadGrid");
 		}
 	});
 	}
@@ -259,6 +318,26 @@ function loadPhysicalStyleOptions(){
 	});
 	}
 
+	
+function loadMeasureOptions(){
+	$.ajax({
+		url:'listMeasure.action',
+		type:'post',
+		data : {
+			sidx: 'mid',
+			sord: "desc"
+		},
+		dataType:'json',
+		success:function(data){
+		//alert(data.dataList[0].CName);
+			var items="";
+			$.each(data.dataList,function(i,measure){
+				items+= "<option value=\"" + measure.ID + "\">" + measure.CName + "</option>"; 
+			});
+			$("#measureID").html(items);
+		}
+	});
+	}
 </script>
 
 
@@ -382,29 +461,34 @@ function loadPhysicalStyleOptions(){
 						<div class="tabbable" id="tabs-360872">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<a href="#panel-953728" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">物理量管理</a>
+									<a href="#panel-1" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">物理量管理</a>
 								</li>
 								<li>
-									<a href="#panel-468768" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">物理单位管理</a>
+									<a href="#panel-2" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">物理单位管理</a>
+								</li>
+								<li>
+									<a href="#panel-3" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">参数管理</a>
 								</li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane active" id="panel-953728">
-								
+								<div class="tab-pane active" id="panel-1">		
 									<table id="PhysicalList" class="table table-striped table-bordered table-hover datatable " ></table>
 						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
 						      			<div id="PhysicalPager" ></div>
-						      		</div>
-						      		
+						      		</div>	      		
 								</div>
-								<div class="tab-pane" id="panel-468768">
-									
+								<div class="tab-pane" id="panel-2">							
 									<!-- 表格 -->
 						      		<table id="MeasureList" class="table table-striped table-bordered table-hover datatable " ></table>
 						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
 						      			<div id="MeasurePager" ></div>
+						      		</div>	      		
+								</div>
+								<div class="tab-pane" id="panel-3">							
+									<table id="ParameterList" class="table table-striped table-bordered table-hover datatable " ></table>
+						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
+						      			<div id="ParameterPager" ></div>
 						      		</div>
-	      		
 								</div>
 							</div>
 						</div>
@@ -526,7 +610,47 @@ function loadPhysicalStyleOptions(){
 		</div><!-- /.modal -->
     
     	
-   
+   				
+				
+    		<!-- 添加参数的模态框 -->   	
+		<div class="modal fade" id="add_parameter_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加参数</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="addParameterForm" action="addParameter.action" method="post"> 
+		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">
+		      		
+		      			<tr>
+		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >名称：(英文)</label></td>
+				            <td><input id="name" type="text" class="input2" name="name" maxlength="30"/><em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >显示：(中文)</label></td>
+		      				<td><input id="display" type="text" class="input2" name="display" maxlength="10" /><em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">物理单位：</label></td>
+		      				<td>
+      							<select id="measureID" name="measureID">		                  
+			                	</select>
+		      					<em style="color:red">*</em>
+		      				</td>
+		      			</tr>		    				
+				   </table>
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 	
 	
   </body>

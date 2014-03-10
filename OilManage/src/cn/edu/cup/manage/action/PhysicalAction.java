@@ -117,9 +117,9 @@ public class PhysicalAction  extends ActionSupport{
 
 		if(records!=0&&rows!=0){
 		total=records/rows;
-		if(records%rows!=0){
-			total++;
-		}
+			if(records%rows!=0){
+				total++;
+			}
 		}
 		return "SUCCESS";
 	}

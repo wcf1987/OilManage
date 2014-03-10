@@ -3,23 +3,23 @@ package cn.edu.cup.manage.business;
 public class Parameters {
 	String name;
 	String ID;
-	String measureID;
+	String measureID;//单位
 	String display;
-	String messureSymbol;
+	String measureSymbol;//体系
 	public Parameters(Integer id2, String mid, String mSymbol, String display2,
 			String name2) {
 		ID=id2.toString();
 		measureID=mid;
-		messureSymbol=mSymbol;
+		measureSymbol=mSymbol;
 		display=display2;
 		name=name2;
 		// TODO Auto-generated constructor stub
 	}
-	public String getMessureSymbol() {
-		return messureSymbol;
+	public String getMeasureSymbol() {
+		return measureSymbol;
 	}
-	public void setMessureSymbol(String messureSymbol) {
-		this.messureSymbol = messureSymbol;
+	public void setMesureSymbol(String measureSymbol) {
+		this.measureSymbol = measureSymbol;
 	}
 	public String getName() {
 		return name;

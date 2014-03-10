@@ -23,7 +23,7 @@ public class ParameterDao {
 
 
 	
-	public int addParameter(String mid,String display, String name){
+	public int addParameter(int mid,String display, String name){
 		
 		Query q = session.createSQLQuery("insert into t_parameters (measureID,display,name) values (?,?,?)");
 		q.setParameter(0, mid);
@@ -63,7 +63,7 @@ public class ParameterDao {
 	
 	}
 	
-	private  void close()
+	public  void close()
 	{
 		tx.commit();
 		session.close();
@@ -81,7 +81,7 @@ public class ParameterDao {
 
 
 	public List<Parameters> getParametersList(int page,int rows,String sidx,String sord) {
-		SQLQuery q = session.createSQLQuery("SELECT t1.id,t1.measureID,t2.Symbol,t1.display,t1.`name` from t_parameters t1,t_measure t2 where t1.ID=t2.ID order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("SELECT t1.id,t1.measureID,t2.Symbol,t1.display,t1.name from t_parameters t1,t_measure t2 where t1.ID=t2.ID order by t1."+sidx+" "+sord);
 
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
@@ -94,7 +94,7 @@ public class ParameterDao {
 
 			  Object[] row = (Object[])l.get(i);;
 			  Integer id = (Integer)row[0];
-			  String mid = (String)row[1];  
+			  String mid = row[1].toString();  
 			  String mSymbol = (String)row[2];  
 			  String display=(String)row[3];
 			  String name=(String)row[4];
@@ -110,17 +110,17 @@ public class ParameterDao {
 
 
 	
-	public int deleteParameter(String  id) {
+	public int deleteParameter(int  id) {
 		SQLQuery q = session.createSQLQuery("delete from t_parameters where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
-		tx.commit();
+//		tx.commit();
 		return re;
 		
 	}
 
 
-	public int updateParameter(String iD, String mid, String display,
+	public int updateParameter(int iD, int mid, String display,
 			String name) {
 		// TODO Auto-generated method stub
 		SQLQuery q = session.createSQLQuery("update t_parameters t set measureID=?,display=?,name=? where t.ID=?");
