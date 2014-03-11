@@ -11,7 +11,7 @@ public class AlgorithmInput {
 		// TODO Auto-generated constructor stub
 		this.ID=id2;
 		this.cycleID=cid;
-		this.ParamID=ParamID;
+		this.ParamID=mid;
 		this.display=display;
 		this.symbol=symbol;
 	}
@@ -32,5 +32,17 @@ public class AlgorithmInput {
 	}
 	public void setParamID(String paramID) {
 		ParamID = paramID;
+	}
+	public void setDisplay(String display) {
+		this.display = display;
+	}
+	public String getDisplay() {
+		return display;
+	}
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
+	public String getSymbol() {
+		return symbol;
 	}
 }

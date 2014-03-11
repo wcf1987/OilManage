@@ -56,8 +56,8 @@ public class AlgorithmInputDao {
 			  String id = ((Integer)row[0]).toString();
 			  String cid = ((Integer)row[1]).toString();
 			  String mid = ((Integer)row[2]).toString();
-			  String display = (row[3]).toString();
-			  String symbol = (row[4]).toString();
+			  String display = (String) row[3];
+			  String symbol = (String) row[4];
 			  AlgorithmInput p=new AlgorithmInput(id,cid,mid,display,symbol);
 			  re.add(p);
 		}
