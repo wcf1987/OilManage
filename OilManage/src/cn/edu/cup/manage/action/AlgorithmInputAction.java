@@ -160,10 +160,11 @@ public class AlgorithmInputAction {
 	
 		records=dao.getCountAlgorithms();
 
-
-		total=records/rows;
-		if(records%rows!=0){
-			total++;
+		if(rows!=0&&records!=0){
+			total=records/rows;
+			if(records%rows!=0){
+				total++;
+			}
 		}
 		return "SUCCESS";
 	}
