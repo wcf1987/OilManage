@@ -148,7 +148,7 @@ public class AlgorithmInputAction {
 	private int total;
 	private String sidx;
 	private String sord;
-	
+
 	
 	public String list(){		
 
@@ -156,7 +156,7 @@ public class AlgorithmInputAction {
 		
 		
 		
-		dataList=dao.getAlgorithmInputList(page,rows,sidx,sord);
+		dataList=dao.getAlgorithmInputList(page,rows,sidx,sord,CycleID);
 	
 		records=dao.getCountAlgorithms();
 
