@@ -363,8 +363,8 @@ function loadMeasureOptions(){
 	            <div class="navbar-collapse collapse">
 	              <ul class="nav navbar-nav">
 	                <li><a href="pages/map.jsp">返回首页</a></li>
-	                <li class="active"><a href="pages/map.jsp">数据管理</a></li>
-	                <li><a href="#contact">算法管理</a></li>
+	                <li class="active"><a href="pages/data.jsp">数据管理</a></li>
+	                <li><a href="pages/algorithm.jsp">算法管理</a></li>
 	                <li><a href="pages/home.jsp">系统管理</a></li>
 			        <li><a href="pages/home.jsp">关于</a></li>
 			        <li><a href="pages/home.jsp">联系方式</a></li>

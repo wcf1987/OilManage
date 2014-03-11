@@ -9,18 +9,18 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import cn.edu.cup.manage.dao.UserDAO;
+import cn.edu.cup.manage.dao.UserDao;
 import cn.edu.cup.manage.business.User;
 
 public class LoginAction extends ActionSupport{
 	String  username;
 	String password;
 	String type;
-	UserDAO userDAO;
-	public UserDAO getUserDAO() {
+	UserDao userDAO;
+	public UserDao getUserDAO() {
 		return userDAO;
 	}
-	public void setUserDAO(UserDAO userDAO) {
+	public void setUserDAO(UserDao userDAO) {
 		this.userDAO = userDAO;
 	}
 	public String getUsername() {
@@ -62,7 +62,7 @@ public class LoginAction extends ActionSupport{
 	        session.put("wrong", "密码为空");	
 			return "fail";
 		}
-		userDAO=new UserDAO();
+		userDAO=new UserDao();
 		user=userDAO.searchUser(username, password, type);
 		if(user==null){
 	        ActionContext actionContext = ActionContext.getContext();

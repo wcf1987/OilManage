@@ -20,13 +20,14 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
+import cn.edu.cup.manage.business.Style;
 import cn.edu.cup.manage.business.User;
 import cn.edu.cup.map.business.Line;
 import cn.edu.cup.map.business.MapPro;
 import cn.edu.cup.test.TestHibernate;
 
 
-public class UserDAO  {
+public class UserDao  {
     
 	//property constants
 	public static final String USERNAME = "username";
@@ -37,7 +38,7 @@ public class UserDAO  {
 	public static final String INFO = "info";
 		
 
-	public UserDAO()
+	public UserDao()
 	{	
 		Configuration cfg = new Configuration();  
         cfg.configure();          
@@ -173,6 +174,21 @@ public class UserDAO  {
 			e.printStackTrace();
 		}		
 		return userR;
+	}
+	
+	public List<User> getUserList() {
+		SQLQuery q = session.createSQLQuery("select t.ID,t.username from t_user t");
+		List l = q.list();
+		List<User> re=new ArrayList<User>();
+		for(int i=0;i<l.size();i++)
+		{
+			  Object[] row = (Object[])l.get(i);;
+			  Integer uid = (Integer)row[0];
+			  String uName = (String)row[1];  
+			  User user=new User(uid, uName,null,0,null,0,null);	 
+			  re.add(user);
+		}
+		return re;
 	}
 	
 	public static String getUSERNAME() {

@@ -20,12 +20,12 @@ public class AlgorithmInputDao {
 	 Session session ;
 	 Transaction tx ;
 		
-		private  void close()
-		{
-			tx.commit();
-			session.close();
-			//sessionFactory.close();
-		}
+	public  void close()
+	{
+		tx.commit();
+		session.close();
+		//sessionFactory.close();
+	}
 
 	public AlgorithmInputDao()
 	{	
@@ -41,7 +41,7 @@ public class AlgorithmInputDao {
 	}
 	public List<AlgorithmInput> getAlgorithmInputList(int page, int rows,
 			String sidx, String sord) {
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.CycleID,t2.ID,t2.display,t3.Symbol from t_algorithminput t1,t_parameters t2,t_measure t3 where t1.ParamID=t2.ID and t3.id=t2.measureID order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.CycleID,t2.ID pid,t2.display,t3.Symbol from t_algorithminput t1,t_parameters t2,t_measure t3 where t1.ParamID=t2.ID and t3.id=t2.measureID order by t1."+sidx+" "+sord);
 
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
@@ -56,8 +56,8 @@ public class AlgorithmInputDao {
 			  String id = ((Integer)row[0]).toString();
 			  String cid = ((Integer)row[1]).toString();
 			  String mid = ((Integer)row[2]).toString();
-			  String display = ((Integer)row[3]).toString();
-			  String symbol = ((Integer)row[4]).toString();
+			  String display = (row[3]).toString();
+			  String symbol = (row[4]).toString();
 			  AlgorithmInput p=new AlgorithmInput(id,cid,mid,display,symbol);
 			  re.add(p);
 		}
@@ -69,18 +69,18 @@ public class AlgorithmInputDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	public int addAlgorithm(String cycleID, String paramID) {
+	public int addAlgorithm(int cycleID, int paramID) {
 		Date addDate=new Date();
 		Query q = session.createSQLQuery("insert into t_algorithminput (cycleID,paramID) values (?,?)");
 		q.setParameter(0, cycleID);
 		q.setParameter(1, paramID);
 		int result=q.executeUpdate();
 		
-		tx.commit();
+//		tx.commit();
 		return result;
 	}
 	
-	public int deleteAlgorithm(String  id) {
+	public int deleteAlgorithm(int  id) {
 		SQLQuery q = session.createSQLQuery("delete from t_algorithminput where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
@@ -90,7 +90,7 @@ public class AlgorithmInputDao {
 	}
 
 
-	public int updateParameter(String iD, String cycleID, String paramID) {
+	public int updateParameter(int iD, int cycleID, int paramID) {
 		// TODO Auto-generated method stub
 		
 		SQLQuery q = session.createSQLQuery("update t_algorithminput t set cycleID=?,paramID=? where t.ID=?");

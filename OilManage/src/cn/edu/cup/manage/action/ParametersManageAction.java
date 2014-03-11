@@ -104,17 +104,16 @@ public class ParametersManageAction extends ActionSupport{
 	public String list(){		
 
 		ParameterDao dao=new ParameterDao();
-		
-		
-		
+
 		dataList=dao.getParametersList(page,rows,sidx,sord);
 	
 		records=dao.getCountParameters();
 
-
-		total=records/rows;
-		if(records%rows!=0){
-			total++;
+		if(records!=0&&rows!=0){
+			total=records/rows;
+			if(records%rows!=0){
+				total++;
+			}
 		}
 		return "SUCCESS";
 	}

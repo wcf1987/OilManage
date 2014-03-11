@@ -1,5 +1,6 @@
 package cn.edu.cup.manage.dao;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,11 +77,15 @@ public class AlgorithmsCycleDao {
 
 	public int getCountAlgorithms() {
 		// TODO Auto-generated method stub
-		return 0;
+		String sql="select count(*) from t_algorithmscycle t2 ";
+		SQLQuery q = session.createSQLQuery(sql);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
+
 	}
 	public int addAlgorithm(String description, String authorID) {
 		Date addDate=new Date();
-		Query q = session.createSQLQuery("insert into t_algorithmscycle (description,authorID,addtime,LastUpdateTime) values (?,?,?,?)");
+		Query q = session.createSQLQuery("insert into t_algorithmscycle (description,authorID,addtime,LastUpdateTime,inputID,planID,outputID) values (?,?,?,?,0,0,0)");
 		q.setParameter(0, description);
 		q.setParameter(1, authorID);
 		q.setParameter(2, addDate);

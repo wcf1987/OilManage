@@ -22,6 +22,11 @@
 		</action>
 	</package>
 	<package name="json" extends="json-default">
+		<action name="listUser" class="cn.edu.cup.manage.action.UserAction"
+			method="list">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
 		<action name="map" class="cn.edu.cup.map.action.MapAction">
 			<result name="SUCCESS" type="json">
 				<param name="excludeProperties">id</param>

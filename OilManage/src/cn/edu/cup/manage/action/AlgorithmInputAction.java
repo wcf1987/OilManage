@@ -4,12 +4,35 @@ import java.util.List;
 
 import cn.edu.cup.manage.business.AlgorithmInput;
 import cn.edu.cup.manage.dao.AlgorithmInputDao;
+import cn.edu.cup.manage.dao.ParameterDao;
 
 public class AlgorithmInputAction {
 	List<AlgorithmInput> dataList;
-	String ID;
-	String CycleID;
-	String ParamID;
+	private List<Integer> ids;
+	
+	public List<Integer> getIds() {
+		return ids;
+	}
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
+	int ID;
+	int CycleID;
+	int ParamID;
+	String symbol;
+	String display;
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
+	public String getSymbol() {
+		return symbol;
+	}
+	public void setDisplay(String display) {
+		this.display = display;
+	}
+	public String getDisplay() {
+		return display;
+	}
 	public List<AlgorithmInput> getDataList() {
 		return dataList;
 	}
@@ -20,32 +43,32 @@ public class AlgorithmInputAction {
 	}
 
 
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
 
 
-	public void setID(String iD) {
+	public void setID(int iD) {
 		ID = iD;
 	}
 
 
-	public String getCycleID() {
+	public int getCycleID() {
 		return CycleID;
 	}
 
 
-	public void setCycleID(String cycleID) {
+	public void setCycleID(int cycleID) {
 		CycleID = cycleID;
 	}
 
 
-	public String getParamID() {
+	public int getParamID() {
 		return ParamID;
 	}
 
 
-	public void setParamID(String paramID) {
+	public void setParamID(int paramID) {
 		ParamID = paramID;
 	}
 
@@ -125,6 +148,8 @@ public class AlgorithmInputAction {
 	private int total;
 	private String sidx;
 	private String sord;
+	
+	
 	public String list(){		
 
 		AlgorithmInputDao dao=new AlgorithmInputDao();
@@ -148,7 +173,15 @@ public class AlgorithmInputAction {
 
 		AlgorithmInputDao dao=new AlgorithmInputDao();
 	
-		int result=dao.addAlgorithm(this.CycleID,this.ParamID);
+		if(!ids.isEmpty()){
+
+			for(int id:ids){
+				dao.addAlgorithm(this.CycleID,id);
+			}
+		}
+		dao.close();
+		
+//		int result=dao.addAlgorithm(this.CycleID,this.ParamID);
 		return "SUCCESS";
 	}
 	public String delete(){
