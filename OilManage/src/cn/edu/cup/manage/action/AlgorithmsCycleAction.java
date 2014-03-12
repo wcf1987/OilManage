@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.edu.cup.manage.business.AlgorithmsCycle;
 import cn.edu.cup.manage.business.Parameters;
+import cn.edu.cup.manage.dao.AlgorithmInputDao;
 import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
 import cn.edu.cup.manage.dao.ParameterDao;
 
@@ -25,7 +26,14 @@ public class AlgorithmsCycleAction {
 	private int total;
 	private String sidx;
 	private String sord;
+	private List<Integer> ids;
 	
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
+	public List<Integer> getIds() {
+		return ids;
+	}
 	public void setID(String iD) {
 		ID = iD;
 	}
@@ -166,7 +174,17 @@ public class AlgorithmsCycleAction {
 	}
 	public String delete(){
 		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
-		dao.deleteAlgorithm(ID);
+		AlgorithmInputDao inputDao=new AlgorithmInputDao();
+		if(!ids.isEmpty()){
+
+			for(int id:ids){
+				inputDao.deleteAlgorithmByCycle(id);
+				dao.deleteAlgorithm(id);
+			}
+		}
+		inputDao.close();
+		dao.close();
+//		dao.deleteAlgorithm(ID);
 		return "SUCCESS";
 	}
 	public String update(){

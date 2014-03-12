@@ -89,7 +89,15 @@ public class AlgorithmInputDao {
 		
 	}
 
-
+	public int deleteAlgorithmByCycle(int  cycleId) {
+		SQLQuery q = session.createSQLQuery("delete from t_algorithminput where cycleID=?");
+		q.setParameter(0, cycleId);
+		int re=q.executeUpdate();
+//		tx.commit();
+		return re;
+		
+	}
+	
 	public int updateParameter(int iD, int cycleID, int paramID) {
 		// TODO Auto-generated method stub
 		

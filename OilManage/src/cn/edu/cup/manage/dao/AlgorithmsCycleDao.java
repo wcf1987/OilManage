@@ -23,12 +23,12 @@ public class AlgorithmsCycleDao {
 	 Session session ;
 	 Transaction tx ;
 		
-		private  void close()
-		{
-			tx.commit();
-			session.close();
-			//sessionFactory.close();
-		}
+	public  void close()
+	{
+		tx.commit();
+		session.close();
+		//sessionFactory.close();
+	}
 
 	public AlgorithmsCycleDao()
 	{	
@@ -96,11 +96,11 @@ public class AlgorithmsCycleDao {
 		return result;
 	}
 	
-	public int deleteAlgorithm(String  id) {
+	public int deleteAlgorithm(int  id) {
 		SQLQuery q = session.createSQLQuery("delete from t_algorithmscycle where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
-		tx.commit();
+//		tx.commit();
 		return re;
 		
 	}
