@@ -11,7 +11,7 @@
 			<result name="succ" type="redirect">/pages/data.jsp</result>
 			<result name="fail" type="redirect">/pages/login.jsp</result>
 		</action>
-		
+	
 		<!-- UserManage End -->
 	</package>
 	
@@ -22,9 +22,8 @@
 		</action>
 	</package>
 	<package name="json" extends="json-default">
-		<action name="listUser" class="cn.edu.cup.manage.action.UserAction"
-			method="list">
-			<result name="SUCCESS" type="json">
+		<action name="listUser" class="cn.edu.cup.manage.action.UserAction" method="list">
+			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
 		<action name="map" class="cn.edu.cup.map.action.MapAction">
@@ -164,7 +163,14 @@
 			</result>
 		</action>
 		
-		
+		<action name="uploadAlgorithm" class="cn.edu.cup.manage.action.UploadAction"
+			method="uploadFile">
+			<param name="savePath">/uploadAlgorithm</param>
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
 		<action name="listAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
 			method="list">
 
