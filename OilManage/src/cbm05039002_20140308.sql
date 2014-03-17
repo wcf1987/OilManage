@@ -22,7 +22,8 @@ DROP TABLE IF EXISTS `t_algorithminput`;
 CREATE TABLE `t_algorithminput` (
   `ID` int(11) DEFAULT NULL,
   `CycleID` int(11) DEFAULT NULL,
-  `ParamID` int(11) DEFAULT NULL
+  `ParamID` int(11) DEFAULT NULL,
+   UNIQUE KEY `pk_input_ID` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -301,7 +302,7 @@ CREATE TABLE `t_physical` (
 -- ----------------------------
 -- Records of t_physical
 -- ----------------------------
-INSERT INTO `t_physical` VALUES ('1', '长度单位', null, '长度\r\n', '米');
+INSERT INTO `t_physical` VALUES ('1', '长度单位', null, '长度', '米');
 INSERT INTO `t_physical` VALUES ('15', '质量', '', null, '千克');
 INSERT INTO `t_physical` VALUES ('16', '温度', '', null, '开尔文');
 INSERT INTO `t_physical` VALUES ('17', '物质的量', '', null, '摩尔');

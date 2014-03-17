@@ -41,7 +41,7 @@ public class AlgorithmInputDao {
 	}
 	public List<AlgorithmInput> getAlgorithmInputList(int page, int rows,
 			String sidx, String sord,int CycleID) {
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.CycleID,t2.ID pid,t2.display,t3.Symbol from t_algorithminput t1,t_parameters t2,t_measure t3 where t1.ParamID=t2.ID and t3.id=t2.measureID and t1.CycleID=? order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.CycleID,t2.ID pid,t2.display,CONCAT(t3.CName,'(',t3.Symbol,')') from t_algorithminput t1,t_parameters t2,t_measure t3 where t1.ParamID=t2.ID and t3.id=t2.measureID and t1.CycleID=? order by t1."+sidx+" "+sord);
 		q.setParameter(0, CycleID);
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);

@@ -379,7 +379,8 @@ public class PhysicalDao {
 			else
 				where.append(" where ");
 			param.replaceAll(".*([';]+|(--)+).*\\/\"", " ");//特殊字符的过滤，防注入
-			where.append(tableName).append(".").append(fieldName).append("=\"").append(param).append("\"");
+			where.append(tableName).append(".").append(fieldName).append(" like '%").append(param).append("%'");
+			System.out.println(where);
 		}
 		return where;
 	}

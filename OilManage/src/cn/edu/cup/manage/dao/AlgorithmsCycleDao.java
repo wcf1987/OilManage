@@ -64,6 +64,7 @@ public class AlgorithmsCycleDao {
 			  String author=(String)row[5];
 			  String description=(String)row[6];
 			  Date addTime=(Date)row[7];
+			  
 			  Date lastUpdateTime=(Date)row[8];
 			  
 			  AlgorithmsCycle p=new AlgorithmsCycle(id, iid, pid, oid, aid,author,description,addTime,lastUpdateTime);
