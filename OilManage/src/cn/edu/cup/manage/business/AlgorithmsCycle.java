@@ -11,6 +11,13 @@ public class AlgorithmsCycle {
 	String outputID;
 	String authorID;
 	String authorName;
+	String name;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getAuthorName() {
 		return authorName;
 	}

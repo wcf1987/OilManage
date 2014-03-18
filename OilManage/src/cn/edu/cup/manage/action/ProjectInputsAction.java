@@ -3,13 +3,13 @@ package cn.edu.cup.manage.action;
 import java.util.Date;
 import java.util.List;
 
+import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
-import cn.edu.cup.manage.business.Parameters;
 import cn.edu.cup.manage.dao.AlgorithmInputDao;
+import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
-import cn.edu.cup.manage.dao.ParameterDao;
 
-public class AlgorithmsCycleAction {
+public class ProjectInputsAction {
 	String ID;
 	String inputID;
 	String planID;
@@ -18,7 +18,8 @@ public class AlgorithmsCycleAction {
 	String Description;
 	Date addDate;
 	Date lastUpdateDate;
-	List<AlgorithmsCycle> dataList;
+	String name;
+	List<AlgorithmPro> dataList;
 	private int page;
 	private int records;
 	private int rows;
@@ -27,13 +28,7 @@ public class AlgorithmsCycleAction {
 	private String sidx;
 	private String sord;
 	private List<Integer> ids;
-	private String name;
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	public void setIds(List<Integer> ids) {
 		this.ids = ids;
 	}
@@ -96,10 +91,10 @@ public class AlgorithmsCycleAction {
 		return lastUpdateDate;
 	}
 	
-	public void setDataList(List<AlgorithmsCycle> dataList) {
+	public void setDataList(List<AlgorithmPro> dataList) {
 		this.dataList = dataList;
 	}
-	public List<AlgorithmsCycle> getDataList() {
+	public List<AlgorithmPro> getDataList() {
 		return dataList;
 	}
 	
@@ -154,11 +149,11 @@ public class AlgorithmsCycleAction {
 	
 	public String list(){		
 
-		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
+		AlgorithmProDao dao=new AlgorithmProDao();
 		
 		
 		
-		dataList=dao.getAlgorithmsList(page,rows,sidx,sord);
+		dataList=dao.getAlgorithmProsList(page,rows,sidx,sord);
 	
 		records=dao.getCountAlgorithms();
 
@@ -173,29 +168,29 @@ public class AlgorithmsCycleAction {
 
 	public String add(){
 
-		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
+		AlgorithmProDao dao=new AlgorithmProDao();
 	
-		int result=dao.addAlgorithm(this.Description,this.authorID,this.name);
+		int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
 		return "SUCCESS";
 	}
 	public String delete(){
-		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
-		AlgorithmInputDao inputDao=new AlgorithmInputDao();
+		AlgorithmProDao dao=new AlgorithmProDao();
+		//AlgorithmInputDao inputDao=new AlgorithmInputDao();
 		if(!ids.isEmpty()){
 
 			for(int id:ids){
-				inputDao.deleteAlgorithmByCycle(id);
-				dao.deleteAlgorithm(id);
+				
+				dao.deletePro(id);
 			}
 		}
-		inputDao.close();
+		//inputDao.close();
 		dao.close();
 //		dao.deleteAlgorithm(ID);
 		return "SUCCESS";
 	}
 	public String update(){
-		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
-		int re=dao.updateParameter(ID, this.inputID,this.planID, this.outputID,this.Description,this.name);
+		AlgorithmProDao dao=new AlgorithmProDao();
+		int re=dao.updatePro(ID, this.name,this.Description);
 		return "SUCCESS"; 
 	}
 	

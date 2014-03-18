@@ -44,7 +44,7 @@ public class AlgorithmsCycleDao {
 	}
 	public List<AlgorithmsCycle> getAlgorithmsList(int page, int rows,
 			String sidx, String sord) {
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime,t1.Name from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID order by t1."+sidx+" "+sord);
 
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
@@ -66,9 +66,9 @@ public class AlgorithmsCycleDao {
 			  Date addTime=(Date)row[7];
 			  
 			  Date lastUpdateTime=(Date)row[8];
-			  
+			  String Name=(String)row[9];
 			  AlgorithmsCycle p=new AlgorithmsCycle(id, iid, pid, oid, aid,author,description,addTime,lastUpdateTime);
-
+			  p.setName(Name);
 			  
 			  re.add(p);
 		}
@@ -84,13 +84,14 @@ public class AlgorithmsCycleDao {
 		return count;
 
 	}
-	public int addAlgorithm(String description, String authorID) {
+	public int addAlgorithm(String description, String authorID,String name) {
 		Date addDate=new Date();
-		Query q = session.createSQLQuery("insert into t_algorithmscycle (description,authorID,addtime,LastUpdateTime,inputID,planID,outputID) values (?,?,?,?,0,0,0)");
+		Query q = session.createSQLQuery("insert into t_algorithmscycle (description,authorID,addtime,LastUpdateTime,inputID,planID,outputID,Name) values (?,?,?,?,0,0,0,?)");
 		q.setParameter(0, description);
 		q.setParameter(1, authorID);
 		q.setParameter(2, addDate);
 		q.setParameter(3, addDate);
+		q.setParameter(4, name);
 		int result=q.executeUpdate();
 		
 		tx.commit();
@@ -108,18 +109,18 @@ public class AlgorithmsCycleDao {
 
 
 	public int updateParameter(String iD, String inputID, String planID,
-			String outputID, String description) {
+			String outputID, String description,String name) {
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();
-		SQLQuery q = session.createSQLQuery("update t_algorithmscycle t set inputID=?,planID=?,outputID=?,Description=?,LastUpdateTime=? where t.ID=?");
+		SQLQuery q = session.createSQLQuery("update t_algorithmscycle t set inputID=?,planID=?,outputID=?,Description=?,LastUpdateTime=? , Name=? where t.ID=?");
 		q.setParameter(0, inputID);
 		q.setParameter(1, planID);
 		q.setParameter(2, outputID);
 		q.setParameter(3, description);
 
 		q.setParameter(4, modifyTime);
-
-		q.setParameter(5, iD);
+		q.setParameter(5, name);
+		q.setParameter(6, iD);
 		int re=q.executeUpdate();
 		tx.commit();
 		return re;
