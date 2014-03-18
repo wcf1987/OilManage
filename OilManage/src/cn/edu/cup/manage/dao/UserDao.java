@@ -168,9 +168,11 @@ public class UserDao  {
 					  user.setPassword(password);
 					  users.add(user);
 				}
+				if(!users.isEmpty()){
+					userR=new User();
+					userR=(User)users.get(0);
+				}
 				
-				userR=new User();
-				userR=(User)users.get(0);
 				} catch (Exception e) {
 			e.printStackTrace();
 		}		
