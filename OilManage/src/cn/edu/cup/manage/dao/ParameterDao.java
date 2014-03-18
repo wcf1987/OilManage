@@ -81,7 +81,7 @@ public class ParameterDao {
 
 
 	public List<Parameters> getParametersList(int page,int rows,String sidx,String sord) {
-		SQLQuery q = session.createSQLQuery("SELECT t1.id,t1.measureID,t2.Symbol,t1.display,t1.name from t_parameters t1,t_measure t2 where t1.ID=t2.ID order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("SELECT t1.id,t1.measureID,t2.Symbol,t1.display,t1.name from t_parameters t1,t_measure t2 where t1.measureID=t2.ID order by t1."+sidx+" "+sord);
 
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
@@ -92,7 +92,7 @@ public class ParameterDao {
 			//TestDb user = (TestDb)l.get(i);
 			//System.out.println(user.getUsername());
 
-			  Object[] row = (Object[])l.get(i);;
+			  Object[] row = (Object[])l.get(i);
 			  Integer id = (Integer)row[0];
 			  String mid = row[1].toString();  
 			  String mSymbol = (String)row[2];  
