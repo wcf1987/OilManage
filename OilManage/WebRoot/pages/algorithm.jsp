@@ -73,7 +73,7 @@ else{
 <script>
 $(document).ready(function(){
 
-	
+	//给算法添加输入的select项的多选
 	 $('#add').click(function(){  
          var $options = $('#select1 option:selected');//获取当前选中的项  
          var $remove = $options.remove();//删除下拉列表中选中的项  
@@ -106,7 +106,7 @@ $(document).ready(function(){
          $('#select2 option:selected').appendTo('#select1');  
      });
         
-	loadAuthorOptions();
+	loadAuthorOptions();//加载作者选项
 	$("#addAlgorithmForm").validate({
 		debug:true,
 		onsubmit:true,

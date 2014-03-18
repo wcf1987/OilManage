@@ -56,6 +56,6 @@ public class UserAction extends ActionSupport{
 		dataList=dao.getUserList();
 		return "SUCCESS";
 	}
-	
+
 	
 }

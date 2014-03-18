@@ -2,6 +2,7 @@ package cn.edu.cup.manage.dao;
 
 // default package
 
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -80,7 +81,7 @@ public class UserDao  {
 		//System.out.println(obj.getUsername());
 	}
 	
-	public int addUser(String username,String password,String usergroupid,String email,String state,String info){
+	public int addUser(String username,String password,int usergroupid,String email,String state,String info){
 		
 		Query q = session.createSQLQuery("insert into T_User (username,password,usergroupid,email,state,info) values (?,?,?,?,?,?)");
 		q.setParameter(0, username);
@@ -189,6 +190,17 @@ public class UserDao  {
 			  re.add(user);
 		}
 		return re;
+	}
+	
+	public Boolean findByUsername(String name){
+		SQLQuery q=session.createSQLQuery("select count(*) from t_user t where t.username=?");
+		q.setParameter(0, name);
+		int count=((BigInteger)q.uniqueResult()).intValue();
+		if(count>0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	public static String getUSERNAME() {
