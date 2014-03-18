@@ -62,14 +62,14 @@ $(
 							sortable:false
 						},
 						{
-							name:'addDate',
+							name:'addDates',
 							index:'addDate',
 							width:100,
 							align:'center',
 							sortable:true
 						},
 						{
-							name:'lastUpdateDate',
+							name:'lastUpdateDates',
 							index:'lastUpdateDate',
 							width:100,
 							align:'center',

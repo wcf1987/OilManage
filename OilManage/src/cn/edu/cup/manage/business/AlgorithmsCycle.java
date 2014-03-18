@@ -2,6 +2,8 @@ package cn.edu.cup.manage.business;
 
 import java.util.Date;
 
+import cn.edu.cup.tools.DateTools;
+
 public class AlgorithmsCycle {
 	String ID;
 	String inputID;
@@ -9,6 +11,13 @@ public class AlgorithmsCycle {
 	String outputID;
 	String authorID;
 	String authorName;
+	String name;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getAuthorName() {
 		return authorName;
 	}
@@ -17,7 +26,9 @@ public class AlgorithmsCycle {
 	}
 	String Description;
 	Date addDate;
+	String addDates;
 	Date lastUpdateDate;
+	String lastUpdateDates;
 	public AlgorithmsCycle(String id2, String iid, String pid, String oid,
 			String aid, String author, String description2, Date addTime,
 			Date lastUpdateTime) {
@@ -30,7 +41,21 @@ public class AlgorithmsCycle {
 		this.authorName=author;
 		this.Description=description2;
 		this.addDate=addTime;
+		this.addDates=DateTools.getStringFromDate(addTime);
 		this.lastUpdateDate=lastUpdateTime;
+		this.lastUpdateDates=DateTools.getStringFromDate(lastUpdateDate);
+	}
+	public String getAddDates() {
+		return addDates;
+	}
+	public void setAddDates(String addDates) {
+		this.addDates = addDates;
+	}
+	public String getLastUpdateDates() {
+		return lastUpdateDates;
+	}
+	public void setLastUpdateDates(String lastUpdateDates) {
+		this.lastUpdateDates = lastUpdateDates;
 	}
 	public Date getAddDate() {
 		return addDate;

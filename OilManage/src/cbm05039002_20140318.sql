@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2014-03-07 16:35:29
+Date: 2014-03-18 17:25:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,14 +20,31 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_algorithminput`;
 CREATE TABLE `t_algorithminput` (
-  `ID` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CycleID` int(11) DEFAULT NULL,
   `ParamID` int(11) DEFAULT NULL,
-   UNIQUE KEY `pk_input_ID` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_algorithminput
+-- ----------------------------
+INSERT INTO `t_algorithminput` VALUES ('1', '2', '3');
+INSERT INTO `t_algorithminput` VALUES ('2', '2', '1');
+
+-- ----------------------------
+-- Table structure for `t_algorithmoutput`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_algorithmoutput`;
+CREATE TABLE `t_algorithmoutput` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `CycleID` int(11) DEFAULT NULL,
+  `ParamID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_algorithmoutput
 -- ----------------------------
 
 -- ----------------------------
@@ -43,11 +60,71 @@ CREATE TABLE `t_algorithmscycle` (
   `Description` varchar(100) DEFAULT NULL,
   `AddTime` datetime DEFAULT NULL,
   `LastUpdateTime` datetime DEFAULT NULL,
-  UNIQUE KEY `PK_Algorithmscycle_ID` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_algorithmscycle
+-- ----------------------------
+INSERT INTO `t_algorithmscycle` VALUES ('2', '0', '0', '0', '1', 'icetest', '2014-03-17 22:22:28', '2014-03-17 22:22:28', null);
+
+-- ----------------------------
+-- Table structure for `t_calchis`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_calchis`;
+CREATE TABLE `t_calchis` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Pro_ID` int(11) DEFAULT NULL,
+  `Calc_Date` datetime DEFAULT NULL,
+  `Algorith_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_calchis
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `t_calcinput_his`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_calcinput_his`;
+CREATE TABLE `t_calcinput_his` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Calc_ID` int(11) DEFAULT NULL,
+  `Pro_ID` int(11) DEFAULT NULL,
+  `AlgorCycle_ID` int(11) DEFAULT NULL,
+  `Input_Par_ID` int(11) DEFAULT NULL,
+  `Input_Par_Value` double DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_calcinput_his
+-- ----------------------------
+INSERT INTO `t_calcinput_his` VALUES ('1', '-1', '2', '2', '1', '0');
+INSERT INTO `t_calcinput_his` VALUES ('2', '-1', '2', '2', '3', '0');
+INSERT INTO `t_calcinput_his` VALUES ('4', '-1', '2', '2', '1', '0');
+INSERT INTO `t_calcinput_his` VALUES ('5', '-1', '2', '2', '3', '0');
+INSERT INTO `t_calcinput_his` VALUES ('7', '-1', '2', '2', '1', '0');
+INSERT INTO `t_calcinput_his` VALUES ('8', '-1', '2', '2', '3', '0');
+
+-- ----------------------------
+-- Table structure for `t_calcoutput_his`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_calcoutput_his`;
+CREATE TABLE `t_calcoutput_his` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Calc_ID` int(11) DEFAULT NULL,
+  `Pro_ID` int(11) DEFAULT NULL,
+  `Output_ID` int(11) DEFAULT NULL,
+  `Output_Par_ID` int(11) DEFAULT NULL,
+  `Output_Par_Value` double DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_calcoutput_his
 -- ----------------------------
 
 -- ----------------------------
@@ -215,7 +292,7 @@ CREATE TABLE `t_mappro` (
   `ProName` varchar(25) DEFAULT NULL,
   `FilePath` varchar(255) DEFAULT NULL,
   `AddDate` datetime DEFAULT NULL,
-  UNIQUE KEY `idpk` (`ID`)
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -251,7 +328,7 @@ CREATE TABLE `t_measure` (
   `RatioA` double DEFAULT NULL,
   `RatioB` double DEFAULT NULL,
   `StyleID` int(11) DEFAULT NULL,
-  UNIQUE KEY `PK_Measure` (`ID`)
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -276,7 +353,7 @@ CREATE TABLE `t_parameters` (
   `measureID` int(11) DEFAULT NULL,
   `display` varchar(32) DEFAULT NULL,
   `name` varchar(32) DEFAULT NULL,
-  UNIQUE KEY `PK_Param_ID` (`ID`)
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -296,13 +373,13 @@ CREATE TABLE `t_physical` (
   `EName` varchar(32) DEFAULT NULL,
   `Description` varchar(50) DEFAULT NULL,
   `ISOBasicUnit` varchar(32) DEFAULT NULL,
-  UNIQUE KEY `pk_Physical` (`ID`)
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_physical
 -- ----------------------------
-INSERT INTO `t_physical` VALUES ('1', '长度单位', null, '长度', '米');
+INSERT INTO `t_physical` VALUES ('1', '长度单位', null, '长度\r\n', '米');
 INSERT INTO `t_physical` VALUES ('15', '质量', '', null, '千克');
 INSERT INTO `t_physical` VALUES ('16', '温度', '', null, '开尔文');
 INSERT INTO `t_physical` VALUES ('17', '物质的量', '', null, '摩尔');
@@ -347,6 +424,26 @@ INSERT INTO `t_physicalstyle` VALUES ('2', 'English');
 INSERT INTO `t_physicalstyle` VALUES ('3', 'UserDefine');
 
 -- ----------------------------
+-- Table structure for `t_projects`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_projects`;
+CREATE TABLE `t_projects` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Pro_InputNum` int(11) DEFAULT NULL,
+  `AuthorID` int(11) DEFAULT NULL,
+  `AddTime` datetime DEFAULT NULL,
+  `LastCalcTime` datetime DEFAULT NULL,
+  `CalcHisNum` int(11) DEFAULT NULL,
+  `Description` varchar(250) DEFAULT NULL,
+  `Name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_projects
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `t_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
@@ -354,7 +451,7 @@ CREATE TABLE `t_user` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `Username` varchar(32) DEFAULT NULL,
   `Password` varchar(32) DEFAULT NULL,
-  UNIQUE KEY `PK_USER_ID` (`ID`)
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------

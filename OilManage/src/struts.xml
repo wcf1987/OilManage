@@ -233,13 +233,77 @@
 		</action>
 		
 		
-		
-		
-		
-		
-		
-		
+		<action name="listAlgorithmOutputs" class="cn.edu.cup.manage.action.AlgorithmOutputAction"
+			method="list">
 
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateAlgorithmOutput" class="cn.edu.cup.manage.action.AlgorithmOutputAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delAlgorithmOutput" class="cn.edu.cup.manage.action.AlgorithmOutputAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addAlgorithmOutput" class="cn.edu.cup.manage.action.AlgorithmOutputAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+				<action name="listAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		
+		
+	<action name="listAlgProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateAlgProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		
 		<action name="testData" class="cn.edu.cup.map.action.TableAction">
 			<result name="SUCCESS" type="json">

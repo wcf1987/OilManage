@@ -14,8 +14,9 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.manage.business.AlgorithmInput;
+import cn.edu.cup.manage.business.AlgorithmOutput;
 
-public class AlgorithmInputDao {
+public class AlgorithmOutputDao {
 	 SessionFactory sessionFactory;
 	 Session session ;
 	 Transaction tx ;
@@ -27,7 +28,7 @@ public class AlgorithmInputDao {
 		//sessionFactory.close();
 	}
 
-	public AlgorithmInputDao()
+	public AlgorithmOutputDao()
 	{	
 		Configuration cfg = new Configuration();  
       cfg.configure();          
@@ -39,14 +40,14 @@ public class AlgorithmInputDao {
 		tx = session.beginTransaction();
 	
 	}
-	public List<AlgorithmInput> getAlgorithmInputList(int page, int rows,
+	public List<AlgorithmOutput> getAlgorithmOutputList(int page, int rows,
 			String sidx, String sord,int CycleID) {
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.CycleID,t2.ID pid,t2.display,CONCAT(t3.CName,'(',t3.Symbol,')') from t_algorithminput t1,t_parameters t2,t_measure t3 where t1.ParamID=t2.ID and t3.id=t2.measureID and t1.CycleID=? order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.CycleID,t2.ID pid,t2.display,CONCAT(t3.CName,'(',t3.Symbol,')') from t_algorithmoutput t1,t_parameters t2,t_measure t3 where t1.ParamID=t2.ID and t3.id=t2.measureID and t1.CycleID=? order by t1."+sidx+" "+sord);
 		q.setParameter(0, CycleID);
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
 		List l = q.list();
-		List<AlgorithmInput> re=new ArrayList<AlgorithmInput>();
+		List<AlgorithmOutput> re=new ArrayList<AlgorithmOutput>();
 		for(int i=0;i<l.size();i++)
 		{
 			//TestDb user = (TestDb)l.get(i);
@@ -58,7 +59,7 @@ public class AlgorithmInputDao {
 			  String mid = ((Integer)row[2]).toString();
 			  String display = (String) row[3];
 			  String symbol = (String) row[4];
-			  AlgorithmInput p=new AlgorithmInput(id,cid,mid,display,symbol);
+			  AlgorithmOutput p=new AlgorithmOutput(id,cid,mid,display,symbol);
 			  re.add(p);
 		}
 		
@@ -71,7 +72,7 @@ public class AlgorithmInputDao {
 	}
 	public int addAlgorithm(int cycleID, int paramID) {
 		Date addDate=new Date();
-		Query q = session.createSQLQuery("insert into t_algorithminput (cycleID,paramID) values (?,?)");
+		Query q = session.createSQLQuery("insert into t_algorithmOutput (cycleID,paramID) values (?,?)");
 		q.setParameter(0, cycleID);
 		q.setParameter(1, paramID);
 		int result=q.executeUpdate();
@@ -81,7 +82,7 @@ public class AlgorithmInputDao {
 	}
 	
 	public int deleteAlgorithm(int  id) {
-		SQLQuery q = session.createSQLQuery("delete from t_algorithminput where ID=?");
+		SQLQuery q = session.createSQLQuery("delete from t_algorithmOutput where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
 		tx.commit();
@@ -90,7 +91,7 @@ public class AlgorithmInputDao {
 	}
 
 	public int deleteAlgorithmByCycle(int  cycleId) {
-		SQLQuery q = session.createSQLQuery("delete from t_algorithminput where cycleID=?");
+		SQLQuery q = session.createSQLQuery("delete from t_algorithmOutput where cycleID=?");
 		q.setParameter(0, cycleId);
 		int re=q.executeUpdate();
 //		tx.commit();
@@ -101,7 +102,7 @@ public class AlgorithmInputDao {
 	public int updateParameter(int iD, int cycleID, int paramID) {
 		// TODO Auto-generated method stub
 		
-		SQLQuery q = session.createSQLQuery("update t_algorithminput t set cycleID=?,paramID=? where t.ID=?");
+		SQLQuery q = session.createSQLQuery("update t_algorithmOutput t set cycleID=?,paramID=? where t.ID=?");
 		q.setParameter(0, cycleID);
 		q.setParameter(1, paramID);
 		q.setParameter(2, iD);
