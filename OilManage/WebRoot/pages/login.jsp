@@ -152,7 +152,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			success : function(data) {
 				if(data.success==true){
 					alert("注册成功！");
-					location.href="pages/data.jsp";
+					window.location.reload();
+					//location.href="pages/data.jsp";
 				}else{
 					alert("注册失败！"+data.errorMessage);
 					//$('#register_modal').modal('hide');

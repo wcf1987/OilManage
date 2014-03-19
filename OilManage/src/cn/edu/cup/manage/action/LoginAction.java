@@ -17,6 +17,8 @@ public class LoginAction extends ActionSupport{
 	String password;
 	String type;
 	UserDao userDAO;
+	String flag;
+	
 	public UserDao getUserDAO() {
 		return userDAO;
 	}
@@ -41,7 +43,12 @@ public class LoginAction extends ActionSupport{
 	public void setType(String type) {
 		this.type = type;
 	}
-
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
 	public String login()   {
 		
 		User user=new User();
@@ -81,6 +88,15 @@ public class LoginAction extends ActionSupport{
         System.out.println(user.getUsername()+"已登录");
 		//System.out.println(getType());
 		return "succ";
+	}
+	public String logout(){
+		ActionContext actionContext = ActionContext.getContext();
+        Map session = actionContext.getSession();
+        session.remove("user");
+//		HttpServletRequest request = null;
+//		request.getSession().removeAttribute("user");
+        flag="true";
+		return SUCCESS;
 	}
 	
 }

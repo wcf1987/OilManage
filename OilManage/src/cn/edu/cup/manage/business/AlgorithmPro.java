@@ -17,8 +17,8 @@ public class AlgorithmPro {
 		this.Author=author;
 		this.AddTime=addTime;
 		this.AddTimes=DateTools.getStringFromDate(addTime);
-		this.LastCalcTime=LastCalcTime;
-		this.LastCalcTimes=DateTools.getStringFromDate(LastCalcTime);
+		this.LastCalcTime=lastCalcTime;
+		this.LastCalcTimes=DateTools.getStringFromDate(lastCalcTime);
 		this.Description=description2;
 		this.CalcHisNum=calcHisNum;
 	}
