@@ -42,6 +42,28 @@ public class AlgorithmsCycleDao {
 		tx = session.beginTransaction();
 	
 	}
+	
+	public AlgorithmsCycle getAlgorithmDetail(int ID){
+		SQLQuery q=session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime,t1.Name from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID and t1.ID=?");
+		q.setParameter(0, ID);
+		Object[] row=(Object[]) q.uniqueResult();
+		String id = ((Integer)row[0]).toString();
+		String iid = ((Integer)row[1]).toString();
+		String pid = ((Integer)row[2]).toString();
+		String oid=((Integer)row[3]).toString();
+		String aid=((Integer)row[4]).toString();
+		String author=(String)row[5];
+		String description=(String)row[6];
+		Date addTime=(Date)row[7];
+		  
+		Date lastUpdateTime=(Date)row[8];
+		String Name=(String)row[9];
+		AlgorithmsCycle p=new AlgorithmsCycle(id, iid, pid, oid, aid,author,description,addTime,lastUpdateTime);
+		p.setName(Name);
+		return p;
+		  
+	}
+	
 	public List<AlgorithmsCycle> getAlgorithmsList(int page, int rows,
 			String sidx, String sord) {
 		SQLQuery q = session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime,t1.Name from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID order by t1."+sidx+" "+sord);
@@ -108,7 +130,7 @@ public class AlgorithmsCycleDao {
 	}
 
 
-	public int updateParameter(String iD, String inputID, String planID,
+	public int updateParameter(int iD, String inputID, String planID,
 			String outputID, String description,String name) {
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();

@@ -13,7 +13,7 @@ $(
 				url : "listAlgorithmsCycle.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '上传计划', '输入', '输出', '作者','描述','添加时间','最近更新时间','输入参数添加'],// 表格的列名
+				colNames : [ '编号', '上传计划', '输入', '输出', '作者','描述','添加时间','最近更新时间','输入参数添加','查看详情'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -31,8 +31,8 @@ $(
 							sortable:true
 						},
 						{
-							name : 'view',
-							index : 'view',
+							name : 'viewInput',
+							index : 'viewInput',
 							width : 100,
 							align : "center",
 							formatter : function(value, grid, rows,state) {
@@ -75,7 +75,7 @@ $(
 							align:'center',
 							sortable:true
 						},
-						{
+						{				
 							name : 'input',
 							index : 'input',
 							width : 100,
@@ -85,6 +85,19 @@ $(
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selectInput('"
 										+ rows.ID + "')\">输入参数添加</a>"
+							}
+						},
+						{
+							name : 'view',
+							index : 'view',
+							width : 100,
+							align : "center",
+//							hidden:true,
+							formatter : function(value, grid, rows,
+									state) {
+//								alert(rows.ID);
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewDetail('"
+										+ rows.ID + "')\">查看</a>"
 							}
 						}
 	
@@ -108,6 +121,17 @@ $(
 					repeatitems: false
 				},
 				caption: "算法管理"//表格名称
+					
+//				gridComplete: function(){
+//	                var ids = $("#AlgorithmList").getDataIDs();//jqGrid('getDataIDs');
+//	                for(var i=0;i<ids.length;i++){
+//	                    var cl = ids[i];
+//	                    be = "<input  type='button' value='查看' onclick=\"jQuery('#AlgorithmList').jqGrid('viewGridRow','"+cl+"',{modal:true});\"  />"; 
+//	                    de = "<input  type='button' value='删除' onclick=\"jQuery('#AlgorithmList').jqGrid('delGridRow','"+cl+"',{closeOnEscape:true});\"  />";
+//	                    jQuery("#AlgorithmList").jqGrid('setRowData',ids[i],{test:be+de});
+//	                } 
+//	            }
+		            
 				
 			});
 //	datagrid.jqGrid('hideCol','ID');
@@ -137,8 +161,54 @@ $(
 				position:"first"
 			});
 	
+	
 }//function结束
 );//$()结束
+
+function viewDetail(rowId){
+	$('#view_detail_modal').modal();
+//	$('#rowID').val(rowData);
+//	alert(rowData);
+	
+//	loadParameterOptions();
+	$.ajax({
+		type:"post",
+		url:"viewAlgorithmDetail.action",
+		data:{
+			ID:rowId,
+			sidx:"ID",
+			sord:"asc"
+		},
+		success:function(data){
+			$("#AlgID").text(data.algorithm.ID);
+			$("#AlgName").text(data.algorithm.name);
+			$("#AlgDes").text(data.algorithm.description);
+			$("#AlgAddDate").text(data.algorithm.addDates);
+			$("#AlgLastUpdateDate").text(data.algorithm.lastUpdateDates);
+			$("#AlgAuthor").text(data.algorithm.authorName);
+//			$("#").text(data.algorithm.);
+		
+			var tr=$("#inputTr");
+			$.each(data.inputList,function(index,row){
+				var clonedTr=tr.clone();
+				var _index=index;
+				clonedTr.children("td").each(function(inner_index){
+					switch(inner_index){
+						case(0):$(this).html(row.ID);break;
+						case(1):$(this).html(row.display);break;
+						case(2):$(this).html(row.symbol);break;
+					
+					}//end switch
+				});//end children.each
+				clonedTr.insertAfter(tr);		
+			});//end $each
+			$("#inputTr").hide();
+			$("#inputTable").show();			
+			
+		}
+	});
+}
+
 function deleteAlgorithm() {
     var sels = $("#AlgorithmList").jqGrid('getGridParam','selarrrow'); 
     if(sels==""){ 

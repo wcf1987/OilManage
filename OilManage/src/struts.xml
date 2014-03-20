@@ -188,10 +188,12 @@
 		</action>
 		<action name="updateAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
 			method="update">
-
 			<result name="SUCCESS" type="json">
-
 			</result>
+		</action>
+		
+		<action name="viewAlgorithmDetail" class="cn.edu.cup.manage.action.AlgorithmsCycleAction" method="viewDetail">
+			<result name="SUCCESS" type="json"></result>
 		</action>
 		<action name="delAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
 			method="delete">

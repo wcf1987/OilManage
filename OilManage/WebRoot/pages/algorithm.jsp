@@ -523,6 +523,141 @@ function loadAuthorOptions(){
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 		
+			<!-- 查看详情的模态框 -->   	
+		<div class="modal fade" id="view_detail_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		       <!--  <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输入</h4> -->
+		      </div>
+		      <div class="modal-body">  
+		      	<div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<dl class="dl-horizontal">
+								<dt>
+									编号
+								</dt>
+								<dd id="AlgID">
+									
+								</dd>
+								<dt>
+									名称
+								</dt>
+								<dd id="AlgName">
+									始创于1775年的江诗丹顿已有250年历史，
+								</dd>
+							
+								<dt>
+									描述
+								</dt>
+								<dd id="AlgDes">
+									创立于1868年的万国表有“机械表专家”之称。
+								</dd>
+								<dt>
+									添加时间
+								</dt>
+								<dd id="AlgAddDate">
+									卡地亚拥有150多年历史，是法国珠宝金银首饰的制造名家。
+								</dd>
+								<dt>
+									最后更新时间
+								</dt>
+								<dd id="AlgLastUpdateDate">
+									卡地亚拥有150多年历史，是法国珠宝金银首饰的制造名家。
+								</dd>
+								<dt>
+									作者
+								</dt>
+								<dd id="AlgAuthor">
+									卡地亚拥有150多年历史，是法国珠宝金银首饰的制造名家。
+								</dd>
+							</dl>	
+							
+							<hr size=1 style="COLOR:#ff9999;border-style:double;width:490"> 
+							
+							<dl class="dl-horizontal">
+								
+								<dt>
+									输入参数明细
+								</dt>
+								<dd id="AlgID">
+									<table id="inputTable" class="table" >
+										<thead>
+											<tr>
+												<th>
+													编号
+												</th>
+												<th>
+													参数名
+												</th>
+												<th>
+													符号
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr id=inputTr>
+												<td>											
+												</td>
+												<td>											
+												</td>
+												<td>											
+												</td>						
+											</tr>									
+										</tbody>
+									</table>	
+								</dd>
+								<dt>
+									输出明细
+								</dt>
+								<dd id="AlgName">
+									
+								</dd>															
+							</dl>						
+						<!--  
+							<table id="generatedTable" class="table" >
+								<thead>
+									<tr>
+										<th>
+											编号
+										</th>
+										<th>
+											参数名
+										</th>
+										<th>
+											符号
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr id="cloneTr">
+										<td>											
+										</td>
+										<td>											
+										</td>
+										<td>											
+										</td>						
+									</tr>									
+								</tbody>
+							</table>
+							-->
+						</div>
+					</div>
+				</div>
+				<!-- 
+	      		<table id="AlgorithmInputList" class="table table-striped table-bordered table-hover datatable " style="width:600px;" ></table>
+	      		<div>
+	      			<div id="AlgorithmInputMeasurePager" ></div>
+	      		</div>	
+	      		 -->	  
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
   </body>
   
 </html>

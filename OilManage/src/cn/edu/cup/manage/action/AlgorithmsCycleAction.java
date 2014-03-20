@@ -3,6 +3,7 @@ package cn.edu.cup.manage.action;
 import java.util.Date;
 import java.util.List;
 
+import cn.edu.cup.manage.business.AlgorithmInput;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
 import cn.edu.cup.manage.business.Parameters;
 import cn.edu.cup.manage.dao.AlgorithmInputDao;
@@ -10,7 +11,7 @@ import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
 import cn.edu.cup.manage.dao.ParameterDao;
 
 public class AlgorithmsCycleAction {
-	String ID;
+	int ID;
 	String inputID;
 	String planID;
 	String outputID;
@@ -19,6 +20,8 @@ public class AlgorithmsCycleAction {
 	Date addDate;
 	Date lastUpdateDate;
 	List<AlgorithmsCycle> dataList;
+	AlgorithmsCycle algorithm;
+	List<AlgorithmInput> inputList;
 	private int page;
 	private int records;
 	private int rows;
@@ -28,6 +31,19 @@ public class AlgorithmsCycleAction {
 	private String sord;
 	private List<Integer> ids;
 	private String name;
+	
+	public List<AlgorithmInput> getInputList() {
+		return inputList;
+	}
+	public void setInputList(List<AlgorithmInput> inputList) {
+		this.inputList = inputList;
+	}
+	public AlgorithmsCycle getAlgorithm() {
+		return algorithm;
+	}
+	public void setAlgorithm(AlgorithmsCycle algorithm) {
+		this.algorithm = algorithm;
+	}
 	public String getName() {
 		return name;
 	}
@@ -40,11 +56,11 @@ public class AlgorithmsCycleAction {
 	public List<Integer> getIds() {
 		return ids;
 	}
-	public void setID(String iD) {
-		ID = iD;
-	}
-	public String getID() {
+	public int getID() {
 		return ID;
+	}
+	public void setID(int iD) {
+		ID = iD;
 	}
 	
 	public void setInputID(String inputID) {
@@ -150,6 +166,14 @@ public class AlgorithmsCycleAction {
 	}
 	public String getSord() {
 		return sord;
+	}
+	
+	public String viewDetail(){
+		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
+		algorithm=dao.getAlgorithmDetail(ID);
+		AlgorithmInputDao inputdao=new AlgorithmInputDao();
+		inputList=inputdao.getAlgorithmInputList(page, rows, sidx, sord, ID);
+		return "SUCCESS";
 	}
 	
 	public String list(){		
