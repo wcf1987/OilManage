@@ -13,14 +13,25 @@ public class AlgorithmPro {
 		this.ID=id2;
 		this.name=proname;
 		this.Pro_input_Num=0;
-		this.Author_ID=aid;
+		this.authorID=aid;
 		this.Author=author;
 		this.AddTime=addTime;
 		this.AddTimes=DateTools.getStringFromDate(addTime);
-		this.LastCalcTime=lastCalcTime;
-		this.LastCalcTimes=DateTools.getStringFromDate(lastCalcTime);
-		this.Description=description2;
-		this.CalcHisNum=calcHisNum;
+		if(lastCalcTime!=null){
+			this.LastCalcTime=lastCalcTime;
+			this.LastCalcTimes=DateTools.getStringFromDate(lastCalcTime);
+		}
+		if(calcHisNum!=null){
+			this.CalcHisNum=calcHisNum;
+		}else{
+			this.CalcHisNum=0;
+		}
+		
+		if(description2!=null){
+			this.Description=description2;
+		}
+		
+		
 	}
 	public String getAuthor() {
 		return Author;
@@ -59,7 +70,7 @@ public class AlgorithmPro {
 		this.name = name;
 	}
 	int Pro_input_Num;
-	int Author_ID;
+	int authorID;
 	String Author;
 	Date  AddTime;
 	String AddTimes;
@@ -76,11 +87,11 @@ public class AlgorithmPro {
 	public void setPro_input_Num(int pro_input_Num) {
 		Pro_input_Num = pro_input_Num;
 	}
-	public int getAuthor_ID() {
-		return Author_ID;
+	public int getAuthorID() {
+		return authorID;
 	}
-	public void setAuthor_ID(int author_ID) {
-		Author_ID = author_ID;
+	public void setAuthorID(int authorID) {
+		this.authorID = authorID;
 	}
 
 	public int getCalcHisNum() {

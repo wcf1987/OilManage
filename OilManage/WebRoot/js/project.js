@@ -66,8 +66,8 @@ $(
 							sortable:true
 						},
 						{
-							name:'ID',
-							index:'ID',
+							name:'set',
+							index:'set',
 							width:200,
 							align:'center',
 							sortable:false,
@@ -99,7 +99,7 @@ $(
 				
 			});
 //	datagrid.jqGrid('hideCol','ID');
-	datagrid.jqGrid('filterToolbar',{searchOperators:true});
+//	datagrid.jqGrid('filterToolbar',{searchOperators:true});
 	datagrid.jqGrid('navGrid','#ProjectPager',{
 		edit : false,
 		add : false,
@@ -107,11 +107,11 @@ $(
 		del : false}).jqGrid('navButtonAdd',"#ProjectPager",{
 				title:'添加',
 				caption:"添加",
-				id:"add_AlgorithmList",
+				id:"add_ProjectList",
 				onClickButton : function addModal(){
 					// 配置对话框
 
-						$('#uploadAlgorithmModal').modal();
+						$('#add_project_modal').modal();
 				
 				},
 				position:"first"
@@ -120,15 +120,16 @@ $(
 			}).jqGrid('navButtonAdd',"#ProjectPager",{
 				title:'删除',
 				caption:"删除",	
-				id:"delete_AlgorithmList",
-				onClickButton:deleteAlgorithm,
+				id:"delete_ProjectList",
+				onClickButton:deleteProject,
 				position:"first"
 			});
 	
 }//function结束
 );//$()结束
-function deleteAlgorithm() {
-    var sels = $("#AlgorithmList").jqGrid('getGridParam','selarrrow'); 
+
+function deleteProject() {
+    var sels = $("#ProjectList").jqGrid('getGridParam','selarrrow'); 
     if(sels==""){ 
        //$().message("请选择要删除的项！"); 
        alert("请选择要删除的项!");
@@ -136,7 +137,7 @@ function deleteAlgorithm() {
     	var selectedIDs={};
     	$.each(sels,function(i,n){ 
           if(sels[i]!=""){ 
-        	  var rowData = $("#AlgorithmList").jqGrid("getRowData", sels[i]);
+        	  var rowData = $("#ProjectList").jqGrid("getRowData", sels[i]);
         	  selectedIDs["ids[" + i + "]"]=rowData.ID;
 //        	  alert(rowData.ID);
           } 
@@ -145,7 +146,7 @@ function deleteAlgorithm() {
        if(confirm("您是否确认删除？")){ 
         $.ajax({ 
           type: "POST", 
-          url: "delAlgorithmsCycle.action", 
+          url: "delAlgPro.action", 
           data: selectedIDs, 
           beforeSend: function() { 
                $().message("正在请求..."); 
@@ -156,12 +157,12 @@ function deleteAlgorithm() {
           
           success: function(msg){ 
         	alert("删除成功！");
-			$("#AlgorithmList").trigger("reloadGrid");
+			$("#ProjectList").trigger("reloadGrid");
                if(msg!=0){ 
                    var arr = msg.split(','); 
                    $.each(arr,function(i,n){ 
                          if(arr[i]!=""){ 
-                             $("#AlgorithmList").jqGrid('delRowData',n);  
+                             $("#ProjectList").jqGrid('delRowData',n);  
                          } 
                    }); 
                    $().message("已成功删除!"); 
@@ -175,9 +176,7 @@ function deleteAlgorithm() {
 }
 
 
-function deleteAlgorithmInput(){
-	
-}
+
 
 function viewAlgorithmInput(cycleId){
 		$("#cloneTr").nextAll().remove();

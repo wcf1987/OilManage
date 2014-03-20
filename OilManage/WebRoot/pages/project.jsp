@@ -74,47 +74,16 @@ User userlogin=(User)(session.getAttribute("user"));
 <script>
 $(document).ready(function(){
 
-	//给算法添加输入的select项的多选
-	 $('#add').click(function(){  
-         var $options = $('#select1 option:selected');//获取当前选中的项  
-         var $remove = $options.remove();//删除下拉列表中选中的项  
-         $remove.appendTo('#select2');//追加给对方  
-     });  
-       
-     $('#remove').click(function(){  
-         var $removeOptions = $('#select2 option:selected');  
-         $removeOptions.appendTo('#select1');//删除和追加可以用appendTo()直接完成  
-     });  
-       
-     $('#addAll').click(function(){  
-         var $options = $('#select1 option');  
-         $options.appendTo('#select2');  
-     });  
-       
-     $('#removeAll').click(function(){  
-         var $options = $('#select2 option');  
-         $options.appendTo('#select1');  
-     });  
-       
-     //双击事件  
-     $('#select1').dblclick(function(){  
-         //var $options = $('#select1 option:selected');  
-         var $options = $('option:selected', this);//注意此处“option”与“:”之间的空格，有空格是不可以的  
-         $options.appendTo('#select2');  
-     });  
-       
-     $('#select2').dblclick(function(){  
-         $('#select2 option:selected').appendTo('#select1');  
-     });
+
         
 	loadAuthorOptions();//加载作者选项
-	$("#addAlgorithmForm").validate({
+	$("#addProjectForm").validate({
 		debug:true,
 		onsubmit:true,
 		onfocusout:false,
 		onkeyup:true,
 		rules:{
-			Description:{
+			name:{
 				required:true
 			},
 			authorID:{
@@ -122,60 +91,40 @@ $(document).ready(function(){
 			}
 		},
 		messages:{
-			Description:{
-				required:"算法描述不能为空！",
+			name:{
+				required:"名称不能为空！"
 			},
 			authorID:{
 				required:"请选择作者！"
 			}
 		},
 		submitHandler:function(){
-			add_algorithm();
-		}
-	});
-	
-	$("#addAlgorithmInputForm").validate({
-		debug:true,
-		onsubmit:true,
-		onfocusout:false,
-		onkeyup:true,
-		rules:{
-			selectedIDs:{
-				required:true
-			}
-		},
-		messages:{
-			selectedIDs:{
-				required:"请选择输入参数！",
-			}
-		},
-		submitHandler:function(){
-			add_algorithmInput();
+			add_project();
 		}
 	});
 	
 	
 });//ready 结束
 
-function add_algorithm() {
+function add_project() {
 
 	$.ajax({
 		type : 'POST',
-		url : 'addAlgorithmsCycle.action',
+		url : 'addAlgPro.action',
 		data : {
+			name:$("#name").val(),
 			Description : $("#Description").val(),
-			authorID:$("#authorID").val(),
-			filePath : $("#hideFilePath").val()
+			authorID:$("#authorID").val()
 		},
 		success : function(data) {
-			alert('算法文件上传成功');
-			$('#uploadAlgorithmModal').modal('hide');
-			$("#AlgorithmList").trigger("reloadGrid");			
+			alert('工程添加成功！');
+			$('#add_project_modal').modal('hide');
+			$("#ProjectList").trigger("reloadGrid");			
 		},
 		error:function(msg){
 			alter(msg);
-			$('#uploadAlgorithmModal').modal('hide');
-			$("#AlgorithmList").trigger("reloadGrid");
+			$('#add_project_modal').modal('hide');
+			$("#ProjectList").trigger("reloadGrid");
 		}
 	});
 	}
@@ -380,6 +329,49 @@ function loadAuthorOptions(){
 	    </div><!-- /.container -->
 	    
 	   
+	   
+	   
+	   	<!-- 添加工程的模态框 -->   	
+		<div class="modal fade" id="add_project_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加工程</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="addProjectForm" action="addAlgPro.action" method="post"> 
+		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">
+		      		
+		      			<tr>
+		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >名称:</label></td>
+				            <td><input id="name" type="text" class="input2" name="name" maxlength="30"/><em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >描述：</label></td>
+		      				<td><input id="Description" type="text" class="input2" name="Description" maxlength="10" /><em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">作者：</label></td>
+		      				<td>		      					 
+					        	<select id="authorID" name=authorID>		                  
+			              		</select>
+		 						<em style="color:red">*</em>    						
+		      				</td>
+		      			</tr>		    				
+				   </table>
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	
+	
 			<!-- 上传算法文件的模态框 -->   
 		<div id="uploadAlgorithmModal" class="modal fade">
 		  <div class="modal-dialog">
