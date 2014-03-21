@@ -13,7 +13,7 @@ $(
 				url : "listAlgorithmsCycle.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '上传计划', '输入', '输出', '作者','描述','添加时间','最近更新时间','输入参数添加','查看详情'],// 表格的列名
+				colNames : [ '编号', '名称', '作者','描述','添加时间','输入参数添加','输出设置','查看详情'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -30,23 +30,23 @@ $(
 							align : "center",
 							sortable:true
 						},
-						{
-							name : 'viewInput',
-							index : 'viewInput',
-							width : 100,
-							align : "center",
-							formatter : function(value, grid, rows,state) {
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewAlgorithmInput('"
-										+ rows.ID + "')\">查看参数</a>"
-							}
-						},
-						{
-							name : 'outputID',
-							index : 'outputID',
-							width : 100,
-							align : "center",
-							sortable:true
-						},
+//						{
+//							name : 'viewInput',
+//							index : 'viewInput',
+//							width : 100,
+//							align : "center",
+//							formatter : function(value, grid, rows,state) {
+//								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewAlgorithmInput('"
+//										+ rows.ID + "')\">查看参数</a>"
+//							}
+//						},
+//						{
+//							name : 'outputID',
+//							index : 'outputID',
+//							width : 100,
+//							align : "center",
+//							sortable:true
+//						},
 						{
 							name:'authorName',
 							index:'authorName',
@@ -68,13 +68,13 @@ $(
 							align:'center',
 							sortable:true
 						},
-						{
-							name:'lastUpdateDates',
-							index:'lastUpdateDate',
-							width:100,
-							align:'center',
-							sortable:true
-						},
+//						{
+//							name:'lastUpdateDates',
+//							index:'lastUpdateDate',
+//							width:100,
+//							align:'center',
+//							sortable:true
+//						},
 						{				
 							name : 'input',
 							index : 'input',
@@ -85,6 +85,18 @@ $(
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selectInput('"
 										+ rows.ID + "')\">输入参数添加</a>"
+							}
+						},
+						{
+							name : 'output',
+							index : 'output',
+							width : 100,
+							align : "center",
+							formatter : function(value, grid, rows,
+									state) {
+//								alert(rows.ID);
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selecOutput('"
+										+ rows.ID + "')\">输出设置</a>"
 							}
 						},
 						{
@@ -166,6 +178,8 @@ $(
 );//$()结束
 
 function viewDetail(rowId){
+	$("#inputTr").nextAll().remove();
+	$("#inputTr").show();	
 	$('#view_detail_modal').modal();
 //	$('#rowID').val(rowData);
 //	alert(rowData);
@@ -260,8 +274,10 @@ function deleteAlgorithm() {
 function deleteAlgorithmInput(){
 	
 }
-
-function viewAlgorithmInput(cycleId){
+/*
+ * 查看算法输入参数列表，使用动态生成表格
+ */
+function viewAlgorithmInput(cycleId){//暂时没用
 		$("#cloneTr").nextAll().remove();
 		$("#cloneTr").show();
 		$.ajax({
@@ -298,7 +314,7 @@ function viewAlgorithmInput(cycleId){
 
 function viewInput(cycleId){//没用
 	/*
-	 * 输入参数管理列表
+	 * 输入参数管理列表，使用jqgrid展示
 	 */
 	var datagrid = jQuery("#AlgorithmInputList")
 	.jqGrid(
