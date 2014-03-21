@@ -4,10 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import cn.edu.cup.manage.business.AlgorithmPro;
-import cn.edu.cup.manage.business.AlgorithmsCycle;
-import cn.edu.cup.manage.dao.AlgorithmInputDao;
+import cn.edu.cup.manage.business.ProjectInputs;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
-import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
+import cn.edu.cup.manage.dao.ProjectInputDao;
 
 public class ProjectInputsAction {
 	String ID;
@@ -19,7 +18,7 @@ public class ProjectInputsAction {
 	Date addDate;
 	Date lastUpdateDate;
 	String name;
-	List<AlgorithmPro> dataList;
+	List<ProjectInputs> dataList;
 	private int page;
 	private int records;
 	private int rows;
@@ -91,10 +90,10 @@ public class ProjectInputsAction {
 		return lastUpdateDate;
 	}
 	
-	public void setDataList(List<AlgorithmPro> dataList) {
+	public void setDataList(List<ProjectInputs> dataList) {
 		this.dataList = dataList;
 	}
-	public List<AlgorithmPro> getDataList() {
+	public List<ProjectInputs> getDataList() {
 		return dataList;
 	}
 	
@@ -146,16 +145,18 @@ public class ProjectInputsAction {
 	public String getSord() {
 		return sord;
 	}
-	
+	int pro_id;
+	int param_id;
+	double value;
 	public String list(){		
 
-		AlgorithmProDao dao=new AlgorithmProDao();
+		ProjectInputDao dao=new ProjectInputDao();
 		
 		
 		
-		dataList=dao.getAlgorithmProsList(page,rows,sidx,sord);
+		dataList=dao.getProInputsList(pro_id,page,rows,sidx,sord);
 	
-		records=dao.getCountAlgorithms();
+		records=dao.getCountProInputs(this.pro_id);
 
 
 		total=records/rows;
@@ -168,19 +169,43 @@ public class ProjectInputsAction {
 
 	public String add(){
 
-		AlgorithmProDao dao=new AlgorithmProDao();
+		ProjectInputDao dao=new ProjectInputDao();
 	
-		int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
+		int result=dao.addInput(this.pro_id,this.param_id,this.value);
 		return "SUCCESS";
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getPro_id() {
+		return pro_id;
+	}
+	public void setPro_id(int pro_id) {
+		this.pro_id = pro_id;
+	}
+	public int getParam_id() {
+		return param_id;
+	}
+	public void setParam_id(int param_id) {
+		this.param_id = param_id;
+	}
+	public double getValue() {
+		return value;
+	}
+	public void setValue(double value) {
+		this.value = value;
+	}
 	public String delete(){
-		AlgorithmProDao dao=new AlgorithmProDao();
+		ProjectInputDao dao=new ProjectInputDao();
 		//AlgorithmInputDao inputDao=new AlgorithmInputDao();
 		if(!ids.isEmpty()){
 
 			for(int id:ids){
 				
-				dao.deletePro(id);
+				dao.deleteInput(id);
 			}
 		}
 		//inputDao.close();
@@ -189,8 +214,8 @@ public class ProjectInputsAction {
 		return "SUCCESS";
 	}
 	public String update(){
-		AlgorithmProDao dao=new AlgorithmProDao();
-		int re=dao.updatePro(ID, this.name,this.Description);
+		ProjectInputDao dao=new ProjectInputDao();
+		int re=dao.updateInput(ID, this.value);
 		return "SUCCESS"; 
 	}
 	
