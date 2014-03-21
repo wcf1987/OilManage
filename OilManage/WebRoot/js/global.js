@@ -5,7 +5,26 @@ $(document).ready(function(){
 
 });
 
+function logout(){
+	$.ajax({
+		url:'logout.action',
+		type:'post',
+		dataType:'json',
+		success:function(data){
+//			alert(data.flag);
+			if(data.flag=="true"){
+				
+//				location.href="#";
+				window.location.reload();
+			}else{
+				alert("登出失败！");
+//				window.location.reload();
+				//$('#register_modal').modal('hide');
+			}
+		}
+	});
 
+}
 function backtop(){
     var backtop = $("<a class='backTop'>∧</a>");
     $("body").append(backtop);

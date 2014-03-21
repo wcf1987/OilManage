@@ -7,13 +7,13 @@ $(
 	/*
 	 * 算法管理列表
 	 */
-	var datagrid = jQuery("#AlgorithmList")
+	var datagrid = jQuery("#ProjectList")
 	.jqGrid(
 			{
-				url : "listAlgorithmsCycle.action",// 后端的数据交互程序，改为你的
+				url : "listAlgPro.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '名称', '作者','描述','添加时间','输入参数添加','输出设置','查看详情'],// 表格的列名
+				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','历史运行次数','设置',],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -24,102 +24,65 @@ $(
 							sorttype:'int'
 						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
 						{
-							name : 'planID',
-							index : 'planID',
+							name : 'name',
+							index : 'name',
 							width : 100,
 							align : "center",
 							sortable:true
 						},
-//						{
-//							name : 'viewInput',
-//							index : 'viewInput',
-//							width : 100,
-//							align : "center",
-//							formatter : function(value, grid, rows,state) {
-//								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewAlgorithmInput('"
-//										+ rows.ID + "')\">查看参数</a>"
-//							}
-//						},
-//						{
-//							name : 'outputID',
-//							index : 'outputID',
-//							width : 100,
-//							align : "center",
-//							sortable:true
-//						},
 						{
-							name:'authorName',
-							index:'authorName',
+							name : 'description',
+							index : 'Description',
+							width : 100,
+							align : "center",
+							sortable:true
+						},
+						{
+							name : 'author',
+							index : 'Author',
+							width : 100,
+							align : "center",
+							sortable:true
+						},
+						{
+							name : 'addTimes',
+							index : 'AddTimes',
+							width : 100,
+							align : "center",
+							sortable:true
+						},
+						{
+							name:'lastCalcTimes',
+							index:'LastCalcTimes',
 							width:100,
 							align:'center',
 							sortable:true
 						},
 						{
-							name:'Description',
-							index:'Description',
+							name:'calcHisNum',
+							index:'CalcHisNum',
+							width:100,
+							align:'center',
+							sortable:true
+						},
+						{
+							name:'set',
+							index:'set',
 							width:200,
 							align:'center',
-							sortable:false
-						},
-						{
-							name:'addDates',
-							index:'addDate',
-							width:100,
-							align:'center',
-							sortable:true
-						},
-//						{
-//							name:'lastUpdateDates',
-//							index:'lastUpdateDate',
-//							width:100,
-//							align:'center',
-//							sortable:true
-//						},
-						{				
-							name : 'input',
-							index : 'input',
-							width : 100,
-							align : "center",
-							formatter : function(value, grid, rows,
-									state) {
-//								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selectInput('"
-										+ rows.ID + "')\">输入参数添加</a>"
-							}
-						},
-						{
-							name : 'output',
-							index : 'output',
-							width : 100,
-							align : "center",
-							formatter : function(value, grid, rows,
-									state) {
-//								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selecOutput('"
-										+ rows.ID + "')\">输出设置</a>"
-							}
-						},
-						{
-							name : 'view',
-							index : 'view',
-							width : 100,
-							align : "center",
-//							hidden:true,
-							formatter : function(value, grid, rows,
-									state) {
-//								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewDetail('"
-										+ rows.ID + "')\">查看</a>"
+							sortable:false,
+							formatter : function(value, grid, rows,state) {
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewAlgorithmInput('"
+										+ rows.ID + "')\">设置</a>"
 							}
 						}
-	
 						],
 //				autowidth:true,
 				rowNum:10,//每一页的行数
 				height: 'auto',
 				width:1230,
 				rowList:[10,20,30],
-				pager: '#AlgorithmPager',
+				pager: '#ProjectPager',
 				sortname: 'ID',
 				viewrecords: true,
 				sortorder: "desc",
@@ -132,99 +95,41 @@ $(
 					records: "records",//总共记录数
 					repeatitems: false
 				},
-				caption: "算法管理"//表格名称
-					
-//				gridComplete: function(){
-//	                var ids = $("#AlgorithmList").getDataIDs();//jqGrid('getDataIDs');
-//	                for(var i=0;i<ids.length;i++){
-//	                    var cl = ids[i];
-//	                    be = "<input  type='button' value='查看' onclick=\"jQuery('#AlgorithmList').jqGrid('viewGridRow','"+cl+"',{modal:true});\"  />"; 
-//	                    de = "<input  type='button' value='删除' onclick=\"jQuery('#AlgorithmList').jqGrid('delGridRow','"+cl+"',{closeOnEscape:true});\"  />";
-//	                    jQuery("#AlgorithmList").jqGrid('setRowData',ids[i],{test:be+de});
-//	                } 
-//	            }
-		            
+				caption: "工程管理"//表格名称
 				
 			});
 //	datagrid.jqGrid('hideCol','ID');
-	datagrid.jqGrid('filterToolbar',{searchOperators:true});
-	datagrid.jqGrid('navGrid','#AlgorithmPager',{
+//	datagrid.jqGrid('filterToolbar',{searchOperators:true});
+	datagrid.jqGrid('navGrid','#ProjectPager',{
 		edit : false,
 		add : false,
 		search:false,
-		del : false}).jqGrid('navButtonAdd',"#AlgorithmPager",{
+		del : false}).jqGrid('navButtonAdd',"#ProjectPager",{
 				title:'添加',
 				caption:"添加",
-				id:"add_AlgorithmList",
+				id:"add_ProjectList",
 				onClickButton : function addModal(){
 					// 配置对话框
 
-						$('#uploadAlgorithmModal').modal();
+						$('#add_project_modal').modal();
 				
 				},
 				position:"first"
 			
 		
-			}).jqGrid('navButtonAdd',"#AlgorithmPager",{
+			}).jqGrid('navButtonAdd',"#ProjectPager",{
 				title:'删除',
 				caption:"删除",	
-				id:"delete_AlgorithmList",
-				onClickButton:deleteAlgorithm,
+				id:"delete_ProjectList",
+				onClickButton:deleteProject,
 				position:"first"
 			});
-	
 	
 }//function结束
 );//$()结束
 
-function viewDetail(rowId){
-	$("#inputTr").nextAll().remove();
-	$("#inputTr").show();	
-	$('#view_detail_modal').modal();
-//	$('#rowID').val(rowData);
-//	alert(rowData);
-	
-//	loadParameterOptions();
-	$.ajax({
-		type:"post",
-		url:"viewAlgorithmDetail.action",
-		data:{
-			ID:rowId,
-			sidx:"ID",
-			sord:"asc"
-		},
-		success:function(data){
-			$("#AlgID").text(data.algorithm.ID);
-			$("#AlgName").text(data.algorithm.name);
-			$("#AlgDes").text(data.algorithm.description);
-			$("#AlgAddDate").text(data.algorithm.addDates);
-			$("#AlgLastUpdateDate").text(data.algorithm.lastUpdateDates);
-			$("#AlgAuthor").text(data.algorithm.authorName);
-//			$("#").text(data.algorithm.);
-		
-			var tr=$("#inputTr");
-			$.each(data.inputList,function(index,row){
-				var clonedTr=tr.clone();
-				var _index=index;
-				clonedTr.children("td").each(function(inner_index){
-					switch(inner_index){
-						case(0):$(this).html(row.ID);break;
-						case(1):$(this).html(row.display);break;
-						case(2):$(this).html(row.symbol);break;
-					
-					}//end switch
-				});//end children.each
-				clonedTr.insertAfter(tr);		
-			});//end $each
-			$("#inputTr").hide();
-			$("#inputTable").show();			
-			
-		}
-	});
-}
-
-function deleteAlgorithm() {
-    var sels = $("#AlgorithmList").jqGrid('getGridParam','selarrrow'); 
+function deleteProject() {
+    var sels = $("#ProjectList").jqGrid('getGridParam','selarrrow'); 
     if(sels==""){ 
        //$().message("请选择要删除的项！"); 
        alert("请选择要删除的项!");
@@ -232,7 +137,7 @@ function deleteAlgorithm() {
     	var selectedIDs={};
     	$.each(sels,function(i,n){ 
           if(sels[i]!=""){ 
-        	  var rowData = $("#AlgorithmList").jqGrid("getRowData", sels[i]);
+        	  var rowData = $("#ProjectList").jqGrid("getRowData", sels[i]);
         	  selectedIDs["ids[" + i + "]"]=rowData.ID;
 //        	  alert(rowData.ID);
           } 
@@ -241,7 +146,7 @@ function deleteAlgorithm() {
        if(confirm("您是否确认删除？")){ 
         $.ajax({ 
           type: "POST", 
-          url: "delAlgorithmsCycle.action", 
+          url: "delAlgPro.action", 
           data: selectedIDs, 
           beforeSend: function() { 
                $().message("正在请求..."); 
@@ -252,12 +157,12 @@ function deleteAlgorithm() {
           
           success: function(msg){ 
         	alert("删除成功！");
-			$("#AlgorithmList").trigger("reloadGrid");
+			$("#ProjectList").trigger("reloadGrid");
                if(msg!=0){ 
                    var arr = msg.split(','); 
                    $.each(arr,function(i,n){ 
                          if(arr[i]!=""){ 
-                             $("#AlgorithmList").jqGrid('delRowData',n);  
+                             $("#ProjectList").jqGrid('delRowData',n);  
                          } 
                    }); 
                    $().message("已成功删除!"); 
@@ -271,13 +176,9 @@ function deleteAlgorithm() {
 }
 
 
-function deleteAlgorithmInput(){
-	
-}
-/*
- * 查看算法输入参数列表，使用动态生成表格
- */
-function viewAlgorithmInput(cycleId){//暂时没用
+
+
+function viewAlgorithmInput(cycleId){
 		$("#cloneTr").nextAll().remove();
 		$("#cloneTr").show();
 		$.ajax({
@@ -314,7 +215,7 @@ function viewAlgorithmInput(cycleId){//暂时没用
 
 function viewInput(cycleId){//没用
 	/*
-	 * 输入参数管理列表，使用jqgrid展示
+	 * 输入参数管理列表
 	 */
 	var datagrid = jQuery("#AlgorithmInputList")
 	.jqGrid(

@@ -22,6 +22,15 @@
 		</action>
 	</package>
 	<package name="json" extends="json-default">
+		<action name="logout" method="logout" class="cn.edu.cup.manage.action.LoginAction">
+			<result type="json">				
+			</result>
+		</action>
+		<action name="register" method="execute" class="cn.edu.cup.manage.action.RegisterAction">
+			<result type="json">				
+			</result>
+		</action>
+		
 		<action name="listUser" class="cn.edu.cup.manage.action.UserAction" method="list">
 			<result name="SUCCESS" type="json">				
 			</result>
@@ -179,10 +188,12 @@
 		</action>
 		<action name="updateAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
 			method="update">
-
 			<result name="SUCCESS" type="json">
-
 			</result>
+		</action>
+		
+		<action name="viewAlgorithmDetail" class="cn.edu.cup.manage.action.AlgorithmsCycleAction" method="viewDetail">
+			<result name="SUCCESS" type="json"></result>
 		</action>
 		<action name="delAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
 			method="delete">
@@ -256,7 +267,7 @@
 			</result>
 		</action>
 		
-				<action name="listAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+		<action name="listAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
 			method="list">
 
 			<result name="SUCCESS" type="json">

@@ -8,24 +8,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
 <%
-User userlogin=(User)(session.getAttribute("user"));
-if (userlogin==null){
-response.sendRedirect("login.jsp");
-return;
-}
-else{
 
-}
-%>
+User userlogin=(User)(session.getAttribute("user"));
+//if (userlogin==null){
+//response.sendRedirect("login.jsp");
+//return;
+//}
+//else{
+
+//}
+%> 
 
     <base href="<%=basePath%>">
     
-    <title>算法管理</title>
+    <title>工程管理</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="算法管理">
+	<meta http-equiv="description" content="工程管理">
 	
 	
 	<!-- Bootstrap -->
@@ -68,52 +69,21 @@ else{
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
-	<script type="text/javascript" src="js/algorithm_manage.js"></script>
+	<script type="text/javascript" src="js/project.js"></script>
 
 <script>
 $(document).ready(function(){
 
-	//给算法添加输入的select项的多选
-	 $('#add').click(function(){  
-         var $options = $('#select1 option:selected');//获取当前选中的项  
-         var $remove = $options.remove();//删除下拉列表中选中的项  
-         $remove.appendTo('#select2');//追加给对方  
-     });  
-       
-     $('#remove').click(function(){  
-         var $removeOptions = $('#select2 option:selected');  
-         $removeOptions.appendTo('#select1');//删除和追加可以用appendTo()直接完成  
-     });  
-       
-     $('#addAll').click(function(){  
-         var $options = $('#select1 option');  
-         $options.appendTo('#select2');  
-     });  
-       
-     $('#removeAll').click(function(){  
-         var $options = $('#select2 option');  
-         $options.appendTo('#select1');  
-     });  
-       
-     //双击事件  
-     $('#select1').dblclick(function(){  
-         //var $options = $('#select1 option:selected');  
-         var $options = $('option:selected', this);//注意此处“option”与“:”之间的空格，有空格是不可以的  
-         $options.appendTo('#select2');  
-     });  
-       
-     $('#select2').dblclick(function(){  
-         $('#select2 option:selected').appendTo('#select1');  
-     });
+
         
 	loadAuthorOptions();//加载作者选项
-	$("#addAlgorithmForm").validate({
+	$("#addProjectForm").validate({
 		debug:true,
 		onsubmit:true,
 		onfocusout:false,
 		onkeyup:true,
 		rules:{
-			Description:{
+			name:{
 				required:true
 			},
 			authorID:{
@@ -121,60 +91,40 @@ $(document).ready(function(){
 			}
 		},
 		messages:{
-			Description:{
-				required:"算法描述不能为空！",
+			name:{
+				required:"名称不能为空！"
 			},
 			authorID:{
 				required:"请选择作者！"
 			}
 		},
 		submitHandler:function(){
-			add_algorithm();
-		}
-	});
-	
-	$("#addAlgorithmInputForm").validate({
-		debug:true,
-		onsubmit:true,
-		onfocusout:false,
-		onkeyup:true,
-		rules:{
-			selectedIDs:{
-				required:true
-			}
-		},
-		messages:{
-			selectedIDs:{
-				required:"请选择输入参数！",
-			}
-		},
-		submitHandler:function(){
-			add_algorithmInput();
+			add_project();
 		}
 	});
 	
 	
 });//ready 结束
 
-function add_algorithm() {
+function add_project() {
 
 	$.ajax({
 		type : 'POST',
-		url : 'addAlgorithmsCycle.action',
+		url : 'addAlgPro.action',
 		data : {
+			name:$("#name").val(),
 			Description : $("#Description").val(),
-			authorID:$("#authorID").val(),
-			filePath : $("#hideFilePath").val()
+			authorID:$("#authorID").val()
 		},
 		success : function(data) {
-			alert('算法文件上传成功');
-			$('#uploadAlgorithmModal').modal('hide');
-			$("#AlgorithmList").trigger("reloadGrid");			
+			alert('工程添加成功！');
+			$('#add_project_modal').modal('hide');
+			$("#ProjectList").trigger("reloadGrid");			
 		},
 		error:function(msg){
 			alter(msg);
-			$('#uploadAlgorithmModal').modal('hide');
-			$("#AlgorithmList").trigger("reloadGrid");
+			$('#add_project_modal').modal('hide');
+			$("#ProjectList").trigger("reloadGrid");
 		}
 	});
 	}
@@ -244,14 +194,15 @@ function loadAuthorOptions(){
 	                <span class="icon-bar"></span>
 	                <span class="icon-bar"></span>
 	              </button>
-	              <a class="navbar-brand" href="#"><div style="font-color:#99CCFF;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统后台管理</div></a>
+	              <a class="navbar-brand" href="#"><div style="font-color:#99CCFF;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统</div></a>
 	            </div>
 	            <div class="navbar-collapse collapse">
 	              <ul class="nav navbar-nav">
-	                <li><a href="pages/map.jsp">返回首页</a></li>
-	                <li><a href="pages/data.jsp">数据管理</a></li>
-	                <li class="active"><a href="pages/algorithm.jsp">算法管理</a></li>
-	                <li><a href="pages/home.jsp">系统管理</a></li>
+	                <li><a href="pages/home.jsp">首页</a></li>
+	                <li><a href="pages/map.jsp">地图建模</a></li>
+	                <li  class="active"><a href="pages/project.jsp">工程管理</a></li>
+	                <li><a href="#contact">系统模拟</a></li>
+	                <li><a href="pages/home.jsp">系统优化</a></li>
 			        <li><a href="pages/home.jsp">关于</a></li>
 			        <li><a href="pages/home.jsp">联系方式</a></li>
 	                <li class="dropdown">
@@ -268,14 +219,16 @@ function loadAuthorOptions(){
 	                </li>
 	              </ul>
 	                
-	               
+	               	<%if (userlogin!=null) {%>
 			      <div class="text-center" style="margin-top:8px;margin-right:25px;" id="userId">
-			      	<div style="margin-left:5px;margin-top:5px;"><a  style="margin-left:5px;margin-top:5px;float:right"id="exit" href="logOut.action">注销</a></div>
+			      	<div style="margin-left:5px;margin-top:5px;"><a  style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">注销</a></div>	     
 			        <div style="font-size:20;color:#FFFFFF;float:right">您好,<a href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%></a></div>
-			       
-			        	
-			      	
 			      </div>
+			       <%}else{ %>
+		        	 <div class="text-center" style="margin-top:8px;"><a  class="btn btn-default" href="pages/login.jsp">管理员登陆</a></div>
+	            	<%} %>
+			      	
+			      
 			     
 			  
 	              
@@ -348,37 +301,16 @@ function loadAuthorOptions(){
 						<div class="tabbable" id="tabs-360872">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<a href="#panel-1" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">算法管理</a>
+									<a href="#panel-1" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">工程管理</a>
 								</li>
-								<!-- 
-								<li>
-									<a href="#panel-2" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">物理单位管理</a>
-								</li>
-								<li>
-									<a href="#panel-3" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">参数管理</a>
-								</li> -->
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="panel-1">		
-									<table id="AlgorithmList" class="table table-striped table-bordered table-hover datatable " ></table>
+									<table id="ProjectList" class="table table-striped table-bordered table-hover datatable " ></table>
 						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-						      			<div id="AlgorithmPager" ></div>
+						      			<div id="ProjectPager" ></div>
 						      		</div>	      		
-								</div>
-								<!--  
-								<div class="tab-pane" id="panel-2">							
-						      		<table id="MeasureList" class="table table-striped table-bordered table-hover datatable " ></table>
-						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-						      			<div id="MeasurePager" ></div>
-						      		</div>	      		
-								</div>
-								<div class="tab-pane" id="panel-3">							
-									<table id="ParameterList" class="table table-striped table-bordered table-hover datatable " ></table>
-						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-						      			<div id="ParameterPager" ></div>
-						      		</div>
-								</div>
-								-->
+								</div>						
 							</div>
 						</div>
 										
@@ -397,6 +329,49 @@ function loadAuthorOptions(){
 	    </div><!-- /.container -->
 	    
 	   
+	   
+	   
+	   	<!-- 添加工程的模态框 -->   	
+		<div class="modal fade" id="add_project_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加工程</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="addProjectForm" action="addAlgPro.action" method="post"> 
+		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">
+		      		
+		      			<tr>
+		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >名称:</label></td>
+				            <td><input id="name" type="text" class="input2" name="name" maxlength="30"/><em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >描述：</label></td>
+		      				<td><input id="Description" type="text" class="input2" name="Description" maxlength="10" /><em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">作者：</label></td>
+		      				<td>		      					 
+					        	<select id="authorID" name=authorID>		                  
+			              		</select>
+		 						<em style="color:red">*</em>    						
+		      				</td>
+		      			</tr>		    				
+				   </table>
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	
+	
 			<!-- 上传算法文件的模态框 -->   
 		<div id="uploadAlgorithmModal" class="modal fade">
 		  <div class="modal-dialog">
@@ -508,141 +483,6 @@ function loadAuthorOptions(){
 									</tr>									
 								</tbody>
 							</table>
-						</div>
-					</div>
-				</div>
-				<!-- 
-	      		<table id="AlgorithmInputList" class="table table-striped table-bordered table-hover datatable " style="width:600px;" ></table>
-	      		<div>
-	      			<div id="AlgorithmInputMeasurePager" ></div>
-	      		</div>	
-	      		 -->	  
-		      </div>
-		     
-		    </div><!-- /.modal-content -->
-		  </div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
-		
-			<!-- 查看详情的模态框 -->   	
-		<div class="modal fade" id="view_detail_modal">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		       <!--  <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输入</h4> -->
-		      </div>
-		      <div class="modal-body">  
-		      	<div class="container-fluid">
-					<div class="row-fluid">
-						<div class="span12">
-							<dl class="dl-horizontal">
-								<dt>
-									编号
-								</dt>
-								<dd id="AlgID">
-									
-								</dd>
-								<dt>
-									名称
-								</dt>
-								<dd id="AlgName">
-									始创于1775年的江诗丹顿已有250年历史，
-								</dd>
-							
-								<dt>
-									描述
-								</dt>
-								<dd id="AlgDes">
-									创立于1868年的万国表有“机械表专家”之称。
-								</dd>
-								<dt>
-									添加时间
-								</dt>
-								<dd id="AlgAddDate">
-									卡地亚拥有150多年历史，是法国珠宝金银首饰的制造名家。
-								</dd>
-								<dt>
-									最后更新时间
-								</dt>
-								<dd id="AlgLastUpdateDate">
-									卡地亚拥有150多年历史，是法国珠宝金银首饰的制造名家。
-								</dd>
-								<dt>
-									作者
-								</dt>
-								<dd id="AlgAuthor">
-									卡地亚拥有150多年历史，是法国珠宝金银首饰的制造名家。
-								</dd>
-							</dl>	
-							
-							<hr size=1 style="COLOR:#ff9999;border-style:double;width:490"> 
-							
-							<dl class="dl-horizontal">
-								
-								<dt>
-									输入参数明细
-								</dt>
-								<dd id="AlgID">
-									<table id="inputTable" class="table" >
-										<thead>
-											<tr>
-												<th>
-													编号
-												</th>
-												<th>
-													参数名
-												</th>
-												<th>
-													符号
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr id=inputTr>
-												<td>											
-												</td>
-												<td>											
-												</td>
-												<td>											
-												</td>						
-											</tr>									
-										</tbody>
-									</table>	
-								</dd>
-								<dt>
-									输出明细
-								</dt>
-								<dd id="AlgName">
-									
-								</dd>															
-							</dl>						
-						<!--  
-							<table id="generatedTable" class="table" >
-								<thead>
-									<tr>
-										<th>
-											编号
-										</th>
-										<th>
-											参数名
-										</th>
-										<th>
-											符号
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr id="cloneTr">
-										<td>											
-										</td>
-										<td>											
-										</td>
-										<td>											
-										</td>						
-									</tr>									
-								</tbody>
-							</table>
-							-->
 						</div>
 					</div>
 				</div>

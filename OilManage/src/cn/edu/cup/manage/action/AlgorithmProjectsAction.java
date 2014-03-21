@@ -29,6 +29,9 @@ public class AlgorithmProjectsAction {
 	private String sord;
 	private List<Integer> ids;
 	
+	public void setName(String name) {
+		this.name = name;
+	}
 	public void setIds(List<Integer> ids) {
 		this.ids = ids;
 	}
