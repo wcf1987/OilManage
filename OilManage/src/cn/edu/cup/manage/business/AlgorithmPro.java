@@ -109,4 +109,9 @@ public class AlgorithmPro {
 	String LastCalcTimes;
 	int CalcHisNum;
 	String Description;
+	public void startCalc() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

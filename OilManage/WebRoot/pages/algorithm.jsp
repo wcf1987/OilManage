@@ -157,14 +157,14 @@ $(document).ready(function(){
 });//ready 结束
 
 function add_algorithm() {
-
+	//alert(hideFilePath);
 	$.ajax({
 		type : 'POST',
 		url : 'addAlgorithmsCycle.action',
 		data : {
 			Description : $("#Description").val(),
 			authorID:$("#authorID").val(),
-			filePath : $("#hideFilePath").val()
+			filePath : hideFilePath
 		},
 		success : function(data) {
 			alert('算法文件上传成功');

@@ -410,7 +410,7 @@ function loadParameterOptions(){
 	});
 	}
 
-
+var hideFilePath;
 $(document).ready(function() {
 	$('#algorithmfile').uploadify({
 		'swf' : 'js/upload/uploadify.swf',
@@ -422,7 +422,10 @@ $(document).ready(function() {
 		'fileSizeLimit' : '5MB',
 		'fileObjName' : 'algorithmfile',
 		'onUploadSuccess' : function(file, data, response) {
-	        alert('The file was saved to: ' + data);
+	        //alert('The file was saved to: ' + data);
+	        var tempJson = jQuery.parseJSON(data);
+	        hideFilePath = tempJson['filePath'];
+	        //alert(hideFilePath);
 	    },
 		'method' : 'post'
 	});

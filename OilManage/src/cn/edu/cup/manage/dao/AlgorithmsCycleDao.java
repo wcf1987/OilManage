@@ -106,14 +106,15 @@ public class AlgorithmsCycleDao {
 		return count;
 
 	}
-	public int addAlgorithm(String description, String authorID,String name) {
+	public int addAlgorithm(String description, String authorID,String name,String filePath) {
 		Date addDate=new Date();
-		Query q = session.createSQLQuery("insert into t_algorithmscycle (description,authorID,addtime,LastUpdateTime,inputID,planID,outputID,Name) values (?,?,?,?,0,0,0,?)");
+		Query q = session.createSQLQuery("insert into t_algorithmscycle (description,authorID,addtime,LastUpdateTime,inputID,planID,outputID,Name,FilePath) values (?,?,?,?,0,0,0,?,?)");
 		q.setParameter(0, description);
 		q.setParameter(1, authorID);
 		q.setParameter(2, addDate);
 		q.setParameter(3, addDate);
 		q.setParameter(4, name);
+		q.setParameter(5, filePath);
 		int result=q.executeUpdate();
 		
 		tx.commit();

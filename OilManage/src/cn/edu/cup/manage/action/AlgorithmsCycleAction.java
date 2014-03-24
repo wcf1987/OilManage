@@ -31,7 +31,13 @@ public class AlgorithmsCycleAction {
 	private String sord;
 	private List<Integer> ids;
 	private String name;
-	
+	private String filePath;
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
 	public List<AlgorithmInput> getInputList() {
 		return inputList;
 	}
@@ -199,7 +205,7 @@ public class AlgorithmsCycleAction {
 
 		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
 	
-		int result=dao.addAlgorithm(this.Description,this.authorID,this.name);
+		int result=dao.addAlgorithm(this.Description,this.authorID,this.name,this.filePath);
 		return "SUCCESS";
 	}
 	public String delete(){

@@ -122,6 +122,11 @@ public class AlgorithmProDao {
 		return re;
 	}
 
+	public AlgorithmPro getCalcInfo(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 	

@@ -196,5 +196,11 @@ public class AlgorithmProjectsAction {
 		int re=dao.updatePro(ID, this.name,this.Description);
 		return "SUCCESS"; 
 	}
-	
+	public String runAlg(){
+		AlgorithmProDao dao=new AlgorithmProDao();
+		AlgorithmPro algpro=dao.getCalcInfo(this.ID);
+		//algpro.startCalc();
+		
+		return "SUCCESS"; 
+	}
 }
