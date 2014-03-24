@@ -156,6 +156,32 @@ $(document).ready(function(){
 		}
 	});
 	
+	$('.valuechange').change(function() {
+		alert("test");
+		value=$(this).val();
+		ID=$(this).siblings('input').val();
+		alert(value+ID);
+		$.ajax({
+			type : 'POST',
+			url : 'updateProInputs.action',
+			data : {
+				value:value,
+				ID:ID
+			},
+			success : function(data) {
+				alert('参数保存成功!');
+		
+				//$('#addAlgorithmInput_modal').modal('hide');
+				//$("#AlgorithmInputList").trigger("reloadGrid");			
+			},
+			error:function(msg){
+				alert(msg);
+				//$('#addAlgorithmInput_modal').modal('hide');
+				//$("#AlgorithmList").trigger("reloadGrid");
+			}
+		});
+	});
+	
 });//ready 结束
 
 function add_project() {
@@ -192,11 +218,13 @@ function add_proInput() {
 		},
 		success : function(data) {
 			alert('参数保存成功!');
+			items="<li><div class='control'><label class='control-label'>"+data.param.display+"</label>&nbsp;&nbsp;<input  style='width:60px;vertical-align:middle;' class='text-center,valuechange' name='modifyInputValue' value="+data.value+" '/><input style='display:none;' value="+data.ID+"'/> &nbsp;&nbsp;<span>"+data.param.measureSymbol+"</span><button type='button' onclick='deleteInputItem(this,"+data.ID+");' title='删除'>×</button></div></li>";
+			$("#ItemInputList").append(items);
 			//$('#addAlgorithmInput_modal').modal('hide');
 			//$("#AlgorithmInputList").trigger("reloadGrid");			
 		},
 		error:function(msg){
-			alter(msg);
+			alert(msg);
 			//$('#addAlgorithmInput_modal').modal('hide');
 			//$("#AlgorithmList").trigger("reloadGrid");
 		}
@@ -251,8 +279,10 @@ function loadAuthorOptions(){
 	});
 	}
 
-
-	
+function addInputItem(obj){   
+       $("#ItemInputList").append("<li class='list-group-item clearfix'><span class='glyphicon glyphicon-resize-vertical sort-handle'></span>"+obj+"<input type='hidden' name='goals' value='"+obj+"'><button type='button' class='close delete-btn deleteItem' onclick='deleteCourseItem(this);' title='删除'>×</button></li>");   
+    }
+    		
 </script>
 
 
@@ -463,31 +493,26 @@ function loadAuthorOptions(){
 		     	 <form id="addProInputForm" action="addProInputs.action" method="post"> 		 
 		      	  <div class="centent"> 
 		      	  	<input id="proID" style="display: none;"/> 
+		      	  	<input id='addInputDisplay' style='display: none;''/><input id='addInputMeasure' style='display: none;''/>
 				    <select  id="addParameterID" name="addParameterID" style="width:200px;height:auto;margin-left:50px;">  
 				    
 				    </select>  
 				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 				    <input id="addInputValue" name="addInputValue" />
+				     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+				    <button type="submit" class="btn btn-primary"  >保存</button>
 				   	<!--  <span id="measureSymbol" name="measureSymbol"></span>--> 
-				    <!-- 
-				    <select  id="select2" name="selectedIDs" style="width:200px;height:auto;">  
-				          
-				    </select> 
-				     --> 
 				  </div>  
-				  <!-- 
-				  <div >  
-				    <button id="add" style="margin-left:50px;">选中添加到右边&gt;&gt;</button>  
-				    <button id="remove" style="margin-left:80px;">&lt;&lt;选中添加到左边</button><br>  
-				    <button id="addAll"  style="margin-left:50px;">全部添加到右边&gt;&gt;</button>  
-				    <button id="removeAll" style="margin-left:80px;">&lt;&lt;全部添加到左边</button>  
-				  </div>  
-				   -->	
-				   <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				        <button type="submit" class="btn btn-primary"  >保存</button>
-				   </div>
+			
+				   <div class="modal-footer"></div>
 				 </form> 
+				 
+				<ul id="ItemInputList"  data-role="list" style="margin-bottom:10px;"></ul>
+				
+			
+				 <div class="modal-footer">
+				      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>				       
+				 </div>
 		      </div>
 		     
 		    </div><!-- /.modal-content -->

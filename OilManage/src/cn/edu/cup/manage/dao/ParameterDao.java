@@ -79,7 +79,20 @@ public class ParameterDao {
 
 
 
+	public Parameters searchParameter(int id){
+		SQLQuery q = session.createSQLQuery("SELECT t1.id,t1.measureID,CONCAT(CName,'(',t2.Symbol,')'),t1.display,t1.name from t_parameters t1,t_measure t2 where t1.measureID=t2.ID and t1.id=?");
+		q.setParameter(0, id);
+		Object[] row=(Object[]) q.uniqueResult();
+		Integer Id = (Integer)row[0];
+		String mid = row[1].toString();  
+		String mSymbol = (String)row[2];  
+		String display=(String)row[3];
+		String name=(String)row[4];
+		  
+		Parameters p=new Parameters(Id, mid, mSymbol, display, name);
+		return p;
 
+	}
 	public List<Parameters> getParametersList(int page,int rows,String sidx,String sord) {
 
 		SQLQuery q = session.createSQLQuery("SELECT t1.id,t1.measureID,CONCAT(CName,'(',t2.Symbol,')'),t1.display,t1.name from t_parameters t1,t_measure t2 where t1.measureID=t2.ID order by t1."+sidx+" "+sord);

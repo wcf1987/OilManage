@@ -4,12 +4,14 @@ import java.util.Date;
 import java.util.List;
 
 import cn.edu.cup.manage.business.AlgorithmPro;
+import cn.edu.cup.manage.business.Parameters;
 import cn.edu.cup.manage.business.ProjectInputs;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
+import cn.edu.cup.manage.dao.ParameterDao;
 import cn.edu.cup.manage.dao.ProjectInputDao;
 
 public class ProjectInputsAction {
-	String ID;
+	int ID;
 	String inputID;
 	String planID;
 	String outputID;
@@ -18,6 +20,7 @@ public class ProjectInputsAction {
 	Date addDate;
 	Date lastUpdateDate;
 	String name;
+	Parameters param;
 	List<ProjectInputs> dataList;
 	ProjectInputs input;
 	private int page;
@@ -29,6 +32,12 @@ public class ProjectInputsAction {
 	private String sord;
 	private List<Integer> ids;
 	
+	public void setParam(Parameters param) {
+		this.param = param;
+	}
+	public Parameters getParam() {
+		return param;
+	}
 	public ProjectInputs getInput() {
 		return input;
 	}
@@ -41,11 +50,11 @@ public class ProjectInputsAction {
 	public List<Integer> getIds() {
 		return ids;
 	}
-	public void setID(String iD) {
-		ID = iD;
-	}
-	public String getID() {
+	public int getID() {
 		return ID;
+	}
+	public void setID(int iD) {
+		ID = iD;
 	}
 	
 	public void setInputID(String inputID) {
@@ -185,7 +194,10 @@ public class ProjectInputsAction {
 
 		ProjectInputDao dao=new ProjectInputDao();
 	
-		int result=dao.addInput(this.pro_id,this.param_id,this.value);
+		ID=dao.addInput(this.pro_id,this.param_id,this.value);
+		
+		ParameterDao paraDao=new ParameterDao();
+		param=paraDao.searchParameter(param_id);
 		return "SUCCESS";
 	}
 	public String getName() {
@@ -212,15 +224,18 @@ public class ProjectInputsAction {
 	public void setValue(double value) {
 		this.value = value;
 	}
+	
 	public String delete(){
 		ProjectInputDao dao=new ProjectInputDao();
 		//AlgorithmInputDao inputDao=new AlgorithmInputDao();
-		if(!ids.isEmpty()){
+		if(ids!=null&&!ids.isEmpty()){
 
 			for(int id:ids){
 				
 				dao.deleteInput(id);
 			}
+		}else if(ID>0){
+			dao.deleteInput(ID);
 		}
 		//inputDao.close();
 		dao.close();

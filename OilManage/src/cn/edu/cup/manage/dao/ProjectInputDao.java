@@ -45,7 +45,7 @@ public class ProjectInputDao {
 	}
 	
 
-	public ProjectInputs searchInput(String iD) {
+	public ProjectInputs searchInput(int iD) {
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();
 		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')') from t_projectinputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.ID=? ");
@@ -116,7 +116,10 @@ public class ProjectInputDao {
 		int result=q.executeUpdate();
 		
 		tx.commit();
-		return result;
+		int ret_id=0; 
+		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()"); 
+		ret_id=((BigInteger) q2.uniqueResult()).intValue();
+		return ret_id;
 	}
 	
 	public int deleteInput(int  id) {
@@ -129,7 +132,7 @@ public class ProjectInputDao {
 	}
 
 
-	public int updateInput(String iD, double value) {
+	public int updateInput(int iD, double value) {
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();
 		SQLQuery q = session.createSQLQuery("update t_projectinputs t set t.par_value=? where t.ID=?");

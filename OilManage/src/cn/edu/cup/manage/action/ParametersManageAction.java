@@ -18,11 +18,18 @@ public class ParametersManageAction extends ActionSupport{
 	private int total;
 	private String sidx;
 	private String sord;
+	Parameters param;
 	List<Parameters> dataList;
 	private int page;
 	private int records;
 	private List<Integer> ids;
 	
+	public void setParam(Parameters param) {
+		this.param = param;
+	}
+	public Parameters getParam() {
+		return param;
+	}
 	public List<Integer> getIds() {
 		return ids;
 	}
@@ -101,6 +108,11 @@ public class ParametersManageAction extends ActionSupport{
 		this.sord = sord;
 	}
 	
+	public String search(){
+		ParameterDao dao=new ParameterDao();
+		param=dao.searchParameter(ID);
+		return "SUCCESS";
+	}
 	public String list(){		
 
 		ParameterDao dao=new ParameterDao();

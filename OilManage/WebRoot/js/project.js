@@ -205,6 +205,7 @@ function selectInput(proID){
 	$('#addProjectInput_modal').modal();
 	$('#proID').val(proID);
 	loadParameterOptions();
+	loadInputOptions(proID);
 }
 
 function loadParameterOptions(){
@@ -219,7 +220,8 @@ function loadParameterOptions(){
 		success:function(data){
 			var items="";
 			$.each(data.dataList,function(i,parameter){
-				items+= "<option value=\"" + parameter.ID + "\">" + parameter.display+" &nbsp;&nbsp"+parameter.measureSymbol + "</option>"; 
+				items+= "<option value=\"" + parameter.ID + "\">" + parameter.display+" &nbsp;&nbsp"+parameter.measureSymbol + " </option>"; 
+				
 //				$("#measureSymbol").html(parameter.measureSymbol);
 			});
 			$("#addParameterID").html(items);
@@ -235,6 +237,28 @@ function modifyInput(proId){
 
 	}
 
+//function loadInputOptions(proId){
+//	$.ajax({
+//		url:'listProInputs.action',
+//		type:'post',
+//		dataType:'json',
+//		data : {
+//			pro_id:proId,
+//			sidx: 'id',
+//			sord: "desc"
+//		},
+//		success:function(data){
+//			var items="";
+//			$.each(data.dataList,function(i,proInput){
+//				items+= "<option value=\"" + proInput.ID + "\">" + proInput.display+" &nbsp;&nbsp"+proInput.mess + "</option>"; 
+////				$("#measureSymbol").html(parameter.measureSymbol);
+//			});
+//			$("#modifyInputID").html(items);
+//			showValue($("#modifyInputID").val());
+//		}
+//	});
+//	}
+
 function loadInputOptions(proId){
 	$.ajax({
 		url:'listProInputs.action',
@@ -248,15 +272,29 @@ function loadInputOptions(proId){
 		success:function(data){
 			var items="";
 			$.each(data.dataList,function(i,proInput){
-				items+= "<option value=\"" + proInput.ID + "\">" + proInput.display+" &nbsp;&nbsp"+proInput.mess + "</option>"; 
-//				$("#measureSymbol").html(parameter.measureSymbol);
+				items+="<input name='inputID' style='display:none;' value="+proInput.ID+"'/><li><div class='control'><label class='control-label'>"+proInput.display+"</label>&nbsp;&nbsp;<input  style='width:60px;vertical-align:middle;' class='text-center,valuechange' id='modifyInputValue' name='modifyInputValue' value="+proInput.value+" '/><input style='display:none;' value="+proInput.ID+"'/> &nbsp;&nbsp;<span>"+proInput.mess+"</span><button type='button' onclick='deleteInputItem(this,"+proInput.ID+");' title='删除'>×</button></div></li>";
+				//items+= "<option value=\"" + proInput.ID + "\">" + proInput.display+" &nbsp;&nbsp"+proInput.mess + "</option>"; 			
 			});
-			$("#modifyInputID").html(items);
-			showValue($("#modifyInputID").val());
+			$("#ItemInputList").append(items);
+//			showValue($("#modifyInputID").val());
 		}
 	});
 	}
-
+function deleteInputItem(obj,id){
+	 
+	$.ajax({
+		url:'delProInputs.action',
+		type:'post',
+		dataType:'json',
+		data:{
+			ID:id
+		},
+		success:function(data){
+			alert("删除成功！");
+			$(obj).parent().replaceWith(""); 
+		}
+	});
+}
 function viewInput(cycleId){//没用
 	/*
 	 * 输入参数管理列表
