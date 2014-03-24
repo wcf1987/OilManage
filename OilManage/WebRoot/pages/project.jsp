@@ -103,6 +103,58 @@ $(document).ready(function(){
 		}
 	});
 	
+		
+	$("#addProInputForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			addParameterID:{
+				required:true
+			},
+			addInputValue:{
+				required:true
+			}
+		},
+		messages:{
+			addParameterID:{
+				required:"请选择输入参数！"
+			},
+			addInputValue:{
+				required:"参数值不能为空！"
+			}
+		},
+		submitHandler:function(){
+			add_proInput();
+		}
+	});
+	
+	$("#modifyProInputForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			modifyInputID:{
+				required:true
+			},
+			modifyInputValue:{
+				required:true
+			}
+		},
+		messages:{
+			modifyInputID:{
+				required:"请选择输入参数！"
+			},
+			modifyInputValue:{
+				required:"参数值不能为空！"
+			}
+		},
+		submitHandler:function(){
+			modify_proInput();
+		}
+	});
 	
 });//ready 结束
 
@@ -129,34 +181,61 @@ function add_project() {
 	});
 	}
 
-function add_algorithmInput() {
-	var $options = $('#select2 option');
-	var ids={};
-  	$.each($options,function(i,n){ 
-           if($options[i]!=""){ 
-         	  ids[i]=$options[i].value;
-           } 
-  	}); 
+function add_proInput() {
 	$.ajax({
 		type : 'POST',
-		url : 'addAlgorithmInput.action',
+		url : 'addProInputs.action',
 		data : {
-			ids:ids,
-			CycleID:$("#CycleID").val()
+			pro_id:$("#proID").val(),
+			param_id:$("#addParameterID").val(),
+			value:$("#addInputValue").val()
 		},
 		success : function(data) {
-			alert('添加输入参数成功!');
-			$('#addAlgorithmInput_modal').modal('hide');
+			alert('参数保存成功!');
+			//$('#addAlgorithmInput_modal').modal('hide');
 			//$("#AlgorithmInputList").trigger("reloadGrid");			
 		},
 		error:function(msg){
 			alter(msg);
-			$('#addAlgorithmInput_modal').modal('hide');
+			//$('#addAlgorithmInput_modal').modal('hide');
 			//$("#AlgorithmList").trigger("reloadGrid");
 		}
 	});
 	}
 	
+function modify_proInput() {
+	$.ajax({
+		type : 'POST',
+		url : 'updateProInputs.action',
+		data : {
+			ID:$("#modifyInputID").val(),			
+			value:$("#modifyInputValue").val()
+		},
+		success : function(data) {
+			alert('参数保存成功!');
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmInputList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alter(msg);
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+	}
+function showValue(inputID){
+	$.ajax({
+		url:'searchProInputs.action',
+		type:'post',
+		dataType:'json',
+		data : {
+			ID:inputID,		
+		},
+		success:function(data){
+			$("#modifyInputValue").val(data.input.value);
+		}
+	});
+	}	
 function loadAuthorOptions(){
 	$.ajax({
 		url:'listUser.action',
@@ -370,46 +449,10 @@ function loadAuthorOptions(){
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-	
-	
-			<!-- 上传算法文件的模态框 -->   
-		<div id="uploadAlgorithmModal" class="modal fade">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title">添加算法</h4>
-		      </div>
-		      <div class="modal-body">
-		      	<form id="addAlgorithmForm" action="addAlgorithmsCycle.action" method="post"> 
-			        <p> 
-			        <!-- 上传文件选择 -->
-			        	  算法描述：<input type="text" name="Description" id='Description'/><em style="color:red">*</em>
-			        	  作者：
-			        	<select id="authorID" name="authorID">		                  
-                		</select>
-   						<em style="color:red">*</em>
-			        	  
-			        	<input type="file" name="xxx" id="algorithmfile" /> 
-			        </p>  		 
-			 		
-			      <div class="modal-footer">
-			       	<button type="submit" class="btn btn-primary">保存 &nbsp;</button>
-			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-			       <input type="text" id="hideAlgorithmFilePath" value=""  style="display:none;"/>
-			      </div>
-		      	</form>
-		       </div>
-		       
-		    </div><!-- /.modal-content -->
-		  </div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
-			
-    	
-   				
+   
 				
     		<!-- 选择输入参数的模态框 -->   	
-		<div class="modal fade" id="addAlgorithmInput_modal">
+		<div class="modal fade" id="addProjectInput_modal">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -417,23 +460,29 @@ function loadAuthorOptions(){
 		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加输入</h4>
 		      </div>
 		      <div class="modal-body">  	  
-		     	 <form id="addAlgorithmInputForm" action="addAlgorithmInput.action" method="post"> 		 
+		     	 <form id="addProInputForm" action="addProInputs.action" method="post"> 		 
 		      	  <div class="centent"> 
-		      	  	<input id="CycleID" style="display: none;"/> 
-				    <select multiple id="select1" style="width:200px;height:auto;margin-left:50px;">  
+		      	  	<input id="proID" style="display: none;"/> 
+				    <select  id="addParameterID" name="addParameterID" style="width:200px;height:auto;margin-left:50px;">  
 				    
 				    </select>  
 				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-				    <select multiple id="select2" name="selectedIDs" style="width:200px;height:auto;">  
+				    <input id="addInputValue" name="addInputValue" />
+				   	<!--  <span id="measureSymbol" name="measureSymbol"></span>--> 
+				    <!-- 
+				    <select  id="select2" name="selectedIDs" style="width:200px;height:auto;">  
 				          
-				    </select>  
+				    </select> 
+				     --> 
 				  </div>  
+				  <!-- 
 				  <div >  
 				    <button id="add" style="margin-left:50px;">选中添加到右边&gt;&gt;</button>  
 				    <button id="remove" style="margin-left:80px;">&lt;&lt;选中添加到左边</button><br>  
 				    <button id="addAll"  style="margin-left:50px;">全部添加到右边&gt;&gt;</button>  
 				    <button id="removeAll" style="margin-left:80px;">&lt;&lt;全部添加到左边</button>  
-				  </div>  	
+				  </div>  
+				   -->	
 				   <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 				        <button type="submit" class="btn btn-primary"  >保存</button>
@@ -444,7 +493,36 @@ function loadAuthorOptions(){
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-	
+		
+		<!-- 修改输入参数的模态框 -->   	
+		<div class="modal fade" id="modifyProjectInput_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">修改输入</h4>
+		      </div>
+		      <div class="modal-body">  	  
+		     	 <form id="modifyProInputForm" action="updateProInputs.action" method="post"> 		 
+		      	  <div class="centent"> 
+		      	  	<input id="proID2" style="display: none;"/> 
+				    <select  id="modifyInputID" name="modifyInputID" onchange=showValue(this.value) style="width:200px;height:auto;margin-left:50px;">  
+				    
+				    </select>  
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+				    <input id="modifyInputValue" name="modifyInputValue" />
+				  </div>  			
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
 					
     		<!-- 查看输入参数的模态框 -->   	
 		<div class="modal fade" id="listAlgorithmInput_modal">

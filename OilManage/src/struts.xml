@@ -296,7 +296,12 @@
 		</action>
 		
 		
-		
+		<action name="searchProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
+			method="search">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
 	<action name="listProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
 			method="list">
 

@@ -13,7 +13,7 @@ $(
 				url : "listAlgPro.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','历史运行次数','设置',],// 表格的列名
+				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','历史运行次数','输入参数添加','输入参数修改','设置'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -64,6 +64,30 @@ $(
 							width:100,
 							align:'center',
 							sortable:true
+						},
+						{				
+							name : 'input',
+							index : 'input',
+							width : 100,
+							align : "center",
+							formatter : function(value, grid, rows,
+									state) {
+//								alert(rows.ID);
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selectInput('"
+										+ rows.ID + "')\">输入参数添加</a>"
+							}
+						},
+						{				
+							name : 'inputView',
+							index : 'inputView',
+							width : 100,
+							align : "center",
+							formatter : function(value, grid, rows,
+									state) {
+//								alert(rows.ID);
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"modifyInput('"
+										+ rows.ID + "')\">输入参数修改</a>"
+							}
 						},
 						{
 							name:'set',
@@ -177,40 +201,60 @@ function deleteProject() {
 
 
 
+function selectInput(proID){
+	$('#addProjectInput_modal').modal();
+	$('#proID').val(proID);
+	loadParameterOptions();
+}
 
-function viewAlgorithmInput(cycleId){
-		$("#cloneTr").nextAll().remove();
-		$("#cloneTr").show();
-		$.ajax({
-			type:"post",
-			url:"listAlgorithmInputs.action",
-			dataType:"json",
-			data:{
-				CycleID:cycleId,
-				sidx:"ID",
-				sord:"asc"
-			},
-			success:function(data){
-				var tr=$("#cloneTr");
-				$.each(data.dataList,function(index,row){
-					var clonedTr=tr.clone();
-					var _index=index;
-					clonedTr.children("td").each(function(inner_index){
-						switch(inner_index){
-							case(0):$(this).html(row.ID);break;
-							case(1):$(this).html(row.display);break;
-							case(2):$(this).html(row.symbol);break;
-						
-						}//end switch
-					});//end children.each
-					clonedTr.insertAfter(tr);		
-				});//end $each
-				$("#cloneTr").hide();
-				$("#generatedTable").show();
-				$("#listAlgorithmInput_modal").modal();
-	
-			}//end success
-		});//end ajax
+function loadParameterOptions(){
+	$.ajax({
+		url:'listParameter.action',
+		type:'post',
+		dataType:'json',
+		data : {
+			sidx: 'id',
+			sord: "desc"
+		},
+		success:function(data){
+			var items="";
+			$.each(data.dataList,function(i,parameter){
+				items+= "<option value=\"" + parameter.ID + "\">" + parameter.display+" &nbsp;&nbsp"+parameter.measureSymbol + "</option>"; 
+//				$("#measureSymbol").html(parameter.measureSymbol);
+			});
+			$("#addParameterID").html(items);
+			
+		}
+	});
+	}
+
+function modifyInput(proId){
+		$('#modifyProjectInput_modal').modal();
+		$('#proID2').val(proId);
+		loadInputOptions(proId);
+
+	}
+
+function loadInputOptions(proId){
+	$.ajax({
+		url:'listProInputs.action',
+		type:'post',
+		dataType:'json',
+		data : {
+			pro_id:proId,
+			sidx: 'id',
+			sord: "desc"
+		},
+		success:function(data){
+			var items="";
+			$.each(data.dataList,function(i,proInput){
+				items+= "<option value=\"" + proInput.ID + "\">" + proInput.display+" &nbsp;&nbsp"+proInput.mess + "</option>"; 
+//				$("#measureSymbol").html(parameter.measureSymbol);
+			});
+			$("#modifyInputID").html(items);
+			showValue($("#modifyInputID").val());
+		}
+	});
 	}
 
 function viewInput(cycleId){//没用
@@ -286,45 +330,3 @@ function viewInput(cycleId){//没用
 //	$('#CycleID').val(cycleId);
 	}
 
-function selectInput(cycleId){
-	$('#addAlgorithmInput_modal').modal();
-	$('#CycleID').val(cycleId);
-	loadParameterOptions();
-}
-
-function loadParameterOptions(){
-	$.ajax({
-		url:'listParameter.action',
-		type:'post',
-		dataType:'json',
-		data : {
-			sidx: 'id',
-			sord: "desc"
-		},
-		success:function(data){
-			var items="";
-			$.each(data.dataList,function(i,parameter){
-				items+= "<option value=\"" + parameter.ID + "\">" + parameter.display + "</option>"; 
-			});
-			$("#select1").html(items);
-		}
-	});
-	}
-
-
-$(document).ready(function() {
-	$('#algorithmfile').uploadify({
-		'swf' : 'js/upload/uploadify.swf',
-		'uploader' : 'uploadAlgorithm.action',
-		'queueID' : 'fileQueue',
-		'auto' : true,
-		'multi' : false,
-		'buttonText' : '上传算法文件',
-		'fileSizeLimit' : '5MB',
-		'fileObjName' : 'algorithmfile',
-		'onUploadSuccess' : function(file, data, response) {
-	        alert('The file was saved to: ' + data);
-	    },
-		'method' : 'post'
-	});
-});

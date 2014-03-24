@@ -19,6 +19,7 @@ public class ProjectInputsAction {
 	Date lastUpdateDate;
 	String name;
 	List<ProjectInputs> dataList;
+	ProjectInputs input;
 	private int page;
 	private int records;
 	private int rows;
@@ -28,6 +29,12 @@ public class ProjectInputsAction {
 	private String sord;
 	private List<Integer> ids;
 	
+	public ProjectInputs getInput() {
+		return input;
+	}
+	public void setInput(ProjectInputs input) {
+		this.input = input;
+	}
 	public void setIds(List<Integer> ids) {
 		this.ids = ids;
 	}
@@ -158,15 +165,22 @@ public class ProjectInputsAction {
 	
 		records=dao.getCountProInputs(this.pro_id);
 
-
-		total=records/rows;
-		if(records%rows!=0){
-			total++;
+		if(records!=0&&rows!=0){
+			total=records/rows;
+			if(records%rows!=0){
+				total++;
+			}
 		}
 		return "SUCCESS";
 	}
 
+	public String search(){
 
+		ProjectInputDao dao=new ProjectInputDao();
+		input=dao.searchInput(ID);
+		return "SUCCESS";
+	}
+	
 	public String add(){
 
 		ProjectInputDao dao=new ProjectInputDao();

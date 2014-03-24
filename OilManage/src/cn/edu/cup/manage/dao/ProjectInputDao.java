@@ -43,6 +43,27 @@ public class ProjectInputDao {
 		tx = session.beginTransaction();
 	
 	}
+	
+
+	public ProjectInputs searchInput(String iD) {
+		// TODO Auto-generated method stub
+		Date modifyTime=new Date();
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')') from t_projectinputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.ID=? ");
+		q.setParameter(0, iD);
+		Object[] row=(Object[]) q.uniqueResult();
+		Integer id = ((Integer)row[0]);
+	    String display = ((String)row[1]);
+		Integer parid = ((Integer)row[2]);
+		Integer meid = ((Integer)row[3]);
+		String name=(String)row[4];
+		double vaule=(Double)row[5];
+		Integer pid = ((Integer)row[6]);
+		String messSymbol=(String)row[7];
+		  
+		ProjectInputs p=new ProjectInputs(id,display,parid,meid,name,vaule,pid,messSymbol);
+		return p;
+	}
+	
 	public List<ProjectInputs> getProInputsList(int pro_id,int page, int rows,
 			String sidx, String sord) {
 		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')') from t_projectinputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.Pro_ID=? order by t1."+sidx+" "+sord);
@@ -111,7 +132,7 @@ public class ProjectInputDao {
 	public int updateInput(String iD, double value) {
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();
-		SQLQuery q = session.createSQLQuery("update t_projectinputs t set value=? where t.ID=?");
+		SQLQuery q = session.createSQLQuery("update t_projectinputs t set t.par_value=? where t.ID=?");
 		q.setParameter(0, value);
 		q.setParameter(1, iD);
 		int re=q.executeUpdate();
