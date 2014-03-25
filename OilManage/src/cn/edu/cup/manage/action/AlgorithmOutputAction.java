@@ -59,7 +59,7 @@ public class AlgorithmOutputAction {
 
 
 	public void setCycleID(int cycleID) {
-		CycleID = cycleID;
+		this.CycleID = cycleID;
 	}
 
 

@@ -70,163 +70,6 @@ else{
 
 	<script type="text/javascript" src="js/algorithm_manage.js"></script>
 
-<script>
-$(document).ready(function(){
-
-	//给算法添加输入的select项的多选
-	 $('#add').click(function(){  
-         var $options = $('#select1 option:selected');//获取当前选中的项  
-         var $remove = $options.remove();//删除下拉列表中选中的项  
-         $remove.appendTo('#select2');//追加给对方  
-     });  
-       
-     $('#remove').click(function(){  
-         var $removeOptions = $('#select2 option:selected');  
-         $removeOptions.appendTo('#select1');//删除和追加可以用appendTo()直接完成  
-     });  
-       
-     $('#addAll').click(function(){  
-         var $options = $('#select1 option');  
-         $options.appendTo('#select2');  
-     });  
-       
-     $('#removeAll').click(function(){  
-         var $options = $('#select2 option');  
-         $options.appendTo('#select1');  
-     });  
-       
-     //双击事件  
-     $('#select1').dblclick(function(){  
-         //var $options = $('#select1 option:selected');  
-         var $options = $('option:selected', this);//注意此处“option”与“:”之间的空格，有空格是不可以的  
-         $options.appendTo('#select2');  
-     });  
-       
-     $('#select2').dblclick(function(){  
-         $('#select2 option:selected').appendTo('#select1');  
-     });
-        
-	loadAuthorOptions();//加载作者选项
-	$("#addAlgorithmForm").validate({
-		debug:true,
-		onsubmit:true,
-		onfocusout:false,
-		onkeyup:true,
-		rules:{
-			Description:{
-				required:true
-			},
-			authorID:{
-				required:true
-			}
-		},
-		messages:{
-			Description:{
-				required:"算法描述不能为空！",
-			},
-			authorID:{
-				required:"请选择作者！"
-			}
-		},
-		submitHandler:function(){
-			add_algorithm();
-		}
-	});
-	
-	$("#addAlgorithmInputForm").validate({
-		debug:true,
-		onsubmit:true,
-		onfocusout:false,
-		onkeyup:true,
-		rules:{
-			selectedIDs:{
-				required:true
-			}
-		},
-		messages:{
-			selectedIDs:{
-				required:"请选择输入参数！",
-			}
-		},
-		submitHandler:function(){
-			add_algorithmInput();
-		}
-	});
-	
-	
-});//ready 结束
-
-function add_algorithm() {
-	//alert(hideFilePath);
-	$.ajax({
-		type : 'POST',
-		url : 'addAlgorithmsCycle.action',
-		data : {
-			Description : $("#Description").val(),
-			authorID:$("#authorID").val(),
-			filePath : hideFilePath
-		},
-		success : function(data) {
-			alert('算法文件上传成功');
-			$('#uploadAlgorithmModal').modal('hide');
-			$("#AlgorithmList").trigger("reloadGrid");			
-		},
-		error:function(msg){
-			alter(msg);
-			$('#uploadAlgorithmModal').modal('hide');
-			$("#AlgorithmList").trigger("reloadGrid");
-		}
-	});
-	}
-
-function add_algorithmInput() {
-	var $options = $('#select2 option');
-	var ids={};
-  	$.each($options,function(i,n){ 
-           if($options[i]!=""){ 
-         	  ids[i]=$options[i].value;
-           } 
-  	}); 
-	$.ajax({
-		type : 'POST',
-		url : 'addAlgorithmInput.action',
-		data : {
-			ids:ids,
-			CycleID:$("#CycleID").val()
-		},
-		success : function(data) {
-			alert('添加输入参数成功!');
-			$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmInputList").trigger("reloadGrid");			
-		},
-		error:function(msg){
-			alter(msg);
-			$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmList").trigger("reloadGrid");
-		}
-	});
-	}
-	
-function loadAuthorOptions(){
-	$.ajax({
-		url:'listUser.action',
-		type:'post',
-		dataType:'json',
-		success:function(data){
-			var items="";
-			$.each(data.dataList,function(i,user){
-				items+= "<option value=\"" + user.userid + "\">" + user.username + "</option>"; 
-			});
-			$("#authorID").html(items);
-		}
-	});
-	}
-
-
-	
-</script>
-
-
   </head>
   
   <body style="background-color:#CCCCCC;">
@@ -470,7 +313,43 @@ function loadAuthorOptions(){
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 	
-					
+			<!-- 选择输出参数的模态框 -->   	
+		<div class="modal fade" id="addAlgorithmOutput_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加输出</h4>
+		      </div>
+		      <div class="modal-body">  	  
+		     	 <form id="addAlgorithmOutputForm"> 		 
+		      	  <div class="centent"> 
+		      	  	<input id="outputCycleID" style="display: none;"/> 
+				    <select multiple id="outputselect1" style="width:200px;height:auto;margin-left:50px;">  
+				    
+				    </select>  
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+				    <select multiple id="outputselect2" name="outputSelectedIDs" style="width:200px;height:auto;">  
+				          
+				    </select>  
+				  </div>  
+				  <div >  
+				    <button id="outputadd" style="margin-left:50px;">选中添加到右边&gt;&gt;</button>  
+				    <button id="outputremove" style="margin-left:80px;">&lt;&lt;选中添加到左边</button><br>  
+				    <button id="outputaddAll"  style="margin-left:50px;">全部添加到右边&gt;&gt;</button>  
+				    <button id="outputremoveAll" style="margin-left:80px;">&lt;&lt;全部添加到左边</button>  
+				  </div>  	
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+						
     		<!-- 查看输入参数的模态框 -->   	
 		<div class="modal fade" id="listAlgorithmInput_modal">
 		  <div class="modal-dialog">
@@ -546,32 +425,32 @@ function loadAuthorOptions(){
 									名称
 								</dt>
 								<dd id="AlgName">
-									始创于1775年的江诗丹顿已有250年历史，
+									
 								</dd>
 							
 								<dt>
 									描述
 								</dt>
 								<dd id="AlgDes">
-									创立于1868年的万国表有“机械表专家”之称。
+									
 								</dd>
 								<dt>
 									添加时间
 								</dt>
 								<dd id="AlgAddDate">
-									卡地亚拥有150多年历史，是法国珠宝金银首饰的制造名家。
+									
 								</dd>
 								<dt>
 									最后更新时间
 								</dt>
 								<dd id="AlgLastUpdateDate">
-									卡地亚拥有150多年历史，是法国珠宝金银首饰的制造名家。
+									
 								</dd>
 								<dt>
 									作者
 								</dt>
 								<dd id="AlgAuthor">
-									卡地亚拥有150多年历史，是法国珠宝金银首饰的制造名家。
+									
 								</dd>
 							</dl>	
 							
@@ -582,7 +461,7 @@ function loadAuthorOptions(){
 								<dt>
 									输入参数明细
 								</dt>
-								<dd id="AlgID">
+								<dd>
 									<table id="inputTable" class="table" >
 										<thead>
 											<tr>
@@ -612,8 +491,32 @@ function loadAuthorOptions(){
 								<dt>
 									输出明细
 								</dt>
-								<dd id="AlgName">
-									
+								<dd>
+									<table id="outputTable" class="table" >
+										<thead>
+											<tr>
+												<th>
+													编号
+												</th>
+												<th>
+													参数名
+												</th>
+												<th>
+													符号
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr id=outputTr>
+												<td>											
+												</td>
+												<td>											
+												</td>
+												<td>											
+												</td>						
+											</tr>									
+										</tbody>
+									</table>	
 								</dd>															
 							</dl>						
 						<!--  

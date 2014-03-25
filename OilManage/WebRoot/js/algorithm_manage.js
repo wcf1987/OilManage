@@ -13,7 +13,7 @@ $(
 				url : "listAlgorithmsCycle.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '名称', '作者','描述','添加时间','输入参数添加','输出设置','查看详情'],// 表格的列名
+				colNames : [ '编号', '名称', '作者','描述','添加时间','输入参数添加','输出参数设置','查看详情'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -30,23 +30,6 @@ $(
 							align : "center",
 							sortable:true
 						},
-//						{
-//							name : 'viewInput',
-//							index : 'viewInput',
-//							width : 100,
-//							align : "center",
-//							formatter : function(value, grid, rows,state) {
-//								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewAlgorithmInput('"
-//										+ rows.ID + "')\">查看参数</a>"
-//							}
-//						},
-//						{
-//							name : 'outputID',
-//							index : 'outputID',
-//							width : 100,
-//							align : "center",
-//							sortable:true
-//						},
 						{
 							name:'authorName',
 							index:'authorName',
@@ -68,13 +51,6 @@ $(
 							align:'center',
 							sortable:true
 						},
-//						{
-//							name:'lastUpdateDates',
-//							index:'lastUpdateDate',
-//							width:100,
-//							align:'center',
-//							sortable:true
-//						},
 						{				
 							name : 'input',
 							index : 'input',
@@ -95,8 +71,8 @@ $(
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selecOutput('"
-										+ rows.ID + "')\">输出设置</a>"
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selectOutput('"
+										+ rows.ID + "')\">输出参数设置</a>"
 							}
 						},
 						{
@@ -146,7 +122,6 @@ $(
 		            
 				
 			});
-//	datagrid.jqGrid('hideCol','ID');
 	datagrid.jqGrid('filterToolbar',{searchOperators:true});
 	datagrid.jqGrid('navGrid','#AlgorithmPager',{
 		edit : false,
@@ -158,8 +133,34 @@ $(
 				id:"add_AlgorithmList",
 				onClickButton : function addModal(){
 					// 配置对话框
-
-						$('#uploadAlgorithmModal').modal();
+					loadAuthorOptions();//加载作者选项
+					$('#uploadAlgorithmModal').modal();
+					$("#addAlgorithmForm").validate({
+						debug:true,
+						onsubmit:true,
+						onfocusout:false,
+						onkeyup:true,
+						rules:{
+							Description:{
+								required:true
+							},
+							authorID:{
+								required:true
+							}
+						},
+						messages:{
+							Description:{
+								required:"算法描述不能为空！",
+							},
+							authorID:{
+								required:"请选择作者！"
+							}
+						},
+						submitHandler:function(){
+							add_algorithm();
+						}
+					});
+						
 				
 				},
 				position:"first"
@@ -176,15 +177,16 @@ $(
 	
 }//function结束
 );//$()结束
-
+/*
+ * 查看算法详情
+ */
 function viewDetail(rowId){
 	$("#inputTr").nextAll().remove();
 	$("#inputTr").show();	
+	$("#outputTr").nextAll().remove();
+	$("#outputTr").show();	
 	$('#view_detail_modal').modal();
-//	$('#rowID').val(rowData);
-//	alert(rowData);
-	
-//	loadParameterOptions();
+
 	$.ajax({
 		type:"post",
 		url:"viewAlgorithmDetail.action",
@@ -200,8 +202,7 @@ function viewDetail(rowId){
 			$("#AlgAddDate").text(data.algorithm.addDates);
 			$("#AlgLastUpdateDate").text(data.algorithm.lastUpdateDates);
 			$("#AlgAuthor").text(data.algorithm.authorName);
-//			$("#").text(data.algorithm.);
-		
+
 			var tr=$("#inputTr");
 			$.each(data.inputList,function(index,row){
 				var clonedTr=tr.clone();
@@ -219,10 +220,53 @@ function viewDetail(rowId){
 			$("#inputTr").hide();
 			$("#inputTable").show();			
 			
+			var tr=$("#outputTr");
+			$.each(data.outputList,function(index,row){
+				var clonedTr=tr.clone();
+				var _index=index;
+				clonedTr.children("td").each(function(inner_index){
+					switch(inner_index){
+						case(0):$(this).html(row.ID);break;
+						case(1):$(this).html(row.display);break;
+						case(2):$(this).html(row.symbol);break;
+					
+					}//end switch
+				});//end children.each
+				clonedTr.insertAfter(tr);		
+			});//end $each
+			$("#outputTr").hide();
+			$("#outputTable").show();			
+			
 		}
 	});
 }
 
+function add_algorithm() {
+	//alert(hideFilePath);
+	$.ajax({
+		type : 'POST',
+		url : 'addAlgorithmsCycle.action',
+		data : {
+			Description : $("#Description").val(),
+			authorID:$("#authorID").val(),
+			filePath : hideFilePath
+		},
+		success : function(data) {
+			alert('算法文件上传成功');
+			$('#uploadAlgorithmModal').modal('hide');
+			$("#AlgorithmList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alter(msg);
+			$('#uploadAlgorithmModal').modal('hide');
+			$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+	}
+
+/*
+ * 删除算法
+ */
 function deleteAlgorithm() {
     var sels = $("#AlgorithmList").jqGrid('getGridParam','selarrrow'); 
     if(sels==""){ 
@@ -234,7 +278,6 @@ function deleteAlgorithm() {
           if(sels[i]!=""){ 
         	  var rowData = $("#AlgorithmList").jqGrid("getRowData", sels[i]);
         	  selectedIDs["ids[" + i + "]"]=rowData.ID;
-//        	  alert(rowData.ID);
           } 
     	}); 
 
@@ -312,86 +355,126 @@ function viewAlgorithmInput(cycleId){//暂时没用
 		});//end ajax
 	}
 
-function viewInput(cycleId){//没用
-	/*
-	 * 输入参数管理列表，使用jqgrid展示
-	 */
-	var datagrid = jQuery("#AlgorithmInputList")
-	.jqGrid(
-			{
-				url : "listAlgorithmInputs.action",// 后端的数据交互程序，改为你的
-				postData:{CycleID:cycleId},
-				datatype : "json",// 前后交互的格式是json数据
-				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '参数', '符号'],// 表格的列名
-				colModel : [
-						{
-							name : 'ID',
-							index : 'ID',
-							width : 50,
-							align : "center",
-							sortable:true,
-							sorttype:'int'
-						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
-						{
-							name : 'display',
-							index : 'display',
-							width : 100,
-							align : "center",
-							sortable:true
-						},
-						{
-							name : 'symbol',
-							index : 'symbol',
-							width : 100,
-							align : "center"
-						}
-	
-						],
-//				autowidth:true,
-				rowNum:10,//每一页的行数
-				height: 'auto',
-				width:555,
-				rowList:[10,20,30],
-				pager: '#AlgorithmInputMeasurePager',
-				sortname: 'ID',			
-				viewrecords: true,
-				sortorder: "desc",
-				multiselect: true,  //可多选，出现多选框 
-			    multiselectWidth: 35, //设置多选列宽度 
-				jsonReader: {//读取后端json数据的格式
-					root: "dataList",//保存详细记录的名称
-					total: "total",//总共有多少页
-					page: "page",//当前是哪一页
-					records: "records",//总共记录数
-					repeatitems: false
-				},
-				caption: "输入参数管理"//表格名称
-				
-			});
-	datagrid.jqGrid('navGrid','#AlgorithmInputMeasurePager',{
-		edit : false,
-		add : false,
-		search:false,
-		del : false}).jqGrid('navButtonAdd',"#AlgorithmInputMeasurePager",{
-				title:'删除',
-				caption:"删除",	
-				id:"delete_AlgorithmInput",
-				onClickButton:deleteAlgorithmInput,
-				position:"first"
-			});
-	$("#listAlgorithmInput_modal").modal();
-//	alert(cycleId);
-//	$('#CycleID').val(cycleId);
-	}
-
+/*
+ * 添加算法输入
+ */
 function selectInput(cycleId){
 	$('#addAlgorithmInput_modal').modal();
 	$('#CycleID').val(cycleId);
-	loadParameterOptions();
+	loadParameterOptions("#select1");
+	$("#addAlgorithmInputForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			selectedIDs:{
+				required:true
+			}
+		},
+		messages:{
+			selectedIDs:{
+				required:"请选择输入参数！",
+			}
+		},
+		submitHandler:function(){
+			add_algorithmInput();
+		}
+	});
 }
 
-function loadParameterOptions(){
+/*
+ * 添加算法输入
+ */
+function add_algorithmInput() {
+	var $options = $('#select2 option');
+	var ids={};
+  	$.each($options,function(i,n){ 
+           if($options[i]!=""){ 
+         	  ids[i]=$options[i].value;
+           } 
+  	}); 
+	$.ajax({
+		type : 'POST',
+		url : 'addAlgorithmInput.action',
+		data : {
+			ids:ids,
+			CycleID:$("#CycleID").val()
+		},
+		success : function(data) {
+			alert('添加输入参数成功!');
+			$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmInputList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alter(msg);
+			$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+	}
+/*
+ * 添加算法输出
+ */	
+function selectOutput(cycleId){
+	$('#addAlgorithmOutput_modal').modal();
+	$('#outputCycleID').val(cycleId);
+	loadParameterOptions("#outputselect1");
+	$("#addAlgorithmOutputForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			selectedIDs:{
+				required:true
+			}
+		},
+		messages:{
+			selectedIDs:{
+				required:"请选择输入参数！",
+			}
+		},
+		submitHandler:function(){
+			add_algorithmOutput();
+		}
+	});
+}
+
+/*
+ * 添加算法输出
+ */
+function add_algorithmOutput() {
+	var $options = $('#outputselect2 option');
+	var ids={};
+  	$.each($options,function(i,n){ 
+           if($options[i]!=""){ 
+         	  ids[i]=$options[i].value;
+           } 
+  	}); 
+	$.ajax({
+		type : 'POST',
+		url : 'addAlgorithmOutput.action',
+		data : {
+			ids:ids,
+			CycleID:$("#outputCycleID").val()
+		},
+		success : function(data) {
+			alert('添加输出参数成功!');
+			$('#addAlgorithmOutput_modal').modal('hide');
+			//$("#AlgorithmInputList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alter(msg);
+			$('#addAlgorithmOutput_modal').modal('hide');
+			//$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+	}
+/*
+ * 加载参数下拉列表
+ */
+function loadParameterOptions(selectStr){
 	$.ajax({
 		url:'listParameter.action',
 		type:'post',
@@ -405,11 +488,30 @@ function loadParameterOptions(){
 			$.each(data.dataList,function(i,parameter){
 				items+= "<option value=\"" + parameter.ID + "\">" + parameter.display + "</option>"; 
 			});
-			$("#select1").html(items);
+			$(selectStr).html(items);
+		}
+	});
+	}
+/*
+ * 加载作者下拉列表
+ */
+function loadAuthorOptions(){
+	$.ajax({
+		url:'listUser.action',
+		type:'post',
+		dataType:'json',
+		success:function(data){
+			var items="";
+			$.each(data.dataList,function(i,user){
+				items+= "<option value=\"" + user.userid + "\">" + user.username + "</option>"; 
+			});
+			$("#authorID").html(items);
 		}
 	});
 	}
 
+
+	
 var hideFilePath;
 $(document).ready(function() {
 	$('#algorithmfile').uploadify({
@@ -429,4 +531,71 @@ $(document).ready(function() {
 	    },
 		'method' : 'post'
 	});
+	
+	//给算法添加输入的select项的多选
+	 $('#add').click(function(){  
+        var $options = $('#select1 option:selected');//获取当前选中的项  
+        var $remove = $options.remove();//删除下拉列表中选中的项  
+        $remove.appendTo('#select2');//追加给对方  
+    });  
+      
+    $('#remove').click(function(){  
+        var $removeOptions = $('#select2 option:selected');  
+        $removeOptions.appendTo('#select1');//删除和追加可以用appendTo()直接完成  
+    });  
+      
+    $('#addAll').click(function(){  
+        var $options = $('#select1 option');  
+        $options.appendTo('#select2');  
+    });  
+      
+    $('#removeAll').click(function(){  
+        var $options = $('#select2 option');  
+        $options.appendTo('#select1');  
+    });  
+      
+    //双击事件  
+    $('#select1').dblclick(function(){  
+        //var $options = $('#select1 option:selected');  
+        var $options = $('option:selected', this);//注意此处“option”与“:”之间的空格，有空格是不可以的  
+        $options.appendTo('#select2');  
+    });  
+      
+    $('#select2').dblclick(function(){  
+        $('#select2 option:selected').appendTo('#select1');  
+    });
+    
+  //给算法添加输出的select项的多选
+	 $('#outputadd').click(function(){  
+       var $options = $('#outputselect1 option:selected');//获取当前选中的项  
+       var $remove = $options.remove();//删除下拉列表中选中的项  
+       $remove.appendTo('#outputselect2');//追加给对方  
+   });  
+     
+   $('#outputremove').click(function(){  
+       var $removeOptions = $('#outputselect2 option:selected');  
+       $removeOptions.appendTo('#outputselect1');//删除和追加可以用appendTo()直接完成  
+   });  
+     
+   $('#outputaddAll').click(function(){  
+       var $options = $('#outputselect1 option');  
+       $options.appendTo('#outputselect2');  
+   });  
+     
+   $('#outputremoveAll').click(function(){  
+       var $options = $('#outputselect2 option');  
+       $options.appendTo('#outputselect1');  
+   });  
+     
+   //双击事件  
+   $('#outputselect1').dblclick(function(){  
+       //var $options = $('#select1 option:selected');  
+       var $options = $('option:selected', this);//注意此处“option”与“:”之间的空格，有空格是不可以的  
+       $options.appendTo('#outputselect2');  
+   });  
+     
+   $('#outputselect2').dblclick(function(){  
+       $('#outputselect2 option:selected').appendTo('#outputselect1');  
+   });
+       
 });

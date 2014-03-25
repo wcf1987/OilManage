@@ -4,9 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import cn.edu.cup.manage.business.AlgorithmInput;
+import cn.edu.cup.manage.business.AlgorithmOutput;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
 import cn.edu.cup.manage.business.Parameters;
 import cn.edu.cup.manage.dao.AlgorithmInputDao;
+import cn.edu.cup.manage.dao.AlgorithmOutputDao;
 import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
 import cn.edu.cup.manage.dao.ParameterDao;
 
@@ -22,6 +24,7 @@ public class AlgorithmsCycleAction {
 	List<AlgorithmsCycle> dataList;
 	AlgorithmsCycle algorithm;
 	List<AlgorithmInput> inputList;
+	List<AlgorithmOutput> outputList;
 	private int page;
 	private int records;
 	private int rows;
@@ -37,6 +40,12 @@ public class AlgorithmsCycleAction {
 	}
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+	public List<AlgorithmOutput> getOutputList() {
+		return outputList;
+	}
+	public void setOutputList(List<AlgorithmOutput> outputList) {
+		this.outputList = outputList;
 	}
 	public List<AlgorithmInput> getInputList() {
 		return inputList;
@@ -179,6 +188,8 @@ public class AlgorithmsCycleAction {
 		algorithm=dao.getAlgorithmDetail(ID);
 		AlgorithmInputDao inputdao=new AlgorithmInputDao();
 		inputList=inputdao.getAlgorithmInputList(page, rows, sidx, sord, ID);
+		AlgorithmOutputDao outputdao=new AlgorithmOutputDao();
+		outputList=outputdao.getAlgorithmOutputList(page, rows, sidx, sord, ID);
 		return "SUCCESS";
 	}
 	
