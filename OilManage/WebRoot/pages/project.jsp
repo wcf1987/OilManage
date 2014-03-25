@@ -289,11 +289,12 @@ User userlogin=(User)(session.getAttribute("user"));
 				     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 				    <button type="submit" class="btn btn-primary"  >添加</button>
 				   	<!--  <span id="measureSymbol" name="measureSymbol"></span>--> 
-				  </div>  
-			
-				   <div class="modal-footer"></div>
+				  
 				 </form> 
-				 
+				 <hr size=1 style="COLOR:#ff9999;border-style:double;width:550"> 
+				 <div class="modal-header">		        	
+		        	<h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输入</h4>
+		      	</div>
 				<ul id="ItemInputList"  data-role="list" style="margin-bottom:10px;"></ul>
 				
 			

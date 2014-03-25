@@ -429,7 +429,7 @@ function add_proInput() {
 			items="<input style='display:none;' value="+data.ID+"'/><li><label class='control-label'>"+data.param.display+"</label>" +
 					"&nbsp;&nbsp;<input  style='width:60px;vertical-align:middle;' class='valuechange' name='modifyInputValue' value="+data.value+" '/> &nbsp;&nbsp;" +
 							"<span>"+data.param.measureSymbol+"</span>&nbsp;&nbsp;" +
-									"<button type='button' onclick='updateInputItem(this,"+proInput.ID+");' title='保存'>&radic;</button>&nbsp;&nbsp;" +
+									"<button type='button' onclick='updateInputItem(this,"+data.ID+");' title='保存'>&radic;</button>&nbsp;&nbsp;" +
 											"<button type='button' onclick='deleteInputItem(this,"+data.ID+");' title='删除'>×</button></li>";
 			$("#ItemInputList").append(items);
 			//$('#addAlgorithmInput_modal').modal('hide');
