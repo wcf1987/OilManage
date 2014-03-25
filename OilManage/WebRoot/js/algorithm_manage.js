@@ -24,8 +24,8 @@ $(
 							sorttype:'int'
 						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
 						{
-							name : 'planID',
-							index : 'planID',
+							name : 'name',
+							index : 'name',
 							width : 100,
 							align : "center",
 							sortable:true

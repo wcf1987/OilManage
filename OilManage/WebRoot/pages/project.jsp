@@ -292,9 +292,10 @@ User userlogin=(User)(session.getAttribute("user"));
 				  
 				 </form> 
 				 <hr size=1 style="COLOR:#ff9999;border-style:double;width:550"> 
-				 <div class="modal-header">		        	
+				 <!-- <div class="modal-header"> -->		        	
 		        	<h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输入</h4>
-		      	</div>
+		      	<!-- </div> -->
+		      	 <hr size=1 style="COLOR:#ff9999;border-style:double;width:550"> 
 				<ul id="ItemInputList"  data-role="list" style="margin-bottom:10px;"></ul>
 				
 			

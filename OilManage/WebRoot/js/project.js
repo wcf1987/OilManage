@@ -41,7 +41,7 @@ $(
 				url : "listAlgPro.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','历史运行次数','输入参数设置'],// 表格的列名
+				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','历史运行次数','输入参数设置','算法选择','运行'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -103,6 +103,30 @@ $(
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setInput('"
 										+ rows.ID + "')\">输入参数设置</a>"
+							}
+						},
+						{				
+							name : 'select_algorithm',
+							index : 'select_algorithm',
+							width : 100,
+							align : "center",
+							formatter : function(value, grid, rows,
+									state) {
+//								alert(rows.ID);
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selectAlgorithm('"
+										+ rows.ID + "')\">算法选择</a>"
+							}
+						},
+						{				
+							name : 'execute',
+							index : 'execute',
+							width : 100,
+							align : "center",
+							formatter : function(value, grid, rows,
+									state) {
+//								alert(rows.ID);
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setInput('"
+										+ rows.ID + "')\">运行</a>"
 							}
 						}
 						],
