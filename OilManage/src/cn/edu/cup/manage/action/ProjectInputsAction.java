@@ -234,7 +234,7 @@ public class ProjectInputsAction {
 				
 				dao.deleteInput(id);
 			}
-		}else if(ID>0){
+		}else if(ID!=0){
 			dao.deleteInput(ID);
 		}
 		//inputDao.close();

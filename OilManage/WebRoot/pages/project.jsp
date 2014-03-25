@@ -71,220 +71,6 @@ User userlogin=(User)(session.getAttribute("user"));
 
 	<script type="text/javascript" src="js/project.js"></script>
 
-<script>
-$(document).ready(function(){
-
-
-        
-	loadAuthorOptions();//加载作者选项
-	$("#addProjectForm").validate({
-		debug:true,
-		onsubmit:true,
-		onfocusout:false,
-		onkeyup:true,
-		rules:{
-			name:{
-				required:true
-			},
-			authorID:{
-				required:true
-			}
-		},
-		messages:{
-			name:{
-				required:"名称不能为空！"
-			},
-			authorID:{
-				required:"请选择作者！"
-			}
-		},
-		submitHandler:function(){
-			add_project();
-		}
-	});
-	
-		
-	$("#addProInputForm").validate({
-		debug:true,
-		onsubmit:true,
-		onfocusout:false,
-		onkeyup:true,
-		rules:{
-			addParameterID:{
-				required:true
-			},
-			addInputValue:{
-				required:true
-			}
-		},
-		messages:{
-			addParameterID:{
-				required:"请选择输入参数！"
-			},
-			addInputValue:{
-				required:"参数值不能为空！"
-			}
-		},
-		submitHandler:function(){
-			add_proInput();
-		}
-	});
-	
-	$("#modifyProInputForm").validate({
-		debug:true,
-		onsubmit:true,
-		onfocusout:false,
-		onkeyup:true,
-		rules:{
-			modifyInputID:{
-				required:true
-			},
-			modifyInputValue:{
-				required:true
-			}
-		},
-		messages:{
-			modifyInputID:{
-				required:"请选择输入参数！"
-			},
-			modifyInputValue:{
-				required:"参数值不能为空！"
-			}
-		},
-		submitHandler:function(){
-			modify_proInput();
-		}
-	});
-	
-	$('.valuechange').change(function() {
-		alert("test");
-		value=$(this).val();
-		ID=$(this).siblings('input').val();
-		alert(value+ID);
-		$.ajax({
-			type : 'POST',
-			url : 'updateProInputs.action',
-			data : {
-				value:value,
-				ID:ID
-			},
-			success : function(data) {
-				alert('参数保存成功!');
-		
-				//$('#addAlgorithmInput_modal').modal('hide');
-				//$("#AlgorithmInputList").trigger("reloadGrid");			
-			},
-			error:function(msg){
-				alert(msg);
-				//$('#addAlgorithmInput_modal').modal('hide');
-				//$("#AlgorithmList").trigger("reloadGrid");
-			}
-		});
-	});
-	
-});//ready 结束
-
-function add_project() {
-
-	$.ajax({
-		type : 'POST',
-		url : 'addAlgPro.action',
-		data : {
-			name:$("#name").val(),
-			Description : $("#Description").val(),
-			authorID:$("#authorID").val()
-		},
-		success : function(data) {
-			alert('工程添加成功！');
-			$('#add_project_modal').modal('hide');
-			$("#ProjectList").trigger("reloadGrid");			
-		},
-		error:function(msg){
-			alter(msg);
-			$('#add_project_modal').modal('hide');
-			$("#ProjectList").trigger("reloadGrid");
-		}
-	});
-	}
-
-function add_proInput() {
-	$.ajax({
-		type : 'POST',
-		url : 'addProInputs.action',
-		data : {
-			pro_id:$("#proID").val(),
-			param_id:$("#addParameterID").val(),
-			value:$("#addInputValue").val()
-		},
-		success : function(data) {
-			alert('参数保存成功!');
-			items="<li><div class='control'><label class='control-label'>"+data.param.display+"</label>&nbsp;&nbsp;<input  style='width:60px;vertical-align:middle;' class='text-center,valuechange' name='modifyInputValue' value="+data.value+" '/><input style='display:none;' value="+data.ID+"'/> &nbsp;&nbsp;<span>"+data.param.measureSymbol+"</span><button type='button' onclick='deleteInputItem(this,"+data.ID+");' title='删除'>×</button></div></li>";
-			$("#ItemInputList").append(items);
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmInputList").trigger("reloadGrid");			
-		},
-		error:function(msg){
-			alert(msg);
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmList").trigger("reloadGrid");
-		}
-	});
-	}
-	
-function modify_proInput() {
-	$.ajax({
-		type : 'POST',
-		url : 'updateProInputs.action',
-		data : {
-			ID:$("#modifyInputID").val(),			
-			value:$("#modifyInputValue").val()
-		},
-		success : function(data) {
-			alert('参数保存成功!');
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmInputList").trigger("reloadGrid");			
-		},
-		error:function(msg){
-			alter(msg);
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmList").trigger("reloadGrid");
-		}
-	});
-	}
-function showValue(inputID){
-	$.ajax({
-		url:'searchProInputs.action',
-		type:'post',
-		dataType:'json',
-		data : {
-			ID:inputID,		
-		},
-		success:function(data){
-			$("#modifyInputValue").val(data.input.value);
-		}
-	});
-	}	
-function loadAuthorOptions(){
-	$.ajax({
-		url:'listUser.action',
-		type:'post',
-		dataType:'json',
-		success:function(data){
-			var items="";
-			$.each(data.dataList,function(i,user){
-				items+= "<option value=\"" + user.userid + "\">" + user.username + "</option>"; 
-			});
-			$("#authorID").html(items);
-		}
-	});
-	}
-
-function addInputItem(obj){   
-       $("#ItemInputList").append("<li class='list-group-item clearfix'><span class='glyphicon glyphicon-resize-vertical sort-handle'></span>"+obj+"<input type='hidden' name='goals' value='"+obj+"'><button type='button' class='close delete-btn deleteItem' onclick='deleteCourseItem(this);' title='删除'>×</button></li>");   
-    }
-    		
-</script>
-
 
   </head>
   
@@ -481,16 +267,17 @@ function addInputItem(obj){
 		</div><!-- /.modal -->
    
 				
-    		<!-- 选择输入参数的模态框 -->   	
-		<div class="modal fade" id="addProjectInput_modal">
+    		<!-- 设置输入参数的模态框 -->   	
+		<div class="modal fade" id="setProjectInput_modal">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加输入</h4>
 		      </div>
-		      <div class="modal-body">  	  
-		     	 <form id="addProInputForm" action="addProInputs.action" method="post"> 		 
+		      <div class="modal-body">  
+		      	 <!-- 添加输入参数 -->	  
+		     	 <form id="addProInputForm"  > 		 
 		      	  <div class="centent"> 
 		      	  	<input id="proID" style="display: none;"/> 
 		      	  	<input id='addInputDisplay' style='display: none;''/><input id='addInputMeasure' style='display: none;''/>
@@ -500,7 +287,7 @@ function addInputItem(obj){
 				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 				    <input id="addInputValue" name="addInputValue" />
 				     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-				    <button type="submit" class="btn btn-primary"  >保存</button>
+				    <button type="submit" class="btn btn-primary"  >添加</button>
 				   	<!--  <span id="measureSymbol" name="measureSymbol"></span>--> 
 				  </div>  
 			
@@ -519,87 +306,10 @@ function addInputItem(obj){
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 		
-		<!-- 修改输入参数的模态框 -->   	
-		<div class="modal fade" id="modifyProjectInput_modal">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">修改输入</h4>
-		      </div>
-		      <div class="modal-body">  	  
-		     	 <form id="modifyProInputForm" action="updateProInputs.action" method="post"> 		 
-		      	  <div class="centent"> 
-		      	  	<input id="proID2" style="display: none;"/> 
-				    <select  id="modifyInputID" name="modifyInputID" onchange=showValue(this.value) style="width:200px;height:auto;margin-left:50px;">  
-				    
-				    </select>  
-				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-				    <input id="modifyInputValue" name="modifyInputValue" />
-				  </div>  			
-				   <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				        <button type="submit" class="btn btn-primary"  >保存</button>
-				   </div>
-				 </form> 
-		      </div>
-		     
-		    </div><!-- /.modal-content -->
-		  </div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
+	
 		
 					
-    		<!-- 查看输入参数的模态框 -->   	
-		<div class="modal fade" id="listAlgorithmInput_modal">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		       <!--  <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输入</h4> -->
-		      </div>
-		      <div class="modal-body">  
-		      	<div class="container-fluid">
-					<div class="row-fluid">
-						<div class="span12">
-							<table id="generatedTable" class="table" >
-								<thead>
-									<tr>
-										<th>
-											编号
-										</th>
-										<th>
-											参数名
-										</th>
-										<th>
-											符号
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr id="cloneTr">
-										<td>											
-										</td>
-										<td>											
-										</td>
-										<td>											
-										</td>						
-									</tr>									
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- 
-	      		<table id="AlgorithmInputList" class="table table-striped table-bordered table-hover datatable " style="width:600px;" ></table>
-	      		<div>
-	      			<div id="AlgorithmInputMeasurePager" ></div>
-	      		</div>	
-	      		 -->	  
-		      </div>
-		     
-		    </div><!-- /.modal-content -->
-		  </div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
+    	
 		
   </body>
   

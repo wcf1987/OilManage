@@ -1,11 +1,39 @@
 
 $(
 	
-		
-	function() {
 
+	
+	function() {
+		
+		
+		$("li>input").blur(function() {
+			alert("test");
+			value=$(this).val();
+			ID=$(this).siblings('input').val();
+			alert(value+ID);
+			$.ajax({
+				type : 'POST',
+				url : 'updateProInputs.action',
+				data : {
+					value:value,
+					ID:ID
+				},
+				success : function(data) {
+					alert('参数保存成功!');
+			
+					//$('#addAlgorithmInput_modal').modal('hide');
+					//$("#AlgorithmInputList").trigger("reloadGrid");			
+				},
+				error:function(msg){
+					alert(msg);
+					//$('#addAlgorithmInput_modal').modal('hide');
+					//$("#AlgorithmList").trigger("reloadGrid");
+				}
+			});
+		});
+		
 	/*
-	 * 算法管理列表
+	 * 工程管理列表
 	 */
 	var datagrid = jQuery("#ProjectList")
 	.jqGrid(
@@ -13,7 +41,7 @@ $(
 				url : "listAlgPro.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','历史运行次数','输入参数添加','输入参数修改','设置'],// 表格的列名
+				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','历史运行次数','输入参数设置'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -73,31 +101,8 @@ $(
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selectInput('"
-										+ rows.ID + "')\">输入参数添加</a>"
-							}
-						},
-						{				
-							name : 'inputView',
-							index : 'inputView',
-							width : 100,
-							align : "center",
-							formatter : function(value, grid, rows,
-									state) {
-//								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"modifyInput('"
-										+ rows.ID + "')\">输入参数修改</a>"
-							}
-						},
-						{
-							name:'set',
-							index:'set',
-							width:200,
-							align:'center',
-							sortable:false,
-							formatter : function(value, grid, rows,state) {
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewAlgorithmInput('"
-										+ rows.ID + "')\">设置</a>"
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setInput('"
+										+ rows.ID + "')\">输入参数设置</a>"
 							}
 						}
 						],
@@ -122,7 +127,7 @@ $(
 				caption: "工程管理"//表格名称
 				
 			});
-//	datagrid.jqGrid('hideCol','ID');
+
 //	datagrid.jqGrid('filterToolbar',{searchOperators:true});
 	datagrid.jqGrid('navGrid','#ProjectPager',{
 		edit : false,
@@ -133,10 +138,36 @@ $(
 				caption:"添加",
 				id:"add_ProjectList",
 				onClickButton : function addModal(){
-					// 配置对话框
-
+						// 配置对话框
+						loadAuthorOptions();//加载作者选项		
 						$('#add_project_modal').modal();
-				
+						$("#addProjectForm").validate({
+							debug:true,
+							onsubmit:true,
+							onfocusout:false,
+							onkeyup:true,
+							rules:{
+								name:{
+									required:true
+								},
+								authorID:{
+									required:true
+								}
+							},
+							messages:{
+								name:{
+									required:"名称不能为空！"
+								},
+								authorID:{
+									required:"请选择作者！"
+								}
+							},
+							submitHandler:function(){
+								add_project();
+							}
+						});
+					
+						
 				},
 				position:"first"
 			
@@ -152,6 +183,34 @@ $(
 }//function结束
 );//$()结束
 
+/*
+ * 添加项目
+ */
+function add_project() {
+
+	$.ajax({
+		type : 'POST',
+		url : 'addAlgPro.action',
+		data : {
+			name:$("#name").val(),
+			Description : $("#Description").val(),
+			authorID:$("#authorID").val()
+		},
+		success : function(data) {
+			alert('工程添加成功！');
+			$('#add_project_modal').modal('hide');
+			$("#ProjectList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alter(msg);
+			$('#add_project_modal').modal('hide');
+			$("#ProjectList").trigger("reloadGrid");
+		}
+	});
+	}
+/*
+ * 删除项目
+ */
 function deleteProject() {
     var sels = $("#ProjectList").jqGrid('getGridParam','selarrrow'); 
     if(sels==""){ 
@@ -198,16 +257,44 @@ function deleteProject() {
        } 
     } 
 }
-
-
-
-function selectInput(proID){
-	$('#addProjectInput_modal').modal();
+/*
+ * 输入设置
+ */
+function setInput(proID){
+	$("#ItemInputList").empty();
 	$('#proID').val(proID);
 	loadParameterOptions();
 	loadInputOptions(proID);
+	$("#addProInputForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			addParameterID:{
+				required:true
+			},
+			addInputValue:{
+				required:true
+			}
+		},
+		messages:{
+			addParameterID:{
+				required:"请选择输入参数！"
+			},
+			addInputValue:{
+				required:"参数值不能为空！"
+			}
+		},
+		submitHandler:function(){
+			add_proInput();
+		}
+	});
+	$('#setProjectInput_modal').modal();
 }
-
+/*
+ * 加载参数下拉列表
+ */
 function loadParameterOptions(){
 	$.ajax({
 		url:'listParameter.action',
@@ -230,12 +317,6 @@ function loadParameterOptions(){
 	});
 	}
 
-function modifyInput(proId){
-		$('#modifyProjectInput_modal').modal();
-		$('#proID2').val(proId);
-		loadInputOptions(proId);
-
-	}
 
 //function loadInputOptions(proId){
 //	$.ajax({
@@ -258,7 +339,9 @@ function modifyInput(proId){
 //		}
 //	});
 //	}
-
+/*
+ * 加载已有的项目输入列表
+ */
 function loadInputOptions(proId){
 	$.ajax({
 		url:'listProInputs.action',
@@ -272,7 +355,10 @@ function loadInputOptions(proId){
 		success:function(data){
 			var items="";
 			$.each(data.dataList,function(i,proInput){
-				items+="<input name='inputID' style='display:none;' value="+proInput.ID+"'/><li><div class='control'><label class='control-label'>"+proInput.display+"</label>&nbsp;&nbsp;<input  style='width:60px;vertical-align:middle;' class='text-center,valuechange' id='modifyInputValue' name='modifyInputValue' value="+proInput.value+" '/><input style='display:none;' value="+proInput.ID+"'/> &nbsp;&nbsp;<span>"+proInput.mess+"</span><button type='button' onclick='deleteInputItem(this,"+proInput.ID+");' title='删除'>×</button></div></li>";
+				items+="<input style='display:none;' value="+proInput.ID+"'/><li><label class='control-label'>"+proInput.display+"</label>&nbsp;&nbsp;" +
+						"<input  style='width:60px;vertical-align:middle;' class='valuechange' id='modifyInputValue' name='modifyInputValue' value="+proInput.value+" '/> &nbsp;&nbsp;" +
+								"<span>"+proInput.mess+"</span>&nbsp;&nbsp;<button type='button' onclick='updateInputItem(this,"+proInput.ID+");' title='保存'>&radic;</button>" +
+										"&nbsp;&nbsp;<button type='button' onclick='deleteInputItem(this,"+proInput.ID+");' title='删除'>×</button></li>";
 				//items+= "<option value=\"" + proInput.ID + "\">" + proInput.display+" &nbsp;&nbsp"+proInput.mess + "</option>"; 			
 			});
 			$("#ItemInputList").append(items);
@@ -280,6 +366,35 @@ function loadInputOptions(proId){
 		}
 	});
 	}
+/*
+ * 保存工程输入项
+ */
+function updateInputItem(obj,id){
+	value=$(obj).prev().prev().val();
+	ID=id;
+	$.ajax({
+		type : 'POST',
+		url : 'updateProInputs.action',
+		data : {
+			value:value,
+			ID:ID
+		},
+		success : function(data) {
+			alert('参数保存成功!');
+	
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmInputList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alert(msg);
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+}
+/*
+ * 删除工程输入项
+ */
 function deleteInputItem(obj,id){
 	 
 	$.ajax({
@@ -291,80 +406,79 @@ function deleteInputItem(obj,id){
 		},
 		success:function(data){
 			alert("删除成功！");
-			$(obj).parent().replaceWith(""); 
+//			$(obj).parent().replaceWith(""); 
+			$(obj).parent().remove();
 		}
 	});
-}
-function viewInput(cycleId){//没用
-	/*
-	 * 输入参数管理列表
-	 */
-	var datagrid = jQuery("#AlgorithmInputList")
-	.jqGrid(
-			{
-				url : "listAlgorithmInputs.action",// 后端的数据交互程序，改为你的
-				postData:{CycleID:cycleId},
-				datatype : "json",// 前后交互的格式是json数据
-				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '参数', '符号'],// 表格的列名
-				colModel : [
-						{
-							name : 'ID',
-							index : 'ID',
-							width : 50,
-							align : "center",
-							sortable:true,
-							sorttype:'int'
-						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
-						{
-							name : 'display',
-							index : 'display',
-							width : 100,
-							align : "center",
-							sortable:true
-						},
-						{
-							name : 'symbol',
-							index : 'symbol',
-							width : 100,
-							align : "center"
-						}
-	
-						],
-//				autowidth:true,
-				rowNum:10,//每一页的行数
-				height: 'auto',
-				width:555,
-				rowList:[10,20,30],
-				pager: '#AlgorithmInputMeasurePager',
-				sortname: 'ID',			
-				viewrecords: true,
-				sortorder: "desc",
-				multiselect: true,  //可多选，出现多选框 
-			    multiselectWidth: 35, //设置多选列宽度 
-				jsonReader: {//读取后端json数据的格式
-					root: "dataList",//保存详细记录的名称
-					total: "total",//总共有多少页
-					page: "page",//当前是哪一页
-					records: "records",//总共记录数
-					repeatitems: false
-				},
-				caption: "输入参数管理"//表格名称
-				
-			});
-	datagrid.jqGrid('navGrid','#AlgorithmInputMeasurePager',{
-		edit : false,
-		add : false,
-		search:false,
-		del : false}).jqGrid('navButtonAdd',"#AlgorithmInputMeasurePager",{
-				title:'删除',
-				caption:"删除",	
-				id:"delete_AlgorithmInput",
-				onClickButton:deleteAlgorithmInput,
-				position:"first"
-			});
-	$("#listAlgorithmInput_modal").modal();
-//	alert(cycleId);
-//	$('#CycleID').val(cycleId);
 	}
 
+/*
+ * 添加项目输入
+ */
+function add_proInput() {
+	$.ajax({
+		type : 'POST',
+		url : 'addProInputs.action',
+		data : {
+			pro_id:$("#proID").val(),
+			param_id:$("#addParameterID").val(),
+			value:$("#addInputValue").val()
+		},
+		success : function(data) {
+			alert('参数保存成功!');
+			items="<input style='display:none;' value="+data.ID+"'/><li><label class='control-label'>"+data.param.display+"</label>" +
+					"&nbsp;&nbsp;<input  style='width:60px;vertical-align:middle;' class='valuechange' name='modifyInputValue' value="+data.value+" '/> &nbsp;&nbsp;" +
+							"<span>"+data.param.measureSymbol+"</span>&nbsp;&nbsp;" +
+									"<button type='button' onclick='updateInputItem(this,"+proInput.ID+");' title='保存'>&radic;</button>&nbsp;&nbsp;" +
+											"<button type='button' onclick='deleteInputItem(this,"+data.ID+");' title='删除'>×</button></li>";
+			$("#ItemInputList").append(items);
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmInputList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alert(msg);
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+	}
+	
+function modify_proInput() {
+	$.ajax({
+		type : 'POST',
+		url : 'updateProInputs.action',
+		data : {
+			ID:$("#modifyInputID").val(),			
+			value:$("#modifyInputValue").val()
+		},
+		success : function(data) {
+			alert('参数保存成功!');
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmInputList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alter(msg);
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+	}
+	
+function loadAuthorOptions(){
+	$.ajax({
+		url:'listUser.action',
+		type:'post',
+		dataType:'json',
+		success:function(data){
+			var items="";
+			$.each(data.dataList,function(i,user){
+				items+= "<option value=\"" + user.userid + "\">" + user.username + "</option>"; 
+			});
+			$("#authorID").html(items);
+		}
+	});
+	}
+
+$(function(){
+	
+})
