@@ -41,7 +41,6 @@ public class AlgorithmProDao {
 		//sessionFactory = new Configuration().configure().buildSessionFactory();
 		session = sessionFactory.openSession();
 		tx = session.beginTransaction();
-	
 	}
 	public List<AlgorithmPro> getAlgorithmProsList(int page, int rows,
 			String sidx, String sord) {
@@ -114,14 +113,31 @@ public class AlgorithmProDao {
 		SQLQuery q = session.createSQLQuery("update t_projects t set Name=?, Description=? where t.ID=?");
 		q.setParameter(0, name);
 		q.setParameter(1, description);
-
-
 		q.setParameter(2, iD);
 		int re=q.executeUpdate();
 		tx.commit();
 		return re;
 	}
-
+	public int searchProAlg(int proID){
+		Query q=session.createSQLQuery("select t.algorithm from t_projects t where t.ID=?");
+		q.setParameter(0, proID);
+		int result=0;
+		try{
+			result=(Integer) q.uniqueResult();
+		}catch(Exception e){
+			
+		} 
+		tx.commit();
+		return result;
+	}
+	public int addAlgorithm(int iD,int algID){
+		Query q = session.createSQLQuery("update t_projects t set t.algorithm =? where t.ID=? ");
+		q.setParameter(0, algID);
+		q.setParameter(1, iD);
+		int result=q.executeUpdate();		
+		tx.commit();
+		return result;
+	}
 	public String getAlgorithmFile(int pro_id) {
 		String sql="select t2.FilePath from t_projects t,t_algorithmscycle t2 where  t.id=? and t2.ID=t.Algorithm";
 		SQLQuery q2 = session.createSQLQuery(sql);

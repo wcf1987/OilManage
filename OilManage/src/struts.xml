@@ -266,7 +266,7 @@
 
 			</result>
 		</action>
-		
+		<!-- 工程 -->
 		<action name="listAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
 			method="list">
 
@@ -294,6 +294,12 @@
 
 			</result>
 		</action>
+		<action name="selectAlg" class="cn.edu.cup.manage.action.AlgorithmProjectsAction" method="selectAlg">
+			<result name="SUCCESS" type="json"></result>
+		</action>
+		<action name="searchProAlg" class="cn.edu.cup.manage.action.AlgorithmProjectsAction" method="searchProAlg">
+			<result name="SUCCESS" type="json"></result>
+		</action>
 		<action name="runAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
 			method="runAlg">
 
@@ -309,7 +315,7 @@
 			<result name="SUCCESS" type="json">
 			</result>
 		</action>
-	<action name="listProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
+		<action name="listProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
 			method="list">
 
 			<result name="SUCCESS" type="json">
@@ -336,7 +342,7 @@
 
 			</result>
 		</action>
-		
+		<!-- 工程end -->
 		
 		
 		<action name="testData" class="cn.edu.cup.map.action.TableAction">

@@ -203,10 +203,11 @@ public class AlgorithmsCycleAction {
 	
 		records=dao.getCountAlgorithms();
 
-
-		total=records/rows;
-		if(records%rows!=0){
-			total++;
+		if(records!=0&&rows!=0){
+			total=records/rows;
+			if(records%rows!=0){
+				total++;
+			}
 		}
 		return "SUCCESS";
 	}

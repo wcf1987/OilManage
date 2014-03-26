@@ -252,12 +252,13 @@ else{
 		      	<form id="addAlgorithmForm" action="addAlgorithmsCycle.action" method="post"> 
 			        <p> 
 			        <!-- 上传文件选择 -->
-			        	  算法描述：<input type="text" name="Description" id='Description'/><em style="color:red">*</em>
+			        	 名称：<input type="text" name="algname" id='algname'/><em style="color:red">*</em><br> <br> 
+			        	  算法描述：<input type="text" name="Description" id='Description'/><em style="color:red">*</em><br> <br> 
 			        	  作者：
 			        	<select id="authorID" name="authorID">		                  
                 		</select>
    						<em style="color:red">*</em>
-			        	  
+			        	<br> <br> 
 			        	<input type="file" name="xxx" id="algorithmfile" /> 
 			        </p>  		 
 			 		
@@ -408,7 +409,6 @@ else{
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		       <!--  <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输入</h4> -->
 		      </div>
 		      <div class="modal-body">  
 		      	<div class="container-fluid">
@@ -519,33 +519,6 @@ else{
 									</table>	
 								</dd>															
 							</dl>						
-						<!--  
-							<table id="generatedTable" class="table" >
-								<thead>
-									<tr>
-										<th>
-											编号
-										</th>
-										<th>
-											参数名
-										</th>
-										<th>
-											符号
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr id="cloneTr">
-										<td>											
-										</td>
-										<td>											
-										</td>
-										<td>											
-										</td>						
-									</tr>									
-								</tbody>
-							</table>
-							-->
 						</div>
 					</div>
 				</div>

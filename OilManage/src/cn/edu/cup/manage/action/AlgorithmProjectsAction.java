@@ -19,6 +19,7 @@ public class AlgorithmProjectsAction {
 	Date lastUpdateDate;
 	String name;
 	List<AlgorithmPro> dataList;
+	private int algID;
 	private int page;
 	private int records;
 	private int rows;
@@ -28,6 +29,12 @@ public class AlgorithmProjectsAction {
 	private String sord;
 	private List<Integer> ids;
 	
+	public void setAlgID(int algID) {
+		this.algID = algID;
+	}
+	public int getAlgID() {
+		return algID;
+	}
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -201,6 +208,16 @@ public class AlgorithmProjectsAction {
 		AlgorithmProDao dao=new AlgorithmProDao();
 		int re=dao.updatePro(ID, this.name,this.Description);
 		return "SUCCESS"; 
+	}
+	public String searchProAlg(){
+		AlgorithmProDao dao=new AlgorithmProDao();
+		this.algID=dao.searchProAlg(this.ID);
+		return "SUCCESS";
+	}
+	public String selectAlg(){
+		AlgorithmProDao dao=new AlgorithmProDao();
+		int re=dao.addAlgorithm(this.ID,this.algID);
+		return "SUCCESS";
 	}
 	public String runAlg(){
 		AlgorithmProDao dao=new AlgorithmProDao();

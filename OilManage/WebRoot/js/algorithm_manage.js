@@ -141,7 +141,7 @@ $(
 						onfocusout:false,
 						onkeyup:true,
 						rules:{
-							Description:{
+							name:{
 								required:true
 							},
 							authorID:{
@@ -149,9 +149,9 @@ $(
 							}
 						},
 						messages:{
-							Description:{
-								required:"算法描述不能为空！",
-							},
+							name:{
+								required:"名称不能为空！",
+							},							
 							authorID:{
 								required:"请选择作者！"
 							}
@@ -247,6 +247,7 @@ function add_algorithm() {
 		type : 'POST',
 		url : 'addAlgorithmsCycle.action',
 		data : {
+			name:$("#algname").val(),
 			Description : $("#Description").val(),
 			authorID:$("#authorID").val(),
 			filePath : hideFilePath

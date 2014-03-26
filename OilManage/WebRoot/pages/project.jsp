@@ -224,7 +224,155 @@ User userlogin=(User)(session.getAttribute("user"));
 	    </div><!-- /.container -->
 	    
 	   
-	   
+		<!-- 查看选择算法的模态框 -->   	
+		<div class="modal fade" id="select_algorithm_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		         <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">选择算法</h4>
+		      </div>
+		      <div class="modal-body">  
+		      	<div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							 <form id="selectAlgorithmForm"  > 		 
+					      	  <div class="centent"> 
+					      	  	<input id="proID2" style="display: none;"/> 
+					      	  	
+							    <select  id="algorithmID" name="algorithmID" style="width:200px;height:auto;margin-left:50px;">  
+							    
+							    </select>  
+							    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  							
+							    <button type="submit" class="btn btn-primary"  >保存</button>
+							   	<!--  <span id="measureSymbol" name="measureSymbol"></span>--> 
+							  </div>
+							 </form> 
+				 			 <hr size=1 style="COLOR:#ff9999;border-style:double;width:550"> 
+							 <!-- <div class="modal-header"> -->		        	
+					        	<h4 class="modal-title" style="font-weight:bold;font-family:幼圆">当前算法明细</h4>
+					      	<!-- </div> -->
+					      	 <hr size=1 style="COLOR:#ff9999;border-style:double;width:550"> 
+							<dl class="dl-horizontal">
+								<dt>
+									编号
+								</dt>
+								<dd id="AlgID">
+									
+								</dd>
+								<dt>
+									名称
+								</dt>
+								<dd id="AlgName">
+									
+								</dd>
+							
+								<dt>
+									描述
+								</dt>
+								<dd id="AlgDes">
+									
+								</dd>
+								<dt>
+									添加时间
+								</dt>
+								<dd id="AlgAddDate">
+									
+								</dd>
+								<dt>
+									最后更新时间
+								</dt>
+								<dd id="AlgLastUpdateDate">
+									
+								</dd>
+								<dt>
+									作者
+								</dt>
+								<dd id="AlgAuthor">
+									
+								</dd>
+							</dl>	
+							
+							<hr size=1 style="COLOR:#ff9999;border-style:double;width:490"> 
+							
+							<dl class="dl-horizontal">
+								
+								<dt>
+									输入参数明细
+								</dt>
+								<dd>
+									<table id="inputTable" class="table" >
+										<thead>
+											<tr>
+												<th>
+													编号
+												</th>
+												<th>
+													参数名
+												</th>
+												<th>
+													符号
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr id=inputTr>
+												<td>											
+												</td>
+												<td>											
+												</td>
+												<td>											
+												</td>						
+											</tr>									
+										</tbody>
+									</table>	
+								</dd>
+								<dt>
+									输出明细
+								</dt>
+								<dd>
+									<table id="outputTable" class="table" >
+										<thead>
+											<tr>
+												<th>
+													编号
+												</th>
+												<th>
+													参数名
+												</th>
+												<th>
+													符号
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr id=outputTr>
+												<td>											
+												</td>
+												<td>											
+												</td>
+												<td>											
+												</td>						
+											</tr>									
+										</tbody>
+									</table>	
+								</dd>															
+							</dl>						
+						</div>
+					</div>
+				</div>
+				<!-- 
+	      		<table id="AlgorithmInputList" class="table table-striped table-bordered table-hover datatable " style="width:600px;" ></table>
+	      		<div>
+	      			<div id="AlgorithmInputMeasurePager" ></div>
+	      		</div>	
+	      		 -->	  
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
 	   
 	   	<!-- 添加工程的模态框 -->   	
 		<div class="modal fade" id="add_project_modal">
@@ -280,7 +428,7 @@ User userlogin=(User)(session.getAttribute("user"));
 		     	 <form id="addProInputForm"  > 		 
 		      	  <div class="centent"> 
 		      	  	<input id="proID" style="display: none;"/> 
-		      	  	<input id='addInputDisplay' style='display: none;''/><input id='addInputMeasure' style='display: none;''/>
+		      	  	<input id='addInputDisplay' style='display: none;'/><input id='addInputMeasure' style='display: none;'/>
 				    <select  id="addParameterID" name="addParameterID" style="width:200px;height:auto;margin-left:50px;">  
 				    
 				    </select>  
@@ -289,7 +437,7 @@ User userlogin=(User)(session.getAttribute("user"));
 				     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 				    <button type="submit" class="btn btn-primary"  >添加</button>
 				   	<!--  <span id="measureSymbol" name="measureSymbol"></span>--> 
-				  
+				  </div>
 				 </form> 
 				 <hr size=1 style="COLOR:#ff9999;border-style:double;width:550"> 
 				 <!-- <div class="modal-header"> -->		        	
@@ -300,7 +448,8 @@ User userlogin=(User)(session.getAttribute("user"));
 				
 			
 				 <div class="modal-footer">
-				      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>				       
+				      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>	
+				      			       
 				 </div>
 		      </div>
 		     
@@ -308,8 +457,9 @@ User userlogin=(User)(session.getAttribute("user"));
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 		
-	
 		
+	
+			
 					
     	
 		
@@ -318,4 +468,5 @@ User userlogin=(User)(session.getAttribute("user"));
 </html>
 
 
+				
 

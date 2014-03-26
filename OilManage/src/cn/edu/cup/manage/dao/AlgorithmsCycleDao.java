@@ -46,6 +46,7 @@ public class AlgorithmsCycleDao {
 	public AlgorithmsCycle getAlgorithmDetail(int ID){
 		SQLQuery q=session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime,t1.Name from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID and t1.ID=?");
 		q.setParameter(0, ID);
+		try{
 		Object[] row=(Object[]) q.uniqueResult();
 		String id = ((Integer)row[0]).toString();
 		String iid = ((Integer)row[1]).toString();
@@ -61,6 +62,10 @@ public class AlgorithmsCycleDao {
 		AlgorithmsCycle p=new AlgorithmsCycle(id, iid, pid, oid, aid,author,description,addTime,lastUpdateTime);
 		p.setName(Name);
 		return p;
+		}catch(Exception e){
+			return null;
+		}
+		
 		  
 	}
 	

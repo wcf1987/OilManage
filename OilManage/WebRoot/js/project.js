@@ -41,7 +41,7 @@ $(
 				url : "listAlgPro.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','历史运行次数','输入参数设置','算法选择','运行'],// 表格的列名
+				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','历史运行次数','输入参数设置','算法选择','运行','输出结果','查看运行历史'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -127,6 +127,30 @@ $(
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setInput('"
 										+ rows.ID + "')\">运行</a>"
+							}
+						},
+						{				
+							name : 'output',
+							index : 'output',
+							width : 100,
+							align : "center",
+							formatter : function(value, grid, rows,
+									state) {
+//								alert(rows.ID);
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setInput('"
+										+ rows.ID + "')\">输出结果</a>"
+							}
+						},
+						{				
+							name : 'calcHistory',
+							index : 'calcHistory',
+							width : 100,
+							align : "center",
+							formatter : function(value, grid, rows,
+									state) {
+//								alert(rows.ID);
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setInput('"
+										+ rows.ID + "')\">查看运行历史</a>"
 							}
 						}
 						],
@@ -281,6 +305,148 @@ function deleteProject() {
        } 
     } 
 }
+/*
+ * 算法选择
+ */
+function selectAlgorithm(proID){
+
+	$('#select_algorithm_modal').modal();
+	$('#proID2').val(proID);
+	loadAlgorithmOptions();
+	$("#selectAlgorithmForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			algorithmID:{
+				required:true
+			}
+		},
+		messages:{
+			algorithmID:{
+				required:"请选择算法！"
+			}
+		},
+		submitHandler:function(){
+			save_algorithm();
+		}
+	});
+	$.ajax({
+		url:'searchProAlg.action',
+		type:'post',
+		dataType:'json',
+		data:{
+			ID:proID
+		},
+		success:function(data){
+			viewAlgorithmDetail(data.algID);
+		}
+	});
+	
+	
+}
+/*
+ * 加载算法下拉列表
+ */
+function loadAlgorithmOptions(){
+	$.ajax({
+		url:'listAlgorithmsCycle.action',
+		type:'post',
+		dataType:'json',
+		data : {
+			sidx: 'id',
+			sord: "desc"
+		},
+		success:function(data){
+			var items="";
+			$.each(data.dataList,function(i,algorithm){
+				items+= "<option value=\"" + algorithm.ID + "\">" + algorithm.name+" </option>"; 
+			});
+			$("#algorithmID").html(items);			
+		}
+	});
+	}
+
+/*
+ * 选择算法
+ */
+function save_algorithm() {
+	$.ajax({
+		type : 'POST',
+		url : 'selectAlg.action',
+		data : {
+			ID:$("#proID2").val(),
+			algID:$("#algorithmID").val()			
+		},
+		success : function(data) {
+			 viewAlgorithmDetail(data.algID);
+		},
+		error:function(msg){
+			alert(msg);
+		}
+	});
+	}
+
+function viewAlgorithmDetail(rowId){
+	$("#inputTr").nextAll().remove();
+	$("#inputTr").show();	
+	$("#outputTr").nextAll().remove();
+	$("#outputTr").show();	
+	$.ajax({
+		type:"post",
+		url:"viewAlgorithmDetail.action",
+		data:{
+			ID:rowId,
+			sidx:"ID",
+			sord:"asc"
+		},
+		success:function(data){
+			$("#AlgID").text(data.algorithm.ID);
+			$("#AlgName").text(data.algorithm.name);
+			$("#AlgDes").text(data.algorithm.description);
+			$("#AlgAddDate").text(data.algorithm.addDates);
+			$("#AlgLastUpdateDate").text(data.algorithm.lastUpdateDates);
+			$("#AlgAuthor").text(data.algorithm.authorName);
+
+			var tr=$("#inputTr");
+			$.each(data.inputList,function(index,row){
+				var clonedTr=tr.clone();
+				var _index=index;
+				clonedTr.children("td").each(function(inner_index){
+					switch(inner_index){
+						case(0):$(this).html(row.ID);break;
+						case(1):$(this).html(row.display);break;
+						case(2):$(this).html(row.symbol);break;
+					
+					}//end switch
+				});//end children.each
+				clonedTr.insertAfter(tr);		
+			});//end $each
+			$("#inputTr").hide();
+			$("#inputTable").show();			
+			
+			var tr=$("#outputTr");
+			$.each(data.outputList,function(index,row){
+				var clonedTr=tr.clone();
+				var _index=index;
+				clonedTr.children("td").each(function(inner_index){
+					switch(inner_index){
+						case(0):$(this).html(row.ID);break;
+						case(1):$(this).html(row.display);break;
+						case(2):$(this).html(row.symbol);break;
+					
+					}//end switch
+				});//end children.each
+				clonedTr.insertAfter(tr);		
+			});//end $each
+			$("#outputTr").hide();
+			$("#outputTable").show();			
+			
+		}
+	});
+}
+
 /*
  * 输入设置
  */
