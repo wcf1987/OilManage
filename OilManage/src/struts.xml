@@ -294,6 +294,13 @@
 
 			</result>
 		</action>
+		<action name="runAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="runAlg">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		
 		
 		<action name="searchProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
