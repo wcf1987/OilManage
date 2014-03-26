@@ -14,7 +14,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
-import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.manage.business.ProjectInputs;
 
 public class ProjectInputDao {
@@ -107,11 +106,13 @@ public class ProjectInputDao {
 
 	}
 	public int addInput(int pro_id,int param_id,double value) {
-		
-		Query q = session.createSQLQuery("INSERT into t_projectinputs  select NULL,?,t1.id,t1.display,?,t1.name,t1.measureID from t_parameters t1 where t1.ID=?;");
+		ParameterDao pDao=new ParameterDao();
+		double ISOValue=pDao.getISOValue(param_id, value);
+		Query q = session.createSQLQuery("INSERT into t_projectinputs  select NULL,?,t1.id,t1.display,?,t1.name,t1.measureID,? from t_parameters t1 where t1.ID=?;");
 		q.setParameter(0, pro_id);
 		q.setParameter(1, value);
-		q.setParameter(2, param_id);
+		q.setParameter(2, ISOValue);
+		q.setParameter(3, param_id);
 		
 		int result=q.executeUpdate();
 		

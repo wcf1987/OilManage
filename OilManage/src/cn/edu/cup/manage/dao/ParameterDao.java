@@ -147,6 +147,27 @@ public class ParameterDao {
 		return re;
 	}
 
-
+	public double getISOValue(int paramid,double value){
+		SQLQuery q = session.createSQLQuery("select t.measureID from t_parameters t where t.ID=?");
+		q.setParameter(0, paramid);
+		Integer a=(Integer)(q.uniqueResult());
+		int messid=a.intValue();		
+		PhysicalDao phydao=new PhysicalDao();
+		Measure m=phydao.getMess(messid);
+		double ISOvalue=m.getRatioA()*value+m.getRatioB();
+		
+		return ISOvalue;
+	}
+	public double getMessValue(int paramid,double value){
+		SQLQuery q = session.createSQLQuery("select t.measureID from t_parameters t where t.ID=?");
+		q.setParameter(0, paramid);
+		Integer a=(Integer)(q.uniqueResult());
+		int messid=a.intValue();	
+		
+		PhysicalDao phydao=new PhysicalDao();
+		Measure m=phydao.getMess(messid);
+		double Messvalue=(value-m.getRatioB())/m.getRatioA();
+		return Messvalue;
+	}
 
 }

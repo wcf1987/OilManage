@@ -198,6 +198,7 @@ public class ProjectInputsAction {
 		
 		ParameterDao paraDao=new ParameterDao();
 		param=paraDao.searchParameter(param_id);
+		
 		return "SUCCESS";
 	}
 	public String getName() {
@@ -245,6 +246,7 @@ public class ProjectInputsAction {
 	public String update(){
 		ProjectInputDao dao=new ProjectInputDao();
 		int re=dao.updateInput(ID, this.value);
+		dao.close();
 		return "SUCCESS"; 
 	}
 	

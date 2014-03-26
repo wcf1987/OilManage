@@ -3,18 +3,17 @@ package cn.edu.cup.manage.action;
 import java.util.Date;
 import java.util.List;
 
+import cn.edu.cup.manage.business.AlgorithmJarPlug;
 import cn.edu.cup.manage.business.AlgorithmPro;
-import cn.edu.cup.manage.business.AlgorithmsCycle;
-import cn.edu.cup.manage.dao.AlgorithmInputDao;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
-import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
+import cn.edu.cup.tools.JarTools;
 
 public class AlgorithmProjectsAction {
-	String ID;
-	String inputID;
-	String planID;
-	String outputID;
-	String authorID;
+	int ID;
+	int inputID;
+	int planID;
+	int outputID;
+	int authorID;
 	String Description;
 	Date addDate;
 	Date lastUpdateDate;
@@ -38,40 +37,20 @@ public class AlgorithmProjectsAction {
 	public List<Integer> getIds() {
 		return ids;
 	}
-	public void setID(String iD) {
+	public void setID(int iD) {
 		ID = iD;
 	}
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
 	
-	public void setInputID(String inputID) {
-		this.inputID = inputID;
-	}
-	public String getInputID() {
-		return inputID;
-	}
+
 	
-	public void setPlanID(String planID) {
-		this.planID = planID;
-	}
-	public String getPlanID() {
-		return planID;
-	}
+
 	
-	public void setOutputID(String outputID) {
-		this.outputID = outputID;
-	}
-	public String getOutputID() {
-		return outputID;
-	}
+
 	
-	public void setAuthorID(String authorID) {
-		this.authorID = authorID;
-	}
-	public String getAuthorID() {
-		return authorID;
-	}
+
 	
 	public void setDescription(String description) {
 		Description = description;
@@ -176,6 +155,33 @@ public class AlgorithmProjectsAction {
 		int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
 		return "SUCCESS";
 	}
+	public int getInputID() {
+		return inputID;
+	}
+	public void setInputID(int inputID) {
+		this.inputID = inputID;
+	}
+	public int getPlanID() {
+		return planID;
+	}
+	public void setPlanID(int planID) {
+		this.planID = planID;
+	}
+	public int getOutputID() {
+		return outputID;
+	}
+	public void setOutputID(int outputID) {
+		this.outputID = outputID;
+	}
+	public int getAuthorID() {
+		return authorID;
+	}
+	public void setAuthorID(int authorID) {
+		this.authorID = authorID;
+	}
+	public String getName() {
+		return name;
+	}
 	public String delete(){
 		AlgorithmProDao dao=new AlgorithmProDao();
 		//AlgorithmInputDao inputDao=new AlgorithmInputDao();
@@ -198,8 +204,9 @@ public class AlgorithmProjectsAction {
 	}
 	public String runAlg(){
 		AlgorithmProDao dao=new AlgorithmProDao();
-		AlgorithmPro algpro=dao.getCalcInfo(this.ID);
-		//algpro.startCalc();
+		String algFile=dao.getAlgorithmFile(this.ID);
+		AlgorithmJarPlug alg=JarTools.getPlug(algFile, this.ID);
+		alg.startCalc();
 		
 		return "SUCCESS"; 
 	}

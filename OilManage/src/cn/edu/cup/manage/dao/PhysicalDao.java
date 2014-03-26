@@ -2,11 +2,7 @@ package cn.edu.cup.manage.dao;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.print.attribute.standard.MediaSize.ISO;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -20,9 +16,6 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import cn.edu.cup.manage.business.Measure;
 import cn.edu.cup.manage.business.Physical;
 import cn.edu.cup.manage.business.Style;
-import cn.edu.cup.map.business.Graphi;
-import cn.edu.cup.map.business.Line;
-import cn.edu.cup.map.business.Point;
 import cn.edu.cup.test.TestHibernate;
 
 public class PhysicalDao {
@@ -385,5 +378,35 @@ public class PhysicalDao {
 		return where;
 	}
 	
+	public double getISOValue(int messid,double value){
+		Measure m=getMess(messid);
+		double ISOvalue=m.getRatioA()*value+m.getRatioB();
+		return ISOvalue;
+	}
+	public double getMessValue(int messid,double value){
+		Measure m=getMess(messid);
+		double Messvalue=(value-m.getRatioB())/m.getRatioA();
+		return Messvalue;
+	}
+	public Measure getMess(int messid){
+		SQLQuery q = session.createSQLQuery("select t1.RatioA,t1.RatioB from T_Measure t1 where t1.ID=?");
+		q.setParameter(0, messid);
+		List l = q.list();
+		Measure re=new Measure();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
 
+			  Object[] row = (Object[])l.get(i);;
+			  Double RA = (Double)row[0];
+			  Double RB = (Double)row[1]; 
+			  re.setRatioA(RA);
+			  re.setRatioB(RB);
+			  
+		}
+		
+		return re;
+		
+	}
 }

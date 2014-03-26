@@ -170,7 +170,7 @@ public class ProjectCalcHisAction {
 
 		AlgorithmProDao dao=new AlgorithmProDao();
 	
-		int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
+		//int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
 		return "SUCCESS";
 	}
 	public String delete(){
@@ -190,7 +190,7 @@ public class ProjectCalcHisAction {
 	}
 	public String update(){
 		AlgorithmProDao dao=new AlgorithmProDao();
-		int re=dao.updatePro(ID, this.name,this.Description);
+		//int re=dao.updatePro(ID, this.name,this.Description);
 		return "SUCCESS"; 
 	}
 	

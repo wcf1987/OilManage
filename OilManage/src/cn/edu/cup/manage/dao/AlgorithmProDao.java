@@ -15,7 +15,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.manage.business.AlgorithmPro;
-import cn.edu.cup.manage.business.AlgorithmsCycle;
+import cn.edu.cup.manage.business.CalcInfo;
 
 public class AlgorithmProDao {
 
@@ -85,7 +85,7 @@ public class AlgorithmProDao {
 		return count;
 
 	}
-	public int addAlgorithmPro(String description, String authorID,String name) {
+	public int addAlgorithmPro(String description, int authorID,String name) {
 		Date addDate=new Date();
 		Query q = session.createSQLQuery("insert into t_projects (description,authorID,addtime,name) values (?,?,?,?)");
 		q.setParameter(0, description);
@@ -108,7 +108,7 @@ public class AlgorithmProDao {
 	}
 
 
-	public int updatePro(String iD, String name, String description) {
+	public int updatePro(int iD, String name, String description) {
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();
 		SQLQuery q = session.createSQLQuery("update t_projects t set Name=?, Description=? where t.ID=?");
@@ -122,9 +122,62 @@ public class AlgorithmProDao {
 		return re;
 	}
 
-	public AlgorithmPro getCalcInfo(String id) {
+	public String getAlgorithmFile(int pro_id) {
+		String sql="select t2.FilePath from t_projects t,t_algorithmscycle t2 where  t.id=? and t2.ID=t.Algorithm";
+		SQLQuery q2 = session.createSQLQuery(sql);
+		q2.setParameter(0, pro_id);
+		String alg=((String)q2.uniqueResult());
+		
+		return alg;
+	}
+	public CalcInfo getProInfo(int pro_id) {
 		// TODO Auto-generated method stub
-		return null;
+		SQLQuery q = session.createSQLQuery("SELECT t.par_name,t.par_ISOValue from t_projectinputs t where t.Pro_ID=?");
+		q.setParameter(0, pro_id);
+		CalcInfo temp=new CalcInfo();
+		List l = q.list();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+
+			  Object[] row = (Object[])l.get(i);;
+			  
+			  String name=(String)row[0];
+			  Double value=(Double)row[1];
+			  temp.addParamInput(name, value);
+			  
+			 
+			  
+		}
+		
+		String sql="select `Algorithm` from t_projects t where  t.id=?";
+		SQLQuery q2 = session.createSQLQuery(sql);
+		q2.setParameter(0, pro_id);
+		Integer alg=((BigInteger)q2.uniqueResult()).intValue();
+		temp.setAlgorthm(alg);
+		
+		SQLQuery q3 = session.createSQLQuery("SELECT t1.name from t_algorithmoutput t,t_parameters t1 where t.CycleID=? and t.ParamID=t1.?");
+		q3.setParameter(0, alg);
+		
+		l = q3.list();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+
+			  Object[] row = (Object[])l.get(i);;
+			  
+			  String name=(String)row[0];
+			 
+			  temp.addParamOutput(name, 0d);
+			  
+			 
+			  
+		}
+		
+		
+		return temp;
 	}
 
 
