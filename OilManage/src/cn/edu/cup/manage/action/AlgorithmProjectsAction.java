@@ -206,7 +206,9 @@ public class AlgorithmProjectsAction {
 		AlgorithmProDao dao=new AlgorithmProDao();
 		String algFile=dao.getAlgorithmFile(this.ID);
 		AlgorithmJarPlug alg=JarTools.getPlug(algFile, this.ID);
+		Date start=new Date();
 		alg.startCalc();
+		alg.save(start);
 		
 		return "SUCCESS"; 
 	}

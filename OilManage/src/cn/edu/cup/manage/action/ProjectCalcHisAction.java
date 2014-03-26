@@ -4,10 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import cn.edu.cup.manage.business.AlgorithmPro;
-import cn.edu.cup.manage.business.AlgorithmsCycle;
-import cn.edu.cup.manage.dao.AlgorithmInputDao;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
-import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
+import cn.edu.cup.manage.dao.ProjectCalcHisDao;
 
 public class ProjectCalcHisAction {
 	String ID;
@@ -166,10 +164,10 @@ public class ProjectCalcHisAction {
 	}
 
 
-	public String add(){
+	public String add(int pro_id,Date start){
 
-		AlgorithmProDao dao=new AlgorithmProDao();
-	
+		ProjectCalcHisDao dao=new ProjectCalcHisDao();
+		dao.addCalcHis(pro_id,start);
 		//int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
 		return "SUCCESS";
 	}

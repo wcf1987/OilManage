@@ -170,4 +170,17 @@ public class ParameterDao {
 		return Messvalue;
 	}
 
+	public double getMessValueByName(String name, double paramOutput) {
+		SQLQuery q = session.createSQLQuery("select t.measureID from t_parameters t where t.Name=?");
+		q.setParameter(0, name);
+		Integer a=(Integer)(q.uniqueResult());
+		int messid=a.intValue();	
+		
+		PhysicalDao phydao=new PhysicalDao();
+		Measure m=phydao.getMess(messid);
+		double Messvalue=(paramOutput-m.getRatioB())/m.getRatioA();
+		return Messvalue;
+	
+	}
+
 }
