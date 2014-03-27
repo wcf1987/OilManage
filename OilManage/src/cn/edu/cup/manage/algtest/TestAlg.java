@@ -13,7 +13,7 @@ public class TestAlg extends AlgorithmPlugBase{
 		double a=this.info.getParamInput("a");
 		double b=this.info.getParamInput("b");
 		double c=a+b;
-		this.info.addParamOutput("coutput", c);
+		this.info.addParamOutput("c", c);
 		return null;
 	}
 }

@@ -131,7 +131,7 @@ public class AlgorithmProDao {
 		return result;
 	}
 	public int addAlgorithm(int iD,int algID){
-		Query q = session.createSQLQuery("update t_projects t set t.algorithm =? where t.ID=? ");
+		Query q = session.createSQLQuery("update t_projects t set t.algorithm_ID =? where t.ID=? ");
 		q.setParameter(0, algID);
 		q.setParameter(1, iD);
 		int result=q.executeUpdate();		
@@ -139,7 +139,7 @@ public class AlgorithmProDao {
 		return result;
 	}
 	public String getAlgorithmFile(int pro_id) {
-		String sql="select t2.FilePath from t_projects t,t_algorithmscycle t2 where  t.id=? and t2.ID=t.Algorithm";
+		String sql="select t2.FilePath from t_projects t,t_algorithmscycle t2 where  t.id=? and t2.ID=t.Algorithm_id";
 		SQLQuery q2 = session.createSQLQuery(sql);
 		q2.setParameter(0, pro_id);
 		String alg=((String)q2.uniqueResult());
@@ -167,13 +167,13 @@ public class AlgorithmProDao {
 			  
 		}
 		
-		String sql="select `Algorithm` from t_projects t where  t.id=?";
+		String sql="select Algorithm_ID from t_projects t where  t.id=?";
 		SQLQuery q2 = session.createSQLQuery(sql);
 		q2.setParameter(0, pro_id);
-		Integer alg=((BigInteger)q2.uniqueResult()).intValue();
+		Integer alg=((Integer)q2.uniqueResult()).intValue();
 		temp.setAlgorthm(alg);
 		
-		SQLQuery q3 = session.createSQLQuery("SELECT t1.name from t_algorithmoutput t,t_parameters t1 where t.CycleID=? and t.ParamID=t1.?");
+		SQLQuery q3 = session.createSQLQuery("SELECT t1.name from t_algorithmoutput t,t_parameters t1 where t.CycleID=? and t.ParamID=t1.ID");
 		q3.setParameter(0, alg);
 		
 		l = q3.list();
@@ -182,9 +182,9 @@ public class AlgorithmProDao {
 			//TestDb user = (TestDb)l.get(i);
 			//System.out.println(user.getUsername());
 
-			  Object[] row = (Object[])l.get(i);;
+			 
 			  
-			  String name=(String)row[0];
+			  String name=(String)l.get(i);
 			 
 			  temp.addParamOutput(name, 0d);
 			  

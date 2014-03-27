@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 import cn.edu.cup.manage.dao.AlgorithmProDao;
+import cn.edu.cup.manage.dao.ProjectCalcHisDao;
 import cn.edu.cup.manage.dao.ProjectOutputDao;
 
 public abstract class AlgorithmPlugBase implements AlgorithmJarPlug{
@@ -18,7 +19,13 @@ public abstract class AlgorithmPlugBase implements AlgorithmJarPlug{
 		
 		return null;
 	}
-	public void save(Date start){
+	public void saveHis(Date start){
+		ProjectCalcHisDao dao=new ProjectCalcHisDao();
+		dao.addCalcHis(pro_id,start);
+		//int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
+		
+	}
+	public void save(){
 		ProjectOutputDao dao=new ProjectOutputDao();
 		dao.cleanLastResult(this.pro_id);
 		Iterator<String> iter=info.paramOutputs.keySet().iterator();

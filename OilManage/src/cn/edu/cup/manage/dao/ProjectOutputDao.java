@@ -15,6 +15,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.manage.business.ProjectInputs;
+import cn.edu.cup.manage.business.ProjectOutputs;
 
 public class ProjectOutputDao {
 
@@ -44,10 +45,10 @@ public class ProjectOutputDao {
 	}
 	
 	public int cleanLastResult(int pro_id){
-		SQLQuery q = session.createSQLQuery("delete from t_projectoutputs t where t.pro_id=?");
+		SQLQuery q = session.createSQLQuery("delete from t_projectoutputs  where Pro_ID=?");
 		q.setParameter(0, pro_id);
 		int re=q.executeUpdate();
-		tx.commit();
+		//tx.commit();
 		return re;
 	}
 	public ProjectInputs searchInput(int iD) {
@@ -69,14 +70,14 @@ public class ProjectOutputDao {
 		return p;
 	}
 	
-	public List<ProjectInputs> getProInputsList(int pro_id,int page, int rows,
+	public List<ProjectOutputs> getProOutputsList(int pro_id,int page, int rows,
 			String sidx, String sord) {
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')') from t_projectinputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.Pro_ID=? order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')') from t_projectoutputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.Pro_ID=? order by t1."+sidx+" "+sord);
 		q.setParameter(0, pro_id);
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
 		List l = q.list();
-		List<ProjectInputs> re=new ArrayList<ProjectInputs>();
+		List<ProjectOutputs> re=new ArrayList<ProjectOutputs>();
 		for(int i=0;i<l.size();i++)
 		{
 			//TestDb user = (TestDb)l.get(i);
@@ -93,7 +94,7 @@ public class ProjectOutputDao {
 			  String messSymbol=(String)row[7];
 			  
 			  
-			  ProjectInputs p=new ProjectInputs(id,display,parid,meid,name,vaule,pid,messSymbol);
+			  ProjectOutputs p=new ProjectOutputs(id,display,parid,meid,name,vaule,pid,messSymbol);
 			  
 			  
 			  re.add(p);
@@ -102,9 +103,9 @@ public class ProjectOutputDao {
 		return re;
 	}
 
-	public int getCountProInputs(int proid) {
+	public int getCountProOutputs(int proid) {
 		// TODO Auto-generated method stub
-		String sql="select count(*) from t_projectinputs t2 where t2.pro_id=? ";
+		String sql="select count(*) from t_projectOutputs t2 where t2.pro_id=? ";
 		SQLQuery q = session.createSQLQuery(sql);
 		q.setParameter(0, proid);
 		Integer count=((BigInteger)q.uniqueResult()).intValue();

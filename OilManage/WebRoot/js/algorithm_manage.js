@@ -38,8 +38,8 @@ $(
 							sortable:true
 						},
 						{
-							name:'Description',
-							index:'Description',
+							name:'description',
+							index:'description',
 							width:200,
 							align:'center',
 							sortable:false

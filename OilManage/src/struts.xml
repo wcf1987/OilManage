@@ -308,6 +308,12 @@
 			</result>
 		</action>
 		
+		<action name="listProOutputs" class="cn.edu.cup.manage.action.ProjectOutputsAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
 		
 		<action name="searchProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
 			method="search">
@@ -343,7 +349,21 @@
 			</result>
 		</action>
 		<action name="list" class="cn.edu.cup.manage.action.ProjectCalcHisAction"
-			method="add">
+			method="list">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+				<action name="inputlist" class="cn.edu.cup.manage.action.ProjectCalcHisAction"
+			method="getInputslist">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+				<action name="outputlist" class="cn.edu.cup.manage.action.ProjectCalcHisAction"
+			method="getOutputslist">
 
 			<result name="SUCCESS" type="json">
 

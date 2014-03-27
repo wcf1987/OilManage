@@ -225,8 +225,8 @@ public class AlgorithmProjectsAction {
 		AlgorithmJarPlug alg=JarTools.getPlug(algFile, this.ID);
 		Date start=new Date();
 		alg.startCalc();
-		alg.save(start);
-		
+		alg.save();
+		alg.saveHis(start);
 		return "SUCCESS"; 
 	}
 }

@@ -3,23 +3,21 @@ package cn.edu.cup.manage.action;
 import java.util.Date;
 import java.util.List;
 
-import cn.edu.cup.manage.business.AlgorithmPro;
+import cn.edu.cup.manage.business.CalcHisInput;
+import cn.edu.cup.manage.business.CalcHisOutput;
+import cn.edu.cup.manage.business.ProjectCalcHis;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.manage.dao.ProjectCalcHisDao;
 
 public class ProjectCalcHisAction {
-	String ID;
+	int ID;
 	int proID;
 	
-	String inputID;
-	String planID;
-	String outputID;
-	String authorID;
-	String Description;
-	Date addDate;
-	Date lastUpdateDate;
-	String name;
-	List<AlgorithmPro> dataList;
+	
+	
+	List<ProjectCalcHis> dataList;
+	List<CalcHisInput> inputList;
+	List<CalcHisOutput> outputList;
 	private int page;
 	private int records;
 	private int rows;
@@ -35,75 +33,14 @@ public class ProjectCalcHisAction {
 	public void setProID(int proID) {
 		this.proID = proID;
 	}
-	public void setIds(List<Integer> ids) {
-		this.ids = ids;
-	}
-	public List<Integer> getIds() {
-		return ids;
-	}
-	public void setID(String iD) {
-		ID = iD;
-	}
-	public String getID() {
-		return ID;
-	}
-	
-	public void setInputID(String inputID) {
-		this.inputID = inputID;
-	}
-	public String getInputID() {
-		return inputID;
-	}
-	
-	public void setPlanID(String planID) {
-		this.planID = planID;
-	}
-	public String getPlanID() {
-		return planID;
-	}
-	
-	public void setOutputID(String outputID) {
-		this.outputID = outputID;
-	}
-	public String getOutputID() {
-		return outputID;
-	}
-	
-	public void setAuthorID(String authorID) {
-		this.authorID = authorID;
-	}
-	public String getAuthorID() {
-		return authorID;
-	}
-	
-	public void setDescription(String description) {
-		Description = description;
-	}
-	public String getDescription() {
-		return Description;
-	}
-	
-	public void setAddDate(Date addDate) {
-		this.addDate = addDate;
-	}
-	public Date getAddDate() {
-		return addDate;
-	}
-	
-	public void setLastUpdateDate(Date lastUpdateDate) {
-		this.lastUpdateDate = lastUpdateDate;
-	}
-	public Date getLastUpdateDate() {
-		return lastUpdateDate;
-	}
-	
-	public void setDataList(List<AlgorithmPro> dataList) {
-		this.dataList = dataList;
-	}
-	public List<AlgorithmPro> getDataList() {
+
+
+	public List<ProjectCalcHis> getDataList() {
 		return dataList;
 	}
-	
+	public void setDataList(List<ProjectCalcHis> dataList) {
+		this.dataList = dataList;
+	}
 	public void setPage(int page) {
 		this.page = page;
 	}
@@ -153,21 +90,52 @@ public class ProjectCalcHisAction {
 		return sord;
 	}
 	
-	public String searchList(){
-		AlgorithmProDao dao=new AlgorithmProDao();
-		dataList=dao.getAlgorithmProsList(page,rows,sidx,sord);
-		return "SUCCESS";
+//	public String searchList(){
+//		AlgorithmProDao dao=new AlgorithmProDao();
+	//	dataList=dao.getAlgorithmProsList(page,rows,sidx,sord);
+//		return "SUCCESS";
 
-	}
+//	}
 	public String list(){		
 
 		ProjectCalcHisDao dao=new ProjectCalcHisDao();
+		dataList=dao.getCalcHis(this.proID);
 		
+		return "SUCCESS";
+	}
+	public String getInputslist(){		
+
+		ProjectCalcHisDao dao=new ProjectCalcHisDao();
+		inputList=dao.getCalcInputsHis(this.ID);
+		
+		return "SUCCESS";
+	}
+	public int getID() {
+		return ID;
+	}
+	public void setID(int iD) {
+		ID = iD;
+	}
+	public String getOutputslist(){		
+
+		ProjectCalcHisDao dao=new ProjectCalcHisDao();
+		outputList=dao.getCalcOutputsHis(this.ID);
 		
 		return "SUCCESS";
 	}
 
-
+	public List<CalcHisInput> getInputList() {
+		return inputList;
+	}
+	public void setInputList(List<CalcHisInput> inputList) {
+		this.inputList = inputList;
+	}
+	public List<CalcHisOutput> getOutputList() {
+		return outputList;
+	}
+	public void setOutputList(List<CalcHisOutput> outputList) {
+		this.outputList = outputList;
+	}
 	public String add(int pro_id,Date start){
 
 		ProjectCalcHisDao dao=new ProjectCalcHisDao();
