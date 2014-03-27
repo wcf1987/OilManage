@@ -342,6 +342,13 @@
 
 			</result>
 		</action>
+		<action name="list" class="cn.edu.cup.manage.action.ProjectCalcHisAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		<!-- 工程end -->
 		
 		

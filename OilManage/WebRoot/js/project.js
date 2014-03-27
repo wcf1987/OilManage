@@ -125,7 +125,7 @@ $(
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setInput('"
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"runAlg('"
 										+ rows.ID + "')\">运行</a>"
 							}
 						},
@@ -304,6 +304,27 @@ function deleteProject() {
         }); 
        } 
     } 
+}
+function runAlg(proID){
+	$.ajax({
+		url:'runAlgPro.action',
+		type:'post',
+		dataTpye:'json',
+		data:{
+			ID:proID
+		},
+		beforeSend: function() { 
+              $().message("正在请求..."); 
+         }, 
+        error:function(){ 
+              $().message("请求失败..."); 
+         }, 
+         
+		success:function(data){
+			
+		}
+		
+	});
 }
 /*
  * 算法选择

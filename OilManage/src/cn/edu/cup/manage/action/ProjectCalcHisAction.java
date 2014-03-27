@@ -9,6 +9,8 @@ import cn.edu.cup.manage.dao.ProjectCalcHisDao;
 
 public class ProjectCalcHisAction {
 	String ID;
+	int proID;
+	
 	String inputID;
 	String planID;
 	String outputID;
@@ -27,6 +29,12 @@ public class ProjectCalcHisAction {
 	private String sord;
 	private List<Integer> ids;
 	
+	public int getProID() {
+		return proID;
+	}
+	public void setProID(int proID) {
+		this.proID = proID;
+	}
 	public void setIds(List<Integer> ids) {
 		this.ids = ids;
 	}
@@ -145,21 +153,17 @@ public class ProjectCalcHisAction {
 		return sord;
 	}
 	
+	public String searchList(){
+		AlgorithmProDao dao=new AlgorithmProDao();
+		dataList=dao.getAlgorithmProsList(page,rows,sidx,sord);
+		return "SUCCESS";
+
+	}
 	public String list(){		
 
-		AlgorithmProDao dao=new AlgorithmProDao();
+		ProjectCalcHisDao dao=new ProjectCalcHisDao();
 		
 		
-		
-		dataList=dao.getAlgorithmProsList(page,rows,sidx,sord);
-	
-		records=dao.getCountAlgorithms();
-
-
-		total=records/rows;
-		if(records%rows!=0){
-			total++;
-		}
 		return "SUCCESS";
 	}
 
