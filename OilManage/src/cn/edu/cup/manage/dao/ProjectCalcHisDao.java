@@ -154,7 +154,7 @@ public class ProjectCalcHisDao {
 	public int addCalcHis(int pro_id, Date start) {
 
 		Query q = session
-				.createSQLQuery("INSERT into t_calchis (ID,Pro_ID,Algorith_ID,Calc_StartTime,Calc_EndTime,Calc_re) select null,t2.id,t2.algorithm_id,?,now(),'OK' from t_projects t2 where t2.id=?");
+				.createSQLQuery("INSERT into t_calchis (ID,Pro_ID,Algorith_ID,Calc_StartTime,Calc_EndTime,Calc_re) select null,t2.id,t2.algorithm_id,?,now(),t2.CalcRes from t_projects t2 where t2.id=?");
 		q.setParameter(0, start);
 		q.setParameter(1, pro_id);
 
