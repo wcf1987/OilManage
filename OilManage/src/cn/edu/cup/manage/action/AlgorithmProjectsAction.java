@@ -244,6 +244,8 @@ public class AlgorithmProjectsAction {
 		alg.startCalc();
 		alg.save();
 		alg.saveHis(start);
+		dao.updateProInfo(this.ID);
+		dao.close();
 		this.exeSuccess=true;
 		}catch(Exception e){
 			this.exeSuccess=false;

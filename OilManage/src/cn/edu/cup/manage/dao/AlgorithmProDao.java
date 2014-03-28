@@ -200,6 +200,18 @@ public class AlgorithmProDao {
 		return temp;
 	}
 
+	public void updateProInfo(int id) {
+		Date modifyTime=new Date();
+		SQLQuery q = session.createSQLQuery("update t_projects t set t.CalcHisNum=(select count(*) from t_calchis t1 where t1.Pro_ID=?),t.LastCalcTime=(select max(t2.Calc_EndTime) from t_calchis t2 where t2.Pro_ID=?) where t.ID=?");
+		
+		q.setParameter(0, id);
+		q.setParameter(1, id);
+		q.setParameter(2, id);
+		int re=q.executeUpdate();
+		
+		
+	}
+
 
 
 	
