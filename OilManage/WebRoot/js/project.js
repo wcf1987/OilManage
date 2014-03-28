@@ -137,7 +137,7 @@ $(
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setInput('"
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewOutput('"
 										+ rows.ID + "')\">输出结果</a>"
 							}
 						},
@@ -149,7 +149,7 @@ $(
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setInput('"
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewCalcHistory('"
 										+ rows.ID + "')\">查看运行历史</a>"
 							}
 						}
@@ -305,6 +305,65 @@ function deleteProject() {
        } 
     } 
 }
+function viewCalcHistory(proID){
+	$("#historyTr").nextAll().remove();
+	$("#historyTr").show();	
+	$.ajax({
+		type:"post",
+		url:"Calclist.action",
+		data:{
+			proID:proID,
+			sidx:"ID",
+			sord:"asc"
+		},
+		success:function(data){
+		
+			var tr=$("#historyTr");
+			$.each(data.dataList,function(index,row){
+				var clonedTr=tr.clone();
+				var _index=index;
+				clonedTr.children("td").each(function(inner_index){
+					switch(inner_index){
+						case(0):$(this).html(row.ID);break;
+						case(1):$(this).html(row.algorithm_name);break;
+						case(2):$(this).html(row.calc_re);break;
+						case(3):$(this).html(row.startTimeS);break;
+						case(4):$(this).html(row.endTimeS);break;
+					
+					}//end switch
+				});//end children.each
+				clonedTr.insertAfter(tr);		
+			});//end $each
+			$("#historyTr").hide();
+			$("#calcHistoryTable").show();					
+		}
+	});
+	$('#view_calchistory_modal').modal();
+}
+function viewOutput(proID){
+	$("#outputID").text("");
+	$("#outputName").text("");
+	$("#outputValue").text("");
+	$("#outputSymbol").text("");
+	$.ajax({
+		url:"listProOutputs.action",
+		type:"post",
+		dataType:'json',
+		data:{
+			pro_id:proID,
+			sidx: 'id',
+			sord: "desc"
+				
+		},
+		success:function(data){
+			$("#outputID").text(data.dataList[0].ID);
+			$("#outputName").text(data.dataList[0].display+"("+data.dataList[0].name+")");
+			$("#outputValue").text(data.dataList[0].value);
+			$("#outputSymbol").text(data.dataList[0].mess);
+		}
+	});
+	$("#view_output_modal").modal();
+}
 function runAlg(proID){
 	$.ajax({
 		url:'runAlgPro.action',
@@ -321,7 +380,11 @@ function runAlg(proID){
          }, 
          
 		success:function(data){
-			
+			if(data.exeSuccess==true){
+				alert("执行成功！");
+			}else{
+				alert("执行失败！");
+			}
 		}
 		
 	});

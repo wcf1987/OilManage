@@ -119,14 +119,10 @@ public class AlgorithmProDao {
 		return re;
 	}
 	public int searchProAlg(int proID){
-		Query q=session.createSQLQuery("select t.algorithm from t_projects t where t.ID=?");
+		Query q=session.createSQLQuery("select t.algorithm_id from t_projects t where t.ID=?");
 		q.setParameter(0, proID);
 		int result=0;
-		try{
-			result=(Integer) q.uniqueResult();
-		}catch(Exception e){
-			
-		} 
+		result=(Integer) q.uniqueResult(); 
 		tx.commit();
 		return result;
 	}

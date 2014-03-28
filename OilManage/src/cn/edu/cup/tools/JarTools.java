@@ -28,7 +28,7 @@ public class JarTools {
            
             Constructor c1=cla.getDeclaredConstructor(new Class[]{int.class});   
             c1.setAccessible(true);   
-            AlgorithmJarPlug a1=(AlgorithmJarPlug)c1.newInstance(new Object[]{3});   
+            AlgorithmJarPlug a1=(AlgorithmJarPlug)c1.newInstance(new Object[]{pro_id});   
 	        
             return a1;
 	        //System.out.println(a1.startCalc());//调用Jar中的类方法

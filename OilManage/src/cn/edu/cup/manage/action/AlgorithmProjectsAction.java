@@ -19,6 +19,7 @@ public class AlgorithmProjectsAction {
 	Date lastUpdateDate;
 	String name;
 	List<AlgorithmPro> dataList;
+	boolean exeSuccess;
 	private int algID;
 	private int page;
 	private int records;
@@ -29,6 +30,12 @@ public class AlgorithmProjectsAction {
 	private String sord;
 	private List<Integer> ids;
 	
+	public void setExeSuccess(boolean exeSuccess) {
+		this.exeSuccess = exeSuccess;
+	}
+	public boolean isExeSuccess() {
+		return exeSuccess;
+	}
 	public void setAlgID(int algID) {
 		this.algID = algID;
 	}
@@ -233,10 +240,18 @@ public class AlgorithmProjectsAction {
 		AlgorithmJarPlug alg=JarTools.getPlug(algFile,clsName, this.ID);
 		if (alg!=null){
 		Date start=new Date();
+		try{
 		alg.startCalc();
 		alg.save();
 		alg.saveHis(start);
+		this.exeSuccess=true;
+		}catch(Exception e){
+			this.exeSuccess=false;
 		}
-		return "SUCCESS"; 
+		
+
+		
 	}
+		return "SUCCESS"; 
+}
 }

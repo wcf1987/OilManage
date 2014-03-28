@@ -74,8 +74,10 @@ public class ProjectOutputDao {
 			String sidx, String sord) {
 		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')') from t_projectoutputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.Pro_ID=? order by t1."+sidx+" "+sord);
 		q.setParameter(0, pro_id);
-		q.setFirstResult((page-1)*rows);
-		q.setMaxResults(rows);
+		if(page!=0&&rows!=0){
+			q.setFirstResult((page-1)*rows);
+			q.setMaxResults(rows);
+		}
 		List l = q.list();
 		List<ProjectOutputs> re=new ArrayList<ProjectOutputs>();
 		for(int i=0;i<l.size();i++)
@@ -89,12 +91,12 @@ public class ProjectOutputDao {
 			  Integer parid = ((Integer)row[2]);
 			  Integer meid = ((Integer)row[3]);
 			  String name=(String)row[4];
-			  double vaule=(Double)row[5];
+			  double value=(Double)row[5];
 			  Integer pid = ((Integer)row[6]);
 			  String messSymbol=(String)row[7];
 			  
 			  
-			  ProjectOutputs p=new ProjectOutputs(id,display,parid,meid,name,vaule,pid,messSymbol);
+			  ProjectOutputs p=new ProjectOutputs(id,display,parid,meid,name,value,pid,messSymbol);
 			  
 			  
 			  re.add(p);

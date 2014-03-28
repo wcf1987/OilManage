@@ -223,7 +223,120 @@ User userlogin=(User)(session.getAttribute("user"));
 	
 	    </div><!-- /.container -->
 	    
-	   
+	    
+	   	 <!-- 查看运行历史的模态框 -->   	
+		<div class="modal fade" id="view_calchistory_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看运行历史</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="viewCalcHistoryForm"> 
+		     	   
+					<dd>
+						<table id="calcHistoryTable" class="table" >
+							<thead>
+								<tr>
+									<th>
+										编号
+									</th>
+									<th>
+										算法名
+									</th>
+									<th>
+										计算结果
+									</th>
+									<th>
+										开始运行时间
+									</th>
+									<th>
+										结束运行时间
+									</th>									
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="historyTr">
+									<td id="historyID">											
+									</td>
+									<td id="historyAlgName">											
+									</td>
+									<td id="historyValue">
+									</td>
+									<td id="historyStartTime">											
+									</td>	
+									<td id="historyEndTime">											
+									</td>					
+								</tr>									
+							</tbody>
+						</table>	
+					</dd>							
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+	   <!-- 查看输出的模态框 -->   	
+		<div class="modal fade" id="view_output_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输出</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="viewOutputForm"> 
+		     	   
+					<dd>
+						<table id="outputTable" class="table" >
+							<thead>
+								<tr>
+									<th>
+										编号
+									</th>
+									<th>
+										参数名
+									</th>
+									<th>
+										值
+									</th>
+									<th>
+										符号
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="outputTr">
+									<td id="outputID">											
+									</td>
+									<td id="outputName">											
+									</td>
+									<td id="outputValue">
+									</td>
+									<td id="outputSymbol">											
+									</td>						
+								</tr>									
+							</tbody>
+						</table>	
+					</dd>							
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
 		<!-- 查看选择算法的模态框 -->   	
 		<div class="modal fade" id="select_algorithm_modal">
 		  <div class="modal-dialog">
