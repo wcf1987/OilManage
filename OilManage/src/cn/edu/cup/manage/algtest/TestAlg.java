@@ -14,6 +14,7 @@ public class TestAlg extends AlgorithmPlugBase{
 		double b=this.info.getParamInput("b");
 		double c=a+b;
 		this.info.addParamOutput("c", c);
+		System.out.println(c);
 		return null;
 	}
 }
