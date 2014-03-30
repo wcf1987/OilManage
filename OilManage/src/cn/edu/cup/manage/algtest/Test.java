@@ -1,37 +1,42 @@
-package cn.edu.cup.tools;
+package cn.edu.cup.manage.algtest;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import cn.edu.cup.manage.business.AlgorithmJarPlug;
-import cn.edu.cup.manage.business.MyClassLoader;
 
-public class JarTools {
-	public static AlgorithmJarPlug getPlug(String filename,String ClassName,int pro_id){
-		String class_path = "cn.edu.cup.manage.algtest."+ClassName;//Jar中的所需要加载的类的类名
+public class Test {
 
-	    String jar_path = "file:/"+filename;//jar所在的文件的URL
+	/**
+	 * @param args
+	 */
+	public void testalgrun(){
+		String class_path = "cn.edu.cup.manage.algtest.TestAlg";//Jar中的所需要加载的类的类名
+
+	    String jar_path = "file:/E:/TestAlg.jar";//jar所在的文件的URL
 	    
          
 	    try {
-	    	 MyClassLoader loader = new MyClassLoader();  
-             loader.addURL(new File(filename).toURI().toURL());  
-             
+	    	
+
+	        ClassLoader loader = new URLClassLoader(new URL[]{new URL(jar_path)});//从Jar文件得到一个Class加载器
 	        
 	       
-	        Class<?> cla = loader.loadClass(class_path);//从加载器中加载Class
+	        Class<?> c = loader.loadClass(class_path);//从加载器中加载Class
 	        
 	         
            
            
-            Constructor c1=cla.getDeclaredConstructor(new Class[]{int.class});   
+            Constructor c1=c.getDeclaredConstructor(new Class[]{int.class});   
             c1.setAccessible(true);   
-            AlgorithmJarPlug a1=(AlgorithmJarPlug)c1.newInstance(new Object[]{pro_id});   
+            AlgorithmJarPlug a1=(AlgorithmJarPlug)c1.newInstance(new Object[]{3});   
 	        
-            return a1;
-	        //System.out.println(a1.startCalc());//调用Jar中的类方法
+
+	        System.out.println(a1.startCalc());//调用Jar中的类方法
 
 	    } catch (MalformedURLException e) {
 
@@ -62,6 +67,9 @@ public class JarTools {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
 	}
+	public static void main(String[] args) {
+		 new Test().testalgrun();
+	}
+
 }

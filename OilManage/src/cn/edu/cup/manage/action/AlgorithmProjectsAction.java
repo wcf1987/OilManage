@@ -226,20 +226,34 @@ public class AlgorithmProjectsAction {
 		int re=dao.addAlgorithm(this.ID,this.algID);
 		return "SUCCESS";
 	}
+	String className;
+	public String getClassName() {
+		return className;
+	}
+	public void setClassName(String className) {
+		this.className = className;
+	}
 	public String runAlg(){
 		AlgorithmProDao dao=new AlgorithmProDao();
 		String algFile=dao.getAlgorithmFile(this.ID);
-		AlgorithmJarPlug alg=JarTools.getPlug(algFile, this.ID);
+		String clsName=dao.getAlgorithmClass(this.ID);
+		AlgorithmJarPlug alg=JarTools.getPlug(algFile,clsName, this.ID);
+		if (alg!=null){
 		Date start=new Date();
 		try{
 		alg.startCalc();
 		alg.save();
 		alg.saveHis(start);
+		dao.updateProInfo(this.ID);
+		dao.close();
 		this.exeSuccess=true;
 		}catch(Exception e){
 			this.exeSuccess=false;
 		}
 		
-		return "SUCCESS"; 
+
+		
 	}
+		return "SUCCESS"; 
+}
 }

@@ -142,6 +142,14 @@ public class AlgorithmProDao {
 		
 		return alg;
 	}
+	public String getAlgorithmClass(int pro_id) {
+		String sql="select t2.ClassName from t_projects t,t_algorithmscycle t2 where  t.id=? and t2.ID=t.Algorithm_id";
+		SQLQuery q2 = session.createSQLQuery(sql);
+		q2.setParameter(0, pro_id);
+		String className=((String)q2.uniqueResult());
+		
+		return className;
+	}
 	public CalcInfo getProInfo(int pro_id) {
 		// TODO Auto-generated method stub
 		SQLQuery q = session.createSQLQuery("SELECT t.par_name,t.par_ISOValue from t_projectinputs t where t.Pro_ID=?");
@@ -190,6 +198,18 @@ public class AlgorithmProDao {
 		
 		
 		return temp;
+	}
+
+	public void updateProInfo(int id) {
+		Date modifyTime=new Date();
+		SQLQuery q = session.createSQLQuery("update t_projects t set t.CalcHisNum=(select count(*) from t_calchis t1 where t1.Pro_ID=?),t.LastCalcTime=(select max(t2.Calc_EndTime) from t_calchis t2 where t2.Pro_ID=?) where t.ID=?");
+		
+		q.setParameter(0, id);
+		q.setParameter(1, id);
+		q.setParameter(2, id);
+		int re=q.executeUpdate();
+		
+		
 	}
 
 
