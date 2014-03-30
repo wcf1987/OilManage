@@ -340,6 +340,73 @@ function viewCalcHistory(proID){
 	});
 	$('#view_calchistory_modal').modal();
 }
+/*
+ * 计算历史查看页面中的查看输入输出列表功能
+ */
+function viewHisInputOutput(obj){
+	var calcID=$(obj).parent().parent().children().first().text();
+	$("#hisInputTr").nextAll().remove();
+	$("#hisOutputTr").nextAll().remove();
+	$("#hisInputTr").show();
+	$("#hisOutputTr").show();	
+	$.ajax({
+		url:"Calcinputlist.action",
+		type:"post",
+		dataType:'json',
+		data:{
+			ID:calcID			
+				
+		},
+		success:function(data){
+			var tr=$("#hisInputTr");
+			$.each(data.inputList,function(index,row){
+				var clonedTr=tr.clone();
+				var _index=index;
+				clonedTr.children("td").each(function(inner_index){
+					switch(inner_index){
+						case(0):$(this).html(row.id);break;
+						case(1):$(this).html(row.par_display+"("+row.par_Name+")");break;
+						case(2):$(this).html(row.par_value);break;
+						case(3):$(this).html(row.symbol);break;
+					}//end switch
+				});//end children.each
+				clonedTr.insertAfter(tr);		
+			});//end $each
+			$("#hisInputTr").hide();
+			$("#hisInputTable").show();	
+			
+		}
+	});
+	$.ajax({
+		url:"Calcoutputlist.action",
+		type:"post",
+		dataType:'json',
+		data:{
+			ID:calcID
+		},
+		success:function(data){
+			var tr=$("#hisOutputTr");
+			$.each(data.outputList,function(index,row){
+				var clonedTr=tr.clone();
+				var _index=index;
+				clonedTr.children("td").each(function(inner_index){
+					switch(inner_index){
+						case(0):$(this).html(row.id);break;
+						case(1):$(this).html(row.par_display+"("+row.par_Name+")");break;
+						case(2):$(this).html(row.par_value);break;
+						case(3):$(this).html(row.symbol);break;
+					}//end switch
+				});//end children.each
+				clonedTr.insertAfter(tr);		
+			});//end $each
+			$("#hisOutputTr").hide();
+			$("#hisOutputTable").show();	
+		}
+	});
+	$("#view_input_output_modal").modal();
+	$("#view_input_output_modal").css("z-index","9999");
+	$("#view_calchistory_modal").css("z-index","9998");
+}
 function viewOutput(proID){
 	$("#outputID").text("");
 	$("#outputName").text("");

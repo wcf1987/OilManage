@@ -35,6 +35,13 @@ public class AlgorithmsCycleAction {
 	private List<Integer> ids;
 	private String name;
 	private String filePath;
+	private String className;
+	public String getClassName() {
+		return className;
+	}
+	public void setClassName(String className) {
+		this.className = className;
+	}
 	public String getFilePath() {
 		return filePath;
 	}
@@ -217,7 +224,7 @@ public class AlgorithmsCycleAction {
 
 		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
 	
-		int result=dao.addAlgorithm(this.Description,this.authorID,this.name,this.filePath);
+		int result=dao.addAlgorithm(this.Description,this.authorID,this.name,this.filePath,this.className);
 		return "SUCCESS";
 	}
 	public String delete(){

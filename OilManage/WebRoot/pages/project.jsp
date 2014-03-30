@@ -223,6 +223,94 @@ User userlogin=(User)(session.getAttribute("user"));
 	
 	    </div><!-- /.container -->
 	    
+	     <!-- 查看计算历史的输入输出的模态框 -->   	
+		<div class="modal fade" id="view_input_output_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看历史输入输出</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="viewHisInputOutputForm"> 
+		     	  <h5 class="modal-title" style="font-weight:bold;font-family:幼圆">输入:</h5>
+		     	   	<dd>
+						<table id="hisInputTable" class="table" >
+							<thead>
+								<tr>
+									<th>
+										编号
+									</th>
+									<th>
+										参数名
+									</th>
+									<th>
+										值
+									</th>
+									<th>
+										符号
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="hisInputTr">
+									<td id="hisInputID">											
+									</td>
+									<td id="hisInputName">											
+									</td>
+									<td id="hisInputValue">
+									</td>
+									<td id="hisInputSymbol">											
+									</td>						
+								</tr>									
+							</tbody>
+						</table>	
+					</dd>		
+					<h5 class="modal-title" style="font-weight:bold;font-family:幼圆">输出:</h5>	
+					<dd>
+						<table id="hisOutputTable" class="table" >
+							<thead>
+								<tr>
+									<th>
+										编号
+									</th>
+									<th>
+										参数名
+									</th>
+									<th>
+										值
+									</th>
+									<th>
+										符号
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="hisOutputTr">
+									<td id="hisOutputID">											
+									</td>
+									<td id="hisOutputName">											
+									</td>
+									<td id="hisOutputValue">
+									</td>
+									<td id="hisOutputSymbol">											
+									</td>						
+								</tr>									
+							</tbody>
+						</table>	
+					</dd>						
+									
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
 	    
 	   	 <!-- 查看运行历史的模态框 -->   	
 		<div class="modal fade" id="view_calchistory_modal">
@@ -253,7 +341,10 @@ User userlogin=(User)(session.getAttribute("user"));
 									</th>
 									<th>
 										结束运行时间
-									</th>									
+									</th>			
+									<th>
+										查看输入输出
+									</th>						
 								</tr>
 							</thead>
 							<tbody>
@@ -267,7 +358,10 @@ User userlogin=(User)(session.getAttribute("user"));
 									<td id="historyStartTime">											
 									</td>	
 									<td id="historyEndTime">											
-									</td>					
+									</td>		
+									<td>
+										<a href="javascript:void(0)"  style="color:#798991" onclick="viewHisInputOutput(this)">查看输入输出</a>
+									</td>			
 								</tr>									
 							</tbody>
 						</table>	

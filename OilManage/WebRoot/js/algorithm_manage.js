@@ -202,7 +202,7 @@ function viewDetail(rowId){
 			$("#AlgAddDate").text(data.algorithm.addDates);
 			$("#AlgLastUpdateDate").text(data.algorithm.lastUpdateDates);
 			$("#AlgAuthor").text(data.algorithm.authorName);
-
+			$("#AlgClassName").text(data.algorithm.className);
 			var tr=$("#inputTr");
 			$.each(data.inputList,function(index,row){
 				var clonedTr=tr.clone();
@@ -250,7 +250,8 @@ function add_algorithm() {
 			name:$("#algname").val(),
 			Description : $("#Description").val(),
 			authorID:$("#authorID").val(),
-			filePath : hideFilePath
+			filePath : hideFilePath,
+			className:$("#className").val()
 		},
 		success : function(data) {
 			alert('算法文件上传成功');

@@ -257,7 +257,8 @@ else{
 			        	  作者：
 			        	<select id="authorID" name="authorID">		                  
                 		</select>
-   						<em style="color:red">*</em>
+   						<em style="color:red">*</em><br> <br> 
+   						类名：<input type="text" name="className" id='className'/><em style="color:red">*</em>
 			        	<br> <br> 
 			        	<input type="file" name="xxx" id="algorithmfile" /> 
 			        </p>  		 
@@ -432,6 +433,12 @@ else{
 									描述
 								</dt>
 								<dd id="AlgDes">
+									
+								</dd>
+								<dt>
+									类名
+								</dt>
+								<dd id="AlgClassName">
 									
 								</dd>
 								<dt>

@@ -44,7 +44,7 @@ public class AlgorithmsCycleDao {
 	}
 	
 	public AlgorithmsCycle getAlgorithmDetail(int ID){
-		SQLQuery q=session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime,t1.Name from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID and t1.ID=?");
+		SQLQuery q=session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime,t1.Name,t1.ClassName from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID and t1.ID=?");
 		q.setParameter(0, ID);
 		try{
 		Object[] row=(Object[]) q.uniqueResult();
@@ -59,8 +59,9 @@ public class AlgorithmsCycleDao {
 		  
 		Date lastUpdateTime=(Date)row[8];
 		String Name=(String)row[9];
-		AlgorithmsCycle p=new AlgorithmsCycle(id, iid, pid, oid, aid,author,description,addTime,lastUpdateTime);
-		p.setName(Name);
+		String className=(String)row[10];
+		AlgorithmsCycle p=new AlgorithmsCycle(id, iid, pid, oid, aid,author,description,addTime,lastUpdateTime,Name,className);
+//		p.setName(Name);
 		return p;
 		}catch(Exception e){
 			return null;
@@ -71,7 +72,7 @@ public class AlgorithmsCycleDao {
 	
 	public List<AlgorithmsCycle> getAlgorithmsList(int page, int rows,
 			String sidx, String sord) {
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime,t1.Name from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime,t1.Name,t1.ClassName from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID order by t1."+sidx+" "+sord);
 
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
@@ -94,8 +95,9 @@ public class AlgorithmsCycleDao {
 			  
 			  Date lastUpdateTime=(Date)row[8];
 			  String Name=(String)row[9];
-			  AlgorithmsCycle p=new AlgorithmsCycle(id, iid, pid, oid, aid,author,description,addTime,lastUpdateTime);
-			  p.setName(Name);
+			  String ClassName=(String)row[10];
+			  AlgorithmsCycle p=new AlgorithmsCycle(id, iid, pid, oid, aid,author,description,addTime,lastUpdateTime,Name,ClassName);
+//			  p.setName(Name);
 			  
 			  re.add(p);
 		}
@@ -111,15 +113,16 @@ public class AlgorithmsCycleDao {
 		return count;
 
 	}
-	public int addAlgorithm(String description, String authorID,String name,String filePath) {
+	public int addAlgorithm(String description, String authorID,String name,String filePath,String className) {
 		Date addDate=new Date();
-		Query q = session.createSQLQuery("insert into t_algorithmscycle (description,authorID,addtime,LastUpdateTime,inputID,planID,outputID,Name,FilePath) values (?,?,?,?,0,0,0,?,?)");
+		Query q = session.createSQLQuery("insert into t_algorithmscycle (description,authorID,addtime,LastUpdateTime,inputID,planID,outputID,Name,FilePath,ClassName) values (?,?,?,?,0,0,0,?,?,?)");
 		q.setParameter(0, description);
 		q.setParameter(1, authorID);
 		q.setParameter(2, addDate);
 		q.setParameter(3, addDate);
 		q.setParameter(4, name);
 		q.setParameter(5, filePath);
+		q.setParameter(6, className);
 		int result=q.executeUpdate();
 		
 		tx.commit();

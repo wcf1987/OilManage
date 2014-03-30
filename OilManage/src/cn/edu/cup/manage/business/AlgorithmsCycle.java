@@ -12,6 +12,13 @@ public class AlgorithmsCycle {
 	String authorID;
 	String authorName;
 	String name;
+	String className;
+	public String getClassName() {
+		return className;
+	}
+	public void setClassName(String className) {
+		this.className = className;
+	}
 	public String getName() {
 		return name;
 	}
@@ -31,7 +38,7 @@ public class AlgorithmsCycle {
 	String lastUpdateDates;
 	public AlgorithmsCycle(String id2, String iid, String pid, String oid,
 			String aid, String author, String description2, Date addTime,
-			Date lastUpdateTime) {
+			Date lastUpdateTime,String name,String className) {
 		// TODO Auto-generated constructor stub
 		this.ID=id2;
 		this.inputID=iid;
@@ -44,6 +51,8 @@ public class AlgorithmsCycle {
 		this.addDates=DateTools.getStringFromDate(addTime);
 		this.lastUpdateDate=lastUpdateTime;
 		this.lastUpdateDates=DateTools.getStringFromDate(lastUpdateDate);
+		this.name=name;
+		this.className=className;
 	}
 	public String getAddDates() {
 		return addDates;
