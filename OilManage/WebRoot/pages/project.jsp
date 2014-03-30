@@ -301,8 +301,7 @@ User userlogin=(User)(session.getAttribute("user"));
 					</dd>						
 									
 				   <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				        <button type="submit" class="btn btn-primary"  >保存</button>
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>				        
 				   </div>
 				 </form> 
 		      </div>
@@ -367,8 +366,7 @@ User userlogin=(User)(session.getAttribute("user"));
 						</table>	
 					</dd>							
 				   <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				        <button type="submit" class="btn btn-primary"  >保存</button>
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>				    
 				   </div>
 				 </form> 
 		      </div>
