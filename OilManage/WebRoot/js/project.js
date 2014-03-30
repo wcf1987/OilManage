@@ -542,8 +542,8 @@ function save_algorithm() {
 function viewAlgorithmDetail(rowId){
 	$("#inputTr").nextAll().remove();
 	$("#inputTr").show();	
-	$("#outputTr").nextAll().remove();
-	$("#outputTr").show();	
+	$("#algOutputTr").nextAll().remove();
+	$("#algOutputTr").show();	
 	$.ajax({
 		type:"post",
 		url:"viewAlgorithmDetail.action",
@@ -577,7 +577,7 @@ function viewAlgorithmDetail(rowId){
 			$("#inputTr").hide();
 			$("#inputTable").show();			
 			
-			var tr=$("#outputTr");
+			var tr=$("#algOutputTr");
 			$.each(data.outputList,function(index,row){
 				var clonedTr=tr.clone();
 				var _index=index;
@@ -591,8 +591,8 @@ function viewAlgorithmDetail(rowId){
 				});//end children.each
 				clonedTr.insertAfter(tr);		
 			});//end $each
-			$("#outputTr").hide();
-			$("#outputTable").show();			
+			$("#algOutputTr").hide();
+			$("#algOutputTable").show();			
 			
 		}
 	});

@@ -420,7 +420,6 @@ User userlogin=(User)(session.getAttribute("user"));
 					</dd>							
 				   <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				        <button type="submit" class="btn btn-primary"  >保存</button>
 				   </div>
 				 </form> 
 		      </div>
@@ -521,7 +520,7 @@ User userlogin=(User)(session.getAttribute("user"));
 											</tr>
 										</thead>
 										<tbody>
-											<tr id=inputTr>
+											<tr id="inputTr">
 												<td>											
 												</td>
 												<td>											
@@ -536,7 +535,7 @@ User userlogin=(User)(session.getAttribute("user"));
 									输出明细
 								</dt>
 								<dd>
-									<table id="outputTable" class="table" >
+									<table id="algOutputTable" class="table" >
 										<thead>
 											<tr>
 												<th>
@@ -551,7 +550,7 @@ User userlogin=(User)(session.getAttribute("user"));
 											</tr>
 										</thead>
 										<tbody>
-											<tr id=outputTr>
+											<tr id="algOutputTr">
 												<td>											
 												</td>
 												<td>											
