@@ -152,7 +152,7 @@ public class ProjectInputDao {
 	}
 
 	public int getParamID(int id){
-		String sql="select t2.par_messID from t_projectinputs t2 where t2.id=?";
+		String sql="select t2.par_id from t_projectinputs t2 where t2.id=?";
 		SQLQuery q = session.createSQLQuery(sql);
 		q.setParameter(0, id);
 		Integer paramid=((Integer)q.uniqueResult()).intValue();
