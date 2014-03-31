@@ -136,13 +136,27 @@ public class ProjectInputDao {
 	public int updateInput(int iD, double value) {
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();
-		SQLQuery q = session.createSQLQuery("update t_projectinputs t set t.par_value=? where t.ID=?");
+		int paramID=getParamID(iD);
+		ParameterDao pDao=new ParameterDao();
+		
+		double ISOValue=pDao.getISOValue(paramID, value);
+		
+		SQLQuery q = session.createSQLQuery("update t_projectinputs t set t.par_value=?,t.par_ISOValue=? where t.ID=?");
 		q.setParameter(0, value);
-		q.setParameter(1, iD);
+
+		q.setParameter(1, ISOValue);
+		q.setParameter(2, iD);
 		int re=q.executeUpdate();
-		tx.commit();
+
 		return re;
 	}
 
+	public int getParamID(int id){
+		String sql="select t2.par_messID from t_projectinputs t2 where t2.id=?";
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, id);
+		Integer paramid=((Integer)q.uniqueResult()).intValue();
+		return paramid;
 
+	}
 }

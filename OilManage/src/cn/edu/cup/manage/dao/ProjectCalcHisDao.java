@@ -185,7 +185,7 @@ public class ProjectCalcHisDao {
 
 	public List<ProjectCalcHis> getCalcHis(int proID) {
 		Query q = session
-				.createSQLQuery("select t.id,t.Pro_ID,t.Algorith_ID,t2.`Name`,t.Calc_StartTime,t.Calc_EndTime,t.Calc_re from t_calchis t,t_algorithmscycle t2 where t.Algorith_ID=t2.ID and t.Pro_ID=? order by t.id desc");
+				.createSQLQuery("select t.id,t.Pro_ID,t.Algorith_ID,t2.`Name`,t.Calc_StartTime,t.Calc_EndTime,t.Calc_re from t_calchis t,t_algorithmscycle t2 where t.Algorith_ID=t2.ID and t.Pro_ID=? order by t.id asc");
 		q.setParameter(0, proID);
 
 		List l = q.list();
