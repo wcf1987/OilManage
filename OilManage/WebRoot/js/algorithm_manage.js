@@ -167,6 +167,55 @@ $(
 			
 		
 			}).jqGrid('navButtonAdd',"#AlgorithmPager",{
+				title:'编辑',
+				caption:"编辑",
+				id:"edit_AlgorithmList",
+				onClickButton : function addModal(){
+					 var sels = $("#AlgorithmList").jqGrid('getGridParam','selarrrow'); 
+					    if(sels==""){ 
+					       //$().message("请选择要删除的项！"); 
+					       alert("请选择编辑的项!");
+					    }else if(sels.length>1){
+					    	alert("只能选择一项！");
+					    }else{ 
+					    	var selectedID=sels[0];
+					    	var rowData = $("#AlgorithmList").jqGrid("getRowData", selectedID);
+				        	var ID=rowData.ID;
+							// 配置对话框
+							loadAuthorOptions();//加载作者选项
+							$('#uploadAlgorithmModal').modal();
+							$("#addAlgorithmForm").validate({
+								debug:true,
+								onsubmit:true,
+								onfocusout:false,
+								onkeyup:true,
+								rules:{
+									name:{
+										required:true
+									},
+									authorID:{
+										required:true
+									}
+								},
+								messages:{
+									name:{
+										required:"名称不能为空！",
+									},							
+									authorID:{
+										required:"请选择作者！"
+									}
+								},
+								submitHandler:function(){		
+									    	edit_algorithm(ID);								
+								}
+							});
+					    }
+
+				},
+		
+			
+		
+			}).jqGrid('navButtonAdd',"#AlgorithmPager",{
 				title:'删除',
 				caption:"删除",	
 				id:"delete_AlgorithmList",
@@ -240,13 +289,46 @@ function viewDetail(rowId){
 		}
 	});
 }
-
+/*
+ * 添加算法
+ */
 function add_algorithm() {
 	//alert(hideFilePath);
 	$.ajax({
 		type : 'POST',
 		url : 'addAlgorithmsCycle.action',
 		data : {
+			name:$("#algname").val(),
+			Description : $("#Description").val(),
+			authorID:$("#authorID").val(),
+			filePath : hideFilePath,
+			className:$("#className").val()
+		},
+		success : function(data) {
+			alert('算法文件上传成功');
+			$('#uploadAlgorithmModal').modal('hide');
+			$("#AlgorithmList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alter(msg);
+			$('#uploadAlgorithmModal').modal('hide');
+			$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+	}
+
+/*
+ * 编辑算法
+ */
+function edit_algorithm(selectedID) {
+
+	    	
+	//alert(hideFilePath);
+	$.ajax({
+		type : 'POST',
+		url : 'updateAlgorithmsCycle.action',
+		data : {
+			ID:selectedID,
 			name:$("#algname").val(),
 			Description : $("#Description").val(),
 			authorID:$("#authorID").val(),
