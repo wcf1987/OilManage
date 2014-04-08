@@ -286,16 +286,34 @@ else{
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加输入</h4>
 		      </div>
-		      <div class="modal-body">  	  
-		     	 <form id="addAlgorithmInputForm" action="addAlgorithmInput.action" method="post"> 		 
+		      <div class="modal-body">  	
+		      	<!-- 添加输入参数 -->	  
+		     	 <form id="addAlgorithmInputForm"  > 		 
 		      	  <div class="centent"> 
-		      	  	<input id="CycleID" style="display: none;"/> 
-				    <select multiple id="select1" style="width:200px;height:auto;margin-left:50px;">  
+		      	  	<input id="algID" style="display: none;"/> 
+		      	  	<input id='addInputDisplay' style='display: none;'/><input id='addInputMeasure' style='display: none;'/>
+				    <select  id="addParameterID" name="addParameterID" style="width:200px;height:auto;margin-left:50px;">  
 				    
 				    </select>  
-				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  				   
+					<button type="submit" class="btn btn-primary"  >添加</button>
+				   	<!--  <span id="measureSymbol" name="measureSymbol"></span>--> 
+				  </div>
+				 </form> 
+				 <hr size=1 style="COLOR:#ff9999;border-style:double;width:550"> 
+				 <!-- <div class="modal-header"> -->		        	
+		        	<h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输入</h4>
+		      	<!-- </div> -->
+		      	 <hr size=1 style="COLOR:#ff9999;border-style:double;width:550"> 
+				<ul id="ItemInputList"  data-role="list" style="margin-bottom:10px;"></ul>
+			     <!-- 
+		     	 <form id="addAlgorithmInputForm" action="addAlgorithmInput.action" method="post"> 		 
+		      	  <div class="centent"> 
+		      	  	<input id="CycleID" style="display: none;"/> 				 
+				    <select multiple id="select1" style="width:200px;height:250px;margin-left:50px;">  				    
+				    </select>  
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  				  
 				    <select multiple id="select2" name="selectedIDs" style="width:200px;height:auto;">  
-				          
 				    </select>  
 				  </div>  
 				  <div >  
@@ -303,12 +321,14 @@ else{
 				    <button id="remove" style="margin-left:80px;">&lt;&lt;选中添加到左边</button><br>  
 				    <button id="addAll"  style="margin-left:50px;">全部添加到右边&gt;&gt;</button>  
 				    <button id="removeAll" style="margin-left:80px;">&lt;&lt;全部添加到左边</button>  
-				  </div>  	
+				  </div> 
+				  
 				   <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 				        <button type="submit" class="btn btn-primary"  >保存</button>
 				   </div>
-				 </form> 
+				 </form>  
+				 --> 	
 		      </div>
 		     
 		    </div><!-- /.modal-content -->
@@ -323,7 +343,28 @@ else{
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加输出</h4>
 		      </div>
-		      <div class="modal-body">  	  
+		      <div class="modal-body">  
+		      	
+		      	<!-- 添加输出参数 -->	  
+		     	 <form id="addAlgorithmOutputForm"  > 		 
+		      	  <div class="centent"> 
+		      	  	<input id="outputAlgID" style="display: none;"/> 
+		      	  	<input id='addOutputDisplay' style='display: none;'/><input id='addOutputMeasure' style='display: none;'/>
+				    <select  id="outputParameterID" name="outputParameterID" style="width:200px;height:auto;margin-left:50px;">  
+				    
+				    </select>  
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  				   
+					<button type="submit" class="btn btn-primary"  >添加</button>
+				   	<!--  <span id="measureSymbol" name="measureSymbol"></span>--> 
+				  </div>
+				 </form> 
+				 <hr size=1 style="COLOR:#ff9999;border-style:double;width:550"> 
+				 <!-- <div class="modal-header"> -->		        	
+		        	<h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输出</h4>
+		      	<!-- </div> -->
+		      	 <hr size=1 style="COLOR:#ff9999;border-style:double;width:550"> 
+				<ul id="ItemOutputList"  data-role="list" style="margin-bottom:10px;"></ul>
+		      	<!-- 
 		     	 <form id="addAlgorithmOutputForm"> 		 
 		      	  <div class="centent"> 
 		      	  	<input id="outputCycleID" style="display: none;"/> 
@@ -346,6 +387,7 @@ else{
 				        <button type="submit" class="btn btn-primary"  >保存</button>
 				   </div>
 				 </form> 
+				 -->
 		      </div>
 		     
 		    </div><!-- /.modal-content -->

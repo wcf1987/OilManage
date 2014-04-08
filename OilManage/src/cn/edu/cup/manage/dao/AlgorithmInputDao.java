@@ -1,5 +1,6 @@
 package cn.edu.cup.manage.dao;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,6 +69,38 @@ public class AlgorithmInputDao {
 	public int getCountAlgorithms() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public List<AlgorithmInput> getExistAlgorithmInputList(int CycleID,int paramID) {
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.CycleID,t2.ID pid,t2.display,CONCAT(t3.CName,'(',t3.Symbol,')') from t_algorithminput t1,t_parameters t2,t_measure t3 where t1.ParamID=t2.ID and t3.id=t2.measureID and t1.CycleID=? and t1.ParamID=?");
+		q.setParameter(0, CycleID);
+		q.setParameter(1, paramID);
+		List l = q.list();
+		List<AlgorithmInput> re=new ArrayList<AlgorithmInput>();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+
+			  Object[] row = (Object[])l.get(i);;
+			  String id = ((Integer)row[0]).toString();
+			  String cid = ((Integer)row[1]).toString();
+			  String mid = ((Integer)row[2]).toString();
+			  String display = (String) row[3];
+			  String symbol = (String) row[4];
+			  AlgorithmInput p=new AlgorithmInput(id,cid,mid,display,symbol);
+			  re.add(p);
+		}
+		
+		return re;
+	}
+	
+	public int isExistAlgorithmInput(int cycleID,int paramID){
+		Query q=session.createSQLQuery("select count(*) from t_algorithminput t where t.cycleID=? and t.ParamID=?");
+		q.setParameter(0, cycleID);
+		q.setParameter(1,paramID);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
 	}
 	public int addAlgorithm(int cycleID, int paramID) {
 		Date addDate=new Date();

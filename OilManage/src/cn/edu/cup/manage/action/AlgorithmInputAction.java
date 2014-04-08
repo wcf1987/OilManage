@@ -1,15 +1,35 @@
 package cn.edu.cup.manage.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.edu.cup.manage.business.AlgorithmInput;
+import cn.edu.cup.manage.business.Parameters;
 import cn.edu.cup.manage.dao.AlgorithmInputDao;
 import cn.edu.cup.manage.dao.ParameterDao;
 
 public class AlgorithmInputAction {
 	List<AlgorithmInput> dataList;
 	private List<Integer> ids;
+	List<Parameters> paramList;
+	List<AlgorithmInput> existInputList;
+	boolean exist=false;
+	public List<AlgorithmInput> getExistInputList() {
+		return existInputList;
+	}
+	public void setExistInputList(List<AlgorithmInput> existInputList) {
+		this.existInputList = existInputList;
+	}
+	public boolean isExist() {
+		return exist;
+	}
 	
+	public List<Parameters> getParamList() {
+		return paramList;
+	}
+	public void setParamList(List<Parameters> paramList) {
+		this.paramList = paramList;
+	}
 	public List<Integer> getIds() {
 		return ids;
 	}
@@ -173,13 +193,23 @@ public class AlgorithmInputAction {
 	public String add(){
 
 		AlgorithmInputDao dao=new AlgorithmInputDao();
-	
+		ParameterDao paraDao=new ParameterDao();
+		
 		if(!ids.isEmpty()){
-
+			paramList=new ArrayList<Parameters>();
 			for(int id:ids){
-				dao.addAlgorithm(this.CycleID,id);
+				int inputCount=dao.isExistAlgorithmInput(CycleID, id);
+				if(inputCount==0){
+					dao.addAlgorithm(this.CycleID,id);
+					Parameters param=paraDao.searchParameter(id);
+					paramList.add(param);
+				}else{
+					this.existInputList=dao.getExistAlgorithmInputList(CycleID,id);
+					this.exist=true;
+				}
 			}
 		}
+		paraDao.close();
 		dao.close();
 		
 //		int result=dao.addAlgorithm(this.CycleID,this.ParamID);

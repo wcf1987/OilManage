@@ -637,9 +637,8 @@ User userlogin=(User)(session.getAttribute("user"));
 				    
 				    </select>  
 				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-				    <input id="addInputValue" name="addInputValue" />
-				     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-				    <button type="submit" class="btn btn-primary"  >添加</button>
+				    <input id="addInputValue" name="addInputValue" />&nbsp;&nbsp; 
+					<button type="submit" class="btn btn-primary"  >添加</button>
 				   	<!--  <span id="measureSymbol" name="measureSymbol"></span>--> 
 				  </div>
 				 </form> 
@@ -652,8 +651,7 @@ User userlogin=(User)(session.getAttribute("user"));
 				
 			
 				 <div class="modal-footer">
-				      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>	
-				      			       
+				      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>					      			       
 				 </div>
 		      </div>
 		     

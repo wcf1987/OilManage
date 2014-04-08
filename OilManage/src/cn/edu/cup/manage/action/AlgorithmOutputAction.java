@@ -1,26 +1,49 @@
 package cn.edu.cup.manage.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import cn.edu.cup.manage.business.AlgorithmInput;
 import cn.edu.cup.manage.business.AlgorithmOutput;
+import cn.edu.cup.manage.business.Parameters;
 import cn.edu.cup.manage.dao.AlgorithmInputDao;
 import cn.edu.cup.manage.dao.AlgorithmOutputDao;
+import cn.edu.cup.manage.dao.ParameterDao;
 
 public class AlgorithmOutputAction {
 	List<AlgorithmOutput> dataList;
 	private List<Integer> ids;
+	List<Parameters> paramList;
+	List<AlgorithmOutput> existOutputList;
+	boolean exist=false;
+
+	int ID;
+	int CycleID;
+	int ParamID;
+	String symbol;
+	String display;
 	
+	public List<Parameters> getParamList() {
+		return paramList;
+	}
+	public void setParamList(List<Parameters> paramList) {
+		this.paramList = paramList;
+	}
+	public List<AlgorithmOutput> getExistOutputList() {
+		return existOutputList;
+	}
+	public void setExistOutputList(List<AlgorithmOutput> existOutputList) {
+		this.existOutputList = existOutputList;
+	}
+	public boolean isExist() {
+		return exist;
+	}
 	public List<Integer> getIds() {
 		return ids;
 	}
 	public void setIds(List<Integer> ids) {
 		this.ids = ids;
 	}
-	int ID;
-	int CycleID;
-	int ParamID;
-	String symbol;
-	String display;
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
 	}
@@ -158,7 +181,7 @@ public class AlgorithmOutputAction {
 		
 		dataList=dao.getAlgorithmOutputList(page,rows,sidx,sord,CycleID);
 	
-		records=dao.getCountAlgorithms();
+		records=dao.getCountAlgorithmOutputs();
 
 		if(rows!=0&&records!=0){
 			total=records/rows;
@@ -171,28 +194,37 @@ public class AlgorithmOutputAction {
 
 
 	public String add(){
-
 		AlgorithmOutputDao dao=new AlgorithmOutputDao();
-	
+		ParameterDao paraDao=new ParameterDao();
+		
 		if(!ids.isEmpty()){
-
+			paramList=new ArrayList<Parameters>();
 			for(int id:ids){
-				dao.addAlgorithm(this.CycleID,id);
+				int inputCount=dao.isExistAlgorithmOutput(CycleID, id);
+				if(inputCount==0){
+					dao.addAlgorithmOutput(this.CycleID,id);
+					Parameters param=paraDao.searchParameter(id);
+					paramList.add(param);
+				}else{
+					this.existOutputList=dao.getExistAlgorithmOutputList(CycleID,id);
+					this.exist=true;
+				}
 			}
 		}
+		paraDao.close();
 		dao.close();
-		
 //		int result=dao.addAlgorithm(this.CycleID,this.ParamID);
 		return "SUCCESS";
 	}
+	
 	public String delete(){
 		AlgorithmOutputDao dao=new AlgorithmOutputDao();
-		dao.deleteAlgorithm(ID);
+		dao.deleteAlgorithmOutput(ID);
 		return "SUCCESS";
 	}
 	public String update(){
 		AlgorithmOutputDao dao=new AlgorithmOutputDao();
-		int re=dao.updateParameter(ID, this.CycleID,this.ParamID);
+		int re=dao.updateAlgorithmOutput(ID, this.CycleID,this.ParamID);
 		return "SUCCESS"; 
 	}
 }

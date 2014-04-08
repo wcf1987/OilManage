@@ -59,7 +59,7 @@ $(
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selectInput('"
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setInput('"
 										+ rows.ID + "')\">输入参数添加</a>"
 							}
 						},
@@ -71,7 +71,7 @@ $(
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selectOutput('"
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setOutput('"
 										+ rows.ID + "')\">输出参数设置</a>"
 							}
 						},
@@ -163,7 +163,7 @@ $(
 						
 				
 				},
-				position:"first"
+				position:"last"
 			
 		
 			}).jqGrid('navButtonAdd',"#AlgorithmPager",{
@@ -171,7 +171,8 @@ $(
 				caption:"编辑",
 				id:"edit_AlgorithmList",
 				onClickButton : function addModal(){
-					 var sels = $("#AlgorithmList").jqGrid('getGridParam','selarrrow'); 
+					alert(1);
+					 var sels = $("#AlgorithmList").jqGrid('getGridParam','selarrrow'); 				
 					    if(sels==""){ 
 					       //$().message("请选择要删除的项！"); 
 					       alert("请选择编辑的项!");
@@ -181,9 +182,15 @@ $(
 					    	var selectedID=sels[0];
 					    	var rowData = $("#AlgorithmList").jqGrid("getRowData", selectedID);
 				        	var ID=rowData.ID;
+				        	
 							// 配置对话框
 							loadAuthorOptions();//加载作者选项
 							$('#uploadAlgorithmModal').modal();
+				        	$("#algname").text(rowData.name);
+				        	$("#Description").text(rowData.Description);
+				        	$("#authorID").text(rowData.authorName);
+//				        	$("#className").val(rowData);
+//				        	$("#algorithmfile").val(rowData);
 							$("#addAlgorithmForm").validate({
 								debug:true,
 								onsubmit:true,
@@ -212,15 +219,15 @@ $(
 					    }
 
 				},
-		
-			
+				
+				position:"last"
 		
 			}).jqGrid('navButtonAdd',"#AlgorithmPager",{
 				title:'删除',
 				caption:"删除",	
 				id:"delete_AlgorithmList",
 				onClickButton:deleteAlgorithm,
-				position:"first"
+				position:"last"
 			});
 	
 	
@@ -322,8 +329,6 @@ function add_algorithm() {
  */
 function edit_algorithm(selectedID) {
 
-	    	
-	//alert(hideFilePath);
 	$.ajax({
 		type : 'POST',
 		url : 'updateAlgorithmsCycle.action',
@@ -336,7 +341,7 @@ function edit_algorithm(selectedID) {
 			className:$("#className").val()
 		},
 		success : function(data) {
-			alert('算法文件上传成功');
+			alert('算法文件上传成功!');
 			$('#uploadAlgorithmModal').modal('hide');
 			$("#AlgorithmList").trigger("reloadGrid");			
 		},
@@ -438,10 +443,230 @@ function viewAlgorithmInput(cycleId){//暂时没用
 			}//end success
 		});//end ajax
 	}
+/*
+ * 算法输入参数设置
+ */
+function setInput(algID){
+	$("#ItemInputList").empty();
+	$('#algID').val(algID);
+	loadParameterOptions("#addParameterID");
+	loadInputOptions(algID);
+	$("#addAlgorithmInputForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			addParameterID:{
+				required:true
+			}
+		},
+		messages:{
+			addParameterID:{
+				required:"请选择输入参数！"
+			}
+		},
+		submitHandler:function(){
+			add_algInput();
+		}
+	});
+	$('#addAlgorithmInput_modal').modal();
+}
+/*
+ * 加载已有的算法输入列表
+ */
+function loadInputOptions(CycleID){
+	$.ajax({
+		url:'listAlgorithmInputs.action',
+		type:'post',
+		dataType:'json',
+		data : {
+			CycleID:CycleID,
+			sidx: 'id',
+			sord: "desc"
+		},
+		success:function(data){
+			var items="";
+			$.each(data.dataList,function(i,algInput){
+				items+="<li><input style='display:none;' value="+algInput.ID+"'/><label class='control-label'>"+algInput.display+"</label>&nbsp;&nbsp;" +			
+								"<span>"+algInput.symbol +
+										"</span>&nbsp;&nbsp;<button type='button' onclick='deleteInputItem(this,"+algInput.ID+");' title='删除'>×</button></li>";
+				//items+= "<option value=\"" + algInput.ID + "\">" + algInput.display+" &nbsp;&nbsp"+algInput.measure + "</option>"; 			
+			});
+			$("#ItemInputList").append(items);
+//			showValue($("#modifyInputID").val());
+		}
+	});
+	}
+/*
+ * 添加算法输入
+ */
+function add_algInput() {
+	var ids={};
+	ids[0]=$("#addParameterID").val();
+	$.ajax({
+		type : 'POST',
+		url : 'addAlgorithmInput.action',
+		data : {
+			ids:ids,
+			CycleID:$('#algID').val()			
+		},
+		success : function(data) {
+			if(data.exist==true){
+				str="";
+				$.each(data.existInputList,function(index,algInput){
+					str+="["+algInput.display+"]";
+				});
+				alert(str+"已存在！");
+			}
+			alert('参数保存成功!');
+			var items="";
+			$.each(data.paramList,function(i,param){
+				items+="<li><input style='display:none;' value="+param.ID+"'/><label class='control-label'>"+param.display+"</label>&nbsp;&nbsp;" +			
+				"<span>"+param.measureSymbol +
+						"</span>&nbsp;&nbsp;<button type='button' onclick='deleteInputItem(this,"+param.ID+");' title='删除'>×</button></li>";
+			});
+			$("#ItemInputList").append(items);		
+		},
+		error:function(msg){
+			alert(msg);
+		}
+	});
+	}
+/*
+ * 删除算法输入项
+ */
+function deleteInputItem(obj,id){
+	 
+	$.ajax({
+		url:'delAlgorithmInput.action',
+		type:'post',
+		dataType:'json',
+		data:{
+			ID:id
+		},
+		success:function(data){
+			alert("删除成功！");
+			$(obj).parent().remove();
+		}
+	});
+	}
+
+
+/*
+ * 算法输出参数设置
+ */
+function setOutput(algID){
+	$("#ItemOutputList").empty();
+	$('#outputAlgID').val(algID);
+	loadParameterOptions("#outputParameterID");
+	loadOutputOptions(algID);
+	$("#addAlgorithmOutputForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			outputParameterID:{
+				required:true
+			}
+		},
+		messages:{
+			outputParameterID:{
+				required:"请选择输入参数！"
+			}
+		},
+		submitHandler:function(){
+			add_algOutput();
+		}
+	});
+	$('#addAlgorithmOutput_modal').modal();
+}
+/*
+ * 加载已有的算法输出列表
+ */
+function loadOutputOptions(CycleID){
+	$.ajax({
+		url:'listAlgorithmOutputs.action',
+		type:'post',
+		dataType:'json',
+		data : {
+			CycleID:CycleID,
+			sidx: 'id',
+			sord: "desc"
+		},
+		success:function(data){
+			var items="";
+			$.each(data.dataList,function(i,algOutput){
+				items+="<li><input style='display:none;' value="+algOutput.ID+"'/><label class='control-label'>"+algOutput.display+"</label>&nbsp;&nbsp;" +			
+								"<span>"+algOutput.symbol +
+										"</span>&nbsp;&nbsp;<button type='button' onclick='deleteOutputItem(this,"+algOutput.ID+");' title='删除'>×</button></li>";
+				//items+= "<option value=\"" + algOutput.ID + "\">" + algOutput.display+" &nbsp;&nbsp"+algOutput.measure + "</option>"; 			
+			});
+			$("#ItemOutputList").append(items);
+//			showValue($("#modifyInputID").val());
+		}
+	});
+	}
+/*
+ * 添加算法输出
+ */
+function add_algOutput() {
+	var ids={};
+	ids[0]=$("#outputParameterID").val();
+	$.ajax({
+		type : 'POST',
+		url : 'addAlgorithmOutput.action',
+		data : {
+			ids:ids,
+			CycleID:$('#outputAlgID').val()			
+		},
+		success : function(data) {
+			if(data.exist==true){
+				str="";
+				$.each(data.existOutputList,function(index,algOutput){
+					str+="["+algOutput.display+"]";
+				});
+				alert(str+"已存在！");
+			}
+			alert('参数保存成功!');
+			var items="";
+			$.each(data.paramList,function(i,param){
+				items+="<li><input style='display:none;' value="+param.ID+"'/><label class='control-label'>"+param.display+"</label>&nbsp;&nbsp;" +			
+				"<span>"+param.measureSymbol +
+						"</span>&nbsp;&nbsp;<button type='button' onclick='deleteOutputItem(this,"+param.ID+");' title='删除'>×</button></li>";
+			});
+			$("#ItemOutputList").append(items);		
+		},
+		error:function(msg){
+			alert(msg);
+		}
+	});
+	}
+/*
+ * 删除算法输出项
+ */
+function deleteOutputItem(obj,id){
+	 
+	$.ajax({
+		url:'delAlgorithmOutput.action',
+		type:'post',
+		dataType:'json',
+		data:{
+			ID:id
+		},
+		success:function(data){
+			alert("删除成功！");
+			$(obj).parent().remove();
+		}
+	});
+	}
+
 
 /*
  * 添加算法输入
  */
+/*
 function selectInput(cycleId){
 	$('#addAlgorithmInput_modal').modal();
 	$('#CycleID').val(cycleId);
@@ -466,10 +691,11 @@ function selectInput(cycleId){
 		}
 	});
 }
-
+*/
 /*
  * 添加算法输入
  */
+/*
 function add_algorithmInput() {
 	var $options = $('#select2 option');
 	var ids={};
@@ -497,9 +723,11 @@ function add_algorithmInput() {
 		}
 	});
 	}
+*/
 /*
  * 添加算法输出
  */	
+/*
 function selectOutput(cycleId){
 	$('#addAlgorithmOutput_modal').modal();
 	$('#outputCycleID').val(cycleId);
@@ -524,10 +752,11 @@ function selectOutput(cycleId){
 		}
 	});
 }
-
+*/
 /*
  * 添加算法输出
  */
+/*
 function add_algorithmOutput() {
 	var $options = $('#outputselect2 option');
 	var ids={};
@@ -555,6 +784,7 @@ function add_algorithmOutput() {
 		}
 	});
 	}
+*/
 /*
  * 加载参数下拉列表
  */
@@ -617,10 +847,14 @@ $(document).ready(function() {
 	});
 	
 	//给算法添加输入的select项的多选
+	/*
+	 * 
+	
 	 $('#add').click(function(){  
         var $options = $('#select1 option:selected');//获取当前选中的项  
-        var $remove = $options.remove();//删除下拉列表中选中的项  
-        $remove.appendTo('#select2');//追加给对方  
+       var $remove = $options.remove();//删除下拉列表中选中的项  
+       $remove.appendTo('#select2');//追加给对方  
+        $options.appendTo('#AlgInputList');
     });  
       
     $('#remove').click(function(){  
@@ -681,5 +915,6 @@ $(document).ready(function() {
    $('#outputselect2').dblclick(function(){  
        $('#outputselect2 option:selected').appendTo('#outputselect1');  
    });
+    */
        
 });
