@@ -171,7 +171,7 @@ $(
 				caption:"编辑",
 				id:"edit_AlgorithmList",
 				onClickButton : function addModal(){
-					alert(1);
+//					alert(1);
 					 var sels = $("#AlgorithmList").jqGrid('getGridParam','selarrrow'); 				
 					    if(sels==""){ 
 					       //$().message("请选择要删除的项！"); 

@@ -170,174 +170,12 @@ $(document).ready(function(){
 		}
 	});
 	loadMeasureOptions();
-	$("#addParameterForm").validate({
-		debug:true,
-		onsubmit:true,
-		onfocusout:false,
-		onkeyup:true,
-		rules:{
-			name:{
-				required:true
-			},
-			display:{
-				required:true
-			},
-			measureID:{
-				required:true
-			}
-		},
-		messages:{
-			name:{
-			required:"名称不能为空！",
-			},
-			display:{
-			required:"中文名称不能为空！",
-			},
-			measureID:{
-				required:"请选择单位！"
-			}
-		},
-		submitHandler:function(){
-			add_parameter();
-		}
-	});
+	
 	
 	
 });//ready 结束
 
-function add_physical() {
-	$.ajax({
-		type : 'POST',
-		url : 'addPhysical.action',
-		data : {
-			CName:$("#CName").val(),
-			EName:$("#EName").val(),
-			Description:$("#Description").val(),
-			ISOBasicUnit:$("#ISOBasicUnit").val()
-		},
-		dataType:'json',
-		complete : function(msg) {
-			alert("添加成功！");
-			$('#add_physical_modal').modal('hide');
-			$("#PhysicalList").trigger("reloadGrid");
-		},
-		error:function(msg){
-			alert("添加失败！");
-			alter(msg);
-			$('#add_physical_modal').modal('hide');
-			$("#PhysicalList").trigger("reloadGrid");
-		}
-	});
-	}
 
-function add_measure() {
-
-	$.ajax({
-		type : 'POST',
-		url : 'addMeasure.action',
-		data : {
-			mCName:$("#MCName").val(),
-			mEName:$("#MEName").val(),
-			Symbol:$("#Symbol").val(),
-			RatioA:$("#RatioA").val(),
-			RatioB:$("#RatioB").val(),
-			PhysicalID:$("#PhysicalID").val(),
-			StyleID:$("#StyleID").val()
-		},
-		dataType:'json',
-		success : function(msg) {
-			alert("添加成功！");
-			$('#add_measure_modal').modal('hide');
-			$("#MeasureList").trigger("reloadGrid");
-		},
-		error:function(msg){
-			alter(msg);
-			$('#add_measure_modal').modal('hide');
-			$("#MeasureList").trigger("reloadGrid");
-		}
-	});
-	}
-
-function add_parameter() {
-
-	$.ajax({
-		type : 'POST',
-		url : 'addParameter.action',
-		data : {
-			name:$("#name").val(),
-			display:$("#display").val(),
-			measureID:$("#measureID").val()
-		},
-		dataType:'json',
-		success : function(msg) {
-			alert("添加成功！");
-			$('#add_parameter_modal').modal('hide');
-			$("#ParameterList").trigger("reloadGrid");
-		},
-		error:function(msg){
-			alter(msg);
-			$('#add_measure_modal').modal('hide');
-			$("#ParameterList").trigger("reloadGrid");
-		}
-	});
-	}
-	
-function loadPhysicalOptions(){
-	$.ajax({
-		url:'listPhysical.action',
-		type:'post',
-		data : {
-			sidx: 'id',
-			sord: "desc"
-		},
-		dataType:'json',
-		success:function(data){
-		//alert(data.dataList[0].CName);
-			var items="";
-			$.each(data.dataList,function(i,physical){
-				items+= "<option value=\"" + physical.ID + "\">" + physical.CName + "</option>"; 
-			});
-			$("#PhysicalID").html(items);
-		}
-	});
-	}
-
-function loadPhysicalStyleOptions(){
-	$.ajax({
-		url:'listPhysicalStyle.action',
-		type:'post',
-		dataType:'json',
-		success:function(data){
-		//alert(data.dataList[0].CName);
-			var items="";
-			$.each(data.styleList,function(i,style){
-				items+= "<option value=\"" + style.ID + "\">" + style.styleName + "</option>"; 
-			});
-			$("#StyleID").html(items);
-		}
-	});
-	}
-
-	
-function loadMeasureOptions(){
-	$.ajax({
-		url:'listMeasure.action',
-		type:'post',
-		data : {
-			sidx: 'mid',
-			sord: "desc"
-		},
-		dataType:'json',
-		success:function(data){
-		//alert(data.dataList[0].CName);
-			var items="";
-			$.each(data.dataList,function(i,measure){
-				items+= "<option value=\"" + measure.ID + "\">" + measure.CName + "</option>"; 
-			});
-			$("#measureID").html(items);
-		}
-	});
-	}
 </script>
 
 
@@ -571,7 +409,7 @@ function loadMeasureOptions(){
 		      			</tr>
 		      			<tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">符号：</label></td>
-		      				<td><input id="Symbol " type="text" class="input2" style="width:100px" name="Symbol " maxlength="30" /></td>
+		      				<td><input id="Symbol" type="text" class="input2" style="width:100px" name="Symbol " maxlength="30" /></td>
 		      			</tr>
 		      			<tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">物理量</label></td>

@@ -23,7 +23,10 @@ public class ParametersManageAction extends ActionSupport{
 	private int page;
 	private int records;
 	private List<Integer> ids;
-	
+	private boolean exist;
+	public boolean isExist() {
+		return exist;
+	}
 	public void setParam(Parameters param) {
 		this.param = param;
 	}
@@ -134,8 +137,14 @@ public class ParametersManageAction extends ActionSupport{
 	public String add(){
 
 		ParameterDao dao=new ParameterDao();
-	
-		int result=dao.addParameter(measureID, display, name);
+		int count=dao.isExistParameter(name);
+		if(count==0){
+			int result=dao.addParameter(measureID, display, name);
+			this.exist=false;
+		}else{
+			this.exist=true;
+		}
+		
 		return "SUCCESS";
 	}
 	public String delete(){
