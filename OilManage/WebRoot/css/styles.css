@@ -7,3 +7,23 @@
 label.error {  
       color: red;/*错误信息的颜色*/  
   } 
+  
+myactive{
+	color:white;
+}
+.navbar-nav > li > a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 20px;
+  color:#000000;font-size:15px;font-family:Microsoft YaHei
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #000000;
+}
+
+
+
+*{
+	font-family:Microsoft YaHei
+}

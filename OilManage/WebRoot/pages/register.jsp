@@ -8,6 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+    <base href="<%=basePath%>"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	
 	<title>Login Page</title>
@@ -15,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="../css/login.css" />
 	<script src="../js/jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+	<script src="js/jquery/jquery-migrate-1.2.1.js"></script>
 	
 	<script src="../js/jquery/jquery.form.js" type="text/javascript"></script>
 	<script type="text/javascript" src="../js/jquery-validation-1.11.1/dist/jquery.validate.js"></script>

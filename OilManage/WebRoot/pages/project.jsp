@@ -51,7 +51,8 @@ User userlogin=(User)(session.getAttribute("user"));
 	  
 	
 	<script src="js/jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+	<script src="js/jquery/jquery-migrate-1.2.1.js"></script>
+
 	
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="bootstrap/js/holder.min.js"></script>
@@ -117,7 +118,7 @@ User userlogin=(User)(session.getAttribute("user"));
 	               	<%if (userlogin!=null) {%>
 			      <div class="text-center" style="margin-top:8px;margin-right:25px;" id="userId">
 			      	<div style="margin-left:5px;margin-top:5px;"><a  style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">注销</a></div>	     
-			        <div style="font-size:20;color:#FFFFFF;float:right">您好,<a href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%></a></div>
+			        <div style="font-size:20;color:#FFFFFF;float:right">您好,<a href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>
 			      </div>
 			       <%}else{ %>
 		        	 <div class="text-center" style="margin-top:8px;"><a  class="btn btn-default" href="pages/login.jsp">管理员登陆</a></div>
