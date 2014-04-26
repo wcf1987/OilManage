@@ -22,12 +22,7 @@
 		</action>
 	</package>
 	<package name="json" extends="json-default">
-		<!-- taxi -->
-		<action name="taxiList" class="cn.edu.cup.map.action.TaxiListAction"
-			method="list">
-			<result name="SUCCESS" type="json">
-			</result>
-		</action>
+
 		
 		<action name="logout" method="logout" class="cn.edu.cup.manage.action.LoginAction">
 			<result type="json">				
