@@ -78,7 +78,13 @@ public class ParameterDao {
 
 
 
-
+	public int isExistParameter(String name){
+		SQLQuery q=session.createSQLQuery("select count(*) from t_parameters t where t.name=?");
+		q.setParameter(0, name);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
+		
+	}
 	public Parameters searchParameter(int id){
 		SQLQuery q = session.createSQLQuery("SELECT t1.id,t1.measureID,CONCAT(CName,'(',t2.Symbol,')'),t1.display,t1.name from t_parameters t1,t_measure t2 where t1.measureID=t2.ID and t1.id=?");
 		q.setParameter(0, id);

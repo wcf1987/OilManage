@@ -6,6 +6,7 @@ public class AlgorithmInput {
 	String ParamID;
 	String display;
 	String symbol;
+	String measure;
 	public AlgorithmInput(String id2, String cid, String mid, String display,
 			String symbol) {
 		// TODO Auto-generated constructor stub
@@ -14,6 +15,13 @@ public class AlgorithmInput {
 		this.ParamID=mid;
 		this.display=display;
 		this.symbol=symbol;
+//		this.measure=measure;
+	}
+	public String getMeasure() {
+		return measure;
+	}
+	public void setMeasure(String measure) {
+		this.measure = measure;
 	}
 	public String getID() {
 		return ID;

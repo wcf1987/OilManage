@@ -244,7 +244,9 @@ public class AlgorithmsCycleAction {
 	}
 	public String update(){
 		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
-		int re=dao.updateParameter(ID, this.inputID,this.planID, this.outputID,this.Description,this.name);
+//		int re=dao.updateParameter(ID, this.inputID,this.planID, this.outputID,this.Description,this.name);
+		int re=dao.updateAlgorithm(ID, this.Description, authorID, name, filePath, className);
+				
 		return "SUCCESS"; 
 	}
 	

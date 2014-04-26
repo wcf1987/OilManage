@@ -40,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/login.css" />  
 	
 	<script src="js/jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+	<script src="js/jquery/jquery-migrate-1.2.1.js"></script>
 	
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="bootstrap/js/holder.min.js"></script>

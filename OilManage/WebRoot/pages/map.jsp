@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqGrid/css/ui.jqgrid.css" />
 	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/overcast/jquery.ui.theme.css" />  
-	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/black-tie/jquery.ui.theme.css" />
+	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/redmond/jquery.ui.theme.css" />
 	 
 	 
 	 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  
 	
 	<script src="js/jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+	<script src="js/jquery/jquery-migrate-1.2.1.js"></script>
 	
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="bootstrap/js/holder.min.js"></script>
@@ -133,7 +133,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	              </ul>
                   	<%if (userlogin!=null) {%>
 			      	<div class="text-center" style="margin-top:8px;margin-right:25px;" id="userId">
-			      	<div style="margin-left:5px;margin-top:5px;"><a  style="margin-left:5px;margin-top:5px;float:right"id="exit" href="logOut.action">注销</a></div>	     
+			      	<div style="margin-left:5px;margin-top:5px;"><a  style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">注销</a></div>	     
 			        <div style="font-size:20;color:#FFFFFF;float:right">您好,<a href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%></a></div>
 			       	</div>
 			       <%}else{ %>

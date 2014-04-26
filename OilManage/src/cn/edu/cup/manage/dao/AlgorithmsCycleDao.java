@@ -138,7 +138,22 @@ public class AlgorithmsCycleDao {
 		
 	}
 
-
+	public int updateAlgorithm(int id,String description, String authorID,String name,String filePath,String className) {
+		Date updateDate=new Date();
+		Query q = session.createSQLQuery("update t_algorithmscycle t set description=?,authorID=?,LastUpdateTime=?,Name=?,FilePath=?,ClassName=? where t.ID=?");
+		q.setParameter(0, description);
+		q.setParameter(1, authorID);
+		q.setParameter(2, updateDate);
+		q.setParameter(3, name);
+		q.setParameter(4, filePath);
+		q.setParameter(5, className);
+		q.setParameter(6,id);
+		int result=q.executeUpdate();
+		
+		tx.commit();
+		return result;
+	}
+	
 	public int updateParameter(int iD, String inputID, String planID,
 			String outputID, String description,String name) {
 		// TODO Auto-generated method stub
