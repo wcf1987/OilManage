@@ -14,53 +14,31 @@ figureSets["secondary"] = {
 }
 
 function figure_Page(x,y)
-{
+{  var stage = new Kinetic.Stage({
+    container: 'container',
+    width: 578,
+    height: 200
+  });
 
-    var r = new Polygon();
-    r.addPoint(new Point(x, y));
-    r.addPoint(new Point(x + figure_defaultFigureSegmentShortSize + 4 - figure_defaultFigureCorner, y));
-    r.addPoint(new Point(x + figure_defaultFigureSegmentShortSize + 4, y + figure_defaultFigureCorner));
-    r.addPoint(new Point(x + figure_defaultFigureSegmentShortSize + 4, y + figure_defaultFigureSegmentSize));
-    r.addPoint(new Point(x, y + figure_defaultFigureSegmentSize));
+  var layer = new Kinetic.Layer();
 
-    var f=new Figure("Page");
-    f.style.fillStyle = figure_defaultFillStyle;
-    f.style.strokeStyle = figure_defaultStrokeStyle;
+  var rect = new Kinetic.Rect({
+    x: 239,
+    y: 75,
+    width: 100,
+    height: 50,
+    fill: 'green',
+    stroke: 'black',
+    strokeWidth: 4
+  });
 
-    f.properties.push(new BuilderProperty('Text', 'primitives.1.str', BuilderProperty.TYPE_TEXT));
-    f.properties.push(new BuilderProperty('Text Size ', 'primitives.1.size', BuilderProperty.TYPE_TEXT_FONT_SIZE));
-    f.properties.push(new BuilderProperty('Font ', 'primitives.1.font', BuilderProperty.TYPE_TEXT_FONT_FAMILY));
-    f.properties.push(new BuilderProperty('Alignment ', 'primitives.1.align', BuilderProperty.TYPE_TEXT_FONT_ALIGNMENT));
-    f.properties.push(new BuilderProperty('Text Color', 'primitives.1.style.fillStyle', BuilderProperty.TYPE_COLOR));
+  // add the shape to the layer
+  layer.add(rect);
 
-//    f.properties.push(new BuilderProperty(BuilderProperty.SEPARATOR));
-    f.properties.push(new BuilderProperty('Stroke Style', 'style.strokeStyle', BuilderProperty.TYPE_COLOR));
-    f.properties.push(new BuilderProperty('Fill Style', 'style.fillStyle', BuilderProperty.TYPE_COLOR));
-    f.properties.push(new BuilderProperty('Line Width', 'style.lineWidth',BuilderProperty.TYPE_LINE_WIDTH));
-//f.properties.push(new BuilderProperty('Vertical Alignment ', 'primitives.1.valign', Text.VALIGNMENTS);
-    f.properties.push(new BuilderProperty('Line Style', 'style.lineStyle',BuilderProperty.TYPE_LINE_STYLE));
-    
-    
-    f.properties.push(new BuilderProperty(BuilderProperty.SEPARATOR));
-    f.properties.push(new BuilderProperty('URL', 'url', BuilderProperty.TYPE_URL));
-    
-    f.addPrimitive(r);
+  // add the layer to the stage
+  stage.add(layer);
 
-    var t2 = new Text(figure_defaultFigureTextStr, x + figure_defaultFigureSegmentShortSize/2 + 2, y + figure_defaultFigureSegmentSize/2, figure_defaultFigureTextFont, figure_defaultFigureTextSize);
-    t2.style.fillStyle = figure_defaultFillTextStyle;
 
-    f.addPrimitive(t2);
-
-    CONNECTOR_MANAGER.connectionPointCreate(f.id, new Point(x, y),ConnectionPoint.TYPE_FIGURE);
-    CONNECTOR_MANAGER.connectionPointCreate(f.id, new Point(x + figure_defaultFigureSegmentShortSize / 2 + 2, y), ConnectionPoint.TYPE_FIGURE);
-    CONNECTOR_MANAGER.connectionPointCreate(f.id, new Point(x + figure_defaultFigureSegmentShortSize + 4, y + figure_defaultFigureSegmentSize/2), ConnectionPoint.TYPE_FIGURE);
-    CONNECTOR_MANAGER.connectionPointCreate(f.id, new Point(x + figure_defaultFigureSegmentShortSize + 4, y + figure_defaultFigureSegmentSize), ConnectionPoint.TYPE_FIGURE);
-    CONNECTOR_MANAGER.connectionPointCreate(f.id, new Point(x + figure_defaultFigureSegmentShortSize / 2 + 2, y + figure_defaultFigureSegmentSize), ConnectionPoint.TYPE_FIGURE);
-    CONNECTOR_MANAGER.connectionPointCreate(f.id, new Point(x, y + figure_defaultFigureSegmentSize), ConnectionPoint.TYPE_FIGURE);
-    CONNECTOR_MANAGER.connectionPointCreate(f.id, new Point(x, y + figure_defaultFigureSegmentSize/2), ConnectionPoint.TYPE_FIGURE);
-    CONNECTOR_MANAGER.connectionPointCreate(f.id, new Point(x + figure_defaultFigureSegmentShortSize / 2 + 2, y + figure_defaultFigureSegmentSize/2), ConnectionPoint.TYPE_FIGURE);
-    f.finalise();
-    return f;
 }
 
 function figure_PageUpperCornerFolded(x,y)

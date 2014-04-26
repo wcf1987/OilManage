@@ -5,6 +5,8 @@
         <title>HTML5 diagram editor</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=9" />
+        <script type="text/javascript" src="./lib/kineticjs.js"></script>    
+        
         <script type="text/javascript" src="./assets/javascript/dropdownmenu.js"></script>    
         
         <link rel="stylesheet" media="screen" type="text/css" href="./assets/css/style.css" />
@@ -55,7 +57,7 @@
         Please download one of the full server versions like: LAMP or All-In-One to have them.");
             }
         </script>
-        
+          
         <script type="text/javascript" src="./lib/canvasprops.js"></script>
         <script type="text/javascript" src="./lib/style.js"></script>
         <script type="text/javascript" src="./lib/primitives.js"></script>
@@ -122,7 +124,7 @@
 
         <script type="text/javascript" src="./lib/commands/InsertedImageFigureCreateCommand.js"></script>
 
-        
+   
         <script type="text/javascript" src="./assets/javascript/colorPicker_new.js"></script>
         <link rel="stylesheet" media="screen" type="text/css" href="./assets/css/colorPicker_new.css" />
 
@@ -287,50 +289,7 @@
                     }
                     
                     buildPanel();
-                    
-//                    var first = true;
-//                    for(var setName in figureSets){
-//                        
-//                        document.write('<div id="' + setName + '" ' + (!first ? 'style="display: none"' : '')+'>');
-//                        document.write('<table border="0" cellpadding="0" cellspacing="0" width="120">');
-//                        var counter = 0;
-//                        var set = figureSets[setName];
-//                        for(var figure in set['figures']){
-//                            figure = set['figures'][figure];
-//                            if(counter % 3 == 0){
-//                                document.write('<tr>');
-//                            }
-//                            
-//                            var figureFunctionName = 'figure_' + figure.figureFunction;
-//                            var figureThumbURL = 'lib/sets/' + setName + '/' + figure.image;
-//                            
-//                            document.write('<td align="center">');
-//                            document.write('<a href="javascript:createFigure(' + figureFunctionName + "," + "'" + figureThumbURL + "'" + ');">');
-//                            
-//                            //TODO: how to prevent default behaviour?
-//                            var figureImageId = 'fig' + setName + '_' + figure.figureFunction;
-//                            document.write('<img id="' + figureImageId +'" onmousedown="javascript:createFigure(' + figureFunctionName + "," + "'" + figureThumbURL + "'" + ');" src="' + figureThumbURL + '" border="0" alt="'+ figure.figureFunction + '" />');
-//                            
-//                            var figureImageElem = document.getElementById(figureImageId);
-//                            figureImageId.onMouseDown = function(evt){
-//                                alert('I am here');
-//                                evt.preventDefault();
-//                            }
-//                            
-//                            //document.write('</a>');
-//                            document.write('</td>');
-//                            
-//                            counter ++;
-//                            if(counter % 3 == 0){
-//                                document.write('</tr>');
-//                            }
-//                        }
-//                        if(counter % 3 != 0){
-//                            document.write('</tr>');
-//                        }
-//                        document.write('</table></div>');
-//                        first = false;
-//                    }
+
                 </script>
                 
                 <div style="display:none;" id="more">
@@ -341,6 +300,7 @@
             <!--THE canvas-->
             <div style="width: 100%">
                 <div  id="container">
+                    <script type="text/javascript" src="./lib/init.js"></script>  
                     <canvas id="a" width="800" height="600">
                         Your browser does not support HTML5. Please upgrade your browser to any modern version.
                     </canvas>

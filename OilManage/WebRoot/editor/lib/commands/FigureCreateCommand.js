@@ -23,6 +23,10 @@ function FigureCreateCommand(factoryFunction, x, y){
     this.y = y;
     this.firstExecute = true;
     this.figureId = null;
+    
+    
+    
+ 
 }
 
 
