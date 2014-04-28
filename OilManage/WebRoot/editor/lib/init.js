@@ -261,7 +261,7 @@ var stage = new Kinetic.Stage({
 //		  var ev = ev || window.event;
 //		  var mousePos = mousePosition(e);
 		  var rectDelete=new Kinetic.Rect({
-			  name:'rectDelete',
+		  	  name:'rectDelete',
 			  x : this.getAbsolutePosition().x-20,
 		      y : this.getAbsolutePosition().y,
 		      width:80,
@@ -273,7 +273,7 @@ var stage = new Kinetic.Stage({
 		      strokeWidth:0.5
 		  });
 		  var textDelete = new Kinetic.Text({
-			   name:'textDelete',
+		  		name:'textDelete',
 				x : this.getAbsolutePosition().x-20,
 				y : this.getAbsolutePosition().y,
 				//			  	x:mousePos.x,
@@ -289,7 +289,7 @@ var stage = new Kinetic.Stage({
 		  
 	
 		   var rectMenu = new Kinetic.Rect({
-			   name:'rectMenu',
+		   	   name:'rectMenu',
 			   x : this.getAbsolutePosition().x-20,
 			   y : this.getAbsolutePosition().y,
 //				x:mousePos.x,
@@ -327,6 +327,5 @@ var stage = new Kinetic.Stage({
 	       stage.draw(); 
 	};
 	rect1.on('click',clickFunc);
-	
 
 

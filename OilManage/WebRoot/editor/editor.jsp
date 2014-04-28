@@ -244,7 +244,7 @@
 	<li><a>放大</a></li>
 	<li><a>缩小</a></li>	-->
 	<li><a>delete</a></li>
-	<li><a>rotate</a></li>
+	<li><a></a></li>
   </ul>
 </body>
 
