@@ -12,11 +12,16 @@
 <link rel="stylesheet" media="screen" type="text/css"
 	href="./assets/css/minimap.css" />
 
+<link type='text/css' href='./assets/css/jquery.contextmenu.css'
+	rel='stylesheet' media='screen' />
+	
 <script type="text/javascript" src="./assets/javascript/json2.js"></script>
 <script type="text/javascript"
 	src="./assets/javascript/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="./assets/javascript/jquery.contextmenu.js"></script>
 <script type="text/javascript"
 	src="./assets/javascript/ajaxfileupload.js"></script>
+
 
 <link type='text/css' href='./assets/simplemodal/css/diagramo.css'
 	rel='stylesheet' media='screen' />
@@ -26,7 +31,29 @@
 
 <link rel="stylesheet" media="screen" type="text/css"
 	href="./assets/css/colorPicker_new.css" />
-
+<style type="text/css">
+#contextmenu {
+	border: 1px solid #aaa;
+	border-bottom: 0;
+	background: #eee;
+	position: absolute;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: none;
+}
+																		   
+#contextmenu li a {
+	display: block;
+	padding: 10px;
+	border-bottom: 1px solid #aaa;
+	cursor: pointer;
+}
+																		   
+#contextmenu li a:hover {
+	background: #fff;
+}
+</style>
 
 <!--[if IE]>
         <script src="./assets/javascript/excanvas.js"></script>
@@ -189,7 +216,7 @@
 			</div>
 		</form>
 	</div>
-
+	
 	<!--Insert Image hidden iframe-->
 	<iframe id="upload_target" name="upload_target"
 		style="width:0;height:0;border:0px;"></iframe>
@@ -209,5 +236,16 @@
 	</script>
 	<br />
 	<? //require_once dirname(__FILE__) . '/common/analytics.php';?>
+	
+  <ul id="contextmenu" style="display:none;">	<!-- 右键菜单 -->
+	<!--  <li><a>顺时针旋转</a></li>
+	<li><a>逆时针旋转</a></li>	
+	<li><a>更改颜色</a></li>
+	<li><a>放大</a></li>
+	<li><a>缩小</a></li>	-->
+	<li><a>delete</a></li>
+	<li><a>rotate</a></li>
+  </ul>
 </body>
+
 </html>

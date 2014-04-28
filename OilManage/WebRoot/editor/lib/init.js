@@ -1,4 +1,32 @@
-  var stage = new Kinetic.Stage({
+function getMousePos(canvas, evt){
+    // 获得 canvas 位置
+    var obj = canvas;
+    var top = 0;
+    var left = 0;
+    while (obj && obj.tagName != 'BODY') {
+        top += obj.offsetTop;
+        left += obj.offsetLeft;
+        obj = obj.offsetParent;
+    }
+ 
+    // 返回鼠标相对位置
+    var mouseX = evt.clientX - left + window.pageXOffset;
+    var mouseY = evt.clientY - top + window.pageYOffset;
+    return {
+        x: mouseX,
+        y: mouseY
+    };
+}
+function mousePosition(e){
+	if(e.pageX||e.pageY){
+		return{x:e.pageX,y:pageY};
+	}
+	return{
+		x:e.clientX+document.body.scrollLeft-document.body.clientLeft,
+		y:e.clientY+document.body.scrollTop-document.body.clientTop
+	};
+}
+var stage = new Kinetic.Stage({
         container: 'container',
         width: 1020,
         height: 800
@@ -95,6 +123,37 @@
        draggable: true,
        closed: true
      });
+   
+   var circle1 = new Kinetic.Circle({
+	   x:45,
+	   y:220,
+	   radius:15,
+	   fill: 'red',
+	   stroke: 'black',
+	   strokeWidth: 2,
+	   fillEnabled:true,
+	   rotationDeg:-10,
+	   draggable: true
+
+	   });
+   
+   var rect1 = new Kinetic.Rect({
+
+	   x : 9,
+	   y : 270,
+	   width : 80,
+	   height : 30,
+	   cornerRadius:10,
+	   scaleX:1,
+       scaleY:1,
+       RotationDeg:0,
+	   draggable: true,
+	   fill : 'blue'
+		   
+	   });
+   
+   var group=new Kinetic.Group();
+   group.add(rect1);
 
    leftlayer.add(rectBackgroundLeft);
    centerlayer.add(rectBackgroundCenter);
@@ -109,6 +168,7 @@
 	   }
 	   return false;
    }	
+   
    var dragFun=function(pos){
 	  
 	   if(checkPoint(pos,centerlayer)){
@@ -139,16 +199,20 @@
        }
        centerlayer.draw(this);
        stage.draw(); 
-   }		
+   };		
    poly1.dragBoundFunc(dragFun);
    poly2.dragBoundFunc(dragFun);
    poly3.dragBoundFunc(dragFun);
    poly4.dragBoundFunc(dragFun);
+   circle1.dragBoundFunc(dragFun);
+   rect1.dragBoundFunc(dragFun);
    leftlayer.add(poly1);
    leftlayer.add(poly2);
    leftlayer.add(poly3);
    leftlayer.add(poly4);
-   
+   leftlayer.add(circle1);
+//   leftlayer.add(rect1);
+   leftlayer.add(group);
    stage.add(leftlayer);
    stage.add(centerlayer);
 
@@ -172,10 +236,97 @@
 	poly2.on('dragend', cloneFun);
 	poly3.on('dragend', cloneFun);
 	poly4.on('dragend', cloneFun);
+	circle1.on('dragend',cloneFun);
+	rect1.on('dragend',cloneFun);
 	poly1.on('mousedown touchstart',cloneFun2);
 	poly2.on('mousedown touchstart',cloneFun2);
 	poly3.on('mousedown touchstart',cloneFun2);
 	poly4.on('mousedown touchstart',cloneFun2);
+	circle1.on('mousedown touchstart',cloneFun2);
+	rect1.on('mousedown touchstart',cloneFun2);
+	
+	
+	var clickFunc=function(e){
+		centerlayer.find('.rectDelete,.rectMenu,.textDelete').destroy();
+		centerlayer.draw(this);
+		stage.draw();
 
+		
+//		$("#contextmenu").css({
+//			top: this.getAbsolutePosition().y,
+//			left: this.getAbsolutePosition().x
+//		}).show();
+		  var clickshape= e.target;
+//		  var mousePos = getMousePos($('#right'), e);
+//		  var ev = ev || window.event;
+//		  var mousePos = mousePosition(e);
+		  var rectDelete=new Kinetic.Rect({
+			  name:'rectDelete',
+			  x : this.getAbsolutePosition().x-20,
+		      y : this.getAbsolutePosition().y,
+		      width:80,
+		      height:20,
+		      scaleX:1,
+		      scaleY:1,
+		      draggable: false,
+		      stroke:'black',
+		      strokeWidth:0.5
+		  });
+		  var textDelete = new Kinetic.Text({
+			   name:'textDelete',
+				x : this.getAbsolutePosition().x-20,
+				y : this.getAbsolutePosition().y,
+				//			  	x:mousePos.x,
+				//			  	y:mousePos.y,
+				text: 'delete',
+				fontSize: 20,
+				fontFamily: 'Calibri',
+				fill: 'black',
+				width:80,
+				align: 'center',
+				offsetX:3
+		      });
+		  
+	
+		   var rectMenu = new Kinetic.Rect({
+			   name:'rectMenu',
+			   x : this.getAbsolutePosition().x-20,
+			   y : this.getAbsolutePosition().y,
+//				x:mousePos.x,
+//			  	y:mousePos.y,
+			   width : 80,
+			   height : 200,
+//			   cornerRadius:10,
+			   scaleX:1,
+		       scaleY:1,
+		       RotationDeg:0,
+			   draggable: false,
+			   fill : 'white',
+			   stroke : 'black',
+			   strokeWidth:0.5
+			   });
+		   
+		  textDelete.on('click',function(e){
+			  clickshape.destroy();
+			  e.target.destroy();
+			  rectDelete.destroy();
+			  rectMenu.destroy();
+			  centerlayer.draw(this);
+		       stage.draw(); 
+			  
+			  });
+//		   group.add(textDelete);
+		   centerlayer.add(rectMenu);
+		   centerlayer.add(rectDelete);
+		   centerlayer.add(textDelete);
+		   
+//		this.destroy();
+//		this.remove();
+//		this.hide();
+		 centerlayer.draw(this);
+	       stage.draw(); 
+	};
+	rect1.on('click',clickFunc);
+	
 
 
