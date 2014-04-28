@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+<%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <!--Copyright 2010 Scriptoid s.r.l-->
 <head>
@@ -11,14 +17,13 @@
 	href="./assets/css/style.css" />
 <link rel="stylesheet" media="screen" type="text/css"
 	href="./assets/css/minimap.css" />
-	
+
 <script type="text/javascript" src="./assets/javascript/json2.js"></script>
 <script type="text/javascript"
 	src="./assets/javascript/jquery-1.11.0.min.js"></script>
 <script type="text/javascript"
 	src="./assets/javascript/ajaxfileupload.js"></script>
-
-
+<script defer="defer" type="text/javascript" src="./lib/init.js"></script>
 <link type='text/css' href='./assets/simplemodal/css/diagramo.css'
 	rel='stylesheet' media='screen' />
 
@@ -43,25 +48,35 @@
 	<div id="actions">
 
 		<a href="javascript:action('connector-straight');"
-			title="Straight connector"><img
-			src="assets/images/icon_connector_straight.gif" border="0" />
-		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
+			title="新建">
+			<img
+			src="icons/sign_add.png" border="0" />
+		</a> 
+		<img class="separator" src="assets/images/toolbar_separator.gif"
 			border="0" width="1" height="16" /> <a
 			href="javascript:action('connector-jagged');"
-			title="Jagged connector"><img
-			src="assets/images/icon_connector_jagged.gif" border="0" />
+			title="打开">
+			<img
+			src="icons/folder.png" border="0" />
 		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
 			border="0" width="1" height="16" /> <a
 			href="javascript:action('connector-organic');"
-			title="Organic connector (Experimental)"><img
-			src="assets/images/icon_connector_organic.gif" border="0"
+			title="保存"><img
+			src="icons/save_labled.png" border="0"
 			alt="Organic" />
 		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
 			border="0" width="1" height="16" /> <a
-			href="javascript:action('container');"
-			title="Container (Experimental)"><img
-			src="assets/images/container.png" border="0" alt="Container" />
-		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
+			href="javascript:scaleCenter(1.25);"
+			title="放大画布"><img
+			src="icons/arrow_expand.png" border="0" alt="Container" />
+		</a> 
+		<img class="separator" src="assets/images/toolbar_separator.gif"
+			border="0" width="1" height="16" /> <a
+			href="javascript:scaleCenter(0.8);"
+			title="缩小画布"><img
+			src="icons/arrow_contract.png" border="0" alt="Container" />
+		</a> 
+		<img class="separator" src="assets/images/toolbar_separator.gif"
 			border="0" width="1" height="16" /> <input type="checkbox"
 			onclick="showGrid();" id="gridCheckbox" title="Show grid" /> <span
 			class="toolbarText">Show grid</span> <img class="separator"
@@ -101,7 +116,7 @@
 		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
 			border="0" width="1" height="16" /> <a
 			href="javascript:showInsertImageDialog();" title="Add image"><img
-			src="/editor/assets/images/image.gif" border="0" height="16"
+			src="assets/images/image.gif" border="0" height="16"
 			alt="Image" />
 		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
 			border="0" width="1" height="16" /> <a
@@ -134,7 +149,7 @@
 
 		
 			<div id="container">
-				<script defer="defer" type="text/javascript" src="./lib/init.js"></script>
+				
 			</div>
 	
 
@@ -190,7 +205,7 @@
 			</div>
 		</form>
 	</div>
-	
+
 	<!--Insert Image hidden iframe-->
 	<iframe id="upload_target" name="upload_target"
 		style="width:0;height:0;border:0px;"></iframe>
@@ -210,7 +225,5 @@
 	</script>
 	<br />
 	<? //require_once dirname(__FILE__) . '/common/analytics.php';?>
-	
 </body>
-
 </html>
