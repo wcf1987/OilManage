@@ -402,16 +402,16 @@ function initLight() {
 		});
 		textZoomIn.on('click',function(e){
 			clickshape.scale({
-				x:clickshape.scaleX()+0.1,
-				y:clickshape.scaleY()+0.1
+				x:clickshape.scaleX()*2,
+				y:clickshape.scaleY()
 			});		
 			centerlayer.draw(this);
 			painting.draw();
 		});
 		textZoomOut.on('click',function(e){
 			clickshape.scale({
-				x:clickshape.scaleX()-0.1,
-				y:clickshape.scaleY()-0.1
+				x:clickshape.scaleX()/2,
+				y:clickshape.scaleY()
 			});
 			centerlayer.draw(this);
 			painting.draw(); 
