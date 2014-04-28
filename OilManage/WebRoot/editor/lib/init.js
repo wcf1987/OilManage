@@ -167,34 +167,38 @@ function initLight() {
 		  };
 		};
 		
-	var cloneFun=function(e){        
-       var userPos = stage.getPointerPosition();
-       if (checkPoint(userPos,centerlayer))
-    	   
-       {  if(this.getParent()!=centerlayer)
-    	   {this.x(this.x()-centerlayer.x());
-           this.moveTo(centerlayer);
-    	   }
-           
-       }
-       else 
-       {
-           this.destroy();
-       }
-       centerlayer.draw(this);
-       stage.draw(); 
-	};		
+		var cloneFun = function(e) {
+			var userPos = stage.getPointerPosition();
+			if (checkPoint(userPos, centerlayer))
 
-	var cloneFun2=function(e){	   
-	   if (e.type == 'mousedown' && this.getLayer()!=centerlayer) {
-		    var cloneOfItem= this.clone();
-		    //cloneOfItem.off('mousedown touchstart');
-		    leftlayer.add(cloneOfItem);  	   
-		    }
-	   if (e.type == 'dragend' ) {	
-		  
-		    }
-	};
+			{
+				if (this.getParent() != painting) {
+					this.x((this.x() - mx)/scaleN);
+					this.y((this.y()-my)/scaleN);
+					this.moveTo(painting);
+				
+				}
+
+			} else {
+				this.destroy();
+			}
+			centerlayer.draw(this);
+			stage.draw();
+		}	
+
+		var cloneFun2 = function(e) {
+			if (e.type == 'mousedown' && this.getLayer() != painting) {
+				var cloneOfItem = this.clone();
+
+				// cloneOfItem.off('mousedown touchstart');
+				leftlayer.add(cloneOfItem);
+
+			}
+			if (e.type == 'dragend') {
+
+			}
+
+		};
 	
 	var dbclickFun = function(e) {
 		if (e.type == 'dblclick') {
@@ -379,30 +383,30 @@ function initLight() {
 //		  rectDelete.destroy();
 //		  rectMenu.destroy();
 			centerlayer.draw(this);
-			stage.draw(); 
+			painting.draw();
 		  });
 		textRotateLeft90.on('click',function(e){
 			clickshape.rotate(-90);
 			centerlayer.draw(this);
-			stage.draw(); 
+			painting.draw();
 		});
 		textRotateRight90.on('click',function(e){
 			clickshape.rotate(90);
 			centerlayer.draw(this);
-			stage.draw(); 
+			painting.draw();
 		});
 		textRotate180.on('click',function(e){
 			clickshape.rotate(180);
 			centerlayer.draw(this);
-			stage.draw(); 
+			painting.draw();
 		});
 		textZoomIn.on('click',function(e){
 			clickshape.scale({
 				x:clickshape.scaleX()+0.1,
 				y:clickshape.scaleY()+0.1
-			});
+			});		
 			centerlayer.draw(this);
-			stage.draw(); 
+			painting.draw();
 		});
 		textZoomOut.on('click',function(e){
 			clickshape.scale({
@@ -410,7 +414,7 @@ function initLight() {
 				y:clickshape.scaleY()-0.1
 			});
 			centerlayer.draw(this);
-			stage.draw(); 
+			painting.draw(); 
 		});
 	  centerlayer.add(rectMenu);
 	  centerlayer.add(rectDelete);
