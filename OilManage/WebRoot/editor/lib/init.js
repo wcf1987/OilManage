@@ -6,6 +6,7 @@ var mx=100;
 var my=0;
 var scaleN=1;
 function initLight() {
+
 	var stage = new Kinetic.Stage({
         container: 'container',
         width: 1020,
@@ -142,7 +143,8 @@ function initLight() {
 	   draggable: true,
 	   fill : 'blue'
 	   });
-   
+		
+		
 	leftlayer.add(rectBackgroundLeft);
 	centerlayer.add(rectBackgroundCenter);
    
@@ -167,48 +169,98 @@ function initLight() {
 		  };
 		};
 		
-		var cloneFun = function(e) {
-			var userPos = stage.getPointerPosition();
-			if (checkPoint(userPos, centerlayer))
+	var cloneFun = function(e) {
+		var userPos = stage.getPointerPosition();
+		if (checkPoint(userPos, centerlayer))
 
-			{
-				if (this.getParent() != painting) {
-					this.x((this.x() - mx)/scaleN);
-					this.y((this.y()-my)/scaleN);
-					this.moveTo(painting);
-				
-				}
-
-			} else {
-				this.destroy();
-			}
-			centerlayer.draw(this);
-			stage.draw();
-		}	
-
-		var cloneFun2 = function(e) {
-			if (e.type == 'mousedown' && this.getLayer() != painting) {
-				var cloneOfItem = this.clone();
-
-				// cloneOfItem.off('mousedown touchstart');
-				leftlayer.add(cloneOfItem);
-
-			}
-			if (e.type == 'dragend') {
-
+		{
+			if (this.getParent() != painting) {
+				this.x((this.x() - mx)/scaleN);
+				this.y((this.y()-my)/scaleN);
+				this.moveTo(painting);
+			
 			}
 
-		};
-	
-	var dbclickFun = function(e) {
-		if (e.type == 'dblclick') {
-			alert('dblclick caidan');
+		} else {
+			this.destroy();
+		}
+		centerlayer.draw(this);
+		stage.draw();
+	};	
+
+	var cloneFun2 = function(e) {
+		if (e.type == 'mousedown' && this.getLayer() != painting) {
+			var cloneOfItem = this.clone();
+
+			// cloneOfItem.off('mousedown touchstart');
+			leftlayer.add(cloneOfItem);
+
+		}
+		if (e.type == 'dragend') {
 
 		}
 
 	};
 	
+	var dbclickFun = function(e) {
+		if (e.type == 'dblclick') {
+			alert('dblclick caidan');
+		}
+
+	};
+	
+	var flag=0;
 	var clickFunc=function(e){
+		// 当前位置弹出菜单（div）
+		$("#contextmenu").css({
+			top:this.getAbsolutePosition().y+100,
+			left:this.getAbsolutePosition().x+90,
+			
+		}).show();
+		var clickshape=e.target;
+		var flagin=flag;//当前序列
+		flag++;
+		/* 右键菜单处理 */	
+		$("#contextmenu a").click(function(){
+			if(flagin!=flag-1){
+				return;
+			}
+			
+			var text = $(this).text();
+			if(text == '删除该节点'){
+				
+				clickshape.destroy();
+				$("#contextmenu").hide();
+				centerlayer.draw(this);
+				painting.draw();
+			}else if(text == '更改颜色'){
+				node.style.fillStyle = Math.floor(Math.random()*250) + ","+Math.floor(Math.random()*250)+"," + Math.floor(Math.random()*250);
+			}else if(text == '顺时针旋转90°'){
+				clickshape.rotate(90);
+//				centerlayer.draw(this);
+				painting.draw();
+			}else if(text == '逆时针旋转90°'){
+				clickshape.rotate(-90);
+//				centerlayer.draw(this);
+				painting.draw();
+			}else if(text == '放大'){
+				clickshape.scale({
+					x:clickshape.scaleX()*2,
+					y:clickshape.scaleY()
+				});		
+				centerlayer.draw(this);
+				painting.draw();
+			}else if(text == '缩小'){
+				clickshape.scale({
+					x:clickshape.scaleX()/2,
+					y:clickshape.scaleY()
+				});		
+				centerlayer.draw(this);
+				painting.draw();
+			}
+			//$("#contextmenu").hide();
+		});
+		/*用kineticJs实现的菜单
 		centerlayer.find('.rectDelete,.rectMenu,.textDelete,.rectRotateLeft90,.textRotateLeft90,.rectRotateRight90,.textRotateRight90,.rectRotate180,.textRotate180,.rectZoomIn,.textZoomIn,.rectZoomOut,.textZoomOut').destroy();
 		centerlayer.draw(this);
 		stage.draw();
@@ -217,7 +269,7 @@ function initLight() {
 			name:'rectDelete',
 			x : this.getAbsolutePosition().x-20,
 			y : this.getAbsolutePosition().y,
-			width:80,
+			width:80, 
 			height:20,
 			scaleX:1,
 			scaleY:1,
@@ -430,7 +482,7 @@ function initLight() {
 	  centerlayer.add(rectZoomOut);
 	  centerlayer.add(textZoomOut);
 	  centerlayer.draw(this);
-	  stage.draw(); 
+	  stage.draw(); */
 	};
 	
 	for ( var k in poly) {
@@ -575,6 +627,10 @@ function initLight() {
 	leftlayer.on('mouseout', function() {
 		document.body.style.cursor = 'default';
 	});
+	centerlayer.on('click',function(e){//如果点击在中央层的背景上则隐藏点击菜单
+		if(e.target.name()==='rectBackgroundCenter')
+		$('#contextmenu').hide();
+	});
 	stage.add(leftlayer);
 	stage.add(centerlayer);
 	stage.add(painting);
@@ -586,3 +642,5 @@ function scaleCenter(s) {
 	painting.scaleY(painting.scaleY() * s);
 	painting.draw();
 }
+
+

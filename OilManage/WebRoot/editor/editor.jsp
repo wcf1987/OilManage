@@ -11,6 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>HTML5 diagram editor</title>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=9" />
+
 <script type="text/javascript" src="./lib/kinetic-v5.1.0.min.js"></script>
 
 <link rel="stylesheet" media="screen" type="text/css"
@@ -19,25 +20,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	href="./assets/css/minimap.css" />
 
 <script type="text/javascript" src="./assets/javascript/json2.js"></script>
-<script type="text/javascript"
-	src="./assets/javascript/jquery-1.11.0.min.js"></script>
-<script type="text/javascript"
-	src="./assets/javascript/ajaxfileupload.js"></script>
+<script type="text/javascript" src="./assets/javascript/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="./assets/javascript/ajaxfileupload.js"></script>
+
+
+
 <script defer="defer" type="text/javascript" src="./lib/init.js"></script>
-<link type='text/css' href='./assets/simplemodal/css/diagramo.css'
-	rel='stylesheet' media='screen' />
-
-
-
-
-<link rel="stylesheet" media="screen" type="text/css"
-	href="./assets/css/colorPicker_new.css" />
+<link type='text/css' href='./assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
+<link rel="stylesheet" media="screen" type="text/css" href="./assets/css/colorPicker_new.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="./assets/css/jquery.contextMenu.css" />
 
 
 <!--[if IE]>
         <script src="./assets/javascript/excanvas.js"></script>
         <![endif]-->
-
+<style type="text/css">
+	#contextmenu {
+		border: 1px solid #aaa;
+		border-bottom: 0;
+		background: #eee;
+		position: absolute;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: none;
+	}
+																			   
+	#contextmenu li a {
+		display: block;
+		padding: 10px;
+		border-bottom: 1px solid #aaa;
+		cursor: pointer;
+	}
+																			   
+	#contextmenu li a:hover {
+		background: #fff;
+	}
+</style>
 </head>
 <body onload="initLight('');" id="body">
 
@@ -139,14 +158,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <a href="javascript:action('ungroup');">Ungroup</a>
             -->
 	</div>
-
-
 	<div id="editor">
-		
-		
-
-		
-
 		
 			<div id="container">
 				
@@ -225,5 +237,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
 	<br />
 	<? //require_once dirname(__FILE__) . '/common/analytics.php';?>
+
 </body>
 </html>
+	<ul id="contextmenu" style="display:none;z-index:100">	
+		<li><a>顺时针旋转90°</a></li>
+		<li><a>逆时针旋转90°</a></li>	
+		<li><a>更改颜色</a></li>
+		<li><a>放大</a></li>
+		<li><a>缩小</a></li>	
+		<li><a>删除该节点</a></li>
+    </ul>
+
