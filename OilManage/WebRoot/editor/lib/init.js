@@ -5,9 +5,11 @@ var poly = new Array;
 var mx=100;
 var my=0;
 var scaleN=1;
+var stage;
+var rectBackgroundCenter;
 function initLight() {
 
-	var stage = new Kinetic.Stage({
+	stage = new Kinetic.Stage({
         container: 'container',
         width: 1020,
         height: 800
@@ -64,7 +66,7 @@ function initLight() {
 	   stroke:'black',
 	   name: 'rectBackgroundLeft'
 	 });
-	var rectBackgroundCenter = new Kinetic.Rect({
+	rectBackgroundCenter = new Kinetic.Rect({
 	   x: 10,
 	   y: 0,
 	   height: 800,
@@ -642,5 +644,146 @@ function scaleCenter(s) {
 	painting.scaleY(painting.scaleY() * s);
 	painting.draw();
 }
+/*
+ * draw grid
+ */
+var bgLayer;
+var bgGroup;
+var bgRect;
+var bgGridRect;
 
+function showGrid(){
+	if(document.getElementById("gridCheckbox").checked==true){
+		drawGrid();
+	}else{
+		bgGroup.destroy();
+		painting.draw();
+	}
+}
+function drawGrid(){
+	var gridEle = 1;
+	bgLayer=painting;
+	bgGroup = new Kinetic.Group( {
+       
+	});
+	   //主编辑区域背景框
+	var bgRect = new Kinetic.Rect( {
+            x : 0,
+            y : bgLayer.y(),
+            fill : "#eee",
+            draggable : false,
+            width : painting.width(),
+            height :painting.height() - bgLayer.y() * 2,
+            shadow : {
+                    color : 'black',
+                    blur : 8,
+                    offset : [ 2, 2 ],
+                    opacity : 0.6
+            }
+    });
+
+    bgGroup.add(bgRect);
+    bgLayer.add(bgGroup);
+	  //主编辑区域网格框
+    bgGridRect = new Kinetic.Rect( {
+            x : bgRect.x(),
+            y : bgRect.y() + gridEle * 4,
+            fill : "#fff",
+            draggable : false,
+            width : bgRect.getWidth() - gridEle * 8,
+            height : bgRect.getHeight() - gridEle * 8
+    });
+    bgGroup.add(bgGridRect);
+
+    //网格的行数列数
+    var rows = bgGridRect.getWidth() / gridEle + 2;
+    var cols = bgGridRect.getHeight() / gridEle - 2;
+
+    //绘制网格
+    for ( var i = 0; i <= rows; i++) {
+            var color = "#f3f3f3";
+            var line = new Kinetic.Line( {
+                    points : [ bgGridRect.getX(),
+                                    bgGridRect.getY() + (i * gridEle) + 0.5,
+                                    bgGridRect.getX() + bgGridRect.getWidth(),
+                                    bgGridRect.getY() + (i * gridEle) + 0.5 ],
+                    stroke : color,
+                    strokeWidth : 1,
+                    lineCap : "butt",
+                    lineJoin : "butt"
+            });
+            bgGroup.add(line);
+    }
+
+    for ( var i = 0; i <= cols; i++) {
+            var color = "#f3f3f3";
+            if (i % 4 == 0) {
+                    color = "#ddd";
+            }
+            var line = new Kinetic.Line( {
+                    points : [ bgGridRect.getX() + (i * gridEle) + 0.5,
+                                    bgGridRect.getY(),
+                                    bgGridRect.getX() + (i * gridEle) + 0.5,
+                                    bgGridRect.getY() + bgGridRect.getHeight() ],
+                    stroke : color,
+                    strokeWidth : 1,
+                    lineCap : "butt",
+                    lineJoin : "butt"
+            });
+            bgGroup.add(line);
+    }
+    
+    for ( var i = 0; i <= rows; i++) {
+            if (i % 4 == 0) {
+                    var line = new Kinetic.Line( {
+                            points : [ bgGridRect.getX(),
+                                            bgGridRect.getY() + (i * gridEle) + 0.5,
+                                            bgGridRect.getX() + bgGridRect.getWidth(),
+                                            bgGridRect.getY() + (i * gridEle) + 0.5 ],
+                            stroke : "#ddd",
+                            strokeWidth : 1,
+                            lineCap : "butt",
+                            lineJoin : "butt"
+                    });
+                    bgGroup.add(line);
+            }
+
+    }
+    painting.draw();
+
+}
+//var showGrid = function() {
+//	W=100;
+//	H=100;
+//	w=10;
+//	h=10;
+//	CELL_SIZE=1;
+//    var grid = new Kinetic.Layer();
+//    var r = new Kinetic.Rect({
+//        x: 0,
+//        y: 0,
+//        width: W,
+//        height: H,
+//        fill: 'transparent'
+//    });
+//    grid.add(r);
+//    for (i = 0; i < w + 1; i++) {
+//        var I = i * CELL_SIZE;
+//        var l = new Kinetic.Line({
+//            stroke: "black",
+//            points: [I, 0, I, H]
+//        });
+//        grid.add(l);
+//    }
+//
+//    for (j = 0; j < h + 1; j++) {
+//        var J = j * CELL_SIZE;
+//        var l2 = new Kinetic.Line({
+//            stroke: "black",
+//            points: [0, J, W, J]
+//        });
+//        grid.add(l2);
+//    }
+//    stage.add(grid);      
+//};
 
