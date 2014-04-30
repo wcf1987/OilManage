@@ -66,20 +66,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<div id="actions">
 
-		<a href="javascript:action('connector-straight');"
+		<a href="javascript:createNew('1');"
 			title="新建">
 			<img
 			src="icons/sign_add.png" border="0" />
 		</a> 
 		<img class="separator" src="assets/images/toolbar_separator.gif"
 			border="0" width="1" height="16" /> <a
-			href="javascript:action('connector-jagged');"
+			href="javascript:load();"
 			title="打开">
 			<img
 			src="icons/folder.png" border="0" />
 		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
 			border="0" width="1" height="16" /> <a
-			href="javascript:action('connector-organic');"
+			href="javascript:save('a');"
 			title="保存"><img
 			src="icons/save_labled.png" border="0"
 			alt="Organic" />

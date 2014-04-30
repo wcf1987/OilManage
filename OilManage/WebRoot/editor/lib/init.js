@@ -7,6 +7,7 @@ var my=0;
 var scaleN=1;
 var stage;
 var rectBackgroundCenter;
+var selectPainting;
 function initLight() {
 
 	stage = new Kinetic.Stage({
@@ -636,13 +637,105 @@ function initLight() {
 	stage.add(leftlayer);
 	stage.add(centerlayer);
 	stage.add(painting);
+	selectPainting=painting;
 }
 
+
+
+function save(s) {
+
+	jsondata=selectPainting.toJSON();
+	console.log(jsondata);
+	//selectPainting=Kinetic.Node.create(jsondata, 'container')
+	
+	$.ajax({
+		type : 'POST',
+		url : 'updateGUIPro.action',
+		data : {			
+			data:jsondata,
+			ID:'1',
+		},
+		success : function(data) {
+			alert('图形化保存成功!');
+	
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmInputList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alert(msg);
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+
+}
+function createNew(s) {
+	jsondata=selectPainting.toJSON();
+	$.ajax({
+		type : 'POST',
+		url : 'addGUIPro.action',
+		data : {
+			Description:'testDes',
+			name:'testname',
+			data:jsondata,
+			authorID:'1',
+			type:'1'
+		},
+		success : function(data) {
+			alert('图形化项目新建成功!');
+	
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmInputList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alert(msg);
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+
+}
+function load() {
+
+	selectedID=1;
+	$.ajax({
+		type : 'POST',
+		url : 'viewGUIPro.action',
+		data : {
+			
+			ID:selectedID
+			
+		},
+		success : function(data) {
+			alert('图形化载入成功!');
+			//data=jQuery.parseJSON(data);
+			saveData=data['dataView']['JSONData'];
+			//alert(saveData);
+			//console.log(saveData['JSONData']);
+			newone=Kinetic.Node.create(saveData);
+			
+			selectPainting.remove();
+			selectPainting.destroy();
+			stage.add(newone);
+			selectPainting=newone;
+			painting=newone;
+			stage.draw();
+			
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmInputList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alert(msg);
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+}
 function scaleCenter(s) {
 	scaleN=scaleN*s;
-	painting.scaleX(painting.scaleX() * s);
-	painting.scaleY(painting.scaleY() * s);
-	painting.draw();
+	selectPainting.scaleX(painting.scaleX() * s);
+	selectPainting.scaleY(painting.scaleY() * s);
+	selectPainting.draw();
 }
 /*
  * draw grid

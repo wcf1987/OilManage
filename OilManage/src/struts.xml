@@ -372,7 +372,43 @@
 			</result>
 		</action>
 		<!-- 工程end -->
+		<!-- GUI start -->
 		
+				<action name="listGUIPro" class="cn.edu.cup.gui.action.GUIAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateGUIPro" class="cn.edu.cup.gui.action.GUIAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delGUIPro" class="cn.edu.cup.gui.action.GUIAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addGUIPro" class="cn.edu.cup.gui.action.GUIAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="viewGUIPro" class="cn.edu.cup.gui.action.GUIAction"
+			method="getView">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<!-- GUI end -->
 		
 		<action name="testData" class="cn.edu.cup.map.action.TableAction">
 			<result name="SUCCESS" type="json">
