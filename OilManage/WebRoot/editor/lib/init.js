@@ -5,8 +5,11 @@ var poly = new Array;
 var mx=100;
 var my=0;
 var scaleN=1;
+var stage;
+var rectBackgroundCenter;
 function initLight() {
-	var stage = new Kinetic.Stage({
+
+	stage = new Kinetic.Stage({
         container: 'container',
         width: 1020,
         height: 800
@@ -63,7 +66,7 @@ function initLight() {
 	   stroke:'black',
 	   name: 'rectBackgroundLeft'
 	 });
-	var rectBackgroundCenter = new Kinetic.Rect({
+	rectBackgroundCenter = new Kinetic.Rect({
 	   x: 10,
 	   y: 0,
 	   height: 800,
@@ -142,7 +145,8 @@ function initLight() {
 	   draggable: true,
 	   fill : 'blue'
 	   });
-   
+		
+		
 	leftlayer.add(rectBackgroundLeft);
 	centerlayer.add(rectBackgroundCenter);
    
@@ -167,48 +171,98 @@ function initLight() {
 		  };
 		};
 		
-		var cloneFun = function(e) {
-			var userPos = stage.getPointerPosition();
-			if (checkPoint(userPos, centerlayer))
+	var cloneFun = function(e) {
+		var userPos = stage.getPointerPosition();
+		if (checkPoint(userPos, centerlayer))
 
-			{
-				if (this.getParent() != painting) {
-					this.x((this.x() - mx)/scaleN);
-					this.y((this.y()-my)/scaleN);
-					this.moveTo(painting);
-				
-				}
-
-			} else {
-				this.destroy();
-			}
-			centerlayer.draw(this);
-			stage.draw();
-		}	
-
-		var cloneFun2 = function(e) {
-			if (e.type == 'mousedown' && this.getLayer() != painting) {
-				var cloneOfItem = this.clone();
-
-				// cloneOfItem.off('mousedown touchstart');
-				leftlayer.add(cloneOfItem);
-
-			}
-			if (e.type == 'dragend') {
-
+		{
+			if (this.getParent() != painting) {
+				this.x((this.x() - mx)/scaleN);
+				this.y((this.y()-my)/scaleN);
+				this.moveTo(painting);
+			
 			}
 
-		};
-	
-	var dbclickFun = function(e) {
-		if (e.type == 'dblclick') {
-			alert('dblclick caidan');
+		} else {
+			this.destroy();
+		}
+		centerlayer.draw(this);
+		stage.draw();
+	};	
+
+	var cloneFun2 = function(e) {
+		if (e.type == 'mousedown' && this.getLayer() != painting) {
+			var cloneOfItem = this.clone();
+
+			// cloneOfItem.off('mousedown touchstart');
+			leftlayer.add(cloneOfItem);
+
+		}
+		if (e.type == 'dragend') {
 
 		}
 
 	};
 	
+	var dbclickFun = function(e) {
+		if (e.type == 'dblclick') {
+			alert('dblclick caidan');
+		}
+
+	};
+	
+	var flag=0;
 	var clickFunc=function(e){
+		// 当前位置弹出菜单（div）
+		$("#contextmenu").css({
+			top:this.getAbsolutePosition().y+100,
+			left:this.getAbsolutePosition().x+90,
+			
+		}).show();
+		var clickshape=e.target;
+		var flagin=flag;//当前序列
+		flag++;
+		/* 右键菜单处理 */	
+		$("#contextmenu a").click(function(){
+			if(flagin!=flag-1){
+				return;
+			}
+			
+			var text = $(this).text();
+			if(text == '删除该节点'){
+				
+				clickshape.destroy();
+				$("#contextmenu").hide();
+				centerlayer.draw(this);
+				painting.draw();
+			}else if(text == '更改颜色'){
+				node.style.fillStyle = Math.floor(Math.random()*250) + ","+Math.floor(Math.random()*250)+"," + Math.floor(Math.random()*250);
+			}else if(text == '顺时针旋转90°'){
+				clickshape.rotate(90);
+//				centerlayer.draw(this);
+				painting.draw();
+			}else if(text == '逆时针旋转90°'){
+				clickshape.rotate(-90);
+//				centerlayer.draw(this);
+				painting.draw();
+			}else if(text == '放大'){
+				clickshape.scale({
+					x:clickshape.scaleX()*2,
+					y:clickshape.scaleY()
+				});		
+				centerlayer.draw(this);
+				painting.draw();
+			}else if(text == '缩小'){
+				clickshape.scale({
+					x:clickshape.scaleX()/2,
+					y:clickshape.scaleY()
+				});		
+				centerlayer.draw(this);
+				painting.draw();
+			}
+			//$("#contextmenu").hide();
+		});
+		/*用kineticJs实现的菜单
 		centerlayer.find('.rectDelete,.rectMenu,.textDelete,.rectRotateLeft90,.textRotateLeft90,.rectRotateRight90,.textRotateRight90,.rectRotate180,.textRotate180,.rectZoomIn,.textZoomIn,.rectZoomOut,.textZoomOut').destroy();
 		centerlayer.draw(this);
 		stage.draw();
@@ -217,7 +271,7 @@ function initLight() {
 			name:'rectDelete',
 			x : this.getAbsolutePosition().x-20,
 			y : this.getAbsolutePosition().y,
-			width:80,
+			width:80, 
 			height:20,
 			scaleX:1,
 			scaleY:1,
@@ -430,7 +484,7 @@ function initLight() {
 	  centerlayer.add(rectZoomOut);
 	  centerlayer.add(textZoomOut);
 	  centerlayer.draw(this);
-	  stage.draw(); 
+	  stage.draw(); */
 	};
 	
 	for ( var k in poly) {
@@ -575,6 +629,10 @@ function initLight() {
 	leftlayer.on('mouseout', function() {
 		document.body.style.cursor = 'default';
 	});
+	centerlayer.on('click',function(e){//如果点击在中央层的背景上则隐藏点击菜单
+		if(e.target.name()==='rectBackgroundCenter')
+		$('#contextmenu').hide();
+	});
 	stage.add(leftlayer);
 	stage.add(centerlayer);
 	stage.add(painting);
@@ -586,3 +644,146 @@ function scaleCenter(s) {
 	painting.scaleY(painting.scaleY() * s);
 	painting.draw();
 }
+/*
+ * draw grid
+ */
+var bgLayer;
+var bgGroup;
+var bgRect;
+var bgGridRect;
+
+function showGrid(){
+	if(document.getElementById("gridCheckbox").checked==true){
+		drawGrid();
+	}else{
+		bgGroup.destroy();
+		painting.draw();
+	}
+}
+function drawGrid(){
+	var gridEle = 1;
+	bgLayer=painting;
+	bgGroup = new Kinetic.Group( {
+       
+	});
+	   //主编辑区域背景框
+	var bgRect = new Kinetic.Rect( {
+            x : 0,
+            y : bgLayer.y(),
+            fill : "#eee",
+            draggable : false,
+            width : painting.width(),
+            height :painting.height() - bgLayer.y() * 2,
+            shadow : {
+                    color : 'black',
+                    blur : 8,
+                    offset : [ 2, 2 ],
+                    opacity : 0.6
+            }
+    });
+
+    bgGroup.add(bgRect);
+    bgLayer.add(bgGroup);
+	  //主编辑区域网格框
+    bgGridRect = new Kinetic.Rect( {
+            x : bgRect.x(),
+            y : bgRect.y() + gridEle * 4,
+            fill : "#fff",
+            draggable : false,
+            width : bgRect.getWidth() - gridEle * 8,
+            height : bgRect.getHeight() - gridEle * 8
+    });
+    bgGroup.add(bgGridRect);
+
+    //网格的行数列数
+    var rows = bgGridRect.getWidth() / gridEle + 2;
+    var cols = bgGridRect.getHeight() / gridEle - 2;
+
+    //绘制网格
+    for ( var i = 0; i <= rows; i++) {
+            var color = "#f3f3f3";
+            var line = new Kinetic.Line( {
+                    points : [ bgGridRect.getX(),
+                                    bgGridRect.getY() + (i * gridEle) + 0.5,
+                                    bgGridRect.getX() + bgGridRect.getWidth(),
+                                    bgGridRect.getY() + (i * gridEle) + 0.5 ],
+                    stroke : color,
+                    strokeWidth : 1,
+                    lineCap : "butt",
+                    lineJoin : "butt"
+            });
+            bgGroup.add(line);
+    }
+
+    for ( var i = 0; i <= cols; i++) {
+            var color = "#f3f3f3";
+            if (i % 4 == 0) {
+                    color = "#ddd";
+            }
+            var line = new Kinetic.Line( {
+                    points : [ bgGridRect.getX() + (i * gridEle) + 0.5,
+                                    bgGridRect.getY(),
+                                    bgGridRect.getX() + (i * gridEle) + 0.5,
+                                    bgGridRect.getY() + bgGridRect.getHeight() ],
+                    stroke : color,
+                    strokeWidth : 1,
+                    lineCap : "butt",
+                    lineJoin : "butt"
+            });
+            bgGroup.add(line);
+    }
+    
+    for ( var i = 0; i <= rows; i++) {
+            if (i % 4 == 0) {
+                    var line = new Kinetic.Line( {
+                            points : [ bgGridRect.getX(),
+                                            bgGridRect.getY() + (i * gridEle) + 0.5,
+                                            bgGridRect.getX() + bgGridRect.getWidth(),
+                                            bgGridRect.getY() + (i * gridEle) + 0.5 ],
+                            stroke : "#ddd",
+                            strokeWidth : 1,
+                            lineCap : "butt",
+                            lineJoin : "butt"
+                    });
+                    bgGroup.add(line);
+            }
+
+    }
+    painting.draw();
+
+}
+//var showGrid = function() {
+//	W=100;
+//	H=100;
+//	w=10;
+//	h=10;
+//	CELL_SIZE=1;
+//    var grid = new Kinetic.Layer();
+//    var r = new Kinetic.Rect({
+//        x: 0,
+//        y: 0,
+//        width: W,
+//        height: H,
+//        fill: 'transparent'
+//    });
+//    grid.add(r);
+//    for (i = 0; i < w + 1; i++) {
+//        var I = i * CELL_SIZE;
+//        var l = new Kinetic.Line({
+//            stroke: "black",
+//            points: [I, 0, I, H]
+//        });
+//        grid.add(l);
+//    }
+//
+//    for (j = 0; j < h + 1; j++) {
+//        var J = j * CELL_SIZE;
+//        var l2 = new Kinetic.Line({
+//            stroke: "black",
+//            points: [0, J, W, J]
+//        });
+//        grid.add(l2);
+//    }
+//    stage.add(grid);      
+//};
+
