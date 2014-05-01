@@ -8,6 +8,7 @@ var scaleN=1;
 var stage;
 var rectBackgroundCenter;
 var selectPainting;
+var gridlayer;
 function initLight() {
 
 	stage = new Kinetic.Stage({
@@ -29,7 +30,17 @@ function initLight() {
 	    id: 'centerlayer',
 	    width:920,
 	    height:800
+//	    width:8,
+//	    height:8
 	});
+	gridlayer  = new Kinetic.Layer({
+	    x:100,
+	    y:0,
+	    id: 'leftlayer',
+	    width:920,
+	    height:800
+	});
+	
 	paintingGroup = new Kinetic.Group({
 		x : 100,
 		y : 0,
@@ -46,6 +57,7 @@ function initLight() {
 		width : 3000,
 		height : 2000,
 		fill : '#ff33ee',
+//		fill: 'transparent',
 		draggable : true
 	});
 	var rectBackground = new Kinetic.Rect({
@@ -534,7 +546,7 @@ function initLight() {
       y: centerlayer.getHeight() - 30,
       width: centerlayer.getWidth() - 70,
       height: 20,
-      fill: 'black',
+      fill:'black',
       opacity: 0.3
     });
     
@@ -634,7 +646,9 @@ function initLight() {
 		if(e.target.name()==='rectBackgroundCenter')
 		$('#contextmenu').hide();
 	});
+	stage.add(gridlayer);
 	stage.add(leftlayer);
+	
 	stage.add(centerlayer);
 	stage.add(painting);
 	selectPainting=painting;
@@ -732,6 +746,7 @@ function load() {
 	});
 }
 function scaleCenter(s) {
+	
 	scaleN=scaleN*s;
 	selectPainting.scaleX(painting.scaleX() * s);
 	selectPainting.scaleY(painting.scaleY() * s);
@@ -740,7 +755,7 @@ function scaleCenter(s) {
 /*
  * draw grid
  */
-var bgLayer;
+//var gridlayer;
 var bgGroup;
 var bgRect;
 var bgGridRect;
@@ -750,47 +765,50 @@ function showGrid(){
 		drawGrid();
 	}else{
 		bgGroup.destroy();
-		painting.draw();
+		gridlayer.draw();
 	}
 }
 function drawGrid(){
+
 	var gridEle = 1;
-	bgLayer=painting;
-	bgGroup = new Kinetic.Group( {
-       
-	});
+//	gridlayer=centerlayer;
+	bgGroup = new Kinetic.Group();
 	   //主编辑区域背景框
-	var bgRect = new Kinetic.Rect( {
-            x : 0,
-            y : bgLayer.y(),
-            fill : "#eee",
+	bgRect = new Kinetic.Rect( {
+            x : 12,
+            y : gridlayer.y()+1,
+//            fill : "#eee",
+            fill: 'transparent',
             draggable : false,
-            width : painting.width(),
-            height :painting.height() - bgLayer.y() * 2,
-            shadow : {
-                    color : 'black',
-                    blur : 8,
-                    offset : [ 2, 2 ],
-                    opacity : 0.6
-            }
+//            width : gridlayer.width()-100,
+//            height :gridlayer.height()-100,
+            width:8000,
+            height:8000,
+//            shadow : {
+//                    color : 'black',
+//                    blur : 8,
+//                    offset : [ 2, 2 ],
+//                    opacity : 0.6
+//            }
     });
 
     bgGroup.add(bgRect);
-    bgLayer.add(bgGroup);
+    gridlayer.add(bgGroup);
 	  //主编辑区域网格框
     bgGridRect = new Kinetic.Rect( {
             x : bgRect.x(),
-            y : bgRect.y() + gridEle * 4,
+            y : bgRect.y(),
             fill : "#fff",
+//            fill: 'transparent',
             draggable : false,
-            width : bgRect.getWidth() - gridEle * 8,
-            height : bgRect.getHeight() - gridEle * 8
+            width :880,
+            height :765
     });
     bgGroup.add(bgGridRect);
 
     //网格的行数列数
-    var rows = bgGridRect.getWidth() / gridEle + 2;
-    var cols = bgGridRect.getHeight() / gridEle - 2;
+    var rows = bgGridRect.getHeight() / gridEle + 2;
+    var cols = bgGridRect.getWidth() / gridEle - 2;
 
     //绘制网格
     for ( var i = 0; i <= rows; i++) {
@@ -840,9 +858,8 @@ function drawGrid(){
                     });
                     bgGroup.add(line);
             }
-
     }
-    painting.draw();
+    gridlayer.draw();
 
 }
 //var showGrid = function() {
