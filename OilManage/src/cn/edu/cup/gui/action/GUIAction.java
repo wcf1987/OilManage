@@ -14,7 +14,7 @@ public class GUIAction {
 	int ID;
 	
 	int authorID;
-	String Description;
+	String description;
 	Date addDate;
 	
 	String name;
@@ -55,10 +55,10 @@ public class GUIAction {
 
 	
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 	
 	public void setAddDate(Date addDate) {
@@ -181,7 +181,7 @@ public class GUIAction {
 
 		GUIDao dao=new GUIDao();
 
-		int result=dao.addPro(this.Description,this.name,this.data,new Date(),this.authorID,this.type);
+		ID=dao.addPro(this.description,this.name,this.data,new Date(),this.authorID,this.type);
 		return "SUCCESS";
 	}
 

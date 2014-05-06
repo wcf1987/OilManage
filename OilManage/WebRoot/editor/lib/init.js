@@ -9,6 +9,8 @@ var stage;
 var rectBackgroundCenter;
 var selectPainting;
 var gridlayer;
+var paintingArray=new Array;
+var tabArray=new Array;
 function initLight() {
 
 	stage = new Kinetic.Stage({
@@ -50,9 +52,28 @@ function initLight() {
 		fill : '#ff33ee',
 		draggable : true
 	});
+	tablayer=new Kinetic.Layer({
+		x:100,
+		y:2,
+		id:'tablayer',
+		width:850,
+		height:50,
+		draggable:false,
+	});
+	tabRect=new Kinetic.Rect({
+		x:15,
+		y:3,
+		width:860,
+		height:50,
+		draggable:false,
+		fill:'#CCCCCC',
+		stroke:'#FFFFFF',
+		strokeWidth:5
+	})
+	tablayer.add(tabRect);
 	painting = new Kinetic.Layer({
 		x : 100,
-		y : 0,
+		y : 100,
 		id : 'painting',
 		width : 3000,
 		height : 2000,
@@ -164,6 +185,9 @@ function initLight() {
 	centerlayer.add(rectBackgroundCenter);
    
 	function checkPoint(pos,rect){
+	/*
+	 * 检查点是否在矩形区域里面
+	 */
 	   var size=rect.size();
 	   if(pos.x>rect.x() && pos.y>rect.y()&& (pos.x<rect.x()+size.width)&& (pos.y<rect.y()+size.height)){
 		   return true;
@@ -186,7 +210,7 @@ function initLight() {
 		
 	var cloneFun = function(e) {
 		var userPos = stage.getPointerPosition();
-		if (checkPoint(userPos, centerlayer))
+		if (checkPoint(userPos, centerlayer))//如果在中间画布上面
 
 		{
 			if (this.getParent() != painting) {
@@ -197,7 +221,7 @@ function initLight() {
 			}
 
 		} else {
-			this.destroy();
+			this.destroy();//不在中间画布就摧毁
 		}
 		centerlayer.draw(this);
 		stage.draw();
@@ -275,229 +299,6 @@ function initLight() {
 			}
 			//$("#contextmenu").hide();
 		});
-		/*用kineticJs实现的菜单
-		centerlayer.find('.rectDelete,.rectMenu,.textDelete,.rectRotateLeft90,.textRotateLeft90,.rectRotateRight90,.textRotateRight90,.rectRotate180,.textRotate180,.rectZoomIn,.textZoomIn,.rectZoomOut,.textZoomOut').destroy();
-		centerlayer.draw(this);
-		stage.draw();
-		var clickshape= e.target;
-		var rectDelete=new Kinetic.Rect({
-			name:'rectDelete',
-			x : this.getAbsolutePosition().x-20,
-			y : this.getAbsolutePosition().y,
-			width:80, 
-			height:20,
-			scaleX:1,
-			scaleY:1,
-			draggable: false,
-			stroke:'black',
-			strokeWidth:0.5
-		});
-		var textDelete = new Kinetic.Text({
-	  		name:'textDelete',
-	  		x : this.getAbsolutePosition().x-20,
-	  		y : this.getAbsolutePosition().y,
-	  		text: 'delete',
-	  		fontSize: 20,
-	  		fontFamily: 'Calibri',
-	  		fill: 'black',
-	  		width:80,
-	  		align: 'center',
-			offsetX:3
-			});
-		
-		var rectRotateLeft90=new Kinetic.Rect({
-			name:'rectRotateLeft90',
-			x:this.getAbsolutePosition().x-20,
-			y:this.getAbsolutePosition().y+20,
-			width:80,
-			height:20,
-			scaleX:1,
-			scaleY:1,
-			draggable:false,
-			stroke:'black',
-			strokeWidth:0.5
-		});
-		var textRotateLeft90=new Kinetic.Text({
-			name:'textRotateLeft90',
-	  		x : this.getAbsolutePosition().x-20,
-	  		y : this.getAbsolutePosition().y+20,
-	  		text: 'left90',
-	  		fontSize: 20,
-	  		fontFamily: 'Calibri',
-	  		fill: 'black',
-	  		width:80,
-	  		align: 'center',
-			offsetX:3
-		});
-		
-		var rectRotateRight90=new Kinetic.Rect({
-			name:'rectRotateRight90',
-			x:this.getAbsolutePosition().x-20,
-			y:this.getAbsolutePosition().y+40,
-			width:80,
-			height:20,
-			scaleX:1,
-			scaleY:1,
-			draggable:false,
-			stroke:'black',
-			strokeWidth:0.5
-		});
-		var textRotateRight90=new Kinetic.Text({
-			name:'textRotateRight90',
-	  		x : this.getAbsolutePosition().x-20,
-	  		y : this.getAbsolutePosition().y+40,
-	  		text: 'right90',
-	  		fontSize: 20,
-	  		fontFamily: 'Calibri',
-	  		fill: 'black',
-	  		width:80,
-	  		align: 'center',
-			offsetX:3
-		});
-		var rectRotate180=new Kinetic.Rect({
-			name:'rectRotate180',
-			x:this.getAbsolutePosition().x-20,
-			y:this.getAbsolutePosition().y+60,
-			width:80,
-			height:20,
-			scaleX:1,
-			scaleY:1,
-			draggable:false,
-			stroke:'black',
-			strokeWidth:0.5
-		});
-		var textRotate180=new Kinetic.Text({
-			name:'textRotate180',
-	  		x : this.getAbsolutePosition().x-20,
-	  		y : this.getAbsolutePosition().y+60,
-	  		text: 'rot180',
-	  		fontSize: 20,
-	  		fontFamily: 'Calibri',
-	  		fill: 'black',
-	  		width:80,
-	  		align: 'center',
-			offsetX:3
-		});
-		
-		var rectZoomIn=new Kinetic.Rect({
-			name:'rectZoomIn',
-			x:this.getAbsolutePosition().x-20,
-			y:this.getAbsolutePosition().y+80,
-			width:80,
-			height:20,
-			scaleX:1,
-			scaleY:1,
-			draggable:false,
-			stroke:'black',
-			strokeWidth:0.5
-		});
-		var textZoomIn=new Kinetic.Text({
-			name:'textZoomIn',
-	  		x : this.getAbsolutePosition().x-20,
-	  		y : this.getAbsolutePosition().y+80,
-	  		text: 'zoomIn',
-	  		fontSize: 20,
-	  		fontFamily: 'Calibri',
-	  		fill: 'black',
-	  		width:80,
-	  		align: 'center',
-			offsetX:3
-		});
-		
-		var rectZoomOut=new Kinetic.Rect({
-			name:'rectZoomOut',
-			x:this.getAbsolutePosition().x-20,
-			y:this.getAbsolutePosition().y+100,
-			width:80,
-			height:20,
-			scaleX:1,
-			scaleY:1,
-			draggable:false,
-			stroke:'black',
-			strokeWidth:0.5
-		});
-		var textZoomOut=new Kinetic.Text({
-			name:'textZoomOut',
-	  		x : this.getAbsolutePosition().x-20,
-	  		y : this.getAbsolutePosition().y+100,
-	  		text: 'zoomOut',
-	  		fontSize: 20,
-	  		fontFamily: 'Calibri',
-	  		fill: 'black',
-	  		width:80,
-	  		align: 'center',
-			offsetX:3
-		});
-		var rectMenu = new Kinetic.Rect({
-	   	   name:'rectMenu',
-	   	   x : this.getAbsolutePosition().x-20,
-	   	   y : this.getAbsolutePosition().y,
-	   	   width : 80,
-	   	   height : 200,
-		   scaleX:1,
-		   scaleY:1,
-		   RotationDeg:0,
-		   draggable: false,
-		   fill : 'white',
-		   stroke : 'black',
-		   strokeWidth:0.5
-		   });
-   
-		textDelete.on('click',function(e){
-			clickshape.destroy();
-			centerlayer.find('.rectDelete,.rectMenu,.textDelete,.rectRotateLeft90,.textRotateLeft90,.rectRotateRight90,.textRotateRight90,.rectRotate180,.textRotate180,.rectZoomIn,.textZoomIn,.rectZoomOut,.textZoomOut').destroy();
-//		  e.target.destroy();
-//		  rectDelete.destroy();
-//		  rectMenu.destroy();
-			centerlayer.draw(this);
-			painting.draw();
-		  });
-		textRotateLeft90.on('click',function(e){
-			clickshape.rotate(-90);
-			centerlayer.draw(this);
-			painting.draw();
-		});
-		textRotateRight90.on('click',function(e){
-			clickshape.rotate(90);
-			centerlayer.draw(this);
-			painting.draw();
-		});
-		textRotate180.on('click',function(e){
-			clickshape.rotate(180);
-			centerlayer.draw(this);
-			painting.draw();
-		});
-		textZoomIn.on('click',function(e){
-			clickshape.scale({
-				x:clickshape.scaleX()*2,
-				y:clickshape.scaleY()
-			});		
-			centerlayer.draw(this);
-			painting.draw();
-		});
-		textZoomOut.on('click',function(e){
-			clickshape.scale({
-				x:clickshape.scaleX()/2,
-				y:clickshape.scaleY()
-			});
-			centerlayer.draw(this);
-			painting.draw(); 
-		});
-	  centerlayer.add(rectMenu);
-	  centerlayer.add(rectDelete);
-	  centerlayer.add(textDelete);
-	  centerlayer.add(rectRotateLeft90);
-	  centerlayer.add(textRotateLeft90);
-	  centerlayer.add(rectRotateRight90);
-	  centerlayer.add(textRotateRight90);
-	  centerlayer.add(rectRotate180);
-	  centerlayer.add(textRotate180);
-	  centerlayer.add(rectZoomIn);
-	  centerlayer.add(textZoomIn);
-	  centerlayer.add(rectZoomOut);
-	  centerlayer.add(textZoomOut);
-	  centerlayer.draw(this);
-	  stage.draw(); */
 	};
 	
 	for ( var k in poly) {
@@ -650,112 +451,98 @@ function initLight() {
 	stage.add(leftlayer);
 	
 	stage.add(centerlayer);
+	stage.add(tablayer);
 	stage.add(painting);
 	selectPainting=painting;
-}
-
-
-
-function save(s) {
-
-	jsondata=selectPainting.toJSON();
-	console.log(jsondata);
-	//selectPainting=Kinetic.Node.create(jsondata, 'container')
 	
-	$.ajax({
-		type : 'POST',
-		url : 'updateGUIPro.action',
-		data : {			
-			data:jsondata,
-			ID:'1',
-		},
-		success : function(data) {
-			alert('图形化保存成功!');
 	
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmInputList").trigger("reloadGrid");			
-		},
-		error:function(msg){
-			alert(msg);
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmList").trigger("reloadGrid");
-		}
-	});
-
-}
-function createNew(s) {
-	jsondata=selectPainting.toJSON();
-	$.ajax({
-		type : 'POST',
-		url : 'addGUIPro.action',
-		data : {
-			Description:'testDes',
-			name:'testname',
-			data:jsondata,
-			authorID:'1',
-			type:'1'
-		},
-		success : function(data) {
-			alert('图形化项目新建成功!');
+	/*
+	 * 图形项目列表
+	 */
+	var datagrid = jQuery("#GUIProList")
+	.jqGrid(
+			{
+				url : "listGUIPro.action",// 后端的数据交互程序，改为你的
+				datatype : "json",// 前后交互的格式是json数据
+				mtype : 'POST',// 交互的方式是发送httpget请求						
+				colNames : [ '编号', '项目名称', '作者','描述','添加时间','操作'],// 表格的列名
+				colModel : [
+						{
+							name : 'id',
+							index : 'ID',
+							width : 50,
+							align : "center",
+							sortable:true,
+							sorttype:'int'
+						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
+						{
+							name : 'proname',
+							index : 'proname',
+							width : 100,
+							align : "center",
+							sortable:true
+						},
+						{
+							name:'author',
+							index:'author',
+							width:100,
+							align:'center',
+							sortable:true
+						},
+						{
+							name:'description',
+							index:'description',
+							width:200,
+							align:'center',
+							sortable:false
+						},
+						{
+							name:'addTime',
+							index:'addTime',
+							width:100,
+							align:'center',
+							sortable:true
+						},
+						{
+							name : 'load',
+							index : 'load',
+							width : 100,
+							align : "center",
+							formatter : function(value, grid, rows,
+									state) {
+//								alert(rows.id);
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"load('"
+										+ rows.id + "')\">加载</a>"
+							}
+						}					
 	
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmInputList").trigger("reloadGrid");			
-		},
-		error:function(msg){
-			alert(msg);
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmList").trigger("reloadGrid");
-		}
-	});
+						],
+//				autowidth:true,
+				rowNum:10,//每一页的行数
+				height: 'auto',
+				width:1230,
+				rowList:[10,20,30],
+				pager: '#GUIProPager',
+				sortname: 'ID',
+				viewrecords: true,
+				sortorder: "desc",
+				multiselect: true,  //可多选，出现多选框 
+			    multiselectWidth: 35, //设置多选列宽度 
+				jsonReader: {//读取后端json数据的格式
+					root: "dataList",//保存详细记录的名称
+					total: "total",//总共有多少页
+					page: "page",//当前是哪一页
+					records: "records",//总共记录数
+					repeatitems: false
+				},
+				caption: "模型列表"//表格名称       
+				
+			});
+}//initLight end
 
-}
-function load() {
-
-	selectedID=1;
-	$.ajax({
-		type : 'POST',
-		url : 'viewGUIPro.action',
-		data : {
-			
-			ID:selectedID
-			
-		},
-		success : function(data) {
-			alert('图形化载入成功!');
-			//data=jQuery.parseJSON(data);
-			saveData=data['dataView']['JSONData'];
-			//alert(saveData);
-			//console.log(saveData['JSONData']);
-			newone=Kinetic.Node.create(saveData);
-			
-			selectPainting.remove();
-			selectPainting.destroy();
-			stage.add(newone);
-			selectPainting=newone;
-			painting=newone;
-			stage.draw();
-			
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmInputList").trigger("reloadGrid");			
-		},
-		error:function(msg){
-			alert(msg);
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmList").trigger("reloadGrid");
-		}
-	});
-}
-function scaleCenter(s) {
-	
-	scaleN=scaleN*s;
-	selectPainting.scaleX(painting.scaleX() * s);
-	selectPainting.scaleY(painting.scaleY() * s);
-	selectPainting.draw();
-}
 /*
- * draw grid
+ * draw grid 背景网格
  */
-//var gridlayer;
 var bgGroup;
 var bgRect;
 var bgGridRect;
@@ -862,38 +649,288 @@ function drawGrid(){
     gridlayer.draw();
 
 }
-//var showGrid = function() {
-//	W=100;
-//	H=100;
-//	w=10;
-//	h=10;
-//	CELL_SIZE=1;
-//    var grid = new Kinetic.Layer();
-//    var r = new Kinetic.Rect({
-//        x: 0,
-//        y: 0,
-//        width: W,
-//        height: H,
-//        fill: 'transparent'
-//    });
-//    grid.add(r);
-//    for (i = 0; i < w + 1; i++) {
-//        var I = i * CELL_SIZE;
-//        var l = new Kinetic.Line({
-//            stroke: "black",
-//            points: [I, 0, I, H]
-//        });
-//        grid.add(l);
-//    }
-//
-//    for (j = 0; j < h + 1; j++) {
-//        var J = j * CELL_SIZE;
-//        var l2 = new Kinetic.Line({
-//            stroke: "black",
-//            points: [0, J, W, J]
-//        });
-//        grid.add(l2);
-//    }
-//    stage.add(grid);      
-//};
+
+
+function scaleCenter(s) {
+	
+	scaleN=scaleN*s;
+	selectPainting.scaleX(painting.scaleX() * s);
+	selectPainting.scaleY(painting.scaleY() * s);
+	selectPainting.draw();
+}
+
+function listGUIProGrid(){
+//	$("#GUIProList").empty();
+	/*
+	 * 图形项目列表
+	 */
+	$('#GUIProList').trigger("reloadGrid");
+	
+	$('#listGUIPro_modal').modal();
+}
+function createNewModal(){
+	selectedPainting = new Kinetic.Layer({
+		x : 100,
+		y : 100,
+		id : 'painting',
+		width : 3000,
+		height : 2000,
+		fill : '#ff33ee',
+//		fill: 'transparent',
+		draggable : true
+	});
+	stage.add(selectedPainting);
+//	paintingArray.add(selectedPainting);
+	// 配置对话框
+	loadAuthorOptions();//加载作者选项
+	$('#add_GUI_modal').modal();
+	$("#addGUIForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout: function(element) { $(element).valid(); },
+	    onkeyup: function(element) { $(element).valid(); },
+		rules:{
+			proname:{
+				required:true
+			},
+			authorID:{
+				required:true
+			},
+			type:{
+				digits:true                 
+			}
+		},
+		messages:{
+			proname:{
+				required:"名称不能为空！",
+			},							
+			authorID:{
+				required:"请选择作者！"
+			},
+			type:{
+				digits:"请输入整数", 
+			}
+		},
+		submitHandler:function(){
+			createNew();
+		}
+	});
+		
+}
+/*
+ * 添加图形项目
+ */
+function createNew() {
+//	if($('#selectedID').val()==''){
+		jsondata=selectPainting.toJSON();
+		$.ajax({
+			type : 'POST',
+			url : 'addGUIPro.action',
+			data : {
+				description:$("#description").val(),
+				name:$('#proname').val(),
+				data:jsondata,
+				authorID:$("#authorID").val(),
+				type:$('#type').val()
+			},
+			success : function(data) {
+				alert('图形化项目新建成功!');
+				$('#add_GUI_modal').modal('hide');
+				load(data.ID);
+				//$("#AlgorithmList").trigger("reloadGrid");		
+			},
+			error:function(msg){
+				alert(msg);
+				$('#add_GUI_modal').modal('hide');
+				//$("#AlgorithmList").trigger("reloadGrid");
+				
+			}
+		});
+
+}
+
+function save() {
+	//selectPainting=Kinetic.Node.create(jsondata, 'container')
+	var selectedID=$('#selectedID').val();
+	if(selectedID==''){
+		createNewModal();
+	}else{
+		updateGUI();
+	}
+	
+}
+function updateGUI(){
+	jsondata=selectPainting.toJSON();
+	console.log(jsondata);
+	$.ajax({
+		type : 'POST',
+		url : 'updateGUIPro.action',
+		data : {			
+			data:jsondata,
+			ID:$('#selectedID').val(),
+		},
+		success : function(data) {
+			alert('图形化保存成功!');
+	
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmInputList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alert(msg);
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+}
+function load(selectedID) {
+
+//	selectedID=1;
+	$.ajax({
+		type : 'POST',
+		url : 'viewGUIPro.action',
+		data : {
+			
+			ID:selectedID
+			
+		},
+		success : function(data) {
+			alert('图形化载入成功!');
+			$('#selectedID').val(selectedID);
+			//data=jQuery.parseJSON(data);
+			$('#listGUIPro_modal').modal('hide');
+			try{
+				saveData=data['dataView']['JSONData'];
+			}catch(err){
+				alert('该项目模型为空！');
+			}
+			//alert(saveData);
+			//console.log(saveData['JSONData']);
+			newone=Kinetic.Node.create(saveData);
+			
+//			selectPainting.remove();
+//			selectPainting.destroy();
+			selectPainting.hide();
+			stage.add(newone);
+			selectPainting=newone;
+			painting=newone;
+			paintingArray.push(newone);
+			createNewTab(data['dataView']['proname']);
+			stage.draw();
+			
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmInputList").trigger("reloadGrid");			
+		},
+		error:function(msg){
+			alert(msg);
+			//$('#addAlgorithmInput_modal').modal('hide');
+			//$("#AlgorithmList").trigger("reloadGrid");
+		}
+	});
+}
+var tabX=50;
+var tabY=50;
+var position;
+function createNewTab(proname){
+
+	
+	var label = new Kinetic.Label({
+		  x: tabX,
+		  y: tabY, 
+		  width:100,
+		  height:5,
+		  draggable: true,
+		  listening:true
+		});
+	label.add(new Kinetic.Tag({
+	        fill: '#FFFFFF',
+//	        width: 100,
+//	        height: 40,
+//	        stroke:'black'
+	        	
+//	        	  fill: 'black',
+	        opacity: 0.75,
+	              pointerDirection: 'down',
+	              pointerWidth: 10,
+	              pointerHeight: 10,
+	              lineJoin: 'round',
+	              shadowColor: 'black',
+	              shadowBlur: 10,
+	              shadowOffset: {x:10,y:20},
+	              shadowOpacity: 0.5
+	      }));
+	label.add(new Kinetic.Text({
+		  text: proname,
+//		  fontSize: 50,
+//		  lineHeight: 1.2,
+//		  padding: 10,
+//		  fill: 'red'		
+		fontFamily: 'Calibri',
+		fontSize: 25,
+		fontStyle:'bold',
+		padding: 10,
+		fill: '#0099CC'
+		 }));
+	label.getText().on('click', clickTab);
+	tabArray.push(label);
+	tablayer.add(label);
+	for ( var k in tabArray) {
+		if(tabArray[k]!=label){
+			tabArray[k].getText().fill('black').fontSize(22).fontStyle('normal');
+		}
+		}
+	stage.draw();
+	tabX+=50;
+}
+var tabFlag=0;
+var clickTab=function(e){
+		var tabFlagin=tabFlag;
+		tabFlag++;
+		if(tabFlagin!=tabFlag-1){
+			return;
+		}
+			for(var p in tabArray){
+				if(tabArray[p].getText()==e.target){
+					position=p;
+//					alert('p'+p);
+				}
+			}
+//				position=tabArray.indexOf(e.target);
+//			alert(position);
+			e.target.fill('#0099CC');
+			e.target.fontSize(25);
+			e.target.fontStyle('bold');
+			selectPainting=paintingArray[position];
+			selectPainting.show();
+			if(selectPainting==null){
+				alert("painting is null");
+			}else{
+//				alert(selectPainting.getClassName());
+			}
+//			paintingArray[position].moveUp();
+			for(var i in paintingArray){
+				if(i!=position){
+					tabArray[i].getText().fill('black').fontSize(22).fontStyle('normal');
+					paintingArray[i].hide();
+				}
+			}
+			stage.draw();
+		
+}
+/*
+ * 加载作者下拉列表
+ */
+function loadAuthorOptions(){
+	$.ajax({
+		url:'listUser.action',
+		type:'post',
+		dataType:'json',
+		success:function(data){
+			var items="";
+			$.each(data.dataList,function(i,user){
+				items+= "<option value=\"" + user.userid + "\">" + user.username + "</option>"; 
+			});
+			$("#authorID").html(items);
+		}
+	});
+	}
 

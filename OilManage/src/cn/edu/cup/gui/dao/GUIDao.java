@@ -33,7 +33,7 @@ public class GUIDao {
 
 	public GUIDao()
 	{	
-		Configuration cfg = new Configuration();  
+	 Configuration cfg = new Configuration();  
      cfg.configure();          
      ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
      SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
@@ -182,7 +182,7 @@ public class GUIDao {
 		q.setParameter(1, data);
 		result=q.executeUpdate();
 		tx.commit();
-		return result;
+		return ret_id;
 		
 	}
 

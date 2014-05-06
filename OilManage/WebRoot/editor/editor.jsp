@@ -13,22 +13,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="X-UA-Compatible" content="IE=9" />
 
 <script type="text/javascript" src="./lib/kinetic-v5.1.0.min.js"></script>
-
+<link rel="stylesheet" type="text/css" media="screen" href="../js/jqGrid/css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="../js/jqueryUI/themes/redmond/jquery.ui.theme.css" />  
+<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../bootstrap/css/carousel.css">
 <link rel="stylesheet" media="screen" type="text/css"
 	href="./assets/css/style.css" />
 <link rel="stylesheet" media="screen" type="text/css"
 	href="./assets/css/minimap.css" />
 
+
+
 <script type="text/javascript" src="./assets/javascript/json2.js"></script>
 <script type="text/javascript" src="./assets/javascript/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="./assets/javascript/ajaxfileupload.js"></script>
-
+<script src="../js/jquery/jquery-migrate-1.2.1.js"></script>
+<script src="../js/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript"></script>
+<script src="../js/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../bootstrap/js/holder.min.js"></script>
+ <script type="text/javascript" src="../js/jquery-validation-1.11.1/dist/jquery.validate.js"></script>
 
 
 <script defer="defer" type="text/javascript" src="./lib/init.js"></script>
 <link type='text/css' href='./assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 <link rel="stylesheet" media="screen" type="text/css" href="./assets/css/colorPicker_new.css" />
-<link rel="stylesheet" media="screen" type="text/css" href="./assets/css/jquery.contextMenu.css" />
+<!-- <link rel="stylesheet" media="screen" type="text/css" href="./assets/css/jquery.contextMenu.css" /> -->
 
 
 <!--[if IE]>
@@ -66,20 +76,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<div id="actions">
 
-		<a href="javascript:createNew('1');"
+		<a href="javascript:createNewModal();"
 			title="新建">
 			<img
 			src="icons/sign_add.png" border="0" />
 		</a> 
 		<img class="separator" src="assets/images/toolbar_separator.gif"
 			border="0" width="1" height="16" /> <a
-			href="javascript:load();"
+			href="javascript:listGUIProGrid();"
 			title="打开">
 			<img
 			src="icons/folder.png" border="0" />
 		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
 			border="0" width="1" height="16" /> <a
-			href="javascript:save('a');"
+			href="javascript:save();"
 			title="保存"><img
 			src="icons/save_labled.png" border="0"
 			alt="Organic" />
@@ -158,8 +168,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <a href="javascript:action('ungroup');">Ungroup</a>
             -->
 	</div>
+	
+	
+	
+	
+	
+
+
+
+
+
 	<div id="editor">
-		
+			<input id="selectedID" style="display: none;"/> 
 			<div id="container">
 				
 			</div>
@@ -238,8 +258,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<br />
 	<? //require_once dirname(__FILE__) . '/common/analytics.php';?>
 
-</body>
-</html>
+
 	<ul id="contextmenu" style="display:none;z-index:100">	
 		<li><a>顺时针旋转90°</a></li>
 		<li><a>逆时针旋转90°</a></li>	
@@ -249,3 +268,76 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<li><a>删除该节点</a></li>
     </ul>
 
+	<!-- 新建图形项目的模态框 -->   	
+		<div class="modal fade" id="add_GUI_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加图形文件</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="addGUIForm" action="addGUIPro.action" method="post"> 
+		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">		      		
+		      			<tr>
+		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >名称:</label></td>
+				            <td><input id="proname" type="text" class="input2" name="proname" maxlength="30"/><em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >描述：</label></td>
+		      				<td><input id="description" type="text" class="input2" name="description" maxlength="10" /></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >类型：</label></td>
+		      				<td><input id="type" type="text" class="input2" name="type" maxlength="10" /></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">作者：</label></td>
+			        		<td><select id="authorID" name="authorID"></select><em style="color:red">*</em></td>   						
+		      			</tr>
+		      				    				
+				   </table>
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+					
+    		<!-- 查看图形项目列表的模态框 -->   	
+		<div class="modal fade" id="listGUIPro_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content" style="width:1300">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		       <!--  <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输入</h4> -->
+		      </div>
+		      <div class="modal-body">  
+		      	<div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table id="GUIProList" class="table table-striped table-bordered table-hover datatable " ></table>
+				      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
+				      			<div id="GUIProPager" ></div>
+				      		</div>	      		
+						</div>
+					</div>
+				</div>  
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
+		
+		
+</body>
+</html>
+	
+	
