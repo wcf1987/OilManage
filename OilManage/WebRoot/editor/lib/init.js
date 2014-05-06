@@ -60,6 +60,7 @@ function initLight() {
 		height:50,
 		draggable:false,
 	});
+	/*
 	tabRect=new Kinetic.Rect({
 		x:15,
 		y:3,
@@ -70,7 +71,7 @@ function initLight() {
 		stroke:'#FFFFFF',
 		strokeWidth:5
 	})
-	tablayer.add(tabRect);
+	tablayer.add(tabRect);*/
 	painting = new Kinetic.Layer({
 		x : 100,
 		y : 100,
@@ -814,22 +815,38 @@ function load(selectedID) {
 			selectPainting=newone;
 			painting=newone;
 			paintingArray.push(newone);
-			createNewTab(data['dataView']['proname']);
-			stage.draw();
 			
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmInputList").trigger("reloadGrid");			
+			createTab(data['dataView']['proname'],paintingArray.indexOf(newone));
+			//createNewTab(data['dataView']['proname']);
+			stage.draw();
+					
 		},
 		error:function(msg){
 			alert(msg);
-			//$('#addAlgorithmInput_modal').modal('hide');
-			//$("#AlgorithmList").trigger("reloadGrid");
 		}
 	});
 }
 var tabX=50;
 var tabY=50;
 var position;
+ 
+function createTab(proname,paintingIndex){
+	$("#paintingTabs").children().removeClass("active");
+	var tabItem="<li class=\"tab active\"> <a href=\"javascript:void(0)\" onclick=\"showPainting(this,'"+ paintingIndex + "')\">"+proname+"</a></li>";
+	$("#paintingTabs").append(tabItem);
+}
+function showPainting(obj,paintingIndex){
+	$("#paintingTabs").children().removeClass("active");
+	$(obj).parent().addClass("active");
+	selectPainting=paintingArray[paintingIndex];
+	selectPainting.show();
+	for(var i in paintingArray){
+		if(i!=paintingIndex){
+			paintingArray[i].hide();
+		}
+	}
+	stage.draw();
+}
 function createNewTab(proname){
 
 	
@@ -843,20 +860,15 @@ function createNewTab(proname){
 		});
 	label.add(new Kinetic.Tag({
 	        fill: '#FFFFFF',
-//	        width: 100,
-//	        height: 40,
-//	        stroke:'black'
-	        	
-//	        	  fill: 'black',
 	        opacity: 0.75,
-	              pointerDirection: 'down',
-	              pointerWidth: 10,
-	              pointerHeight: 10,
-	              lineJoin: 'round',
-	              shadowColor: 'black',
-	              shadowBlur: 10,
-	              shadowOffset: {x:10,y:20},
-	              shadowOpacity: 0.5
+			pointerDirection: 'down',
+			pointerWidth: 10,
+			pointerHeight: 10,
+			lineJoin: 'round',
+			shadowColor: 'black',
+			shadowBlur: 10,
+			shadowOffset: {x:10,y:20},
+			shadowOpacity: 0.5
 	      }));
 	label.add(new Kinetic.Text({
 		  text: proname,

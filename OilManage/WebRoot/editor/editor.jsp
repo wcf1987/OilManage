@@ -26,14 +26,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script type="text/javascript" src="./assets/javascript/json2.js"></script>
 <script type="text/javascript" src="./assets/javascript/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="./assets/javascript/ajaxfileupload.js"></script>
 <script src="../js/jquery/jquery-migrate-1.2.1.js"></script>
+<script type="text/javascript" src="./assets/javascript/ajaxfileupload.js"></script>
 <script src="../js/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript"></script>
 <script src="../js/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="../bootstrap/js/holder.min.js"></script>
- <script type="text/javascript" src="../js/jquery-validation-1.11.1/dist/jquery.validate.js"></script>
-
+<script type="text/javascript" src="../js/jquery-validation-1.11.1/dist/jquery.validate.js"></script>
+<script src="../js/easytabs/jquery.hashchange.min.js" type="text/javascript"></script>
+<script src="../js/easytabs/jquery.easytabs.js" type="text/javascript"></script>
 
 <script defer="defer" type="text/javascript" src="./lib/init.js"></script>
 <link type='text/css' href='./assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
@@ -66,6 +67,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	#contextmenu li a:hover {
 		background: #fff;
 	}
+	
+	
+	.etabs { margin: 0; padding: 0; }
+	.tab { display: inline-block; zoom:1; *display:inline; background: #eee; border: solid 1px #999; border-bottom: none; -moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; }
+	.tab a { font-size: 14px; line-height: 2em; display: block; padding: 0 10px; outline: none; }
+	.tab a:hover { text-decoration: underline; }
+	.tab.active { background: #fff; padding-top: 6px; position: relative; top: 1px; border-color: #666; }
+	.tab a.active { font-weight: bold; }
+	.tab-container .panel-container { background: #fff; border: solid #666 1px; padding: 10px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
 </style>
 </head>
 <body onload="initLight('');" id="body">
@@ -177,11 +187,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 
+	
+
 
 	<div id="editor">
 			<input id="selectedID" style="display: none;"/> 
+			<div id="tab-container" class="tab-container"  style="position: absolute;z-index:100;margin-left:120px;margin-top:2px;">
+			  <ul id="paintingTabs" class='etabs'>
+			    <!--
+			    <li class='tab'><a href="#tabs1-html">HTML Markup</a></li>
+			    <li class='tab'><a href="#tabs1-js">Required JS</a></li>
+			    <li class='tab'><a href="#tabs1-css">Example CSS</a></li>  
+			    -->
+			    
+			  </ul>
+			  <!-- 
+			  <div id="tabs1-html">
+			    <h2>HTML Markup for these tabs</h2>
+			  </div>
+			  <div id="tabs1-js">
+			    <h2>JS for these tabs</h2>
+			  </div>
+			  <div id="tabs1-css">
+			    <h2>CSS Styles for these tabs</h2>
+			  </div> 
+			  -->
+			</div>
+		
 			<div id="container">
-				
 			</div>
 	
 
@@ -243,6 +276,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		style="width:0;height:0;border:0px;"></iframe>
 
 	<script type="text/javascript">
+		$(function(){
+			$('#tab-container').easytabs();
+		});
 		function loadFill(check) {
 			if (check.checked === true) {
 				if ($('#colorpickerHolder3').css('display') === 'none') {
