@@ -28,17 +28,17 @@ function initLight() {
 	});
 	centerlayer   = new Kinetic.Layer({
 	    x:100,
-	    y:0,
+	    y:50,
 	    id: 'centerlayer',
 	    width:920,
-	    height:800
+	    height:500
 //	    width:8,
 //	    height:8
 	});
 	gridlayer  = new Kinetic.Layer({
 	    x:100,
 	    y:0,
-	    id: 'leftlayer',
+	    id: 'gridlayer',
 	    width:920,
 	    height:800
 	});
@@ -104,7 +104,7 @@ function initLight() {
 	rectBackgroundCenter = new Kinetic.Rect({
 	   x: 10,
 	   y: 0,
-	   height: 800,
+	   height: 500,
 	   width: 900,
 	   fill: 'transparent',
 	   draggable: false,
@@ -181,7 +181,7 @@ function initLight() {
 	   fill : 'blue'
 	   });
 		
-		
+	selectPainting=painting;	
 	leftlayer.add(rectBackgroundLeft);
 	centerlayer.add(rectBackgroundCenter);
    
@@ -214,10 +214,11 @@ function initLight() {
 		if (checkPoint(userPos, centerlayer))//如果在中间画布上面
 
 		{
-			if (this.getParent() != painting) {
+			if (this.getParent() != selectPainting) {
+
 				this.x((this.x() - mx)/scaleN);
 				this.y((this.y()-my)/scaleN);
-				this.moveTo(painting);
+				this.moveTo(selectPainting);
 			
 			}
 
@@ -229,7 +230,7 @@ function initLight() {
 	};	
 
 	var cloneFun2 = function(e) {
-		if (e.type == 'mousedown' && this.getLayer() != painting) {
+		if (e.type == 'mousedown' && this.getLayer() != selectPainting) {
 			var cloneOfItem = this.clone();
 
 			// cloneOfItem.off('mousedown touchstart');
@@ -272,31 +273,31 @@ function initLight() {
 				clickshape.destroy();
 				$("#contextmenu").hide();
 				centerlayer.draw(this);
-				painting.draw();
+				selectPainting.draw();
 			}else if(text == '更改颜色'){
 				node.style.fillStyle = Math.floor(Math.random()*250) + ","+Math.floor(Math.random()*250)+"," + Math.floor(Math.random()*250);
 			}else if(text == '顺时针旋转90°'){
 				clickshape.rotate(90);
 //				centerlayer.draw(this);
-				painting.draw();
+				selectPainting.draw();
 			}else if(text == '逆时针旋转90°'){
 				clickshape.rotate(-90);
 //				centerlayer.draw(this);
-				painting.draw();
+				selectPainting.draw();
 			}else if(text == '放大'){
 				clickshape.scale({
 					x:clickshape.scaleX()*2,
 					y:clickshape.scaleY()
 				});		
 				centerlayer.draw(this);
-				painting.draw();
+				selectPainting.draw();
 			}else if(text == '缩小'){
 				clickshape.scale({
 					x:clickshape.scaleX()/2,
 					y:clickshape.scaleY()
 				});		
 				centerlayer.draw(this);
-				painting.draw();
+				selectPainting.draw();
 			}
 			//$("#contextmenu").hide();
 		});
@@ -310,31 +311,23 @@ function initLight() {
 		poly[k].on('dragend', cloneFun);
 		poly[k].on('mousedown touchstart', cloneFun2);
 	}
-	
+
 	var updateBackgroundPos = function() {
-	    var x =(hscroll.getPosition().x - 20)/(centerlayer.getWidth() - 90-110);
-	    var y =(vscroll.getPosition().y - 20)/(centerlayer.getHeight() -90-110);
-	    var px=painting.getWidth();
-	    var py=painting.getHeight();
+		x =(hscroll.getPosition().x - 20)/(centerlayer.getWidth() - 90-110);
+	    y =(vscroll.getPosition().y - 20)/(centerlayer.getHeight() -90-110);
+	    px=selectPainting.getWidth();
+	    py=selectPainting.getHeight();
 	    mx=100-(px-centerlayer.getWidth())*x;
-	    my=0-(py-centerlayer.getHeight())*y;
-	    painting.x(mx);
+	    my=100-(py-centerlayer.getHeight())*y;
+	    selectPainting.x(mx);
 	    
-	    painting.y(my);
-	    var childs=painting.getChildren();
-	    	 
+	    selectPainting.y(my);
 	    
-	    for (var ich in childs){
-	    /*	
-	    	if(checkPoint(childs[ich].getAbsolutePosition(),centerlayer)){
-	    		childs[ich].show();
-	    	}
-	    	else{
-	    		childs[ich].hide();
-	    	}*/
-	    	
-	    }
-	    painting.draw();
+	    //	selectPainting.draw();
+	    selectPainting.moveToTop();
+	    selectPainting.draw();
+
+		
 	};
     var areas = new Kinetic.Group();
     var scrollbars = new Kinetic.Group();
@@ -397,11 +390,11 @@ function initLight() {
         draggable: true,
         dragBoundFunc: function(pos) {
           var newY = pos.y;
-          if(newY < 20) {
-            newY = 20;
+          if(newY < 20+centerlayer.y()) {
+            newY = 20+centerlayer.y();
           }
-          else if(newY > centerlayer.getHeight() - 110-70) {
-            newY = centerlayer.getHeight() - 110-70;
+          else if(newY > centerlayer.getHeight() - 110-70+centerlayer.y()) {
+            newY = centerlayer.getHeight() - 110-70+centerlayer.y();
           }
           return {
             x: this.getAbsolutePosition().x,
@@ -412,6 +405,12 @@ function initLight() {
         stroke: 'black',
         strokeWidth: 1
       });
+    var x =(hscroll.getPosition().x - 20)/(centerlayer.getWidth() - 90-110);
+    var y =(vscroll.getPosition().y - 20)/(centerlayer.getHeight() -90-110);
+    var px=selectPainting.getWidth();
+    var py=selectPainting.getHeight();
+    var mx=100-(px-centerlayer.getWidth())*x;
+    var my=100-(py-centerlayer.getHeight())*y;
     /*
      * scrollbars
      */
@@ -452,9 +451,9 @@ function initLight() {
 	stage.add(leftlayer);
 	
 	stage.add(centerlayer);
-	stage.add(tablayer);
+	//stage.add(tablayer);
 	stage.add(painting);
-	selectPainting=painting;
+	
 	
 	
 	/*
@@ -655,9 +654,10 @@ function drawGrid(){
 function scaleCenter(s) {
 	
 	scaleN=scaleN*s;
-	selectPainting.scaleX(painting.scaleX() * s);
-	selectPainting.scaleY(painting.scaleY() * s);
+	selectPainting.scaleX(selectPainting.scaleX() * s);
+	selectPainting.scaleY(selectPainting.scaleY() * s);
 	selectPainting.draw();
+	
 }
 
 function listGUIProGrid(){
@@ -669,6 +669,7 @@ function listGUIProGrid(){
 	
 	$('#listGUIPro_modal').modal();
 }
+
 function createNewModal(){
 	selectedPainting = new Kinetic.Layer({
 		x : 100,
@@ -810,12 +811,12 @@ function load(selectedID) {
 			
 //			selectPainting.remove();
 //			selectPainting.destroy();
-			selectPainting.hide();
+			//selectPainting.hide();
 			stage.add(newone);
 			selectPainting=newone;
-			painting=newone;
-			paintingArray.push(newone);
 			
+			paintingArray.push(newone);
+			selectPainting.moveToTop();
 			createTab(data['dataView']['proname'],paintingArray.indexOf(newone));
 			//createNewTab(data['dataView']['proname']);
 			stage.draw();
@@ -839,60 +840,15 @@ function showPainting(obj,paintingIndex){
 	$("#paintingTabs").children().removeClass("active");
 	$(obj).parent().addClass("active");
 	selectPainting=paintingArray[paintingIndex];
-	selectPainting.show();
+	selectPainting.moveToTop();
 	for(var i in paintingArray){
 		if(i!=paintingIndex){
-			paintingArray[i].hide();
+			//paintingArray[i].hide();
 		}
 	}
 	stage.draw();
 }
-function createNewTab(proname){
 
-	
-	var label = new Kinetic.Label({
-		  x: tabX,
-		  y: tabY, 
-		  width:100,
-		  height:5,
-		  draggable: true,
-		  listening:true
-		});
-	label.add(new Kinetic.Tag({
-	        fill: '#FFFFFF',
-	        opacity: 0.75,
-			pointerDirection: 'down',
-			pointerWidth: 10,
-			pointerHeight: 10,
-			lineJoin: 'round',
-			shadowColor: 'black',
-			shadowBlur: 10,
-			shadowOffset: {x:10,y:20},
-			shadowOpacity: 0.5
-	      }));
-	label.add(new Kinetic.Text({
-		  text: proname,
-//		  fontSize: 50,
-//		  lineHeight: 1.2,
-//		  padding: 10,
-//		  fill: 'red'		
-		fontFamily: 'Calibri',
-		fontSize: 25,
-		fontStyle:'bold',
-		padding: 10,
-		fill: '#0099CC'
-		 }));
-	label.getText().on('click', clickTab);
-	tabArray.push(label);
-	tablayer.add(label);
-	for ( var k in tabArray) {
-		if(tabArray[k]!=label){
-			tabArray[k].getText().fill('black').fontSize(22).fontStyle('normal');
-		}
-		}
-	stage.draw();
-	tabX+=50;
-}
 var tabFlag=0;
 var clickTab=function(e){
 		var tabFlagin=tabFlag;
@@ -912,7 +868,7 @@ var clickTab=function(e){
 			e.target.fontSize(25);
 			e.target.fontStyle('bold');
 			selectPainting=paintingArray[position];
-			selectPainting.show();
+			selectPainting.moveToTop();
 			if(selectPainting==null){
 				alert("painting is null");
 			}else{
@@ -922,7 +878,7 @@ var clickTab=function(e){
 			for(var i in paintingArray){
 				if(i!=position){
 					tabArray[i].getText().fill('black').fontSize(22).fontStyle('normal');
-					paintingArray[i].hide();
+					//paintingArray[i].hide();
 				}
 			}
 			stage.draw();
