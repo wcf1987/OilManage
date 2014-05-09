@@ -312,23 +312,7 @@ function initLight() {
 		poly[k].on('mousedown touchstart', cloneFun2);
 	}
 
-	var updateBackgroundPos = function() {
-		x =(hscroll.getPosition().x - 20)/(centerlayer.getWidth() - 90-110);
-	    y =(vscroll.getPosition().y - 20)/(centerlayer.getHeight() -90-110);
-	    px=selectPainting.getWidth();
-	    py=selectPainting.getHeight();
-	    mx=100-(px-centerlayer.getWidth())*x;
-	    my=100-(py-centerlayer.getHeight())*y;
-	    selectPainting.x(mx);
-	    
-	    selectPainting.y(my);
-	    
-	    //	selectPainting.draw();
-	    selectPainting.moveToTop();
-	    selectPainting.draw();
 
-		
-	};
     var areas = new Kinetic.Group();
     var scrollbars = new Kinetic.Group();
     var container = stage.getContainer();
@@ -650,7 +634,23 @@ function drawGrid(){
 
 }
 
+function updateBackgroundPos() {
+	x =(hscroll.getPosition().x - 20)/(centerlayer.getWidth() - 90-110);
+    y =(vscroll.getPosition().y - 20)/(centerlayer.getHeight() -90-110);
+    px=selectPainting.getWidth();
+    py=selectPainting.getHeight();
+    mx=100-(px-centerlayer.getWidth())*x;
+    my=100-(py-centerlayer.getHeight())*y;
+    selectPainting.x(mx);
+    
+    sselectPainting.y(my);
+    
+    //	selectPainting.draw();
+    selectPainting.moveToTop();
+    selectPainting.draw();
 
+	
+};
 function scaleCenter(s) {
 	
 	scaleN=scaleN*s;

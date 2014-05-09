@@ -36,7 +36,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="../js/easytabs/jquery.hashchange.min.js" type="text/javascript"></script>
 <script src="../js/easytabs/jquery.easytabs.js" type="text/javascript"></script>
 
-<script defer="defer" type="text/javascript" src="./lib/init.js"></script>
+<script defer="defer" type="text/javascript" src="./lib/init2.js"></script>
+<script defer="defer" type="text/javascript" src="./lib/platform.js"></script>
+<script defer="defer" type="text/javascript" src="./lib/leftpoly.js"></script>
+<script defer="defer" type="text/javascript" src="./lib/Paintings.js"></script>
+<script defer="defer" type="text/javascript" src="./lib/tools.js"></script>
+<script defer="defer" type="text/javascript" src="./lib/kinecttab.js"></script>
+
 <link type='text/css' href='./assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 <link rel="stylesheet" media="screen" type="text/css" href="./assets/css/colorPicker_new.css" />
 <!-- <link rel="stylesheet" media="screen" type="text/css" href="./assets/css/jquery.contextMenu.css" /> -->
@@ -136,31 +142,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			href="javascript:action('moveforward');"
 			title="Move (one level) to front"><img
 			src="assets/images/icon_forward.gif" border="0" />
-		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
-			border="0" width="1" height="16" /> <a
-			href="javascript:action('moveback');" title="Move (one level) back"><img
-			src="assets/images/icon_backward.gif" border="0" />
-		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
-			border="0" width="1" height="16" /> <a
-			href="javascript:action('group');" title="Group (Ctrl-G)"><img
-			src="assets/images/group.gif" border="0" />
-		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
-			border="0" width="1" height="16" /> <a
-			href="javascript:action('ungroup');" title="Ungroup (Ctrl-U)"><img
-			src="assets/images/ungroup.gif" border="0" />
-		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
-			border="0" width="1" height="16" /> <a
-			href="javascript:createFigure(figure_Text);" title="Add text"><img
-			src="assets/images/text.gif" border="0" height="16" />
-		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
-			border="0" width="1" height="16" /> <a
-			href="javascript:showInsertImageDialog();" title="Add image"><img
-			src="assets/images/image.gif" border="0" height="16"
-			alt="Image" />
-		</a> <img class="separator" src="assets/images/toolbar_separator.gif"
-			border="0" width="1" height="16" /> <a
-			href="javascript:action('undo');" title="Undo (Ctrl-Z)"><img
-			src="assets/images/arrow_undo.png" border="0" />
 		</a>
 		<!-- TODO: From Janis: we have to create a nice icon for duplicate, currently this is the only command without an icon -->
 		<!--
