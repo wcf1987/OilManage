@@ -255,6 +255,8 @@ var Platform=function(){
 		this.stage.draw();
 	}
 
-	
+	this.draw=function(){
+		this.selectPainting.p.draw();
+	}
 };
 	

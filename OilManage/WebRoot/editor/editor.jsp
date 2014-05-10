@@ -83,11 +83,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	.tab a.active { font-weight: bold; }
 	.tab-container .panel-container { background: #fff; border: solid #666 1px; padding: 10px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
 </style>
+
+  
+<style type="text/css">
+body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", sans-serif; }
+.big-link { display: block; margin-top: 100px; text-align: center; font-size: 70px; color: #06f; }
+</style>
+
 </head>
 <body onload="initLight('');" id="body">
 
 	<div id="header">
-		<span> <img src="." /> </span>
+		<span> <img src="" /> </span>
 	</div>
 
 	<div id="actions">
@@ -351,7 +358,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 		
-		
+				<!--载入选择框 -->  
+		<div class="modal fade" id="load_modal" width="155" style="margin: 200px 200 0 -280px;">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">选择操作</h4>
+		      </div>
+		      <div class="modal-body"  height="300px">
+		     	 <img src="./icons/new.png" width="175" height="150" alt="" onclick="clickLoad(1);"  title="新建工程" /> 
+		     	 <img src="./icons/open.png" width="175" height="150" alt="" onclick="clickLoad(2);" title="打开工程" /> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 		
 		
 </body>

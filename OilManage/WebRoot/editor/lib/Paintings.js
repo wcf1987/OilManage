@@ -27,11 +27,17 @@ var Paintings = function() {
 			width : 3000,
 			height : 2000,
 			fill : '#ff33ee',
+			
 //			fill: 'transparent',
-			draggable : true
+			draggable:true,
+			dragBoundFunc: function(pos) {
+	              console.log('abc');
+	              return pos;
+	          }
+			
 		});
 		
-		 
+		 this.p.draggable(true);
 		 this.areas = new Kinetic.Group();
 		 this.scrollbars = new Kinetic.Group();
 		 var container = platform.stage.getContainer();
@@ -45,6 +51,7 @@ var Paintings = function() {
 		      width: platform.centerlayer.getWidth() - 70,
 		      height: 20,
 		      fill:'black',
+		      
 		      opacity: 0.3
 		    });
 		    
@@ -54,6 +61,7 @@ var Paintings = function() {
 		        width: 130,
 		        height: 20,
 		        fill: '#9f005b',
+		        dragOnTop: false,
 		        draggable: true,
 		        dragBoundFunc: function(pos) {
 		          var newX = pos.x;
@@ -91,6 +99,7 @@ var Paintings = function() {
 		        width: 20,
 		        height: 130,
 		        fill: '#9f005b',
+		        dragOnTop: false,
 		        draggable: true,
 		        dragBoundFunc: function(pos) {
 		          var newY = pos.y;
@@ -165,7 +174,7 @@ var Paintings = function() {
 	    	}
 	    }
 	    platform.selectPainting.p.draw();
-	    
+	    platform.selectPainting.p.moveToTop();
 	}
 	this.scaleN=1;
 	this.deletePainting=function(){
