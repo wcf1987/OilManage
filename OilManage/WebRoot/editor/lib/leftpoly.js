@@ -155,12 +155,12 @@ var Leftpolys = function() {
 
 		}).show();
 		var clickshape = e.target;
-		var flagin = flag;// 当前序列
-		flag++;
+		var flagin = leftpoly.flag;// 当前序列
+		leftpoly.flag++;
 		/* 右键菜单处理 */
 		$("#contextmenu a").click(
 				function() {
-					if (flagin != flag - 1) {
+					if (flagin != leftpoly.flag - 1) {
 						return;
 					}
 
@@ -169,8 +169,8 @@ var Leftpolys = function() {
 
 						clickshape.destroy();
 						$("#contextmenu").hide();
-						centerlayer.draw(this);
-						selectPainting.draw();
+						
+						platform.selectPainting.p.draw();
 					} else if (text == '更改颜色') {
 						node.style.fillStyle = Math.floor(Math.random() * 250)
 								+ "," + Math.floor(Math.random() * 250) + ","
@@ -178,25 +178,23 @@ var Leftpolys = function() {
 					} else if (text == '顺时针旋转90°') {
 						clickshape.rotate(90);
 						// centerlayer.draw(this);
-						selectPainting.draw();
+						platform.selectPainting.p.draw();
 					} else if (text == '逆时针旋转90°') {
 						clickshape.rotate(-90);
 						// centerlayer.draw(this);
-						selectPainting.draw();
+						platform.selectPainting.p.draw();
 					} else if (text == '放大') {
 						clickshape.scale({
 							x : clickshape.scaleX() * 2,
 							y : clickshape.scaleY()
 						});
-						centerlayer.draw(this);
-						selectPainting.draw();
+						platform.selectPainting.p.draw();
 					} else if (text == '缩小') {
 						clickshape.scale({
 							x : clickshape.scaleX() / 2,
 							y : clickshape.scaleY()
 						});
-						centerlayer.draw(this);
-						selectPainting.draw();
+						platform.selectPainting.p.draw();
 					}
 					// $("#contextmenu").hide();
 				});

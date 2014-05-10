@@ -129,7 +129,7 @@ var Platform=function(){
 			this.gridlayer.draw();
 		}
 	}
-	var gridEle = 1;
+	var gridEle = 9;
 //	gridlayer=centerlayer;
 	bgGroup = new Kinetic.Group();
 	   //主编辑区域背景框
@@ -246,12 +246,12 @@ var Platform=function(){
 		paintings.p=newone;
 		this.addPainting(paintings);
 		this.paintingArray.push(paintings);
-		this.selectPainting.p.moveToTop();
+		this.selectPainting.showSelected();
 		return this.paintingArray.indexOf(paintings);
 	}
 	this.showPainting=function(index){
 		this.selectPainting=this.paintingArray[index];
-		this.selectPainting.p.moveToTop();		
+		this.selectPainting.showSelected();
 		this.stage.draw();
 	}
 

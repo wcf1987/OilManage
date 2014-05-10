@@ -93,8 +93,8 @@ var TabTools=function (){
 	}
 
 	this.createNewModal=function(){
-		paintings=new Paintings();
-		platform.addPainting(paintings.init());
+		newone=new Paintings();
+		platform.addPainting(newone.init());
 //		paintingArray.add(selectedPainting);
 		// 配置对话框
 		loadAuthorOptions();//加载作者选项
@@ -197,6 +197,13 @@ var TabTools=function (){
 			}
 		});
 	}
+	this.switchTab=function(selectedID) {
+
+
+
+				platform.showPainting(selectedID);
+		
+	}
 	this.load=function(selectedID) {
 
 //		selectedID=1;
@@ -247,41 +254,7 @@ var TabTools=function (){
 		platform.showPainting(paintingIndex);
 	}
 
-	var tabFlag=0;
-	var clickTab=function(e){
-			var tabFlagin=tabFlag;
-			tabFlag++;
-			if(tabFlagin!=tabFlag-1){
-				return;
-			}
-				for(var p in tabArray){
-					if(tabArray[p].getText()==e.target){
-						position=p;
-//						alert('p'+p);
-					}
-				}
-//					position=tabArray.indexOf(e.target);
-//				alert(position);
-				e.target.fill('#0099CC');
-				e.target.fontSize(25);
-				e.target.fontStyle('bold');
-				selectPainting=paintingArray[position];
-				selectPainting.moveToTop();
-				if(selectPainting==null){
-					alert("painting is null");
-				}else{
-//					alert(selectPainting.getClassName());
-				}
-//				paintingArray[position].moveUp();
-				for(var i in paintingArray){
-					if(i!=position){
-						tabArray[i].getText().fill('black').fontSize(22).fontStyle('normal');
-						//paintingArray[i].hide();
-					}
-				}
-				stage.draw();
-			
-	}
+
 	/*
 	 * 加载作者下拉列表
 	 */

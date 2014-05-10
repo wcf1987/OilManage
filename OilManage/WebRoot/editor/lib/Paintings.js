@@ -1,5 +1,24 @@
 var Paintings = function() {
-	
+	this.hide=function(){
+		this.p.hide();
+		this.areas.hide();
+		this.scrollbars.show();
+	}
+	this.show=function(){
+		this.p.show();
+		this.areas.show();
+		this.scrollbars.show();
+	}
+	this.showSelected=function(){
+		this.show();
+
+		for(var i in platform.paintingArray){
+			if (platform.paintingArray[i]!=this){
+				platform.paintingArray[i].hide();
+			}
+		}
+		platform.stage.draw();
+	}
 	this.init=function(){
 		this.p = new Kinetic.Layer({
 			x : 100,
@@ -13,8 +32,8 @@ var Paintings = function() {
 		});
 		
 		 
-		 var areas = new Kinetic.Group();
-		 var scrollbars = new Kinetic.Group();
+		 this.areas = new Kinetic.Group();
+		 this.scrollbars = new Kinetic.Group();
 		 var container = platform.stage.getContainer();
 		    
 		    /*
@@ -93,22 +112,22 @@ var Paintings = function() {
 		    /*
 		     * scrollbars
 		     */
-		    scrollbars.on('mouseover', function() {
+		   this.scrollbars.on('mouseover', function() {
 		      document.body.style.cursor = 'pointer';
 		    });
-		    scrollbars.on('mouseout', function() {
+		   this.scrollbars.on('mouseout', function() {
 		      document.body.style.cursor = 'default';
 		    });
 
 		    this.hscroll.on('dragmove', updateBackgroundPos);
 		    this.vscroll.on('dragmove', updateBackgroundPos);
 
-		    areas.add(this.hscrollArea);
-		    areas.add(this.vscrollArea);
-		    scrollbars.add(this.hscroll);
-		    scrollbars.add(this.vscroll);
-		    platform.centerlayer.add(areas);
-		    platform.centerlayer.add(scrollbars);
+		    this.areas.add(this.hscrollArea);
+		    this.areas.add(this.vscrollArea);
+		    this.scrollbars.add(this.hscroll);
+		    this.scrollbars.add(this.vscroll);
+		    platform.centerlayer.add(this.areas);
+		    platform.centerlayer.add(this.scrollbars);
 		    //
 			this.p.on('mouseover', function() {
 				document.body.style.cursor = 'pointer';
