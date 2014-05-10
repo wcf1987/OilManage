@@ -8,6 +8,7 @@ var Leftpolys = function() {
 		stroke : 'black',
 		strokeWidth : 2,
 		draggable : true,
+		name:'test1',
 		closed : true
 	});
 
@@ -19,6 +20,8 @@ var Leftpolys = function() {
 		stroke : 'black',
 		strokeWidth : 2,
 		draggable : true,
+		name:'test2',
+	
 		closed : true
 	});
 
@@ -30,6 +33,7 @@ var Leftpolys = function() {
 		stroke : 'black',
 		strokeWidth : 2,
 		draggable : true,
+		name:'test3',
 		closed : true
 	});
 
@@ -41,6 +45,7 @@ var Leftpolys = function() {
 		stroke : 'black',
 		strokeWidth : 2,
 		draggable : true,
+		name:'test4',
 		closed : true
 	});
 
@@ -52,6 +57,7 @@ var Leftpolys = function() {
 		stroke : 'black',
 		strokeWidth : 2,
 		fillEnabled : true,
+		name:'test5',
 		rotationDeg : -10,
 		draggable : true
 	});
@@ -66,6 +72,7 @@ var Leftpolys = function() {
 		scaleY : 1,
 		RotationDeg : 0,
 		draggable : true,
+		name:'test6',
 		fill : 'blue'
 	});
 	this.init = function() {
@@ -81,16 +88,7 @@ var Leftpolys = function() {
 	/*
 	 * 检查点是否在矩形区域里面
 	 */
-	  function checkPoint(pos, rect) {
-		
-		var size = rect.size();
-		if (pos.x > rect.x() && pos.y > rect.y()
-				&& (pos.x < rect.x() + size.width)
-				&& (pos.y < rect.y() + size.height)) {
-			return true;
-		}
-		return false;
-	};
+
 	//var platform=null;
 	this.dragFun = function(pos) {
 		if (checkPoint(pos, platform.centerlayer)) {

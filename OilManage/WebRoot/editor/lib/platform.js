@@ -14,7 +14,7 @@ var Platform=function(){
 	});
 	this.centerlayer   = new Kinetic.Layer({
 	    x:100,
-	    y:50,
+	    y:40,
 	    id: 'centerlayer',
 	    width:920,
 	    height:500
@@ -23,7 +23,7 @@ var Platform=function(){
 	});
 	this.gridlayer  = new Kinetic.Layer({
 	    x:100,
-	    y:50,
+	    y:this.centerlayer.y(),
 	    id: 'gridlayer',
 	    width:920,
 	    height:500

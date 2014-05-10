@@ -63,6 +63,7 @@ var Paintings = function() {
 		          else if(newX > platform.centerlayer.getWidth()-80 ) {
 		            newX = platform.centerlayer.getWidth() -80;
 		          }
+		    
 		          return {
 		            x: newX,
 		            y: this.getAbsolutePosition().y
@@ -99,7 +100,9 @@ var Paintings = function() {
 		          else if(newY > platform.centerlayer.getHeight() - 110-70+platform.centerlayer.y()) {
 		            newY = platform.centerlayer.getHeight() - 110-70+platform.centerlayer.y();
 		          }
+		         
 		          return {
+		        	  
 		            x: this.getAbsolutePosition().x,
 		            y: newY
 		          }
@@ -119,9 +122,12 @@ var Paintings = function() {
 		      document.body.style.cursor = 'default';
 		    });
 
-		    this.hscroll.on('dragmove', updateBackgroundPos);
-		    this.vscroll.on('dragmove', updateBackgroundPos);
-
+		    this.hscroll.on('dragmove', this.updateBackgroundPos);
+		    
+		    this.vscroll.on('dragmove', this.updateBackgroundPos);
+		    //this.hscroll.dragBoundFunc(this.updateBackgroundPos);
+		    //this.vscroll.dragBoundFunc(this.updateBackgroundPos);
+		    
 		    this.areas.add(this.hscrollArea);
 		    this.areas.add(this.vscrollArea);
 		    this.scrollbars.add(this.hscroll);
@@ -139,7 +145,7 @@ var Paintings = function() {
 	}
 	this.mx;
 	this.my;
-	function updateBackgroundPos(){
+	this.updateBackgroundPos=function (pos){
 		x =(platform.selectPainting.hscroll.getPosition().x - 20)/(platform.centerlayer.getWidth() - 90-110);
 	    y =(platform.selectPainting.vscroll.getPosition().y - 20)/(platform.centerlayer.getHeight() -90-110);
 	    px=platform.selectPainting.p.getWidth();
@@ -147,19 +153,26 @@ var Paintings = function() {
 	    platform.selectPainting.mx=100-(px-platform.centerlayer.getWidth())*x;
 	    platform.selectPainting.my=100-(py-platform.centerlayer.getHeight())*y;
 	    platform.selectPainting.p.x(platform.selectPainting.mx);
-	    
 	    platform.selectPainting.p.y(platform.selectPainting.my);
-	    
-	   	//selectPainting.draw();
-	    platform.selectPainting.p.moveToTop();
+	    nodeChildren=platform.selectPainting.p.getChildren().toArray();
+	    for(var i in nodeChildren){
+	    	
+	    	if (checkPoint(nodeChildren[i].getAbsolutePosition(),platform.centerlayer)){
+	    		nodeChildren[i].show();
+	    	}
+	    	else{
+	    		nodeChildren[i].hide();
+	    	}
+	    }
 	    platform.selectPainting.p.draw();
+	    
 	}
 	this.scaleN=1;
 	this.deletePainting=function(){
 		
 	}
 	this.update=function(){
-		updateBackgroundPos();
+		this.updateBackgroundPos({x:0,y:0});
 		platform.centerlayer.draw();
 	}
 }

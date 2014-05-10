@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="../js/easytabs/jquery.hashchange.min.js" type="text/javascript"></script>
 <script src="../js/easytabs/jquery.easytabs.js" type="text/javascript"></script>
 
-<script defer="defer" type="text/javascript" src="./lib/init2.js"></script>
+<script defer="defer" type="text/javascript" src="./lib/init3.js"></script>
 <script defer="defer" type="text/javascript" src="./lib/platform.js"></script>
 <script defer="defer" type="text/javascript" src="./lib/leftpoly.js"></script>
 <script defer="defer" type="text/javascript" src="./lib/Paintings.js"></script>
