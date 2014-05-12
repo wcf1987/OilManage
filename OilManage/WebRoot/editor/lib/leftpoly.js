@@ -1,5 +1,7 @@
 var Leftpolys = function() {
 	this.polys = new Array;
+	this.polyGroups=new Array;
+	this.connectionPoints=new Array;
 	this.polys[0] = new Kinetic.Line({
 		x : 5,
 		y : 20,
@@ -7,7 +9,7 @@ var Leftpolys = function() {
 		fill : '#00D2FF',
 		stroke : 'black',
 		strokeWidth : 2,
-		draggable : true,
+	
 		name:'test1',
 		closed : true
 	});
@@ -19,7 +21,6 @@ var Leftpolys = function() {
 		fill : '#00FF00',
 		stroke : 'black',
 		strokeWidth : 2,
-		draggable : true,
 		name:'test2',
 	
 		closed : true
@@ -32,7 +33,6 @@ var Leftpolys = function() {
 		fill : '#FF0000',
 		stroke : 'black',
 		strokeWidth : 2,
-		draggable : true,
 		name:'test3',
 		closed : true
 	});
@@ -44,7 +44,6 @@ var Leftpolys = function() {
 		fill : '#44ffee',
 		stroke : 'black',
 		strokeWidth : 2,
-		draggable : true,
 		name:'test4',
 		closed : true
 	});
@@ -58,8 +57,7 @@ var Leftpolys = function() {
 		strokeWidth : 2,
 		fillEnabled : true,
 		name:'test5',
-		rotationDeg : -10,
-		draggable : true
+		rotationDeg : -10
 	});
 
 	this.polys[5] = new Kinetic.Rect({
@@ -71,22 +69,58 @@ var Leftpolys = function() {
 		scaleX : 1,
 		scaleY : 1,
 		RotationDeg : 0,
-		draggable : true,
 		name:'test6',
 		fill : 'blue'
 	});
 	this.init = function() {
+		
 		for ( var k in this.polys) {
-			this.polys[k].dragBoundFunc(this.dragFun);
-			this.polys[k].on('click', this.clickFunc);
+			this.polyGroups[k]= new Kinetic.Group({
+		        x: this.polys[k].x(),
+		        y: this.polys[k].y(),
+		        
+				draggable : true
+				
+				
+		      });
+			  var connPointsLeft = new Kinetic.Circle({
+				  x : 0,
+				  y : 5,
+					
+			        radius: 5,
+			        fill: 'yellow',
+			        stroke: 'black',
+			        name:'connPointsLeft',
+			        strokeWidth: 2
+			      });
+			  var connPointsRight = new Kinetic.Circle({
+				  x : 90,
+					y : 5,
+					name:'connPointsRight',
+			        radius: 5,
+			        fill: 'yellow',
+			        stroke: 'black',
+			        strokeWidth: 2
+			      });
+			  
+			this.polys[k].x(0);
+			this.polys[k].y(0);
+			this.polyGroups[k].add(this.polys[k]);
+			this.polyGroups[k].add(connPointsLeft);
+			this.polyGroups[k].add(connPointsRight);
+			connPointsLeft.hide();
+			connPointsRight.hide();
+			this.polyGroups[k].dragBoundFunc(this.dragFun);
+			
+			this.polyGroups[k].on('click', this.clickFunc);
 			// polys[k].on('dblclick', dbclickFun);
 
-			this.polys[k].on('dragend', this.cloneFun);
-			this.polys[k].on('mousedown touchstart', this.cloneFun2);
-			this.polys[k].on('mouseover', function() {
+			this.polyGroups[k].on('dragend', this.cloneFun);
+			this.polyGroups[k].on('mousedown touchstart', this.cloneFun2);
+			this.polyGroups[k].on('mouseover', function() {
 				document.body.style.cursor = 'pointer';
 			});
-			this.polys[k].on('mouseout', function() {
+			this.polyGroups[k].on('mouseout', function() {
 				document.body.style.cursor = 'default';
 			});
 		}
@@ -97,8 +131,15 @@ var Leftpolys = function() {
 	 */
 
 	//var platform=null;
+	
 	this.dragFun = function(pos) {
+
 		if (checkPoint(pos, platform.centerlayer)) {
+			if(platform.getConnShowed()==false)
+			{showConnect(this);
+			showALLConnPoints();
+			}
+			checkConn(this);
 			return {
 				x : pos.x,
 				y : pos.y
@@ -111,6 +152,7 @@ var Leftpolys = function() {
 	};
 
 	this.cloneFun = function(e) {
+
 		var userPos = platform.stage.getPointerPosition();
 		if (checkPoint(userPos, platform.centerlayer))// 如果在中间画布上面
 
@@ -120,20 +162,24 @@ var Leftpolys = function() {
 				this.x((this.x() - platform.selectPainting.mx) / platform.selectPainting.scaleN);
 				this.y((this.y() - platform.selectPainting.my) / platform.selectPainting.scaleN);
 				this.moveTo(platform.selectPainting.p);
-
+				
 			}
 
 		} else {
+			
 			this.destroy();// 不在中间画布就摧毁
+			
 		}
+		hideALLConnPoints();
 		platform.centerlayer.draw(this);
 		platform.stage.draw();
 	};
 
 	this.cloneFun2 = function(e) {
+		
 		if (e.type == 'mousedown' && this.getLayer() != platform.selectPainting.p) {
 			var cloneOfItem = this.clone();
-
+			
 			// cloneOfItem.off('mousedown touchstart');
 			platform.leftlayer.add(cloneOfItem);
 
@@ -141,8 +187,9 @@ var Leftpolys = function() {
 		if (e.type == 'dragend') {
 
 		}
-
+		
 	};
+	
 
 	this.dbclickFun = function(e) {
 		if (e.type == 'dblclick') {
@@ -204,4 +251,40 @@ var Leftpolys = function() {
 					// $("#contextmenu").hide();
 				});
 	};
+
+	showALLConnPoints=function (){
+		points=platform.getAllChildren();
+		for(i1=0;i1<points.length;i1++){
+			showConnect(points[i1]);
+			
+		}
+		platform.setConnShowed(true);
+	}
+	hideALLConnPoints=function (){
+		points=platform.getAllChildren();
+		for(i1=0;i1<points.length;i1++){
+			hideConnection(points[i1]);
+			
+		}
+		platform.setConnShowed(false);
+	}
+	showConnect = function(g){
+		
+		tempArray=g.getChildren(function(node){
+			   return node.getName() == 'connPointsLeft' || node.getName() == 'connPointsRight'
+		});
+		tempArray[0].show();
+		tempArray[1].show();
+		g.draw();
+	}
+	hideConnection = function(g){
+		tempArray=g.getChildren(function(node){
+			   return node.getName() == 'connPointsLeft' || node.getName() == 'connPointsRight'
+		});
+		tempArray[0].hide();
+		tempArray[1].hide();
+	} 
+	checkConn = function(g){
+		
+	}
 }

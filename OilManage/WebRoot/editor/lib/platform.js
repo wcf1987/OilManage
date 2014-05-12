@@ -114,12 +114,14 @@ var Platform=function(){
 	
 	this.addLeft=function(left){
 		left.platform=this;
-		for (var k in left.polys)
-		{this.leftlayer.add(left.polys[k]);}
+		for (var k in left.polyGroups)
+		{this.leftlayer.add(left.polyGroups[k]);}
 		this.leftlayer.draw();
 	}
 
-
+	this.getAllChildren=function(){
+		return this.selectPainting.p.getChildren();
+	}
 	this.showGrid=function(){
 		if(document.getElementById("gridCheckbox").checked==true){
 			bgGroup.show();
@@ -257,6 +259,12 @@ var Platform=function(){
 
 	this.draw=function(){
 		this.selectPainting.p.draw();
+	}
+	this.getConnShowed=function(){
+		return this.showed;
+	}
+	this.setConnShowed=function(bool){
+		this.showed=bool;
 	}
 };
 	

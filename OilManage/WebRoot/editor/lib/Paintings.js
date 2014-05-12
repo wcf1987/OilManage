@@ -154,6 +154,7 @@ var Paintings = function() {
 	}
 	this.mx;
 	this.my;
+	this.showed=false;
 	this.updateBackgroundPos=function (pos){
 		x =(platform.selectPainting.hscroll.getPosition().x - 20)/(platform.centerlayer.getWidth() - 90-110);
 	    y =(platform.selectPainting.vscroll.getPosition().y - 20)/(platform.centerlayer.getHeight() -90-110);
