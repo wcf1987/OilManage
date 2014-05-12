@@ -1,7 +1,7 @@
 var Leftpolys = function() {
 	this.polys = new Array;
-	this.polyGroups=new Array;
-	this.connectionPoints=new Array;
+	this.polyGroups = new Array;
+	this.connectionPoints = new Array;
 	this.polys[0] = new Kinetic.Line({
 		x : 5,
 		y : 20,
@@ -9,8 +9,8 @@ var Leftpolys = function() {
 		fill : '#00D2FF',
 		stroke : 'black',
 		strokeWidth : 2,
-	
-		name:'test1',
+
+		name : 'test1',
 		closed : true
 	});
 
@@ -21,8 +21,8 @@ var Leftpolys = function() {
 		fill : '#00FF00',
 		stroke : 'black',
 		strokeWidth : 2,
-		name:'test2',
-	
+		name : 'test2',
+
 		closed : true
 	});
 
@@ -33,7 +33,7 @@ var Leftpolys = function() {
 		fill : '#FF0000',
 		stroke : 'black',
 		strokeWidth : 2,
-		name:'test3',
+		name : 'test3',
 		closed : true
 	});
 
@@ -44,7 +44,7 @@ var Leftpolys = function() {
 		fill : '#44ffee',
 		stroke : 'black',
 		strokeWidth : 2,
-		name:'test4',
+		name : 'test4',
 		closed : true
 	});
 
@@ -56,7 +56,7 @@ var Leftpolys = function() {
 		stroke : 'black',
 		strokeWidth : 2,
 		fillEnabled : true,
-		name:'test5',
+		name : 'test5',
 		rotationDeg : -10
 	});
 
@@ -69,40 +69,39 @@ var Leftpolys = function() {
 		scaleX : 1,
 		scaleY : 1,
 		RotationDeg : 0,
-		name:'test6',
+		name : 'test6',
 		fill : 'blue'
 	});
 	this.init = function() {
-		
+
 		for ( var k in this.polys) {
-			this.polyGroups[k]= new Kinetic.Group({
-		        x: this.polys[k].x(),
-		        y: this.polys[k].y(),
-		        
+			this.polyGroups[k] = new Kinetic.Group({
+				x : this.polys[k].x(),
+				y : this.polys[k].y(),
+
 				draggable : true
-				
-				
-		      });
-			  var connPointsLeft = new Kinetic.Circle({
-				  x : 0,
-				  y : 5,
-					
-			        radius: 5,
-			        fill: 'yellow',
-			        stroke: 'black',
-			        name:'connPointsLeft',
-			        strokeWidth: 2
-			      });
-			  var connPointsRight = new Kinetic.Circle({
-				  x : 90,
-					y : 5,
-					name:'connPointsRight',
-			        radius: 5,
-			        fill: 'yellow',
-			        stroke: 'black',
-			        strokeWidth: 2
-			      });
-			  
+
+			});
+			var connPointsLeft = new Kinetic.Circle({
+				x : 0,
+				y : 5,
+
+				radius : 5,
+				fill : 'yellow',
+				stroke : 'black',
+				name : 'connPointsLeft',
+				strokeWidth : 2
+			});
+			var connPointsRight = new Kinetic.Circle({
+				x : 90,
+				y : 5,
+				name : 'connPointsRight',
+				radius : 5,
+				fill : 'yellow',
+				stroke : 'black',
+				strokeWidth : 2
+			});
+
 			this.polys[k].x(0);
 			this.polys[k].y(0);
 			this.polyGroups[k].add(this.polys[k]);
@@ -111,7 +110,7 @@ var Leftpolys = function() {
 			connPointsLeft.hide();
 			connPointsRight.hide();
 			this.polyGroups[k].dragBoundFunc(this.dragFun);
-			
+
 			this.polyGroups[k].on('click', this.clickFunc);
 			// polys[k].on('dblclick', dbclickFun);
 
@@ -124,22 +123,28 @@ var Leftpolys = function() {
 				document.body.style.cursor = 'default';
 			});
 		}
-		
+
 	}
 	/*
 	 * 检查点是否在矩形区域里面
 	 */
 
-	//var platform=null;
-	
+	// var platform=null;
 	this.dragFun = function(pos) {
 
 		if (checkPoint(pos, platform.centerlayer)) {
-			if(platform.getConnShowed()==false)
-			{showConnect(this);
-			showALLConnPoints();
+			if (platform.getConnShowed() == false) {
+				showConnect(this);
+				showALLConnPoints();
 			}
-			checkConn(this);
+			poss = checkConn(this);
+			if (poss != null) {
+				return {
+					x : pos.x - poss.x,
+					y : pos.y - poss.y
+				};
+
+			}
 			return {
 				x : pos.x,
 				y : pos.y
@@ -159,16 +164,18 @@ var Leftpolys = function() {
 		{
 			if (this.getParent() != platform.selectPainting.p) {
 
-				this.x((this.x() - platform.selectPainting.mx) / platform.selectPainting.scaleN);
-				this.y((this.y() - platform.selectPainting.my) / platform.selectPainting.scaleN);
+				this.x((this.x() - platform.selectPainting.mx)
+						/ platform.selectPainting.scaleN);
+				this.y((this.y() - platform.selectPainting.my)
+						/ platform.selectPainting.scaleN);
 				this.moveTo(platform.selectPainting.p);
-				
+
 			}
 
 		} else {
-			
+
 			this.destroy();// 不在中间画布就摧毁
-			
+
 		}
 		hideALLConnPoints();
 		platform.centerlayer.draw(this);
@@ -176,10 +183,11 @@ var Leftpolys = function() {
 	};
 
 	this.cloneFun2 = function(e) {
-		
-		if (e.type == 'mousedown' && this.getLayer() != platform.selectPainting.p) {
+
+		if (e.type == 'mousedown'
+				&& this.getLayer() != platform.selectPainting.p) {
 			var cloneOfItem = this.clone();
-			
+
 			// cloneOfItem.off('mousedown touchstart');
 			platform.leftlayer.add(cloneOfItem);
 
@@ -187,9 +195,8 @@ var Leftpolys = function() {
 		if (e.type == 'dragend') {
 
 		}
-		
+
 	};
-	
 
 	this.dbclickFun = function(e) {
 		if (e.type == 'dblclick') {
@@ -221,7 +228,7 @@ var Leftpolys = function() {
 
 						clickshape.destroy();
 						$("#contextmenu").hide();
-						
+
 						platform.selectPainting.p.draw();
 					} else if (text == '更改颜色') {
 						node.style.fillStyle = Math.floor(Math.random() * 250)
@@ -253,42 +260,79 @@ var Leftpolys = function() {
 				});
 	};
 
-	showALLConnPoints=function (){
-		points=platform.getAllChildren();
-		for(i1=0;i1<points.length;i1++){
+	showALLConnPoints = function() {
+		points = platform.getAllChildren();
+		for (i1 = 0; i1 < points.length; i1++) {
 			showConnect(points[i1]);
-			
+
 		}
 		platform.draw();
 		platform.setConnShowed(true);
 	}
-	hideALLConnPoints=function (){
-		points=platform.getAllChildren();
-		for(i1=0;i1<points.length;i1++){
+	hideALLConnPoints = function() {
+		points = platform.getAllChildren();
+		for (i1 = 0; i1 < points.length; i1++) {
 			hideConnection(points[i1]);
-			
+
 		}
 		platform.draw();
 		platform.setConnShowed(false);
 	}
-	showConnect = function(g){
-		
-		tempArray=g.getChildren(function(node){
-			   return node.getName() == 'connPointsLeft' || node.getName() == 'connPointsRight'
+	showConnect = function(g) {
+
+		tempArray = g.getChildren(function(node) {
+			return node.getName() == 'connPointsLeft'
+					|| node.getName() == 'connPointsRight'
 		});
 		tempArray[0].show();
 		tempArray[1].show();
 		g.draw();
 	}
-	hideConnection = function(g){
-		tempArray=g.getChildren(function(node){
-			   return node.getName() == 'connPointsLeft' || node.getName() == 'connPointsRight'
+	hideConnection = function(g) {
+		tempArray = g.getChildren(function(node) {
+			return node.getName() == 'connPointsLeft'
+					|| node.getName() == 'connPointsRight'
 		});
 		tempArray[0].hide();
 		tempArray[1].hide();
-		
-	} 
-	checkConn = function(g){
-		
+
+	}
+	checkConn = function(g) {
+		tempArray = g.getChildren(function(node) {
+			return node.getName() == 'connPointsLeft'
+					|| node.getName() == 'connPointsRight'
+		});
+		points = platform.getAllChildren();
+		for (li = 0; li < points.length; li++) {
+			tempArray2 = points[li].getChildren(function(node) {
+				return node.getName() == 'connPointsLeft'
+						|| node.getName() == 'connPointsRight'
+			});
+			if (checkCircle(tempArray[0], tempArray2[1],
+					tempArray[0].radius() * 2)) {
+				return {
+					g : points[li],
+					right : tempArray2[1],
+					left : 0,
+					x : tempArray[0].getAbsolutePosition().x
+							- tempArray2[1].getAbsolutePosition().x,
+					y : tempArray[0].getAbsolutePosition().y
+							- tempArray2[1].getAbsolutePosition().y,
+				}
+			}
+			if (checkCircle(tempArray[1], tempArray2[0],
+					tempArray[0].radius() * 2)) {
+				return {
+					g : points[li],
+					right : 0,
+					left : tempArray2[0],
+					x : tempArray[1].getAbsolutePosition().x
+							- tempArray2[0].getAbsolutePosition().x,
+					y : tempArray[1].getAbsolutePosition().y
+							- tempArray2[0].getAbsolutePosition().y,
+				}
+			}
+		}
+		return null;
 	}
 }
