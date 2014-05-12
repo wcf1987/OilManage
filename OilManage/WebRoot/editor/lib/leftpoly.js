@@ -83,7 +83,14 @@ var Leftpolys = function() {
 
 			this.polys[k].on('dragend', this.cloneFun);
 			this.polys[k].on('mousedown touchstart', this.cloneFun2);
+			this.polys[k].on('mouseover', function() {
+				document.body.style.cursor = 'pointer';
+			});
+			this.polys[k].on('mouseout', function() {
+				document.body.style.cursor = 'default';
+			});
 		}
+		
 	}
 	/*
 	 * 检查点是否在矩形区域里面
