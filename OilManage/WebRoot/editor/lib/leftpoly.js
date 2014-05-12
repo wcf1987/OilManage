@@ -206,7 +206,7 @@ var Leftpolys = function() {
 			left : this.getAbsolutePosition().x + 90,
 
 		}).show();
-		var clickshape = e.target;
+		var clickshape = e.target.getParent();
 		var flagin = leftpoly.flag;// 当前序列
 		leftpoly.flag++;
 		/* 右键菜单处理 */
@@ -248,6 +248,7 @@ var Leftpolys = function() {
 						});
 						platform.selectPainting.p.draw();
 					}
+					hideALLConnPoints();
 					// $("#contextmenu").hide();
 				});
 	};
@@ -258,6 +259,7 @@ var Leftpolys = function() {
 			showConnect(points[i1]);
 			
 		}
+		platform.draw();
 		platform.setConnShowed(true);
 	}
 	hideALLConnPoints=function (){
@@ -266,6 +268,7 @@ var Leftpolys = function() {
 			hideConnection(points[i1]);
 			
 		}
+		platform.draw();
 		platform.setConnShowed(false);
 	}
 	showConnect = function(g){
@@ -283,6 +286,7 @@ var Leftpolys = function() {
 		});
 		tempArray[0].hide();
 		tempArray[1].hide();
+		
 	} 
 	checkConn = function(g){
 		
