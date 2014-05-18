@@ -11,6 +11,8 @@ function listGUIProGrid(){
 	tabtools.listGUIProGrid();
 }
 function save(){
+
+	platform.update();
 	tabtools.save();
 }
 function clickLoad(s){

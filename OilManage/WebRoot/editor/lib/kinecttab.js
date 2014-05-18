@@ -200,7 +200,7 @@ var TabTools=function (){
 	this.switchTab=function(selectedID) {
 
 
-
+				
 				platform.showPainting(selectedID);
 		
 	}
@@ -251,6 +251,7 @@ var TabTools=function (){
 	this.showPainting=function(obj,paintingIndex){
 		$("#paintingTabs").children().removeClass("active");
 		$(obj).parent().addClass("active");
+		platform.selectPainting.saveScroll();
 		platform.showPainting(paintingIndex);
 	}
 

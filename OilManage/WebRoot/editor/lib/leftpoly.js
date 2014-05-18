@@ -74,7 +74,7 @@ var Leftpolys = function() {
 	});
 	this.init = function() {
 
-		for ( var k in this.polys) {
+		for ( var k=0;k<this.polys.length;k++) {
 			this.polyGroups[k] = new Kinetic.Group({
 				x : this.polys[k].x(),
 				y : this.polys[k].y(),
@@ -139,6 +139,9 @@ var Leftpolys = function() {
 			}
 			poss = checkConn(this);
 			if (poss != null) {
+				this.x(pos.x - poss.x);
+				this.y(pos.y - poss.y);
+				platform.draw();
 				return {
 					x : pos.x - poss.x,
 					y : pos.y - poss.y
@@ -303,6 +306,7 @@ var Leftpolys = function() {
 					|| node.getName() == 'connPointsRight'
 		});
 		points = platform.getAllChildren();
+		var re=null;
 		for (li = 0; li < points.length; li++) {
 			tempArray2 = points[li].getChildren(function(node) {
 				return node.getName() == 'connPointsLeft'
@@ -310,19 +314,22 @@ var Leftpolys = function() {
 			});
 			if (checkCircle(tempArray[0], tempArray2[1],
 					tempArray[0].radius() * 2)) {
-				return {
-					g : points[li],
-					right : tempArray2[1],
-					left : 0,
-					x : tempArray[0].getAbsolutePosition().x
-							- tempArray2[1].getAbsolutePosition().x,
-					y : tempArray[0].getAbsolutePosition().y
-							- tempArray2[1].getAbsolutePosition().y,
-				}
+
+				re= {
+						g : points[li],
+						right : tempArray2[1],
+						left : 0,
+						x : tempArray[0].getAbsolutePosition().x
+								- tempArray2[1].getAbsolutePosition().x,
+						y : tempArray[0].getAbsolutePosition().y
+								- tempArray2[1].getAbsolutePosition().y,
+					}
+				
 			}
 			if (checkCircle(tempArray[1], tempArray2[0],
 					tempArray[0].radius() * 2)) {
-				return {
+				
+				re= {
 					g : points[li],
 					right : 0,
 					left : tempArray2[0],
@@ -333,6 +340,6 @@ var Leftpolys = function() {
 				}
 			}
 		}
-		return null;
+		return re;
 	}
 }
