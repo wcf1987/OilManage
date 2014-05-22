@@ -94,9 +94,9 @@ public class GUIDao {
 	}
 
 
-	public int updatePro(int iD, String data) {
+	public int updatePro(int iD, String data,Date modifyTime) {
 		// TODO Auto-generated method stub
-		Date modifyTime=new Date();
+		
 		SQLQuery q = session.createSQLQuery("update t_guipro t set addtime=? where t.ID=?");
 		q.setParameter(1, iD);
 		q.setParameter(0, modifyTime);
@@ -107,7 +107,7 @@ public class GUIDao {
 		q.setParameter(0, data);
 		
 		re=q.executeUpdate();
-		tx.commit();
+		
 		return re;
 	}
 	public int searchProAlg(int proID){
@@ -185,5 +185,41 @@ public class GUIDao {
 		return ret_id;
 		
 	}
+	public void clearOld(int id){
+		Query q = session.createSQLQuery("update t_guipoint t set t.statusNow=-1 where t.statusNow=1 and t.pro_id=?");
+		q.setParameter(0, id);
+		int result=q.executeUpdate();
+		q = session.createSQLQuery("update t_guiconnect t set t.statusNow=-1 where t.statusNow=1 and t.pro_id=?");
+		q.setParameter(0, id);
+		result=q.executeUpdate();
+	}
+	public void addPoint(int iD, String name, int type, String typeName,Date addDate) {
+		// TODO Auto-generated method stub
+		
+		
+		Query q = session.createSQLQuery("insert into t_guipoint (pro_id,name,type,typename,statusNow,updateTime) values (?,?,?,?,?,?)");
+		q.setParameter(0, iD);
+		q.setParameter(1, name);
+		q.setParameter(2, type);
+		q.setParameter(3, typeName);
+		q.setParameter(4, 1);
+		q.setParameter(5, addDate);
+		int result=q.executeUpdate();
+		
+	}
+
+	public void addConnect(int iD, String left, String right,Date addDate) {
+		// TODO Auto-generated method stub
+		
+		Query q = session.createSQLQuery("insert into t_guiconnect (pro_id,pointleft,pointright,statusNow,updateTime) values (?,?,?,?,?)");
+		q.setParameter(0, iD);
+		q.setParameter(1, left);
+		q.setParameter(2, right);
+		q.setParameter(3, 1);
+		q.setParameter(4, addDate);
+		int result=q.executeUpdate();
+	}
+
+
 
 }

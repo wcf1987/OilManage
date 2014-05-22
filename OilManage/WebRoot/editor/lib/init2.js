@@ -1,3 +1,4 @@
+jQuery.ajaxSettings.traditional = true;
 var platform;
 var leftpoly;
 var tabtools;

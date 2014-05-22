@@ -1,3 +1,7 @@
+var connectC=function(){
+	this.left=0;
+	this.right=0;
+}
 var Paintings = function() {
 	this.points=new Array;
 	this.connects=new Array;
@@ -13,8 +17,9 @@ var Paintings = function() {
 		this.points=new Array;
 		points1 = this.p.getChildren();
 		for (li = 0; li < points1.length; li++) {
-			this.addPoints(points1[li])
+			this.addPoints(points1[li]);
 		}
+		//this.pointstr=this.points.toJSONString();
 	}
 	
 	this.updateConnects=function(){
@@ -22,9 +27,9 @@ var Paintings = function() {
 		this.connects=new Array;
 		points1 = this.p.getChildren();
 		for (l2 = 0; l2 < points1.length; l2++) {
-			this.checkConn(points1[l2])
+			this.checkConn(points1[l2]);
 		}
-			
+		//this.Connstr=this.connects.toJSONString();
 		
 	}
 	this.checkConn = function(g) {
@@ -55,24 +60,27 @@ var Paintings = function() {
 	}
 	this.addConnect=function(a,b){
 		for(var l3=0;l3<this.connects.length;l3++){
-			if(this.connects[l3].left==a&&this.connects[l3].right==b)
+			if(this.connects[l3].left==a.id()&&this.connects[l3].right==b.id())
 				return;
 		}
-			this.connects.push({left:a,right:b});
+			var temp=new connectC;
+			temp.left=a.id();
+			temp.right=b.id();
+			this.connects.push(temp);
 		
 	}
 	
 	this.delConnect=function(a,b){
 		this.connects.remove({left:a,right:b});
 	}
-	this.delConnectByOne=function(a){
+/*	this.delConnectByOne=function(a){
 		for(var i=0;i<this.connects.length;i++){
 			if(this.connects[i]!=undefined&&(this.connects[i].left==a ||this.connects[i].right==a)){
 					delete this.connects[i];
 			}
 		}
 		
-	}
+	}*/
 	this.hide=function(){
 		this.p.hide();
 

@@ -177,11 +177,15 @@ var TabTools=function (){
 	function updateGUI(){
 		jsondata=platform.selectPainting.p.toJSON();
 		console.log(jsondata);
+		s=JSON.stringify(platform.selectPainting.connects);
+		console.log(s);
 		$.ajax({
 			type : 'POST',
 			url : 'updateGUIPro.action',
 			data : {			
 				data:jsondata,
+				Points:JSON.parse(JSON.stringify(platform.selectPainting.points)),
+				Conns: s,
 				ID:$('#selectedID').val(),
 			},
 			success : function(data) {
