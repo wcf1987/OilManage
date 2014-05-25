@@ -144,7 +144,7 @@ public class GUIAction {
 	public String getSord() {
 		return sord;
 	}
-	GUIPro dataView;
+
 	public String getView(){		
 
 		GUIDao dao=new GUIDao();
@@ -192,7 +192,6 @@ public class GUIAction {
 		}
 		return "SUCCESS";
 	}
-	String data;
 	List<String> Points;
 	List<String> Conns;
 	public List<String>  getPoints() {
