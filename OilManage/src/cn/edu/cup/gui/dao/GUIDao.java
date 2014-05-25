@@ -15,6 +15,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.gui.business.GUIPro;
+import cn.edu.cup.gui.business.PointValue;
 import cn.edu.cup.manage.business.CalcInfo;
 
 public class GUIDao {
@@ -42,6 +43,59 @@ public class GUIDao {
 		session = sessionFactory.openSession();
 		tx = session.beginTransaction();
 	}
+	
+	public List<PointValue> getPointPraList(int pointID,int page, int rows,
+			String sidx, String sord) {
+		SQLQuery q = session.createSQLQuery("select t1.id,t1.par_name,t1.par_display,t1.par_value,t1.par_ISOValue,t3.CName,t3.Symbol from t_guipointvalue t1,t_guipoint t2,t_measure t3 WHERE t1.point_id=t2.id and t1.par_messID=t3.ID and t1.point_id=? order by t1."+sidx+" "+sord);
+		q.setParameter(0, pointID);
+		q.setFirstResult((page-1)*rows);
+		q.setMaxResults(rows);
+		List l = q.list();
+		List<PointValue> re=new ArrayList<PointValue>();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+
+			  Object[] row = (Object[])l.get(i);;
+			  Integer id = ((Integer)row[0]);
+			  String par_name=((String)row[1]);
+			  String par_display=((String)row[2]);
+			  double par_value=(Double)row[3];
+			  double par_ISOValue=(Double)row[4];
+			  String measure_CName=((String)row[5]);
+			  String measure_Symbol=((String)row[6]);
+  
+			  PointValue p=new PointValue(id,par_display,par_name,par_value,par_ISOValue,measure_CName,measure_Symbol);
+			  
+			  
+			  re.add(p);
+		}
+		
+		return re;
+	}
+	
+	public int getCountPointPras(int pointID) {
+		// TODO Auto-generated method stub
+		String sql="select count(*) from t_guipointvalue t where t.point_id=?";
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, pointID);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
+
+	}
+	
+	public int updatePointPra(int iD, double par_value) {
+		// TODO Auto-generated method stub
+//		Date modifyTime=new Date();
+		SQLQuery q = session.createSQLQuery("update t_guipointvalue t set par_value=? where t.ID=?");
+		q.setParameter(1, iD);
+		q.setParameter(0, par_value);
+		int re=q.executeUpdate();
+		tx.commit();
+		return re;
+	}
+	
 	public List<GUIPro> getGUIProsList(int page, int rows,
 			String sidx, String sord) {
 		SQLQuery q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime from t_guipro t1,t_user t2 where t1.AuthorID=t2.ID order by t1."+sidx+" "+sord);

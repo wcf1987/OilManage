@@ -211,6 +211,8 @@ var Leftpolys = function() {
 	this.flag = 0;
 	this.clickFunc = function(e) {
 		// 当前位置弹出菜单（div）
+		var attrtop=this.getAbsolutePosition().y + 100;
+		var attrleft=this.getAbsolutePosition().x + 90;
 		$("#contextmenu").css({
 			top : this.getAbsolutePosition().y + 100,
 			left : this.getAbsolutePosition().x + 90,
@@ -256,6 +258,17 @@ var Leftpolys = function() {
 							x : clickshape.scaleX() / 2,
 							y : clickshape.scaleY()
 						});
+						platform.selectPainting.p.draw();
+					}else if (text == '属性') {
+						$("#pointPra").css({
+							top :attrtop,
+							left : attrleft,
+
+						}).show();					
+//						clickshape.scale({
+//							x : clickshape.scaleX() / 2,
+//							y : clickshape.scaleY()
+//						});
 						platform.selectPainting.p.draw();
 					}
 					hideALLConnPoints();

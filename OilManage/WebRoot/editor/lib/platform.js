@@ -377,6 +377,27 @@ var Platform=function(){
 		this.addPainting(paintings);
 		this.paintingArray.push(paintings);
 		this.selectPainting.showSelected();
+		/*
+		 *加载模型后为每个元素添加 事件 
+		 */
+		var polys=this.selectPainting.p.getChildren();
+		var leftpolys=new Leftpolys();
+		for ( var k=0;k<polys.length;k++) {
+			polys[k].on('click',leftpolys.clickFunc);
+			polys[k].dragBoundFunc(this.dragFun);
+			polys[k].on('click', this.clickFunc);
+			polys[k].on('dragend', this.cloneFun);
+			polys[k].on('mousedown touchstart', this.cloneFun2);
+			polys[k].on('mouseover', function() {
+				document.body.style.cursor = 'pointer';
+			});
+			polys[k].on('mouseout', function() {
+				document.body.style.cursor = 'default';
+			});
+		}
+		/*
+		 *加载模型后为每个元素添加 事件  结束
+		 */
 		return this.paintingArray.indexOf(paintings);
 	}
 	this.showPainting=function(index){
@@ -384,7 +405,11 @@ var Platform=function(){
 		this.selectPainting.showSelected();
 		this.stage.draw();
 	}
-
+	this.hidePainting=function(index){
+		this.selectPainting=this.paintingArray[index];
+		this.selectPainting.hideSelected();
+		this.stage.draw();
+	}
 	this.draw=function(){
 		this.selectPainting.p.draw();
 	}

@@ -23,7 +23,7 @@
 	</package>
 	<package name="json" extends="json-default">
 
-		
+
 		<action name="logout" method="logout" class="cn.edu.cup.manage.action.LoginAction">
 			<result type="json">				
 			</result>
@@ -373,8 +373,8 @@
 		</action>
 		<!-- 工程end -->
 		<!-- GUI start -->
-		
-				<action name="listGUIPro" class="cn.edu.cup.gui.action.GUIAction"
+	
+		<action name="listGUIPro" class="cn.edu.cup.gui.action.GUIAction"
 			method="list">
 
 			<result name="SUCCESS" type="json">
@@ -403,6 +403,20 @@
 		</action>
 		<action name="viewGUIPro" class="cn.edu.cup.gui.action.GUIAction"
 			method="getView">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		<action name="listPointPra" class="cn.edu.cup.gui.action.GUIAction"
+			method="listPointPra">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="editPointPra" class="cn.edu.cup.gui.action.GUIAction"
+			method="updatePointPra">
 
 			<result name="SUCCESS" type="json">
 

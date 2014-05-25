@@ -98,6 +98,10 @@ var Paintings = function() {
 		}
 	
 	}
+	this.hideSelected=function(){
+		this.hide();
+	}
+	
 	this.init=function(){
 		this.p = new Kinetic.Layer({
 			x : 100,

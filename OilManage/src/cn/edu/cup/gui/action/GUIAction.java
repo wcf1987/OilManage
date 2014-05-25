@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.edu.cup.gui.business.GUIPro;
+import cn.edu.cup.gui.business.PointValue;
 import cn.edu.cup.gui.dao.GUIDao;
 import cn.edu.cup.manage.business.AlgorithmJarPlug;
 import cn.edu.cup.manage.business.AlgorithmPro;
@@ -11,15 +12,21 @@ import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.tools.JarTools;
 
 public class GUIAction {
+	GUIPro dataView;
 	int ID;
-	
 	int authorID;
 	String description;
 	Date addDate;
-	
 	String name;
 	List<GUIPro> dataList;
 	
+	String oper;
+	int pointID;
+	int pointPraID;
+	double par_value;
+	List<PointValue> pointPraList;
+	String data;
+	int type;
 	private int page;
 	private int records;
 	private int rows;
@@ -29,7 +36,30 @@ public class GUIAction {
 	private String sord;
 	private List<Integer> ids;
 	
-
+	public int getPointPraID() {
+		return pointPraID;
+	}
+	public void setPointPraID(int pointPraID) {
+		this.pointPraID = pointPraID;
+	}
+	public double getPar_value() {
+		return par_value;
+	}
+	public void setPar_value(double par_value) {
+		this.par_value = par_value;
+	}
+	public int getPointID() {
+		return pointID;
+	}
+	public void setPointID(int pointID) {
+		this.pointID = pointID;
+	}
+	public List<PointValue> getPointPraList() {
+		return pointPraList;
+	}
+	public void setPointPraList(List<PointValue> pointPraList) {
+		this.pointPraList = pointPraList;
+	}
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -46,14 +76,6 @@ public class GUIAction {
 		return ID;
 	}
 	
-
-	
-
-	
-
-	
-
-	
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -67,9 +89,6 @@ public class GUIAction {
 	public Date getAddDate() {
 		return addDate;
 	}
-
-	
-
 	
 	public void setPage(int page) {
 		this.page = page;
@@ -119,20 +138,15 @@ public class GUIAction {
 	public String getSord() {
 		return sord;
 	}
-	GUIPro dataView;
-	public String getView(){		
-
-		GUIDao dao=new GUIDao();
-		
-		
-		
-		dataView=dao.getGUIProView(this.ID);
-
-
-		
-		return "SUCCESS";
+	public int getAuthorID() {
+		return authorID;
 	}
-
+	public void setAuthorID(int authorID) {
+		this.authorID = authorID;
+	}
+	public String getName() {
+		return name;
+	}
 	public List<GUIPro> getDataList() {
 		return dataList;
 	}
@@ -157,17 +171,19 @@ public class GUIAction {
 	public void setType(int type) {
 		this.type = type;
 	}
+	
+	public String getView(){		
+
+		GUIDao dao=new GUIDao();
+		dataView=dao.getGUIProView(this.ID);	
+		return "SUCCESS";
+	}
+
 	public String list(){		
 
 		GUIDao dao=new GUIDao();
-		
-		
-		
 		dataList=dao.getGUIProsList(page,rows,sidx,sord);
-	
 		records=dao.getCountGUIPros();
-
-
 		total=records/rows;
 		if(records%rows!=0){
 			total++;
@@ -175,8 +191,7 @@ public class GUIAction {
 		return "SUCCESS";
 	}
 
-	String data;
-	int type;
+
 	public String add(){
 
 		GUIDao dao=new GUIDao();
@@ -185,17 +200,6 @@ public class GUIAction {
 		return "SUCCESS";
 	}
 
-
-
-	public int getAuthorID() {
-		return authorID;
-	}
-	public void setAuthorID(int authorID) {
-		this.authorID = authorID;
-	}
-	public String getName() {
-		return name;
-	}
 	public String delete(){
 		GUIDao dao=new GUIDao();
 		//AlgorithmInputDao inputDao=new AlgorithmInputDao();
@@ -226,6 +230,25 @@ public class GUIAction {
 		//int re=dao.addAlgorithm(this.ID,this.algID);
 		return "SUCCESS";
 	}
+	
+	/*
+	 * 点的属性
+	 */
+	public String listPointPra(){		
 
+		GUIDao dao=new GUIDao();
+		pointPraList=dao.getPointPraList(pointID,page,rows,sidx,sord);
+		records=dao.getCountPointPras(pointID);
+		total=records/rows;
+		if(records%rows!=0){
+			total++;
+		}
+		return "SUCCESS";
+	}
+	public String updatePointPra(){
+		GUIDao dao=new GUIDao();
+		int re=dao.updatePointPra(ID,this.par_value);
+		return "SUCCESS"; 
+	}
 
 }

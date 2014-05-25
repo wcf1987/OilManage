@@ -45,8 +45,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <link type='text/css' href='./assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 <link rel="stylesheet" media="screen" type="text/css" href="./assets/css/colorPicker_new.css" />
-<!-- <link rel="stylesheet" media="screen" type="text/css" href="./assets/css/jquery.contextMenu.css" /> -->
-
+<link rel="stylesheet" media="screen" type="text/css" href="./assets/css/processui.css" /> 
+ 
 
 <!--[if IE]>
         <script src="./assets/javascript/excanvas.js"></script>
@@ -203,8 +203,13 @@ body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", san
 			</div>
 		
 			<div id="container">
+			
 			</div>
-	
+			<div id="output" style="margin-top:550px;margin-left:115px;border:solid;width:900px;height:250px;">
+				<textarea cols="108" rows="11" id="outputarea" name="outputarea" disabled="">
+				输出testtesttestetsdtgffgfdgfhgdfjhdgjhjhggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+				</textarea>
+			</div>
 
 		<!--Right panel-->
 		<div id="right">
@@ -278,6 +283,9 @@ body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", san
 				}
 			}
 		}
+		function closePraList(){
+			$("#pointPra").hide();
+		}
 	</script>
 	<br />
 	<? //require_once dirname(__FILE__) . '/common/analytics.php';?>
@@ -290,8 +298,57 @@ body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", san
 		<li><a>放大</a></li>
 		<li><a>缩小</a></li>	
 		<li><a>删除该节点</a></li>
+		<li><a>属性</a></li>
     </ul>
-
+    <!-- 属性框 -->
+	<div id="pointPra"  style=" display: none;z-index:100;position:absolute">
+		<div id="pointPraClose" ><span style="font-size:25px;float:right;width:20px;align:center;margin-top:-30px;" onclick="closePraList()">x</span></div>
+		<table id="PointPraList" >
+		</table>
+   		<div>
+   			<div id="PointPraPager" ></div>
+   		</div>	
+		<!-- <div class="dock_view_header">
+			数据属性
+			<div class="ico ico_dock_collapse">x</div>
+		</div>
+		<div class="dock_content" style="padding: 5px 0px 5px;">
+			<div class="attr_add" style="display: block;">
+				<div id="attr_add_btn" class="toolbar_button active" style="width: 120px; display: inline-block;" onclick="Dock.showAttrAdd()">添加数据属性</div>
+				<div class="attr_add_items" style="display: none;">
+					<div class="dock_label" style="width: 50px;">名字:</div>
+					<input id="attr_add_name" type="text" class="input_text" style="float: left; width: 260px;">
+					<div style="height: 5px; clear: both"></div>
+					<div class="dock_label" style="width: 50px;">类型:</div>
+					<select id="attr_add_type" class="input_select" style="float: left; width: 120px;">
+						<option value="string">文本</option>
+						<option value="link">链接</option>
+						<option value="number">数值</option>
+						<option value="date">日期</option>
+						<option value="boolean">布尔</option>
+						<option value="list" style="display:none;">列表</option>
+					</select>
+					<div style="height: 5px; clear: both"></div>
+					<div class="dock_label" style="width: 50px;">值:</div>
+					<div id="attr_add_value_arera" style="float: left;"><input type="text" class="input_text" style="width: 260px;"></div>
+					<div style="height: 5px; clear: both"></div>
+					<div class="toolbar_button active" style="width: 70px;display: inline-block;" onclick="Dock.saveAttrAdd()">确定</div>
+					<div class="toolbar_button active" style="width: 70px;display: inline-block;" onclick="Dock.cancelAttrAdd()">取消</div>
+				</div>
+				<div class="dock_devider"></div>
+			</div>
+			<ul class="attr_list" style="height: auto;list-style:none;">
+				<li id="1454196a3eca09" class="attr_item attr_item_1454196a3eca09" onclick="Dock.editAttr('1454196a3eca09')"><div class="attr_name">序号</div><div class="attr_type">数值</div><div class="attr_value"></div><div style="clear: both"></div></li>
+				<li id="1454196a3ecfc2" class="attr_item attr_item_1454196a3ecfc2" onclick="Dock.editAttr('1454196a3ecfc2')"><div class="attr_name">名称</div><div class="attr_type">文本</div><div class="attr_value"></div><div style="clear: both"></div></li>
+				<li id="1454196a3ec5e3" class="attr_item attr_item_1454196a3ec5e3" onclick="Dock.editAttr('1454196a3ec5e3')"><div class="attr_name">所有者</div><div class="attr_type">文本</div><div class="attr_value"></div><div style="clear: both"></div></li>
+				<li id="1454196a3ec4e9" class="attr_item attr_item_1454196a3ec4e9" onclick="Dock.editAttr('1454196a3ec4e9')"><div class="attr_name">连接</div><div class="attr_type">链接</div><div class="attr_value"></div><div style="clear: both"></div></li>
+				<li id="1454196a3ec9b3" class="attr_item attr_item_1454196a3ec9b3" onclick="Dock.editAttr('1454196a3ec9b3')"><div class="attr_name">便笺</div><div class="attr_type">文本</div><div class="attr_value"></div><div style="clear: both"></div></li>
+			</ul>
+		</div> -->
+	</div>
+		
+		
+		
 	<!-- 新建图形项目的模态框 -->   	
 		<div class="modal fade" id="add_GUI_modal">
 		  <div class="modal-dialog">

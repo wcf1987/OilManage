@@ -1,12 +1,10 @@
-<<<<<<< HEAD
-#Sun Apr 27 21:09:00 CST 2014
-=======
->>>>>>> refs/remotes/origin/master
+#Tue May 13 20:43:12 CST 2014
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=refs/remotes/origin/master
 eclipse.preferences.version=1
 encoding//WebRoot/editor/editor.jsp=UTF-8
 encoding//WebRoot/pages/data.jsp=UTF-8
 encoding//WebRoot/pages/login.jsp=UTF-8
 encoding//WebRoot/pages/register.jsp=UTF-8
-encoding//WebRoot/pages/taxi.jsp=UTF-8
 encoding//WebRoot/pages/testMap.jsp=UTF-8
-encoding//WebRoot/pages/testjTopo.jsp=UTF-8
