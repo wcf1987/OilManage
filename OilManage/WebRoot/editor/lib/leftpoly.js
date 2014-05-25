@@ -114,7 +114,7 @@ var Leftpolys = function() {
 
 			this.polyGroups[k].on('click', this.clickFunc);
 			// polys[k].on('dblclick', dbclickFun);
-
+			this.polyGroups[k].on('dblclick', this.dbclickFun);
 			this.polyGroups[k].on('dragend', this.cloneFun);
 			this.polyGroups[k].on('mousedown touchstart', this.cloneFun2);
 			this.polyGroups[k].on('mouseover', function() {
@@ -132,7 +132,7 @@ var Leftpolys = function() {
 
 	// var platform=null;
 	this.dragFun = function(pos) {
-
+		platform.selectPainting.hasChange();
 		if (checkPoint(pos, platform.centerlayer)) {
 			if (platform.getConnShowed() == false) {
 				showConnect(this);
@@ -140,6 +140,7 @@ var Leftpolys = function() {
 			}
 			poss = checkConn(this);
 			if (poss != null) {
+				
 				this.x(pos.x - poss.x);
 				this.y(pos.y - poss.y);
 				platform.draw();
@@ -174,7 +175,7 @@ var Leftpolys = function() {
 						/ platform.selectPainting.scaleN);
 				this.id(this._id);
 				this.moveTo(platform.selectPainting.p);
-
+				platform.selectPainting.hasChange();
 			}
 
 		} else {
@@ -205,13 +206,26 @@ var Leftpolys = function() {
 
 	this.dbclickFun = function(e) {
 		if (e.type == 'dblclick') {
-			alert('dblclick caidan');
+			$("#contextmenu").hide();
+			var attrtop=this.getAbsolutePosition().y + 100;
+			var attrleft=this.getAbsolutePosition().x + 90;
+			$("#pointPra").css({
+				top :attrtop,
+				left : attrleft,
+
+			}).show();					
+//			clickshape.scale({
+//				x : clickshape.scaleX() / 2,
+//				y : clickshape.scaleY()
+//			});
+			platform.selectPainting.p.draw();
 		}
 
 	};
 
 	this.flag = 0;
 	this.clickFunc = function(e) {
+		if (e.type == 'click') {
 		// 当前位置弹出菜单（div）
 		var attrtop=this.getAbsolutePosition().y + 100;
 		var attrleft=this.getAbsolutePosition().x + 90;
@@ -276,6 +290,7 @@ var Leftpolys = function() {
 					hideALLConnPoints();
 					// $("#contextmenu").hide();
 				});
+	}
 	};
 
 	showALLConnPoints = function() {

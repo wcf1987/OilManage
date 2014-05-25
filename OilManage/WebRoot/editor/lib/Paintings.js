@@ -4,6 +4,18 @@ var connectC=function(){
 }
 var Paintings = function() {
 	this.points=new Array;
+	this.changed=false;
+	this.hasChange=function(){
+		this.changed=true;
+		
+	}
+	this.clearChange=function(){
+		this.changed=false;
+		
+	}
+	this.getChange=function(){
+		return this.changed;
+	}
 	this.connects=new Array;
 	this.addPoints=function(p){
 		this.points.push(p);

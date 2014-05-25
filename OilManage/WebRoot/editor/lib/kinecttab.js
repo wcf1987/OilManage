@@ -255,7 +255,39 @@ var TabTools=function (){
 			},
 			success : function(data) {
 				alert('图形化保存成功!');
+				platform.selectPainting.clearChange();
+				//$('#addAlgorithmInput_modal').modal('hide');
+				//$("#AlgorithmInputList").trigger("reloadGrid");			
+			},
+			error:function(msg){
+				alert(msg);
+				//$('#addAlgorithmInput_modal').modal('hide');
+				//$("#AlgorithmList").trigger("reloadGrid");
+			}
+		});
+	}
+	
+	function updateGUIByIndex(index){
 		
+		paintingtemp=platform.getPaintingByIndex(index);
+		paintingtemp.updateConnects();
+		paintingtemp.updatePoints();
+		jsondata=paintingtemp.p.toJSON();
+		console.log(jsondata);
+		s=JSON.stringify(paintingtemp.connects);
+		console.log(s);
+		$.ajax({
+			type : 'POST',
+			url : 'updateGUIPro.action',
+			data : {			
+				data:jsondata,
+				Points:JSON.parse(JSON.stringify(paintingtemp.points)),
+				Conns: s,
+				ID:$('#selectedID').val(),
+			},
+			success : function(data) {
+				alert('图形化保存成功!');
+				paintingtemp.clearChange();
 				//$('#addAlgorithmInput_modal').modal('hide');
 				//$("#AlgorithmInputList").trigger("reloadGrid");			
 			},
@@ -326,6 +358,12 @@ var TabTools=function (){
 	this.hidePainting=function(obj,paintingIndex){
 //		$("#paintingTabs").children().removeClass("active");
 //		$(obj).parent().removeClass("active");
+		if(platform.getPaintingByIndex(paintingIndex).getChange()){
+			if(confirm("you have change the project ,do you save")){
+				updateGUIByIndex(paintingIndex);
+			}
+			
+		}
 		$(obj).parent().remove();
 //		platform.selectPainting.saveScroll();
 		platform.hidePainting(paintingIndex);

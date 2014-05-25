@@ -28,6 +28,20 @@ public class GUIAction {
 	
 	String oper;
 	int pointID;
+	int pro_id;
+	String pointType;
+	public String getPointType() {
+		return pointType;
+	}
+	public int getPro_id() {
+		return pro_id;
+	}
+	public void setPro_id(int pro_id) {
+		this.pro_id = pro_id;
+	}
+	public void setPointType(String pointType) {
+		this.pointType = pointType;
+	}
 	int pointPraID;
 	double par_value;
 	List<PointValue> pointPraList;
@@ -312,8 +326,8 @@ public class GUIAction {
 	public String listPointPra(){		
 
 		GUIDao dao=new GUIDao();
-		pointPraList=dao.getPointPraList(pointID,page,rows,sidx,sord);
-		records=dao.getCountPointPras(pointID);
+		pointPraList=dao.getPointPraList(this.pro_id,this.name,this.pointType,page,rows,sidx,sord);
+		records=dao.getCountPointPras(this.pointType);
 		total=records/rows;
 		if(records%rows!=0){
 			total++;

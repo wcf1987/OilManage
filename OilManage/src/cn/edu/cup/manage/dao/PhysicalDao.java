@@ -118,7 +118,7 @@ public class PhysicalDao {
 	
 	}
 	
-	private  void close()
+	public  void close()
 	{
 		tx.commit();
 		session.close();

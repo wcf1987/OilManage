@@ -405,6 +405,10 @@ var Platform=function(){
 		this.selectPainting.showSelected();
 		this.stage.draw();
 	}
+	this.getPaintingByIndex=function(index){
+		return this.selectPainting=this.paintingArray[index];
+	
+	}
 	this.hidePainting=function(index){
 		this.selectPainting=this.paintingArray[index];
 		this.selectPainting.hideSelected();

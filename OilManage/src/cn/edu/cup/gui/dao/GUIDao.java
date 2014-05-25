@@ -17,6 +17,9 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import cn.edu.cup.gui.business.GUIPro;
 import cn.edu.cup.gui.business.PointValue;
 import cn.edu.cup.manage.business.CalcInfo;
+import cn.edu.cup.manage.business.Measure;
+import cn.edu.cup.manage.dao.ParameterDao;
+import cn.edu.cup.manage.dao.PhysicalDao;
 
 public class GUIDao {
 
@@ -44,12 +47,30 @@ public class GUIDao {
 		tx = session.beginTransaction();
 	}
 	
-	public List<PointValue> getPointPraList(int pointID,int page, int rows,
+	public List<PointValue> getPointPraList(int pro_id,String name,String type,int page, int rows,
 			String sidx, String sord) {
-		SQLQuery q = session.createSQLQuery("select t1.id,t1.par_name,t1.par_display,t1.par_value,t1.par_ISOValue,t3.CName,t3.Symbol from t_guipointvalue t1,t_guipoint t2,t_measure t3 WHERE t1.point_id=t2.id and t1.par_messID=t3.ID and t1.point_id=? order by t1."+sidx+" "+sord);
-		q.setParameter(0, pointID);
-		q.setFirstResult((page-1)*rows);
-		q.setMaxResults(rows);
+		String sql="select count(*) from t_guipointvalue t where t.pro_id=? and t.point_name=? and t.point_type=?";
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, pro_id);
+		q.setParameter(1, name);
+		q.setParameter(2, type);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		if(count==0){
+			q = session.createSQLQuery("insert INTO t_guipointvalue (pro_id,point_name,point_type,proper_id,par_value,par_ISOValue,point_id) select ?,?,t1.point_type,t1.id,0,0,0 from t_guipointproper t1 where t1.point_type=?");
+			q.setParameter(0, pro_id);
+			q.setParameter(1, name);
+			q.setParameter(2, type);
+			q.executeUpdate();
+		}
+			q = session.createSQLQuery("select t1.id,t2.par_name,t2.par_display,t1.par_value,t1.par_ISOValue,t3.CName,t3.Symbol from t_guipointvalue t1,t_guipointproper t2,t_measure t3 WHERE t1.proper_id=t2.id and t2.par_messID=t3.ID and t1.point_name=? and t1.pro_id=? and t1.point_type=? order by t1."+sidx+" "+sord);
+			q.setParameter(0, name);
+			q.setParameter(1, pro_id);
+			q.setParameter(2, type);
+			q.setFirstResult((page-1)*rows);
+			q.setMaxResults(rows);
+		
+		
+
 		List l = q.list();
 		List<PointValue> re=new ArrayList<PointValue>();
 		for(int i=0;i<l.size();i++)
@@ -75,11 +96,11 @@ public class GUIDao {
 		return re;
 	}
 	
-	public int getCountPointPras(int pointID) {
+	public int getCountPointPras(String pointType) {
 		// TODO Auto-generated method stub
-		String sql="select count(*) from t_guipointvalue t where t.point_id=?";
+		String sql="select count(*) from t_guipointproper t where t.point_type=?";
 		SQLQuery q = session.createSQLQuery(sql);
-		q.setParameter(0, pointID);
+		q.setParameter(0, pointType);
 		Integer count=((BigInteger)q.uniqueResult()).intValue();
 		return count;
 
@@ -88,9 +109,20 @@ public class GUIDao {
 	public int updatePointPra(int iD, double par_value) {
 		// TODO Auto-generated method stub
 //		Date modifyTime=new Date();
-		SQLQuery q = session.createSQLQuery("update t_guipointvalue t set par_value=? where t.ID=?");
-		q.setParameter(1, iD);
+		String sql="select t1.par_messID from t_guipointproper t1,t_guipointvalue t2 where t2.id=? and t2.proper_id=t1.id";
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, iD);
+		Integer messid=((BigInteger)q.uniqueResult()).intValue();
+		
+		
+		PhysicalDao phydao=new PhysicalDao();
+		Measure m=phydao.getMess(messid);
+		double ISOvalue=m.getRatioA()*par_value+m.getRatioB();
+		phydao.close();
+		q = session.createSQLQuery("update t_guipointvalue t set par_value=?, par_ISOvalue=? where t.ID=?");
+		q.setParameter(2, iD);
 		q.setParameter(0, par_value);
+		q.setParameter(1, ISOvalue);
 		int re=q.executeUpdate();
 		tx.commit();
 		return re;
@@ -260,18 +292,44 @@ public class GUIDao {
 		q.setParameter(5, addDate);
 		int result=q.executeUpdate();
 		
+		
+		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()");
+		int ret_id = ((BigInteger) q2.uniqueResult()).intValue();
+		
+		
+		q = session.createSQLQuery("UPDATE t_guipointvalue t set t.point_id=? where t.pro_id=? and t.point_name=? and t.point_type=? ");
+		q.setParameter(0, ret_id);
+		q.setParameter(1, iD);
+		q.setParameter(2, name);
+		q.setParameter(3, typeName);
+		result=q.executeUpdate();
 	}
 
 	public void addConnect(int iD, String left, String right,Date addDate) {
 		// TODO Auto-generated method stub
-		
-		Query q = session.createSQLQuery("insert into t_guiconnect (pro_id,pointleft,pointright,statusNow,updateTime) values (?,?,?,?,?)");
+		int left_id=getPointIDByName(left,iD);
+		int right_id=getPointIDByName(right,iD);
+		Query q = session.createSQLQuery("insert into t_guiconnect (pro_id,left_id,pointleft,right_id,pointright,statusNow,updateTime) values (?,?,?,?,?,?,?)");
 		q.setParameter(0, iD);
-		q.setParameter(1, left);
-		q.setParameter(2, right);
-		q.setParameter(3, 1);
-		q.setParameter(4, addDate);
+		q.setParameter(1, left_id);
+		q.setParameter(2, left);
+		q.setParameter(3, right_id);
+		q.setParameter(4, right);
+		q.setParameter(5, 1);
+		q.setParameter(6, addDate);
 		int result=q.executeUpdate();
+	}
+	public int getPointIDByName(String name,int pro_id) {
+		// TODO Auto-generated method stub
+		
+		Query q=session.createSQLQuery("select t1.id from t_guipoint t1 where t1.pro_id=? and t1.statusNow=1 and t1.name=?");
+		q.setParameter(0, pro_id);
+
+		q.setParameter(1, name);
+
+		int result=0;
+		result=(Integer) q.uniqueResult(); 
+		return result;
 	}
 
 
