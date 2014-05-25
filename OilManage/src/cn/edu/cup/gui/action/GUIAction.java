@@ -1,14 +1,20 @@
 package cn.edu.cup.gui.action;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import cn.edu.cup.gui.business.GUIConnect;
+import cn.edu.cup.gui.business.GUIPoint;
 import cn.edu.cup.gui.business.GUIPro;
-import cn.edu.cup.gui.business.PointValue;
 import cn.edu.cup.gui.dao.GUIDao;
+import cn.edu.cup.manage.dao.AlgorithmProDao;
+import cn.edu.cup.gui.business.PointValue;
 import cn.edu.cup.manage.business.AlgorithmJarPlug;
 import cn.edu.cup.manage.business.AlgorithmPro;
-import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.tools.JarTools;
 
 public class GUIAction {
@@ -138,14 +144,17 @@ public class GUIAction {
 	public String getSord() {
 		return sord;
 	}
-	public int getAuthorID() {
-		return authorID;
-	}
-	public void setAuthorID(int authorID) {
-		this.authorID = authorID;
-	}
-	public String getName() {
-		return name;
+	public String getView(){		
+
+		GUIDao dao=new GUIDao();
+		
+		
+		
+		dataView=dao.getGUIProView(this.ID);
+
+
+		
+		return "SUCCESS";
 	}
 	public List<GUIPro> getDataList() {
 		return dataList;
@@ -171,14 +180,6 @@ public class GUIAction {
 	public void setType(int type) {
 		this.type = type;
 	}
-	
-	public String getView(){		
-
-		GUIDao dao=new GUIDao();
-		dataView=dao.getGUIProView(this.ID);	
-		return "SUCCESS";
-	}
-
 	public String list(){		
 
 		GUIDao dao=new GUIDao();
@@ -190,8 +191,61 @@ public class GUIAction {
 		}
 		return "SUCCESS";
 	}
+	List<String> Points;
+	List<String> Conns;
+	public List<String>  getPoints() {
+		return Points;
+	}
+	public void setPoints(List<String>  points) {
+		Points = points;
+		this.guiPoints=new LinkedList<GUIPoint>();
+		 try{
+		 for(int i=0;i<points.size();i++){ 
+			 JSONObject jsonObject2 =JSONObject.fromObject(points.get(i)).getJSONObject("attrs");
+			 
+			 String name=jsonObject2.getString("id");
+			 String typename=jsonObject2.getString("name");
+			 int type=GUIPoint.getTypeInt(typename);
+			 GUIPoint pointInfo = new GUIPoint(name,typename,type); 
+			 this.guiPoints.add(pointInfo);
+		 }
+		 }catch(Exception  e){
+			e.printStackTrace(); 
+		 }
+	}
+	public List<String> getConns() {
+		return Conns;
+	}
+	public void setConns(List<String> conns) {
+		Conns = conns;
+ 		this.guiConns=new LinkedList<GUIConnect>();
+ 		//String temp=conns.get(0).replace("[", "").replace("]", "");
+ 		JSONArray array =JSONArray.fromObject(conns.get(0));
+		 try{
+		 for(int i=0;i<array.size();i++){ 
+			 Map<String,String> o=(Map<String,String>)array.get(i);
+			 
+			 
+			 String left=String.valueOf(o.get("left"));
+			 String right=String.valueOf(o.get("right"));
+			 GUIConnect connInfo = new GUIConnect(left,right); 
+			 this.guiConns.add(connInfo);
+		 }
+		 }catch(Exception  e){
+			e.printStackTrace(); 
+		 }
+	}
+	public List<GUIPoint> getGuiPoints() {
+		return guiPoints;
+	}
+	
+	public List<GUIConnect> getGuiConns() {
+		return guiConns;
+	}
 
-
+	List<GUIPoint> guiPoints;
+	List<GUIConnect> guiConns;
+	
 	public String add(){
 
 		GUIDao dao=new GUIDao();
@@ -199,7 +253,15 @@ public class GUIAction {
 		ID=dao.addPro(this.description,this.name,this.data,new Date(),this.authorID,this.type);
 		return "SUCCESS";
 	}
-
+	public int getAuthorID() {
+		return authorID;
+	}
+	public void setAuthorID(int authorID) {
+		this.authorID = authorID;
+	}
+	public String getName() {
+		return name;
+	}
 	public String delete(){
 		GUIDao dao=new GUIDao();
 		//AlgorithmInputDao inputDao=new AlgorithmInputDao();
@@ -217,8 +279,20 @@ public class GUIAction {
 	}
 	public String update(){
 		GUIDao dao=new GUIDao();
-		int re=dao.updatePro(ID,this.data);
-		return "SUCCESS"; 
+		Date addDate=new Date();
+		int k=dao.updatePro(ID,this.data,addDate);
+		
+		dao.clearOld(ID);
+		for(int i=0;i<guiPoints.size();i++){
+			GUIPoint temp=guiPoints.get(i);
+			dao.addPoint(ID,temp.getName(),temp.getType(),temp.getTypeName(),addDate);
+		}
+		for(int i=0;i<guiConns.size();i++){
+			GUIConnect temp=guiConns.get(i);
+			dao.addConnect(ID,temp.getLeft(),temp.getRight(),addDate);
+		}
+		dao.close();
+		return "SUCCESS";
 	}
 	public String searchProAlg(){
 		AlgorithmProDao dao=new AlgorithmProDao();
