@@ -78,7 +78,7 @@ var Leftpolys = function() {
 			this.polyGroups[k] = new Kinetic.Group({
 				x : this.polys[k].x(),
 				y : this.polys[k].y(),
-
+				name:this.polys[k].name(),
 				draggable : true
 
 			});
@@ -105,6 +105,7 @@ var Leftpolys = function() {
 			this.polys[k].x(0);
 			this.polys[k].y(0);
 			this.polyGroups[k].add(this.polys[k]);
+			
 			this.polyGroups[k].add(connPointsLeft);
 			this.polyGroups[k].add(connPointsRight);
 			connPointsLeft.hide();
@@ -171,6 +172,7 @@ var Leftpolys = function() {
 						/ platform.selectPainting.scaleN);
 				this.y((this.y() - platform.selectPainting.my)
 						/ platform.selectPainting.scaleN);
+				this.id(this._id);
 				this.moveTo(platform.selectPainting.p);
 
 			}
