@@ -7,6 +7,10 @@ var Paintings = function() {
 	this.changed=false;
 	this.hasChange=function(){
 		this.changed=true;
+//		alert(1);
+		if($(".active > a:first").children().length==0){
+			$(".active > a:first").append("<span>*</span>");
+		}
 		
 	}
 	this.clearChange=function(){

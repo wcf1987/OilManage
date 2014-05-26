@@ -370,6 +370,7 @@ var Platform=function(){
 		
 	}
 	this.paintingArray=new Array;
+	
 	this.addLoadPainting=function(newone) {
 		paintings=new Paintings();
 		paintings.init()

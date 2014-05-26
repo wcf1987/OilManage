@@ -285,6 +285,7 @@ body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", san
 		}
 		function closePraList(){
 			$("#pointPra").hide();
+
 		}
 	</script>
 	<br />

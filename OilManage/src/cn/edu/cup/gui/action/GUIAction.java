@@ -24,12 +24,17 @@ public class GUIAction {
 	String description;
 	Date addDate;
 	String name;
+	String nameFlag;//判断项目名字是否已经存在
 	List<GUIPro> dataList;
 	
 	String oper;
 	int pointID;
 	int pro_id;
 	String pointType;
+	
+	public String getNameFlag() {
+		return nameFlag;
+	}
 	public String getPointType() {
 		return pointType;
 	}
@@ -264,8 +269,14 @@ public class GUIAction {
 	public String add(){
 
 		GUIDao dao=new GUIDao();
-
-		ID=dao.addPro(this.description,this.name,this.data,new Date(),this.authorID,this.type);
+		int searchByNameCou=dao.searchProByName(this.name);
+		if(searchByNameCou>0){
+			nameFlag="true";
+		}else{
+			nameFlag="false";
+			ID=dao.addPro(this.description,this.name,this.data,new Date(),this.authorID,this.type);
+		}
+		
 		return "SUCCESS";
 	}
 	public int getAuthorID() {
@@ -283,7 +294,6 @@ public class GUIAction {
 		if(!ids.isEmpty()){
 
 			for(int id:ids){
-				
 				dao.deletePro(id);
 			}
 		}

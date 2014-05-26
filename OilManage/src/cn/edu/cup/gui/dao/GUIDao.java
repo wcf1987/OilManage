@@ -92,7 +92,7 @@ public class GUIDao {
 			  
 			  re.add(p);
 		}
-		
+		tx.commit();
 		return re;
 	}
 	
@@ -109,10 +109,12 @@ public class GUIDao {
 	public int updatePointPra(int iD, double par_value) {
 		// TODO Auto-generated method stub
 //		Date modifyTime=new Date();
-		String sql="select t1.par_messID from t_guipointproper t1,t_guipointvalue t2 where t2.id=? and t2.proper_id=t1.id";
+		String sql="select max(t1.par_messID) from t_guipointproper t1,t_guipointvalue t2 where t2.id=? and t2.proper_id=t1.id ";
 		SQLQuery q = session.createSQLQuery(sql);
 		q.setParameter(0, iD);
-		Integer messid=((BigInteger)q.uniqueResult()).intValue();
+//		Object a = q.uniqueResult();
+		
+		Integer messid= (Integer) q.uniqueResult();
 		
 		
 		PhysicalDao phydao=new PhysicalDao();
@@ -196,6 +198,7 @@ public class GUIDao {
 		
 		return re;
 	}
+	
 	public int searchProAlg(int proID){
 		Query q=session.createSQLQuery("select t.algorithm_id from t_projects t where t.ID=?");
 		q.setParameter(0, proID);
@@ -247,7 +250,14 @@ public class GUIDao {
 		
 		
 	}
-
+	
+	public int searchProByName(String name){
+		Query searchQuery = session.createSQLQuery("select count(t.id) from t_guipro t where t.name=?");
+		searchQuery.setParameter(0, name);
+		int searchCou=((BigInteger)searchQuery.uniqueResult()).intValue();
+		return searchCou;
+	}
+	
 	public int addPro(String description,String name, String data, Date date, int authorID,int type) {
 		Date addDate=new Date();
 		Query q = session.createSQLQuery("insert into t_guipro (description,authorID,addtime,name,type) values (?,?,?,?,?)");
@@ -256,8 +266,7 @@ public class GUIDao {
 		q.setParameter(2, addDate);
 		q.setParameter(3, name);
 		q.setParameter(4, type);
-		int result=q.executeUpdate();
-		
+		int result=q.executeUpdate();	
 		
 		int ret_id = 0;
 		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()");

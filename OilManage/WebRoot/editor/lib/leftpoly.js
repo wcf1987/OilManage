@@ -226,71 +226,75 @@ var Leftpolys = function() {
 	this.flag = 0;
 	this.clickFunc = function(e) {
 		if (e.type == 'click') {
+			var clickshape = e.target.getParent();
+			point_name=clickshape.id();
+			point_type=clickshape.name();
 		// 当前位置弹出菜单（div）
-		var attrtop=this.getAbsolutePosition().y + 100;
-		var attrleft=this.getAbsolutePosition().x + 90;
-		$("#contextmenu").css({
-			top : this.getAbsolutePosition().y + 100,
-			left : this.getAbsolutePosition().x + 90,
-
-		}).show();
-		var clickshape = e.target.getParent();
-		var flagin = leftpoly.flag;// 当前序列
-		leftpoly.flag++;
-		/* 右键菜单处理 */
-		$("#contextmenu a").click(
-				function() {
-					if (flagin != leftpoly.flag - 1) {
-						return;
-					}
-
-					var text = $(this).text();
-					if (text == '删除该节点') {
-
-						clickshape.destroy();
-						$("#contextmenu").hide();
-
-						platform.selectPainting.p.draw();
-					} else if (text == '更改颜色') {
-						node.style.fillStyle = Math.floor(Math.random() * 250)
-								+ "," + Math.floor(Math.random() * 250) + ","
-								+ Math.floor(Math.random() * 250);
-					} else if (text == '顺时针旋转90°') {
-						clickshape.rotate(90);
-						// centerlayer.draw(this);
-						platform.selectPainting.p.draw();
-					} else if (text == '逆时针旋转90°') {
-						clickshape.rotate(-90);
-						// centerlayer.draw(this);
-						platform.selectPainting.p.draw();
-					} else if (text == '放大') {
-						clickshape.scale({
-							x : clickshape.scaleX() * 2,
-							y : clickshape.scaleY()
-						});
-						platform.selectPainting.p.draw();
-					} else if (text == '缩小') {
-						clickshape.scale({
-							x : clickshape.scaleX() / 2,
-							y : clickshape.scaleY()
-						});
-						platform.selectPainting.p.draw();
-					}else if (text == '属性') {
-						$("#pointPra").css({
-							top :attrtop,
-							left : attrleft,
-
-						}).show();					
-//						clickshape.scale({
-//							x : clickshape.scaleX() / 2,
-//							y : clickshape.scaleY()
-//						});
-						platform.selectPainting.p.draw();
-					}
-					hideALLConnPoints();
-					// $("#contextmenu").hide();
-				});
-	}
+			var attrtop=this.getAbsolutePosition().y + 100;
+			var attrleft=this.getAbsolutePosition().x + 90;
+			$("#contextmenu").css({
+				top : this.getAbsolutePosition().y + 100,
+				left : this.getAbsolutePosition().x + 90,
+	
+			}).show();
+//			var clickshape = e.target.getParent();
+			var flagin = leftpoly.flag;// 当前序列
+			leftpoly.flag++;
+			/* 右键菜单处理 */
+			$("#contextmenu a").click(
+					function() {
+						if (flagin != leftpoly.flag - 1) {
+							return;
+						}
+	
+						var text = $(this).text();
+						if (text == '删除该节点') {
+	
+							clickshape.destroy();
+							$("#contextmenu").hide();
+	
+							platform.selectPainting.p.draw();
+						} else if (text == '更改颜色') {
+							node.style.fillStyle = Math.floor(Math.random() * 250)
+									+ "," + Math.floor(Math.random() * 250) + ","
+									+ Math.floor(Math.random() * 250);
+						} else if (text == '顺时针旋转90°') {
+							clickshape.rotate(90);
+							// centerlayer.draw(this);
+							platform.selectPainting.p.draw();
+						} else if (text == '逆时针旋转90°') {
+							clickshape.rotate(-90);
+							// centerlayer.draw(this);
+							platform.selectPainting.p.draw();
+						} else if (text == '放大') {
+							clickshape.scale({
+								x : clickshape.scaleX() * 2,
+								y : clickshape.scaleY()
+							});
+							platform.selectPainting.p.draw();
+						} else if (text == '缩小') {
+							clickshape.scale({
+								x : clickshape.scaleX() / 2,
+								y : clickshape.scaleY()
+							});
+							platform.selectPainting.p.draw();
+						}else if (text == '属性') {
+							$("#contextmenu").hide();
+							pro_id=$(".active > input[name='proID']").val();
+//							name=clickshape.id();
+//							typename=clickshape.name();
+							showPrameter(point_name,pro_id,point_type,attrtop,attrleft);
+									
+	//						clickshape.scale({
+	//							x : clickshape.scaleX() / 2,
+	//							y : clickshape.scaleY()
+	//						});
+							platform.selectPainting.p.draw();
+						}
+						hideALLConnPoints();
+						// $("#contextmenu").hide();
+					});
+		}
 	};
 
 	showALLConnPoints = function() {
@@ -372,4 +376,85 @@ var Leftpolys = function() {
 		}
 		return re;
 	}
+	
+
+	/*
+	 * 属性编辑列表
+	 */
+	 showPrameter=function(point_name,pro_id,point_type,attrtop,attrleft){
+//		$("#PointPraList").empty();
+		 this.datagrid =jQuery("#PointPraList").jqGrid({
+		   	url:'listPointPra.action',
+			datatype: "json",
+			mtype : 'POST',
+		   	colNames:['ID','属性中文名称', '属性英文名称', '属性值','属性ISO值','单位名称','单位符号','操作'],
+		   	colModel:[
+		   		{name:'ID',index:'ID', width:55,align:"center",hidden:true,editable:true},
+		   		{name:'par_display',index:'par_display', width:120, align:"center"},
+		   		{name:'par_name',index:'par_name', width:100,align:"center",hidden:true},
+		   		{name:'par_value',index:'par_value', width:80, align:"center",editable:true},
+		   		{name:'par_ISOValue',index:'par_ISOValue', width:100, align:"center",hidden:true,editable:true},		
+		   		{name:'measure_CName',index:'measure_CName', width:80,align:"center"},		
+		   		{name:'measure_Symbol',index:'measure_Symbol', width:150, align:"center"},
+		   		{name:'act',index:'act', width:75,sortable:false}
+		   	],
+		   	width:530,
+		   	rowNum:10,
+		   	rowList:[10,20,30],
+//		   	pager: '#PointPraPager',
+		   	sortname: 'id',
+		    viewrecords: true,
+		    sortorder: "desc",
+			gridComplete: function(){
+				var ids = jQuery("#PointPraList").jqGrid('getDataIDs');
+				for(var i=0;i < ids.length;i++){
+					var cl = ids[i];
+					be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#PointPraList').editRow('"+cl+"');\"  />"; 
+					se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#PointPraList').saveRow('"+cl+"');\"  />"; 
+					ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#PointPraList').restoreRow('"+cl+"');\" />"; 
+					jQuery("#PointPraList").jqGrid('setRowData',ids[i],{act:be+se+ce});
+				}	
+			},
+			editurl: "editPointPra.action",
+			caption: "属性列表",
+			postData:{
+				name:point_name,//相当于pointID
+				pro_id:pro_id,
+				pointType:point_type,
+//				pointID:1,
+				pointPraID:$("#gridTable").jqGrid("getRowData", $("#gridTable").jqGrid("getGridParam", "selrow")).ID
+		    },
+			jsonReader: {//读取后端json数据的格式
+				root: "pointPraList",//保存详细记录的名称
+				total: "total",//总共有多少页
+				page: "page",//当前是哪一页
+				records: "records",//总共记录数
+				repeatitems: false
+			},
+		});
+		 $('#PointPraList').trigger("reloadGrid");
+	/*		jQuery("#PointPraList").jqGrid('navGrid',"#PointPraPager",{edit:true,add:false,del:false});
+		jQuery("#PointPraList").jqGrid('inlineNav',"#PointPraPager");
+		jQuery("#PointPraList").jqGrid('navButtonAdd',"#PointPraPager",{
+			title:'编辑',
+			caption:"编辑",	
+			id:"updatePraVal",
+			onClickButton:updatePraVal,
+			position:"last"
+		});*/
+//		var attrtop=this.getAbsolutePosition().y + 100;
+//		var attrleft=this.getAbsolutePosition().x + 90;
+//		$("#pointPra").css({
+//			top :attrtop,
+//			left : attrleft,
+//		}).show();
+		$("#pointPra").css({
+			top :attrtop,
+			left : attrleft,
+		}).show();	
+		
+	}
+		
+	
 }
+
