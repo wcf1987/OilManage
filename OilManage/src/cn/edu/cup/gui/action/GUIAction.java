@@ -24,6 +24,7 @@ public class GUIAction {
 	String description;
 	Date addDate;
 	String name;
+	String pointName;
 	String nameFlag;//判断项目名字是否已经存在
 	List<GUIPro> dataList;
 	
@@ -32,6 +33,12 @@ public class GUIAction {
 	int pro_id;
 	String pointType;
 	
+	public String getPointName() {
+		return pointName;
+	}
+	public void setPointName(String pointName) {
+		this.pointName = pointName;
+	}
 	public String getNameFlag() {
 		return nameFlag;
 	}
@@ -336,7 +343,7 @@ public class GUIAction {
 	public String listPointPra(){		
 
 		GUIDao dao=new GUIDao();
-		pointPraList=dao.getPointPraList(this.pro_id,this.name,this.pointType,page,rows,sidx,sord);
+		pointPraList=dao.getPointPraList(this.pro_id,this.pointName,this.pointType,page,rows,sidx,sord);
 		records=dao.getCountPointPras(this.pointType);
 		total=records/rows;
 		if(records%rows!=0){
