@@ -238,7 +238,6 @@ var Platform=function(){
 		    	}
 		    }
 		    platform.selectPainting.p.draw();
-		    platform.selectPainting.initPoint();
 		}
 	this.addLeft=function(left){
 		left.platform=this;
