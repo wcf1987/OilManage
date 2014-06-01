@@ -180,37 +180,14 @@ var TabTools=function (){
 		}		
 	}
 	function updateGUI(){
-		jsondata=platform.selectPainting.p.toJSON();
-		console.log(jsondata);
-		s=JSON.stringify(platform.selectPainting.connects);
-		console.log(s);
-		$.ajax({
-			type : 'POST',
-			url : 'updateGUIPro.action',
-			data : {			
-				data:jsondata,
-				Points:JSON.parse(JSON.stringify(platform.selectPainting.points)),
-				Conns: s,
-				ID:$('#selectedID').val(),
-			},
-			success : function(data) {
-				alert('图形化保存成功!');
-				platform.selectPainting.clearChange();
-				if($(".active > a:first").children().length>0){
-					$(".active > a:first").children().remove();
-				}
-				//$('#addAlgorithmInput_modal').modal('hide');
-				//$("#AlgorithmInputList").trigger("reloadGrid");			
-			},
-			error:function(msg){
-				alert(msg);
-				//$('#addAlgorithmInput_modal').modal('hide');
-				//$("#AlgorithmList").trigger("reloadGrid");
-			}
-		});
+		paintingtemp=platform.selectPainting;
+		updateGUIByPaint(paintingtemp);
 	}
-	
 	function updateGUIByIndex(index){
+		paintingtemp=platform.getPaintingByIndex(index);
+		updateGUIByPaint(paintingtemp);
+	}
+	function updateGUIByPaint(paintingtemp){
 		
 		paintingtemp=platform.getPaintingByIndex(index);
 		paintingtemp.updateConnects();
@@ -226,6 +203,8 @@ var TabTools=function (){
 				data:jsondata,
 				Points:JSON.parse(JSON.stringify(paintingtemp.points)),
 				Conns: s,
+				scaleN:paintingtemp.scaleN,
+				
 				ID:$('#selectedID').val(),
 			},
 			success : function(data) {
@@ -279,7 +258,8 @@ var TabTools=function (){
 					//alert(saveData);
 					//console.log(saveData['JSONData']);
 					newone=Kinetic.Node.create(saveData);
-					index=platform.addLoadPainting(newone);				
+					scalN=data['dataView']['scalN'];
+					index=platform.addLoadPainting(newone,scalN);				
 					createTab(data['dataView']['proname'],index,selectedID);
 					//createNewTab(data['dataView']['proname']);
 					platform.stage.draw();

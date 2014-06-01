@@ -12,10 +12,13 @@ function initLight() {
 	paintings=new Paintings();
 	platform.addPainting(paintings.init());
 	tabtools=new TabTools();
-	$('#container').bind('mousewheel MozMousePixelScroll',    function(event, delta, deltaX, deltaY){
-		    event.preventDefault();
-		    onMouseWheel(event,delta,deltaX,deltaY);
-		  });
+	initMouseWheel();
+
+	
+	//$('#container').bind('mousewheel MozMousePixelScroll',    function(event, delta, deltaX, deltaY){
+	//	    event.preventDefault();
+	//	    onMouseWheel(event,delta,deltaX,deltaY);
+	//	  });
 	$('#load_modal').modal({
 		     backdrop:true,
 		     keyboard:false,

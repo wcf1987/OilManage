@@ -238,7 +238,7 @@ var Platform=function(){
 		    	}
 		    }
 		    platform.selectPainting.p.draw();
-		    platform.selectPainting.p.moveToTop();
+		    platform.selectPainting.initPoint();
 		}
 	this.addLeft=function(left){
 		left.platform=this;
@@ -371,12 +371,15 @@ var Platform=function(){
 	}
 	this.paintingArray=new Array;
 	
-	this.addLoadPainting=function(newone) {
+	this.addLoadPainting=function(newone,scalN) {
 		paintings=new Paintings();
-		paintings.init()
+		paintings.init();
 		paintings.p=newone;
+		paintings.initPoint();
+		paintings.scaleN=scalN;
 		this.addPainting(paintings);
 		this.paintingArray.push(paintings);
+		
 		this.selectPainting.showSelected();
 		/*
 		 *加载模型后为每个元素添加 事件 
