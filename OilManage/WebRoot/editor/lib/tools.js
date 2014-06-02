@@ -27,30 +27,10 @@ function clickLoad(s){
 }
 
 function onMouseWheel(e, delta,dx,dy) {
-	  
-	  // mozilla fix...
-	  if (e.originalEvent.detail){
-	    delta = e.originalEvent.detail;
-	  }
-	  else{
-	    delta = e.originalEvent.wheelDelta;
-	  }
-	  
-			if (delta !== 0) {
-				e.preventDefault();
-			}
 
-			var cur_scale;
-			if (delta > 0) {
-				cur_scale = (Math.abs(delta / 640)/0.075)*1.25;
-			} else {
-				cur_scale = (Math.abs(delta / 640)/0.075)*0.8;
-			}
+
+
 			
-
-
-				platform.scaleCenter(cur_scale);
-				platform.draw();
 			
 
 		}
@@ -73,3 +53,35 @@ function checkCircle(v1,v2,length){
 			return false;
 		}
 };
+function getTimeByS(){
+
+	 var now= new Date();
+	   var year=now.getYear();
+	   var month=now.getMonth()+1;
+	   var day=now.getDate();
+	   var hour=now.getHours();
+	   var minute=now.getMinutes();
+	   var second=now.getSeconds();
+	   var milSecond = now.getMilliseconds();
+	   var divid = year+""+month+""+day+""+hour+""+minute+""+second +""+milSecond ;
+	return divid;
+};
+function initMouseWheel(){
+	 $('#container').bind('mousewheel', function(event) {
+	      event.preventDefault();
+	      event.stopPropagation();
+	      var deltaY=event.deltaY;
+	      var cur_scale=0;
+	      if (deltaY > 0) {
+				cur_scale = 1.25;
+				
+			} else {
+				cur_scale = 0.8;
+				
+			}
+			
+			
+				platform.scaleCenter(cur_scale);
+				platform.draw();
+	    });
+}

@@ -27,12 +27,18 @@ public class GUIAction {
 	String pointName;
 	String nameFlag;//判断项目名字是否已经存在
 	List<GUIPro> dataList;
-	
+	String scaleN;
 	String oper;
 	int pointID;
 	int pro_id;
 	String pointType;
 	
+	public String getScaleN() {
+		return scaleN;
+	}
+	public void setScaleN(String scaleN) {
+		this.scaleN = scaleN;
+	}
 	public String getPointName() {
 		return pointName;
 	}
@@ -312,7 +318,8 @@ public class GUIAction {
 	public String update(){
 		GUIDao dao=new GUIDao();
 		Date addDate=new Date();
-		int k=dao.updatePro(ID,this.data,addDate);
+		try{
+		int k=dao.updatePro(ID,this.data,addDate,this.scaleN);
 		
 		dao.clearOld(ID);
 		for(int i=0;i<guiPoints.size();i++){
@@ -322,6 +329,11 @@ public class GUIAction {
 		for(int i=0;i<guiConns.size();i++){
 			GUIConnect temp=guiConns.get(i);
 			dao.addConnect(ID,temp.getLeft(),temp.getRight(),addDate);
+		}
+		}catch(Exception e){
+			dao.roll();
+			e.printStackTrace();
+			return "SUCCESS";
 		}
 		dao.close();
 		return "SUCCESS";

@@ -34,7 +34,12 @@ public class GUIDao {
 		session.close();
 		//sessionFactory.close();
 	}
+	public  void roll()
+	{
+		tx.rollback();
 
+		//sessionFactory.close();
+	}
 	public GUIDao()
 	{	
 	 Configuration cfg = new Configuration();  
@@ -182,7 +187,7 @@ public class GUIDao {
 	}
 
 
-	public int updatePro(int iD, String data,Date modifyTime) {
+	public int updatePro(int iD, String data,Date modifyTime,String ScalN) {
 		// TODO Auto-generated method stub
 		
 		SQLQuery q = session.createSQLQuery("update t_guipro t set addtime=? where t.ID=?");
@@ -190,10 +195,11 @@ public class GUIDao {
 		q.setParameter(0, modifyTime);
 		
 		int re=q.executeUpdate();
-		q = session.createSQLQuery("update t_guijson t set JSONData=?  where t.ID=?");
-		q.setParameter(1, iD);
-		q.setParameter(0, data);
+		q = session.createSQLQuery("update t_guijson t set JSONData=?,ScalN=?  where t.ID=?");
+		q.setParameter(2, iD);
 		
+		q.setParameter(0, data);
+		q.setParameter(1, ScalN);
 		re=q.executeUpdate();
 		
 		return re;
@@ -211,7 +217,7 @@ public class GUIDao {
 
 	public GUIPro getGUIProView(int pro_id) {
 		// TODO Auto-generated method stub
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime ,t3.JSONData from t_guipro t1,t_user t2,t_guijson t3 where t1.AuthorID=t2.ID and t1.id=? and t1.id=t3.id");
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime ,t3.JSONData , t3.ScalN from t_guipro t1,t_user t2,t_guijson t3 where t1.AuthorID=t2.ID and t1.id=? and t1.id=t3.id");
 		q.setParameter(0, pro_id);
 		GUIPro temp=null;
 		List l = q.list();
@@ -228,7 +234,9 @@ public class GUIDao {
 			  String author=(String)row[4];
 			  Date addTime=(Date)row[5];
 			  String jsondata=(String)row[6];
+			  Double ScalN=(Double)row[7];
 			  temp=new GUIPro(id, proname, aid, author, description, addTime);
+			  temp.setScalN(ScalN);
 			  temp.setJSONData(jsondata);
 			  return temp;
 			 
@@ -272,7 +280,7 @@ public class GUIDao {
 		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()");
 		ret_id = ((BigInteger) q2.uniqueResult()).intValue();
 		
-		q = session.createSQLQuery("insert into t_guijson (id,JSONData) values (?,?)");
+		q = session.createSQLQuery("insert into t_guijson (id,JSONData,ScalN) values (?,?,1)");
 		q.setParameter(0, ret_id);
 		q.setParameter(1, data);
 		result=q.executeUpdate();

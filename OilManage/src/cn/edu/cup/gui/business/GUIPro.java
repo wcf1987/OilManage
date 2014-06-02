@@ -3,7 +3,13 @@ package cn.edu.cup.gui.business;
 import java.util.Date;
 
 public class GUIPro {
-
+	Double ScalN;
+	public Double getScalN() {
+		return ScalN;
+	}
+	public void setScalN(Double scalN) {
+		ScalN = scalN;
+	}
 	Integer id;
 	String proname;
 	Integer aid;

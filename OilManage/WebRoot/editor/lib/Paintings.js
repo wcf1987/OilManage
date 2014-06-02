@@ -16,9 +16,16 @@ var Paintings = function() {
 	this.clearChange=function(){
 		this.changed=false;
 		
+		
 	}
 	this.getChange=function(){
 		return this.changed;
+	}
+	this.initPoint=function(){
+		pointslist = this.p.getChildren();
+		for(var z=0;z<pointslist.length;z++){
+			leftpoly.initPoint(pointslist[z]);
+		}
 	}
 	this.connects=new Array;
 	this.addPoints=function(p){

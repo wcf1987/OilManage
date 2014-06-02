@@ -170,22 +170,26 @@ var Leftpolys = function() {
 			this.polyGroups[k].add(connPointsLeft);
 			this.polyGroups[k].add(connPointsRight);
 			connPointsLeft.hide();
-			connPointsRight.hide();
-			this.polyGroups[k].dragBoundFunc(this.dragFun);
-
-			this.polyGroups[k].on('click', this.clickFunc);
-			// polys[k].on('dblclick', dbclickFun);
-			this.polyGroups[k].on('dblclick', this.dbclickFun);
-			this.polyGroups[k].on('dragend', this.cloneFun);
-			this.polyGroups[k].on('mousedown touchstart', this.cloneFun2);
-			this.polyGroups[k].on('mouseover', function() {
-				document.body.style.cursor = 'pointer';
-			});
-			this.polyGroups[k].on('mouseout', function() {
-				document.body.style.cursor = 'default';
-			});
+			connPointsRight.hide();	
+			this.initPoint(this.polyGroups[k]);
+			
 		}
 
+	}
+	this.initPoint = function(point){
+		point.dragBoundFunc(this.dragFun);
+
+		point.on('click', this.clickFunc);
+		// polys[k].on('dblclick', dbclickFun);
+		point.on('dblclick', this.dbclickFun);
+		point.on('dragend', this.cloneFun);
+		point.on('mousedown touchstart', this.cloneFun2);
+		point.on('mouseover', function() {
+			document.body.style.cursor = 'pointer';
+		});
+		point.on('mouseout', function() {
+			document.body.style.cursor = 'default';
+		});
 	}
 	/*
 	 * 检查点是否在矩形区域里面
@@ -195,22 +199,22 @@ var Leftpolys = function() {
 	this.dragFun = function(pos) {
 		platform.selectPainting.hasChange();
 		if (checkPoint(pos, platform.centerlayer)) {
-			if (platform.getConnShowed() == false) {
-				showConnect(this);
-				showALLConnPoints();
-			}
-			poss = checkConn(this);
+			
+			showConnect(this);
+			showALLConnPoints();
+			
+			/*poss = checkConn(this);
 			if (poss != null) {
 				
 				this.x(pos.x - poss.x);
 				this.y(pos.y - poss.y);
 				platform.draw();
 				return {
-					x : pos.x - poss.x,
-					y : pos.y - poss.y
+					x : this.x(),
+					y : this.y()
 				};
 
-			}
+			}*/
 			return {
 				x : pos.x,
 				y : pos.y
@@ -221,7 +225,7 @@ var Leftpolys = function() {
 			y : this.getAbsolutePosition().y
 		};
 	};
-
+	
 	this.cloneFun = function(e) {
 
 		var userPos = platform.stage.getPointerPosition();
@@ -234,9 +238,16 @@ var Leftpolys = function() {
 						/ platform.selectPainting.scaleN);
 				this.y((this.y() - platform.selectPainting.my)
 						/ platform.selectPainting.scaleN);
-				this.id(this._id);
+				this.id(getTimeByS());
 				this.moveTo(platform.selectPainting.p);
 				platform.selectPainting.hasChange();
+			}
+			poss = checkConn(this);
+			if (poss != null) {
+				
+				this.x((this.x() - (poss.x/platform.selectPainting.scaleN))			);
+				this.y((this.y() - (poss.y/platform.selectPainting.scaleN)));
+				platform.draw();
 			}
 
 		} else {
@@ -408,7 +419,7 @@ var Leftpolys = function() {
 						|| node.getName() == 'connPointsRight'
 			});
 			if (checkCircle(tempArray[0], tempArray2[1],
-					tempArray[0].radius() * 2)) {
+					tempArray[0].radius()*platform.selectPainting.scaleN  * 2)) {
 
 				re= {
 						g : points[li],
@@ -419,10 +430,10 @@ var Leftpolys = function() {
 						y : tempArray[0].getAbsolutePosition().y
 								- tempArray2[1].getAbsolutePosition().y,
 					}
-				
+				return re;
 			}
 			if (checkCircle(tempArray[1], tempArray2[0],
-					tempArray[0].radius() * 2)) {
+					tempArray[0].radius()*platform.selectPainting.scaleN * 2)) {
 				
 				re= {
 					g : points[li],
@@ -433,6 +444,7 @@ var Leftpolys = function() {
 					y : tempArray[1].getAbsolutePosition().y
 							- tempArray2[0].getAbsolutePosition().y,
 				}
+				return re;
 			}
 		}
 		return re;
