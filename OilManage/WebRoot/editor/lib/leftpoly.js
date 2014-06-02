@@ -50,7 +50,7 @@ var Leftpolys = function() {
 			},
 		});
 		 $('#PointPraList').trigger("reloadGrid");
-	/*		jQuery("#PointPraList").jqGrid('navGrid',"#PointPraPager",{edit:true,add:false,del:false});
+	/*	jQuery("#PointPraList").jqGrid('navGrid',"#PointPraPager",{edit:true,add:false,del:false});
 		jQuery("#PointPraList").jqGrid('inlineNav',"#PointPraPager");
 		jQuery("#PointPraList").jqGrid('navButtonAdd',"#PointPraPager",{
 			title:'编辑',
@@ -178,9 +178,7 @@ var Leftpolys = function() {
 	}
 	this.initPoint = function(point){
 		point.dragBoundFunc(this.dragFun);
-
 		point.on('click', this.clickFunc);
-		// polys[k].on('dblclick', dbclickFun);
 		point.on('dblclick', this.dbclickFun);
 		point.on('dragend', this.cloneFun);
 		point.on('mousedown touchstart', this.cloneFun2);
@@ -275,22 +273,23 @@ var Leftpolys = function() {
 		}
 
 	};
-
+	var TimeFn=null;
 	this.dbclickFun = function(e) {
 		if (e.type == 'dblclick') {
+			// 取消上次延时未执行的方法
+		    clearTimeout(TimeFn);//单击事件
+		    //双击事件的执行代码
 			$("#contextmenu").hide();
+			var clickshape = e.target.getParent();
+			point_name=clickshape.id();
+			point_type=clickshape.name();
+		// 当前位置弹出菜单（div）
 			var attrtop=this.getAbsolutePosition().y + 100;
-			var attrleft=this.getAbsolutePosition().x + 90;
-			$("#pointPra").css({
-				top :attrtop,
-				left : attrleft,
-
-			}).show();					
-//			clickshape.scale({
-//				x : clickshape.scaleX() / 2,
-//				y : clickshape.scaleY()
-//			});
+			var attrleft=this.getAbsolutePosition().x + 90;		
+			pro_id=$(".active > input[name='proID']").val();
+			showPrameter(point_name,pro_id,point_type,attrtop,attrleft);									
 			platform.selectPainting.p.draw();
+			
 		}
 
 	};
@@ -298,18 +297,14 @@ var Leftpolys = function() {
 	this.flag = 0;
 	this.clickFunc = function(e) {
 		if (e.type == 'click') {
-			var clickshape = e.target.getParent();
+			// 取消上次延时未执行的方法
+		    clearTimeout(TimeFn);
+		    var clickshape = e.target.getParent();
 			point_name=clickshape.id();
 			point_type=clickshape.name();
-		// 当前位置弹出菜单（div）
-			var attrtop=this.getAbsolutePosition().y + 100;
-			var attrleft=this.getAbsolutePosition().x + 90;
-			$("#contextmenu").css({
-				top : this.getAbsolutePosition().y + 100,
-				left : this.getAbsolutePosition().x + 90,
-	
-			}).show();
-//			var clickshape = e.target.getParent();
+			// 当前位置弹出菜单（div）
+			var attrtop=this.getAbsolutePosition().y + 300;
+			var attrleft=this.getAbsolutePosition().x + 450;
 			var flagin = leftpoly.flag;// 当前序列
 			leftpoly.flag++;
 			/* 右键菜单处理 */
@@ -317,14 +312,11 @@ var Leftpolys = function() {
 					function() {
 						if (flagin != leftpoly.flag - 1) {
 							return;
-						}
-	
+						}		
 						var text = $(this).text();
-						if (text == '删除该节点') {
-	
+						if (text == '删除该节点') {		
 							clickshape.destroy();
-							$("#contextmenu").hide();
-	
+							$("#contextmenu").hide();		
 							platform.selectPainting.p.draw();
 						} else if (text == '更改颜色') {
 							node.style.fillStyle = Math.floor(Math.random() * 250)
@@ -353,19 +345,23 @@ var Leftpolys = function() {
 						}else if (text == '属性') {
 							$("#contextmenu").hide();
 							pro_id=$(".active > input[name='proID']").val();
-//							name=clickshape.id();
-//							typename=clickshape.name();
-							showPrameter(point_name,pro_id,point_type,attrtop,attrleft);
-									
-	//						clickshape.scale({
-	//							x : clickshape.scaleX() / 2,
-	//							y : clickshape.scaleY()
-	//						});
+							showPrameter(point_name,pro_id,point_type,attrtop,attrleft);									
 							platform.selectPainting.p.draw();
 						}
 						hideALLConnPoints();
 						// $("#contextmenu").hide();
 					});
+			$("#contextmenu").css({
+				top : clickshape.getAbsolutePosition().y + 300,
+				left : clickshape.getAbsolutePosition().x + 450,		
+			});
+		    //执行延时
+		    TimeFn = setTimeout(function(clickshape){
+		        //do function在此处写单击事件要执行的代码
+				$("#contextmenu").show();
+		    },300);
+		    
+
 		}
 	};
 
@@ -378,11 +374,10 @@ var Leftpolys = function() {
 		platform.draw();
 		platform.setConnShowed(true);
 	}
-	hideALLConnPoints = function() {
+	hideALLConnPoints = function() {//隐藏所有连接点
 		points = platform.getAllChildren();
 		for (i1 = 0; i1 < points.length; i1++) {
 			hideConnection(points[i1]);
-
 		}
 		platform.draw();
 		platform.setConnShowed(false);
@@ -468,7 +463,7 @@ var Leftpolys = function() {
 					pointPraID:$("#gridTable").jqGrid("getRowData", $("#gridTable").jqGrid("getGridParam", "selrow")).ID
 					} 
 		 }); 
-		 $('#PointPraList').trigger("reloadGrid");
+		$('#PointPraList').trigger("reloadGrid");
 		$("#pointPra").css({
 			top :attrtop,
 			left : attrleft,

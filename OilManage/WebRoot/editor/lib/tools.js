@@ -4,11 +4,11 @@ function showGrid(){
 function scaleCenter(s){
 	platform.scaleCenter(s);
 }
-function createNewModal(){
-	tabtools.createNewModal();
+function createNewModal(isFirst){
+	tabtools.createNewModal(isFirst);
 }
-function listGUIProGrid(){
-	tabtools.listGUIProGrid();
+function listGUIProGrid(isFirst){
+	tabtools.listGUIProGrid(isFirst);
 }
 function save(){
 
@@ -17,11 +17,11 @@ function save(){
 }
 function clickLoad(s){
 	if(s==1){
-		createNewModal();
+		createNewModal(true);
 		$('#load_modal').modal('hide');
 	}
 	else{
-		listGUIProGrid();
+		listGUIProGrid(true);
 		$('#load_modal').modal('hide');
 	}
 }

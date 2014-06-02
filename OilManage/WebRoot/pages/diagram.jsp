@@ -36,6 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="js/jquery-validation-1.11.1/dist/jquery.validate.js"></script>
 	<script src="js/easytabs/jquery.hashchange.min.js" type="text/javascript"></script>
 	<script src="js/easytabs/jquery.easytabs.js" type="text/javascript"></script>
+	<script src="js/jqueryPlug/jquery.mousewheel.min.js" type="text/javascript"></script>
 	
 	<script defer="defer" type="text/javascript" src="editor/lib/init2.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/platform.js"></script>
@@ -266,10 +267,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							
 							</div>
 						<!-- 	<div id="output" style="margin-top:-270px;margin-left:115px;border:solid;width:900px;height:250px;">
+
+							</div>  -->
+						<!-- 	<div id="output" style="margin-top:-270px;margin-left:115px;border:solid;width:900px;height:250px;">
 								<textarea cols="108" rows="11" id="outputarea" name="outputarea" disabled="">
 								输出testtesttestetsdtgffgfdgfhgdfjhdgjhjhggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 								</textarea>
-							</div> -->
+							</div>  -->
 					</div>
 					
 					<!--The import panel-->
@@ -358,7 +362,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <button type="button" id="add_GUI_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加图形文件</h4>
 		      </div>
 		      <div class="modal-body">
@@ -366,15 +370,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">		      		
 		      			<tr>
 		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >名称:</label></td>
-				            <td><input id="proname" type="text" class="input2" name="proname" maxlength="30"/><em style="color:red">*</em></td>
+				            <td><input id="proname" type="text" class="input2" name="proname"/><em style="color:red">*</em></td>
 		      			</tr>
 		      			<tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >描述：</label></td>
-		      				<td><input id="description" type="text" class="input2" name="description" maxlength="10" /></td>
+		      				<td><input id="description" type="text" class="input2" name="description" /></td>
 		      			</tr>
 		      			<tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >类型：</label></td>
-		      				<td><input id="type" type="text" class="input2" name="type" maxlength="10" /></td>
+		      				<td><input id="type" type="text" class="input2" name="type" /></td>
 		      			</tr>
 		      			<tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">作者：</label></td>
@@ -383,7 +387,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      				    				
 				   </table>
 				   <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				       <!--  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> -->
 				        <button type="submit" class="btn btn-primary"  >保存</button>
 				   </div>
 				 </form> 
@@ -397,9 +401,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<!-- 查看图形项目列表的模态框 -->   	
 		<div class="modal fade" id="listGUIPro_modal">
 		  <div class="modal-dialog">
-		    <div class="modal-content" style="width:1300">
+		    <div class="modal-content" style="width:1070">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <button type="button" id="listGUIPro_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		       <!--  <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输入</h4> -->
 		      </div>
 		      <div class="modal-body">  
@@ -407,7 +411,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="row-fluid">
 						<div class="span12">
 							<table id="GUIProList" class="table table-striped table-bordered table-hover datatable " ></table>
-				      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
+				      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1000" >
 				      			<div id="GUIProPager" ></div>
 				      		</div>	      		
 						</div>
@@ -424,12 +428,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
 		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">选择操作</h4>
 		      </div>
 		      <div class="modal-body"  height="300px">
-		     	 <img src="editor/icons/new.png" width="175" height="150" alt="" onclick="clickLoad(1);"  title="新建工程" /> 
-		     	 <img src="editor/icons/open.png" width="175" height="150" alt="" onclick="clickLoad(2);" title="打开工程" /> 
+		      	
+		     	 <img src="editor/icons/new.gif"  style="margin-left:95px;margin-bottom:20px;" alt="" onclick="clickLoad(1);"  title="新建工程" />
+		     	 <img src="editor/icons/open.gif" style="margin-left:100px;" alt="" onclick="clickLoad(2);" title="打开工程" />
+		     	
 		      </div>
 		     
 		    </div><!-- /.modal-content -->
@@ -437,8 +443,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div><!-- /.modal -->
 				
 		<script type="text/javascript">
+		
+			$('#listGUIPro_modal>.modal-dialog').css({
+			 'margin-top': function () {
+			            return ($(window).height()-300)/2;
+			        },
+			 'margin-right':function () {
+			            return ($(window).width()-200)/2;
+			        },
+			});
+			
+			$('#load_modal>.modal-dialog').css({
+			 'margin-top': function () {
+			            return ($(window).height()-700)/2;
+			        },
+			 'margin-right':function () {
+			            return ($(window).width()-1000)/2;
+			        },
+			});
 			$(function(){
-				$('#tab-container').easytabs();
+				$('#tab-container').easytabs();			
 			});
 			function loadFill(check) {
 				if (check.checked === true) {
