@@ -267,7 +267,7 @@ var TabTools=function (){
 					
 				},
 				success : function(data) {
-					alert('图形化载入成功!');
+//					alert('图形化载入成功!');
 					$('#selectedID').val(selectedID);
 					//data=jQuery.parseJSON(data);
 					$('#listGUIPro_modal').modal('hide');

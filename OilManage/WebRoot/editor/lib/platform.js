@@ -1,7 +1,7 @@
 var Platform=function(){
 	this.stage = new Kinetic.Stage({
         container: 'container',
-        width: 1020,
+        width: 1150,
         height: 800
       });
     
@@ -16,7 +16,7 @@ var Platform=function(){
 	    x:100,
 	    y:40,
 	    id: 'centerlayer',
-	    width:920,
+	    width:1070,
 	    height:500
 //	    width:8,
 //	    height:8
@@ -25,10 +25,25 @@ var Platform=function(){
 	    x:100,
 	    y:this.centerlayer.y(),
 	    id: 'gridlayer',
-	    width:920,
+	    width:1070,
 	    height:500
 	});
-	
+
+	this.tablayer=new Kinetic.Layer({
+		x:100,
+		y:2,
+		id:'tablayer',
+		width:1070,
+		height:50,
+		draggable:false,
+	});
+	this.outputlayer= new Kinetic.Layer({
+		x:100,
+		y:540,
+		id:'outputlayer',
+		width:1070,
+		height:250
+	});
 	this.paintingGroup = new Kinetic.Group({
 		x : 100,
 		y : 0,
@@ -38,15 +53,6 @@ var Platform=function(){
 		fill : '#ff33ee',
 		draggable : true
 	});
-	this.tablayer=new Kinetic.Layer({
-		x:100,
-		y:2,
-		id:'tablayer',
-		width:850,
-		height:50,
-		draggable:false,
-	});
-	
 	
 	this.rectBackground = new Kinetic.Rect({
 	   x: 0,
@@ -71,13 +77,35 @@ var Platform=function(){
 	   x: 10,
 	   y: 0,
 	   height: 500,
-	   width: 900,
+	   width: 1070,
 	   fill: 'transparent',
 	   draggable: false,
 	   stroke:'black',
 	   name: 'rectBackgroundCenter'
 	 });
-   
+    this.rectBackgroundOutput =new Kinetic.Rect({
+    	x:10,
+    	y:5,
+    	height:250,
+    	width:1040,  
+    	stroke:'white',
+    	name:'rectBackgroundOutput'
+    });
+    this.rectBackgroundText = new Kinetic.Text({
+    	  x: 10,
+    	  y: 5,//0
+    	  height:250,
+      	  width:1000,
+	  	  fontSize: 18,
+	      fontFamily: 'Calibri',
+	      fill: '#555',
+	      padding: 20,
+//      	  fill:'green',
+    	  text: 'Simple Text',
+    	  fontSize: 30,
+    	  fontFamily: 'Calibri',
+    	  fill: 'green'
+    	});
 	this.areas = new Kinetic.Group();
 	 this.scrollbars = new Kinetic.Group();
 	 var container = this.stage.getContainer();
@@ -86,12 +114,11 @@ var Platform=function(){
 	     * horizontal scrollbars
 	     */
 	   this.hscrollArea = new Kinetic.Rect({
-	      x: 20,
+	      x: 12,//20
 	      y: this.centerlayer.getHeight() - 30,
-	      width: this.centerlayer.getWidth() - 70,
+	      width: this.centerlayer.getWidth() - 52,//70
 	      height: 20,
 	      fill:'black',
-	      
 	      opacity: 0.3
 	    });
 	    
@@ -127,9 +154,9 @@ var Platform=function(){
 	     */
 	   this.vscrollArea = new Kinetic.Rect({
 	      x: this.centerlayer.getWidth() - 40,
-	      y: 20,
+	      y: 0,//20
 	      width: 20,
-	      height: this.centerlayer.getHeight() - 70,
+	      height: this.centerlayer.getHeight() - 10,//70
 	      fill: 'black',
 	      opacity: 0.3
 	    });
@@ -184,10 +211,12 @@ var Platform=function(){
 	    this.gridlayer.add(bgGroup);
 		this.leftlayer.add(this.rectBackgroundLeft);
 		this.centerlayer.add(this.rectBackgroundCenter);
+		this.outputlayer.add(this.rectBackgroundOutput);
+		this.outputlayer.add(this.rectBackgroundText);
 		this.stage.add(this.gridlayer);
-		this.stage.add(this.leftlayer);
-		
+		this.stage.add(this.leftlayer);		
 		this.stage.add(this.centerlayer);
+		this.stage.add(this.outputlayer);
 		   /*
 	     * scrollbars
 	     */
@@ -289,7 +318,7 @@ var Platform=function(){
             fill : "#fff",
 //            fill: 'transparent',
             draggable : false,
-            width :900,
+            width :1070,
             height :500
     });
 	this.drawGrid=function(){
