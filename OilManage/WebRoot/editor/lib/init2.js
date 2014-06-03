@@ -11,7 +11,8 @@ function initLight() {
 	platform.addLeft(leftpoly);
 	paintings=new Paintings();
 	platform.addPainting(paintings.init());
-	tabtools=new TabTools();
+	tabtools=new TabTools(); 
+	
 	initMouseWheel();
 
 	
