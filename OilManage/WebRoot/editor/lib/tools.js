@@ -4,11 +4,11 @@ function showGrid(){
 function scaleCenter(s){
 	platform.scaleCenter(s);
 }
-function createNewModal(){
-	tabtools.createNewModal();
+function createNewModal(isFirst){
+	tabtools.createNewModal(isFirst);
 }
-function listGUIProGrid(){
-	tabtools.listGUIProGrid();
+function listGUIProGrid(isFirst){
+	tabtools.listGUIProGrid(isFirst);
 }
 function save(){
 
@@ -17,23 +17,32 @@ function save(){
 }
 function clickLoad(s){
 	if(s==1){
-		createNewModal();
+		createNewModal(true);
 		$('#load_modal').modal('hide');
 	}
 	else{
-		listGUIProGrid();
+		listGUIProGrid(true);
 		$('#load_modal').modal('hide');
 	}
 }
 
 function onMouseWheel(e, delta,dx,dy) {
-
-
-
+	event.preventDefault();
+    event.stopPropagation();
+    var deltaY=event.deltaY;
+    var cur_scale=0;
+    if (deltaY > 0) {
+			cur_scale = 1.25;
 			
+		} else {
+			cur_scale = 0.8;
 			
-
 		}
+		platform.scaleCenter(cur_scale);
+		platform.draw();
+
+}
+
 function checkPoint(pos, rect) {
 	
 	var size = rect.size();

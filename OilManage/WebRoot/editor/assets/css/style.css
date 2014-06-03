@@ -61,7 +61,7 @@ body{
 }
 
 #editor{
-    position: fixed;
+    /* position: fixed; */
     top: 72px;
     bottom: 0px;
     width: 100%;
@@ -100,11 +100,11 @@ body{
 }
 
 #container{
-    position: fixed;
-    top: 72px;
+    /* position: fixed; */
+/*     top: 72px;
     bottom: 0px;
     left: 5px;
-    right: 260px;
+    right: 260px; */
     /*height: 600px;*/
 }
 #right{

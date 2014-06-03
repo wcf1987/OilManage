@@ -1,10 +1,18 @@
 var Platform=function(){
 	this.stage = new Kinetic.Stage({
         container: 'container',
-        width: 1020,
-        height: 800
+        width: 1150,
+        height: 800,
+        
       });
-    
+/*	this.outputstage = new Kinetic.Stage({
+        container: 'output',
+        width: 1070,
+        height: 250,
+        x:100,
+        y:540
+      });
+	*/
 	this.leftlayer   = new Kinetic.Layer({
 	    x:0,
 	    y:0,
@@ -16,7 +24,7 @@ var Platform=function(){
 	    x:100,
 	    y:40,
 	    id: 'centerlayer',
-	    width:920,
+	    width:1070,
 	    height:500
 //	    width:8,
 //	    height:8
@@ -25,10 +33,26 @@ var Platform=function(){
 	    x:100,
 	    y:this.centerlayer.y(),
 	    id: 'gridlayer',
-	    width:920,
+	    width:1070,
 	    height:500
 	});
-	
+
+	this.tablayer=new Kinetic.Layer({
+		x:100,
+		y:2,
+		id:'tablayer',
+		width:1070,
+		height:50,
+		draggable:false,
+	});
+
+	this.outputlayer= new Kinetic.Layer({
+		x:100,
+		y:540,
+		id:'outputlayer',
+		width:1070,
+		height:250,
+	});
 	this.paintingGroup = new Kinetic.Group({
 		x : 100,
 		y : 0,
@@ -38,15 +62,6 @@ var Platform=function(){
 		fill : '#ff33ee',
 		draggable : true
 	});
-	this.tablayer=new Kinetic.Layer({
-		x:100,
-		y:2,
-		id:'tablayer',
-		width:850,
-		height:50,
-		draggable:false,
-	});
-	
 	
 	this.rectBackground = new Kinetic.Rect({
 	   x: 0,
@@ -71,45 +86,78 @@ var Platform=function(){
 	   x: 10,
 	   y: 0,
 	   height: 500,
-	   width: 900,
+	   width: 1038,
 	   fill: 'transparent',
 	   draggable: false,
 	   stroke:'black',
 	   name: 'rectBackgroundCenter'
 	 });
-   
-	this.areas = new Kinetic.Group();
-	 this.scrollbars = new Kinetic.Group();
-	 var container = this.stage.getContainer();
-	    
+    this.rectBackgroundOutput =new Kinetic.Rect({
+    	x:10,
+    	y:5,
+    	height:250,
+    	width:1040,  
+    	stroke:'black',
+    	name:'rectBackgroundOutput',
+    	fill:'#F8F8F8',
+    	strokeWidth: 0.5,
+        cornerRadius:2,
+        embossWhiteLevel:0.8,
+        embossStrength:0.8,
+        embossDirection:top
+    });
+    this.rectBackgroundText = new Kinetic.Text({
+    	  x: 10,
+    	  y: 5,//0
+    	  height:250,
+      	  width:1000,
+	  	  fontSize: 18,
+	      fontFamily: 'Calibri',
+	      fill: '#F8F8F8',
+	      padding: 20,
+//      	  fill:'green',
+    	  text: 'Simple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple Text',
+    	  fontSize: 30,
+    	  fontFamily: 'Calibri',
+    	  fill: 'black'
+    	});
+    this.areas = new Kinetic.Group();
+	this.scrollbars = new Kinetic.Group();
+	var container = this.stage.getContainer();
+	 this.rectBackgroundText.dragBoundFunc(function(){
+		  return {
+		    x: this.getAbsolutePosition().x,
+		    y: pos.y
+		  };
+		});
+	
 	    /*
 	     * horizontal scrollbars
 	     */
 	   this.hscrollArea = new Kinetic.Rect({
-	      x: 20,
-	      y: this.centerlayer.getHeight() - 30,
-	      width: this.centerlayer.getWidth() - 70,
+	      x: 12,//20
+	      y: this.centerlayer.getHeight() - 22,
+	      width: this.centerlayer.getWidth() - 52,//70
 	      height: 20,
-	      fill:'black',
-	      
-	      opacity: 0.3
+	      fill:'#E8E8E8',
+	      opacity: 1
 	    });
 	    
 	   this.hscroll = new Kinetic.Rect({
 	        x: 20,
-	        y: this.centerlayer.getHeight() - 30,
+	        y: this.centerlayer.getHeight() - 22,
 	        width: 130,
 	        height: 20,
-	        fill: '#9f005b',
+	        fill: '#99CCFF',
 	        dragOnTop: false,
 	        draggable: true,
 	        dragBoundFunc: function(pos) {
 	          var newX = pos.x;
-	          if(newX < platform.centerlayer.x()+20) {
-	            newX = platform.centerlayer.x()+20;
+	          if(newX < platform.centerlayer.x()+12) {
+	            newX = platform.centerlayer.x()+12;
 	          }
-	          else if(newX > platform.centerlayer.getWidth()-80 ) {
-	            newX = platform.centerlayer.getWidth() -80;
+	          else if(newX > platform.centerlayer.getWidth()-72 ) {
+	            newX = platform.centerlayer.getWidth() -72;
 	          }
 	    
 	          return {
@@ -119,35 +167,36 @@ var Platform=function(){
 	        },
 	        opacity: 0.9,
 	        stroke: 'black',
-	        strokeWidth: 1
+	        strokeWidth: 0.5,
+	        cornerRadius:2
 	      });
 
 	    /*
 	     * vertical scrollbars
 	     */
 	   this.vscrollArea = new Kinetic.Rect({
-	      x: this.centerlayer.getWidth() - 40,
-	      y: 20,
+	      x: this.centerlayer.getWidth() - 42,
+	      y: 0,//20
 	      width: 20,
-	      height: this.centerlayer.getHeight() - 70,
-	      fill: 'black',
-	      opacity: 0.3
+	      height: this.centerlayer.getHeight() - 2,//70
+	      fill: '#E8E8E8',
+	      opacity:1
 	    });
 	   this.vscroll = new Kinetic.Rect({
-	        x: this.centerlayer.getWidth() - 40,
+	        x: this.centerlayer.getWidth() - 42,
 	        y: 20,
 	        width: 20,
 	        height: 130,
-	        fill: '#9f005b',
+	        fill: '#99CCFF',
 	        dragOnTop: false,
 	        draggable: true,
 	        dragBoundFunc: function(pos) {
 	          var newY = pos.y;
-	          if(newY < 20+platform.centerlayer.y()) {
-	            newY = 20+platform.centerlayer.y();
+	          if(newY < 5+platform.centerlayer.y()) {
+	            newY = 5+platform.centerlayer.y();
 	          }
-	          else if(newY > platform.centerlayer.getHeight() - 110-70+platform.centerlayer.y()) {
-	            newY = platform.centerlayer.getHeight() - 110-70+platform.centerlayer.y();
+	          else if(newY > platform.centerlayer.getHeight() - 155+platform.centerlayer.y()) {
+	            newY = platform.centerlayer.getHeight() - 155+platform.centerlayer.y();
 	          }
 	         
 	          return {
@@ -158,11 +207,102 @@ var Platform=function(){
 	        },
 	        opacity: 0.9,
 	        stroke: 'black',
-	        strokeWidth: 1
+	        strokeWidth: 0.5,
+	        cornerRadius:2,
+	        embossWhiteLevel:0.8,
+	        embossStrength:0.8,
+	        embossDirection:top
 	      });
+	   this.vscroll.embossDirection(top);
+	   this.vscroll.embossStrength(1);
+	   
+	   /*
+	    *output scroll 
+	    */
+	   this.outputareas = new Kinetic.Group();
+	   this.outputscrollbars = new Kinetic.Group();
+		   this.outputHscrollArea = new Kinetic.Rect({
+		      x: 11,//20
+		      y: this.outputlayer.getHeight() - 17,
+		      width: this.outputlayer.getWidth() - 52,//70
+		      height: 20,
+		      fill:'#E8E8E8',
+		      opacity: 1
+		    });
+		    
+		   this.outputHscroll = new Kinetic.Rect({
+		        x: 10,
+		        y: this.outputlayer.getHeight()-17,
+		        width: 50,
+		        height: 20,
+		        fill: '#99CCFF',
+		        dragOnTop: false,
+		        draggable: true,
+		        dragBoundFunc: function(pos) {
+		          var newX = pos.x;
+		          if(newX < platform.outputlayer.x()+12) {
+		            newX = platform.outputlayer.x()+12;
+		          }
+		          else if(newX > platform.outputlayer.getWidth()+2 ) {
+		            newX = platform.outputlayer.getWidth() +2;
+		          }
+		    
+		          return {
+		            x: newX,
+		            y: this.getAbsolutePosition().y
+		          }
+		        },
+		        opacity: 0.9,
+		        stroke: 'black',
+		        strokeWidth: 0.5,
+		        cornerRadius:2
+		      });
 
-	 
-		
+		    /*
+		     * vertical outputscrollbars
+		     */
+		   this.outputVscrollArea = new Kinetic.Rect({
+		      x: this.outputlayer.getWidth() - 42,
+		      y: 6,//20
+		      width: 50,
+		      height: this.outputlayer.getHeight() - 3,//70
+		      fill: '#E8E8E8',
+		      opacity:1
+		    });
+		   this.outputVscroll = new Kinetic.Rect({
+		        x: this.outputlayer.getWidth() - 42,
+		        y: 8,
+		        width: 20,
+		        height: 30,
+		        fill: '#99CCFF',
+		        dragOnTop: false,
+		        draggable: true,
+		        dragBoundFunc: function(pos) {
+		          var newY = pos.y;
+		          if(newY < 10+platform.outputlayer.y()) {
+		            newY = 10+platform.outputlayer.y();
+		          }
+		          else if(newY > platform.outputlayer.getHeight()-50+platform.outputlayer.y()) {
+		            newY = platform.outputlayer.getHeight() - 50+platform.outputlayer.y();
+		          }
+		         
+		          return {
+		        	  
+		            x: this.getAbsolutePosition().x,
+		            y: newY
+		          }
+		        },
+		        opacity: 0.9,
+		        stroke: 'black',
+		        strokeWidth: 0.5,
+		        cornerRadius:2,
+		        embossWhiteLevel:0.8,
+		        embossStrength:0.8,
+		        embossDirection:top
+		      });
+		   /*
+		    *output scroll 
+		    */
 	this.selectPainting=null;	
 	this.bgGroup;
 	this.bgRect=null;
@@ -178,17 +318,23 @@ var Platform=function(){
 		this.centerlayer.on('click',function(e){//如果点击在中央层的背景上则隐藏点击菜单
 			if(e.target.name()==='rectBackgroundCenter')
 			$('#contextmenu').hide();
+			hideALLConnPoints();
 		});
 	    bgGroup.add(bgRect);
 	    
 	    this.gridlayer.add(bgGroup);
 		this.leftlayer.add(this.rectBackgroundLeft);
 		this.centerlayer.add(this.rectBackgroundCenter);
+		this.outputlayer.add(this.rectBackgroundOutput);
+		this.outputlayer.add(this.rectBackgroundText);
 		this.stage.add(this.gridlayer);
-		this.stage.add(this.leftlayer);
-		
+		this.stage.add(this.leftlayer);		
 		this.stage.add(this.centerlayer);
-		   /*
+		this.stage.add(this.outputlayer);
+//		this.outputstage.add(this.outputlayer);
+		this.drawGrid();
+		this.showGrid();
+		/*
 	     * scrollbars
 	     */
 	   this.scrollbars.on('mouseover', function() {
@@ -210,8 +356,26 @@ var Platform=function(){
 	    this.scrollbars.add(this.vscroll);
 	    platform.centerlayer.add(this.areas);
 	    platform.centerlayer.add(this.scrollbars);
-		this.drawGrid();
-		this.showGrid();
+	    
+		/*
+	     * output scrollbars
+	     */
+	   this.outputscrollbars.on('mouseover', function() {
+	      document.body.style.cursor = 'pointer';
+	    });
+	   this.outputscrollbars.on('mouseout', function() {
+	      document.body.style.cursor = 'default';
+	    });
+
+	    this.outputHscroll.on('dragmove', this.outputUpdateBackgroundPos);
+	    this.outputVscroll.on('dragmove', this.outputUpdateBackgroundPos);
+	    this.outputareas.add(this.outputHscrollArea);
+	    this.outputareas.add(this.outputVscrollArea);
+	    this.outputscrollbars.add(this.outputHscroll);
+	    this.outputscrollbars.add(this.outputVscroll);
+	    platform.outputlayer.add(this.outputareas);
+	    platform.outputlayer.add(this.outputscrollbars);
+	    
 		
 		//stage.add(tablayer);
 		//this.stage.add(painting);
@@ -239,6 +403,17 @@ var Platform=function(){
 		    }
 		    platform.selectPainting.p.draw();
 		}
+	    
+	    this.outputUpdateBackgroundPos=function (pos){//更新输出框的滚动条拉动后的文本位置	    	
+	    	var x = -1 * (platform.outputHscroll.getPosition().x - 10);
+	    	var y = -1 * (platform.outputVscroll.getPosition().y - 10);
+	    	platform.rectBackgroundText.setAttrs({
+	    		  x:x,
+	    		  y:y
+	    		});
+	    	platform.outputlayer.draw();
+		}
+	    
 	this.addLeft=function(left){
 		left.platform=this;
 		for (var k in left.polyGroups)
@@ -288,7 +463,7 @@ var Platform=function(){
             fill : "#fff",
 //            fill: 'transparent',
             draggable : false,
-            width :900,
+            width :1070,
             height :500
     });
 	this.drawGrid=function(){
@@ -387,10 +562,11 @@ var Platform=function(){
 		var leftpolys=new Leftpolys();
 		for ( var k=0;k<polys.length;k++) {
 			polys[k].on('click',leftpolys.clickFunc);
-			polys[k].dragBoundFunc(this.dragFun);
-			polys[k].on('click', this.clickFunc);
-			polys[k].on('dragend', this.cloneFun);
-			polys[k].on('mousedown touchstart', this.cloneFun2);
+			polys[k].dragBoundFunc(leftpolys.dragFun);
+			polys[k].on('click', leftpolys.clickFunc);
+			polys[k].on('dblclick', leftpolys.dbclickFun);
+			polys[k].on('dragend', leftpolys.cloneFun);
+			polys[k].on('mousedown touchstart', leftpolys.cloneFun2);
 			polys[k].on('mouseover', function() {
 				document.body.style.cursor = 'pointer';
 			});
