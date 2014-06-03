@@ -114,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                <li><a href="pages/home.jsp">首页</a></li>
 	                <li class="active"><a href="pages/map.jsp">地图建模</a></li>
 	                <li><a href="pages/project.jsp">工程管理</a></li>
-	                <li><a href="#contact">系统模拟</a></li>
+	                <li><a href="pages/diagram.jsp">系统建模</a></li>
 	                <li><a href="pages/home.jsp">系统优化</a></li>
 			        <li><a href="pages/home.jsp">关于</a></li>
 			        <li><a href="pages/home.jsp">联系方式</a></li>

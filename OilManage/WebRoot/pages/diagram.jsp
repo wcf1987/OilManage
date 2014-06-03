@@ -7,6 +7,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
+ <%
+User userlogin=(User)(session.getAttribute("user"));
+%> 
     <base href="<%=basePath%>">
     
     <title>图形建模</title>
@@ -103,26 +106,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	              <a class="navbar-brand" href="#"><div style="font-color:#99CCFF;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统后台管理</div></a>
 	            </div>
 	            <div class="navbar-collapse collapse">
-	              <ul class="nav navbar-nav">
-	                <li><a href="pages/map.jsp">返回首页</a></li>
-	                <li><a href="pages/data.jsp">数据管理</a></li>
-	                <li class="active"><a href="pages/algorithm.jsp">算法管理</a></li>
-	                <li><a href="pages/home.jsp">系统管理</a></li>
-			        <li><a href="pages/home.jsp">关于</a></li>
-			        <li><a href="pages/home.jsp">联系方式</a></li>
-	                <li class="dropdown">
-	                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-	                  <ul class="dropdown-menu">
-	                    <li><a href="#">Action</a></li>
-	                    <li><a href="#">Another action</a></li>
-	                    <li><a href="#">Something else here</a></li>
-	                    <li class="divider"></li>
-	                    <li class="dropdown-header">Nav header</li>
-	                    <li><a href="#">Separated link</a></li>
-	                    <li><a href="#">One more separated link</a></li>
-	                  </ul>
-	                </li>
-	              </ul>
+	           		<ul class="nav navbar-nav">
+		                <li><a href="pages/home.jsp">首页</a></li>
+		                <li><a href="pages/map.jsp">地图建模</a></li>
+		                <li><a href="pages/project.jsp">工程管理</a></li>
+		                <li class="active"><a href="#">系统建模</a></li>
+		                <li><a href="pages/home.jsp">系统优化</a></li>
+				        <li><a href="pages/home.jsp">关于</a></li>
+				        <li><a href="pages/home.jsp">联系方式</a></li>
+		                <li class="dropdown">
+		                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+		                  <ul class="dropdown-menu">
+		                    <li><a href="#">Action</a></li>
+		                    <li><a href="#">Another action</a></li>
+		                    <li><a href="#">Something else here</a></li>
+		                    <li class="divider"></li>
+		                    <li class="dropdown-header">Nav header</li>
+		                    <li><a href="#">Separated link</a></li>
+		                    <li><a href="#">One more separated link</a></li>
+		                  </ul>
+		                </li>
+	              	</ul>
+	                
+	               	<%if (userlogin!=null) {%>
+				      <div class="text-center" style="margin-top:8px;margin-right:25px;" id="userId">
+				      	<div style="margin-left:5px;margin-top:5px;"><a  style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">注销</a></div>	     
+				        <div style="font-size:20;color:#FFFFFF;float:right">您好,<a href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>
+				      </div>
+			       	<%}else{ %>
+		        	 <div class="text-center" style="margin-top:8px;"><a  class="btn btn-default" href="pages/login.jsp">管理员登陆</a></div>
+	            	<%} %>
               
 	            </div>
 	          </div>

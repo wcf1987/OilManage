@@ -2,7 +2,8 @@ var Platform=function(){
 	this.stage = new Kinetic.Stage({
         container: 'container',
         width: 1150,
-        height: 800
+        height: 800,
+        
       });
 /*	this.outputstage = new Kinetic.Stage({
         container: 'output',
