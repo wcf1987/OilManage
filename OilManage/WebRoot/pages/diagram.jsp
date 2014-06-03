@@ -263,7 +263,7 @@ User userlogin=(User)(session.getAttribute("user"));
 							</a>
 						</div>
 						
-						<div id="editor">
+						<div id="editor" style="background-color:#F6F6F6">
 							<input id="selectedID" style="display: none;"/> 
 							<div id="tab-container" class="tab-container"  style="position: absolute;z-index:100;margin-left:120px;margin-top:2px;">
 							  <ul id="paintingTabs" class='etabs'>
