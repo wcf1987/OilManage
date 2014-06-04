@@ -437,14 +437,14 @@ User userlogin=(User)(session.getAttribute("user"));
 		</div><!-- /.modal -->
 		
 				<!--载入选择框 -->  
-		<div class="modal fade" id="load_modal" width="155" style="margin: 200px 200 0 -280px;">
+		<div class="modal fade" id="load_modal" ><!-- width="155" style="margin: 250px 200 0 -280px;" -->
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
 		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">选择操作</h4>
 		      </div>
-		      <div class="modal-body"  height="300px">
+		      <div class="modal-body">
 		      	
 		     	 <img src="editor/icons/new.gif"  style="margin-left:95px;margin-bottom:20px;" alt="" onclick="clickLoad(1);"  title="新建工程" />
 		     	 <img src="editor/icons/open.gif" style="margin-left:100px;" alt="" onclick="clickLoad(2);" title="打开工程" />
@@ -459,19 +459,19 @@ User userlogin=(User)(session.getAttribute("user"));
 		
 			$('#listGUIPro_modal>.modal-dialog').css({
 			 'margin-top': function () {
-			            return ($(window).height()-300)/2;
+			            return ($(window).height())/2-178;
 			        },
 			 'margin-right':function () {
-			            return ($(window).width()-200)/2;
+			            return ($(window).width())/2-50;
 			        },
 			});
 			
 			$('#load_modal>.modal-dialog').css({
 			 'margin-top': function () {
-			            return ($(window).height()-700)/2;
+			            return ($(window).height())/2-123;
 			        },
 			 'margin-right':function () {
-			            return ($(window).width()-1000)/2;
+			            return ($(window).width())/2-300;
 			        },
 			});
 			$(function(){

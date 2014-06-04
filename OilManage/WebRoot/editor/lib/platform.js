@@ -5,14 +5,6 @@ var Platform=function(){
         height: 800,
         
       });
-/*	this.outputstage = new Kinetic.Stage({
-        container: 'output',
-        width: 1070,
-        height: 250,
-        x:100,
-        y:540
-      });
-	*/
 	this.leftlayer   = new Kinetic.Layer({
 	    x:0,
 	    y:0,
@@ -26,8 +18,6 @@ var Platform=function(){
 	    id: 'centerlayer',
 	    width:1070,
 	    height:500
-//	    width:8,
-//	    height:8
 	});
 	this.gridlayer  = new Kinetic.Layer({
 	    x:100,
@@ -77,7 +67,7 @@ var Platform=function(){
 	   y: 0,
 	   height: 800,
 	   width: 100,
-	   fill: 'transparent',
+	   fill: '#F6F6F6',
 	   draggable: false,
 	   stroke:'black',
 	   name: 'rectBackgroundLeft'
@@ -111,15 +101,14 @@ var Platform=function(){
     	  y: 5,//0
     	  height:250,
       	  width:1000,
-	  	  fontSize: 18,
-	      fontFamily: 'Calibri',
-	      fill: '#F8F8F8',
+	  	  fontSize: 20,
+//	      fontFamily: '微软雅黑',
+	  	  levels:0,
+	      fill: 'black',
 	      padding: 20,
 //      	  fill:'green',
-    	  text: 'Simple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple TextSimple Text',
-    	  fontSize: 30,
-    	  fontFamily: 'Calibri',
-    	  fill: 'black'
+	      lineHeight:1,
+	      text:'输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出'
     	});
     this.areas = new Kinetic.Group();
 	this.scrollbars = new Kinetic.Group();
@@ -327,11 +316,14 @@ var Platform=function(){
 		this.centerlayer.add(this.rectBackgroundCenter);
 		this.outputlayer.add(this.rectBackgroundOutput);
 		this.outputlayer.add(this.rectBackgroundText);
-		this.stage.add(this.gridlayer);
-		this.stage.add(this.leftlayer);		
-		this.stage.add(this.centerlayer);
+		
+		
+		
 		this.stage.add(this.outputlayer);
-//		this.outputstage.add(this.outputlayer);
+		this.stage.add(this.leftlayer);	
+		this.stage.add(this.gridlayer);//添加顺序很重要，先添加的在底层，这里网格将挡住拖拽超出到中间画布上的输出框内容。
+		this.stage.add(this.centerlayer);
+		
 		this.drawGrid();
 		this.showGrid();
 		/*
@@ -369,16 +361,13 @@ var Platform=function(){
 
 	    this.outputHscroll.on('dragmove', this.outputUpdateBackgroundPos);
 	    this.outputVscroll.on('dragmove', this.outputUpdateBackgroundPos);
-	    this.outputareas.add(this.outputHscrollArea);
+//	    this.outputareas.add(this.outputHscrollArea);//去掉输出框的水平滚动条
 	    this.outputareas.add(this.outputVscrollArea);
-	    this.outputscrollbars.add(this.outputHscroll);
+//	    this.outputscrollbars.add(this.outputHscroll);
 	    this.outputscrollbars.add(this.outputVscroll);
 	    platform.outputlayer.add(this.outputareas);
 	    platform.outputlayer.add(this.outputscrollbars);
-	    
-		
-		//stage.add(tablayer);
-		//this.stage.add(painting);
+	    platform.stage.draw();
 	}
 
 	
@@ -434,37 +423,28 @@ var Platform=function(){
 		}
 	}
 	var gridEle = 9;
-//	gridlayer=centerlayer;
 	bgGroup = new Kinetic.Group();
 	   //主编辑区域背景框
 	bgRect = new Kinetic.Rect( {
             x : 12,
             y : this.gridlayer.y()+1,
-//            fill : "#eee",
             fill: 'transparent',
             draggable : false,
 //            width : gridlayer.width()-100,
 //            height :gridlayer.height()-100,
-            width:8000,
-            height:8000,
-//            shadow : {
-//                    color : 'black',
-//                    blur : 8,
-//                    offset : [ 2, 2 ],
-//                    opacity : 0.6
-//            }
-    });
+            width:1070,
+            height:480,//这个高度保证不挡住下面的输出框
 
+    });
 
 	  //主编辑区域网格框
     bgGridRect = new Kinetic.Rect( {
             x : bgRect.x(),
             y : 0,
             fill : "#fff",
-//            fill: 'transparent',
             draggable : false,
             width :1070,
-            height :500
+            height :480//这个高度保证不挡住下面的输出框
     });
 	this.drawGrid=function(){
 
@@ -561,7 +541,6 @@ var Platform=function(){
 		var polys=this.selectPainting.p.getChildren();
 		var leftpolys=new Leftpolys();
 		for ( var k=0;k<polys.length;k++) {
-			polys[k].on('click',leftpolys.clickFunc);
 			polys[k].dragBoundFunc(leftpolys.dragFun);
 			polys[k].on('click', leftpolys.clickFunc);
 			polys[k].on('dblclick', leftpolys.dbclickFun);
