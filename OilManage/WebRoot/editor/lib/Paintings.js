@@ -7,15 +7,16 @@ var Paintings = function() {
 	this.changed=false;
 	this.hasChange=function(){
 		this.changed=true;
-//		alert(1);
-		if($(".active > a:first").children().length==0){
-			$(".active > a:first").append("<span>*</span>");
+		if($("#paintingTabs>.active > a:first").children().length==0){
+			$("#paintingTabs>.active > a:first").append("<span>*</span>");
 		}
 		
 	}
 	this.clearChange=function(){
 		this.changed=false;
-		
+		if($("#paintingTabs>.active > a:first").children().length!=0){
+			$("#paintingTabs>.active > a:first").children().remove();
+		}
 		
 	}
 	this.getChange=function(){
