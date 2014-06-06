@@ -11,6 +11,8 @@
 			<result name="succ" type="redirect">/pages/data.jsp</result>
 			<result name="fail" type="redirect">/pages/login.jsp</result>
 		</action>
+		
+		
 	
 		<!-- UserManage End -->
 	</package>
@@ -23,7 +25,7 @@
 	</package>
 	<package name="json" extends="json-default">
 
-
+	<!--user manage -->
 		<action name="logout" method="logout" class="cn.edu.cup.manage.action.LoginAction">
 			<result type="json">				
 			</result>
@@ -37,6 +39,47 @@
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
+		<action name="listRole" class="cn.edu.cup.manage.action.RoleAction" method="listRoles">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="listAlgByRole" class="cn.edu.cup.manage.action.RoleAction" method="listAlgByRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="listUserByRole" class="cn.edu.cup.manage.action.RoleAction" method="listUserByRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="addRole" class="cn.edu.cup.manage.action.RoleAction" method="addRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="delRole" class="cn.edu.cup.manage.action.RoleAction" method="delRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="addUserRole" class="cn.edu.cup.manage.action.RoleAction" method="addUserRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="delUserRole" class="cn.edu.cup.manage.action.RoleAction" method="delUserRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="addAlgRole" class="cn.edu.cup.manage.action.RoleAction" method="addAlgRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="delAlgRole" class="cn.edu.cup.manage.action.RoleAction" method="delAlgRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		
+		
+	<!--user manage -->
+			
+			
 		<action name="map" class="cn.edu.cup.map.action.MapAction">
 			<result name="SUCCESS" type="json">
 				<param name="excludeProperties">id</param>

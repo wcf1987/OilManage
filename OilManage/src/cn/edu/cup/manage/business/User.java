@@ -20,11 +20,36 @@ public class User  implements java.io.Serializable {
      private String email;
      private int state;
      private String info;
-
-
+     private int roleID;
+     private String roleName;
+     private int userRoleID;
     // Constructors
 
-    /** default constructor */
+    public int getUserRoleID() {
+		return userRoleID;
+	}
+
+	public void setUserRoleID(int userRoleID) {
+		this.userRoleID = userRoleID;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public int getRoleID() {
+		return roleID;
+	}
+
+	public void setRoleID(int roleID) {
+		this.roleID = roleID;
+	}
+
+	/** default constructor */
     public User() {
     }
 
@@ -45,7 +70,16 @@ public class User  implements java.io.Serializable {
     }
 
    
-    // Property accessors
+    public User(Integer id, Integer rid, String rName, Integer uid, String uName) {
+		// TODO Auto-generated constructor stub
+    	this.roleID=rid;
+    	this.roleName=rName;
+    	this.userid=uid;
+    	this.username=uName;
+    	this.userRoleID=id;
+	}
+
+	// Property accessors
     @Column
     public int getUserid() {
         return this.userid;
