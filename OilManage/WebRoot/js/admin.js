@@ -577,7 +577,7 @@ function delUserRole(){
  */
 function loadUserOptions(){
 	$.ajax({
-		url:'listUser.action',
+		url:'listUserNoRole.action',
 		type:'post',
 		dataType:'json',
 		success:function(data){

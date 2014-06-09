@@ -82,17 +82,12 @@ public class UserDao  {
 		//System.out.println(obj.getUsername());
 	}
 	
-	public int addUser(String username,String password,int usergroupid,String email,String state,String info){
+	public int addUser(String username,String password){
 		
-		Query q = session.createSQLQuery("insert into T_User (username,password,usergroupid,email,state,info) values (?,?,?,?,?,?)");
+		Query q = session.createSQLQuery("insert into T_User (username,password) values (?,?)");
 		q.setParameter(0, username);
 		q.setParameter(1, password);
-		q.setParameter(2, usergroupid);
-		q.setParameter(3, email);
-		q.setParameter(4, state);
-		q.setParameter(5, info);
 		int result=q.executeUpdate();
-		
 		tx.commit();
 		return result;
 	}
@@ -180,8 +175,13 @@ public class UserDao  {
 		return userR;
 	}
 	
-	public List<User> getUserList() {
-		SQLQuery q = session.createSQLQuery("select t.ID,t.username,t.AddTime,t.LastLoginTime,t.LoginTimes from t_user t");
+	public List<User> getUserList(int flag) {
+		SQLQuery q;
+		if(flag==0){
+			q = session.createSQLQuery("select t.ID,t.username,t.AddTime,t.LastLoginTime,t.LoginTimes from t_user t where t.ID not in (select t1.user_id from t_userrole t1)");
+		}else{
+			q = session.createSQLQuery("select t.ID,t.username,t.AddTime,t.LastLoginTime,t.LoginTimes from t_user t");
+		}		
 		List l = q.list();
 		List<User> re=new ArrayList<User>();
 		for(int i=0;i<l.size();i++)

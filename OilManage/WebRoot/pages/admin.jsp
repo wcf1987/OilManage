@@ -265,7 +265,7 @@ else{
 		    <div class="modal-content" style="width:870">
 		      <div class="modal-header">
 		        <button type="button" id="listUserByRole_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看用户</h4> 
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">用户管理</h4> 
 		      </div>
 		      <div class="modal-body">  
 		      	<div class="container-fluid">
@@ -320,7 +320,7 @@ else{
 		    <div class="modal-content" style="width:870">
 		      <div class="modal-header">
 		        <button type="button" id="listAlgByRole_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看算法</h4> 
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">算法管理</h4> 
 		      </div>
 		      <div class="modal-body">  
 		      	<div class="container-fluid">

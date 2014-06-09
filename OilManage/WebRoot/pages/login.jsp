@@ -102,10 +102,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				username:{
 					required:true
 				},
-				email:{
-					required:true,
-					email:true
-				},
 				reg_password:{
 					required:true
 				},
@@ -116,10 +112,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			messages:{
 				username:{
 					required:"用户名不能为空！",
-				},
-				email:{
-					required:"邮箱不能为空！",
-					email:"邮箱格式不正确！"
 				},
 				reg_password:{
 					required:"密码不能为空！"
@@ -144,7 +136,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			url : 'register.action',
 			data : {
 				username:$("#username").val(),
-				email:$("#email").val(),
 				regpassword:$("#reg_password").val(),
 				conpassword:$("#conpassword").val()
 			},
@@ -240,19 +231,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      		
 		      			<tr>
 		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >用户名：</label></td>
-				            <td><input id="username" type="text" class="input2" name="username" maxlength="30"/><em style="color:red">*</em></td>
+				            <td><input id="username" type="text" class="input2" name="username" /><em style="color:red">*</em></td>
 		      			</tr>
-		      			<tr>
+		      	<!-- 		<tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >邮箱：</label></td>
 		      				<td><input id="email" type="text" class="input2" name="email" maxlength="10" /><em style="color:red">*</em></td>
-		      			</tr>
+		      			</tr> -->
 		      			<tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >密码：</label></td>
-		      				<td><input id="reg_password" type="text" class="input2" name="reg_password" maxlength="10" /><em style="color:red">*</em></td>
+		      				<td><input id="reg_password" type="text" class="input2" name="reg_password"  /><em style="color:red">*</em></td>
 		      			</tr>
 		      			<tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >密码确认：</label></td>
-		      				<td><input id="conpassword" type="text" class="input2" name="conpassword" maxlength="10" /><em style="color:red">*</em></td>
+		      				<td><input id="conpassword" type="text" class="input2" name="conpassword"  /><em style="color:red">*</em></td>
 		      			</tr>
 		      			<!--
 		      			<tr>

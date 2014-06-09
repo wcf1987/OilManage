@@ -58,12 +58,13 @@ public class RegisterAction extends ActionSupport
 		{
 			if (regpassword.equals(conpassword))			
 			{
-				User user = new User(0, username, regpassword, 0, email, 1, info);
+				User user = new User(0, username, regpassword);
 //				System.out.println("save()");
 //				userDAO.save(user);
-				userDAO.addUser(username, regpassword, 0, email, null, info);
+				userDAO.addUser(username, regpassword);
 				ActionContext.getContext().getSession().put("user", user);
 				login = true;
+				
 				success = true;
 			}
 			else 

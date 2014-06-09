@@ -63,9 +63,17 @@ public class UserAction extends ActionSupport{
 
 	public String list(){		
 		UserDao dao=new UserDao();
-		dataList=dao.getUserList();
+		int flag=1;
+		dataList=dao.getUserList(flag);
 		return "SUCCESS";
 	}
+	public String listUserNoRole(){		
+		UserDao dao=new UserDao();
+		int flag=0;
+		dataList=dao.getUserList(flag);
+		return "SUCCESS";
+	}
+	
 	public String delUser(){		
 		UserDao dao=new UserDao();
 		if(!ids.isEmpty()){

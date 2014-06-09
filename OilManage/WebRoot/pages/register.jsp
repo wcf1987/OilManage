@@ -78,9 +78,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 			<legend>注册</legend>
 			
-			<label for="register">邮箱</label>
+			<!-- <label for="register">邮箱</label>
 			<input type="text" id="email" name="email" value="请输入邮箱地址"/>
-			<div class="clear"></div>
+			<div class="clear"></div> -->
 			
 			<label for="password">密码</label>
 			<input type="password" id="password" name="password" />

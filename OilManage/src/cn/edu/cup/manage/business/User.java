@@ -42,6 +42,13 @@ public class User  implements java.io.Serializable {
     }
     
     
+	public User(int userid, String username, String password) {
+		super();
+		this.userid = userid;
+		this.username = username;
+		this.password = password;
+	}
+
 	public User(int order,int userRoleID,int roleID, String roleName,int userid, String username ) {
 		super();
 		this.order=order;

@@ -43,6 +43,10 @@
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
+		<action name="listUserNoRole" class="cn.edu.cup.manage.action.UserAction" method="listUserNoRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
 		
 		<action name="listRole" class="cn.edu.cup.manage.action.RoleAction" method="listRoles">
 			<result name="SUCCESS" type="json">				
