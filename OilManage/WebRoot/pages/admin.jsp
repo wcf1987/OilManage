@@ -184,7 +184,7 @@ else{
 			      <h3 class="list-group-heading" style="color:white;font-style:bold;font-size:20px;font-family:微软雅黑">系统管理</h3>
 			      
 			      
-			      <div id="tab-side-container" style="width:300%;height:70%;">
+			      <div id="tab-side-container" style="width:120%;height:70%;">
 					 <ul style="background:#F1EAEA;height:auto">
 					 	<li style="width:200px;"><a href="#side-tab1">角色管理</a></li>
 					 	<li style="width:200px;"><a href="#side-tab2">用户管理</a></li>
