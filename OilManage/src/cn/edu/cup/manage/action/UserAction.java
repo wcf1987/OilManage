@@ -10,6 +10,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import cn.edu.cup.manage.dao.PhysicalDao;
+import cn.edu.cup.manage.dao.RoleDao;
 import cn.edu.cup.manage.dao.UserDao;
 import cn.edu.cup.manage.business.Measure;
 import cn.edu.cup.manage.business.User;
@@ -20,6 +21,15 @@ public class UserAction extends ActionSupport{
 	String type;
 	UserDao userDAO;
 	List<User> dataList;
+	private List<Integer> ids;
+	
+	
+	public List<Integer> getIds() {
+		return ids;
+	}
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
 	public List<User> getDataList() {
 		return dataList;
 	}
@@ -56,6 +66,14 @@ public class UserAction extends ActionSupport{
 		dataList=dao.getUserList();
 		return "SUCCESS";
 	}
-
+	public String delUser(){		
+		UserDao dao=new UserDao();
+		if(!ids.isEmpty()){
+			for(int id:ids)
+				dao.delUser(id);
+		}
+		dao.close();
+		return "SUCCESS";
+	}
 	
 }

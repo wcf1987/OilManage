@@ -5,9 +5,12 @@ public class AlgRoleBase {
 	int roleID;
 	String roleName;
 	int algID;
-	public AlgRoleBase(int algRoleID, int roleID, String roleName, int algID,
+	int order;
+	
+	public AlgRoleBase(int order,int algRoleID, int roleID, String roleName, int algID,
 			String algName) {
 		super();
+		this.order=order;
 		this.algRoleID = algRoleID;
 		this.roleID = roleID;
 		this.roleName = roleName;
@@ -44,5 +47,11 @@ public class AlgRoleBase {
 	}
 	public void setAlgName(String algName) {
 		this.algName = algName;
+	}
+	public int getOrder() {
+		return order;
+	}
+	public void setOrder(int order) {
+		this.order = order;
 	}
 }

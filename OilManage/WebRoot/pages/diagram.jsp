@@ -342,15 +342,12 @@ User userlogin=(User)(session.getAttribute("user"));
 			</div>
 
 	      	<hr class="featurette-divider">
-
-	
-	      	<!-- FOOTER -->
-	      	<div class="footer">
-	        	<p>&copy; 2013 中国石油大学</p>
-	      	</div>
-	
+			  <!--end of main content-->
+		     <div id="footer">
+		          <%@ include file="commons/footer.jsp" %>
+		     </div>   
 	    </div><!-- /.container -->		
-	
+		
 		<ul id="contextmenu" style="display:none;z-index:100">	
 			<li><a>顺时针旋转90°</a></li>
 			<li><a>逆时针旋转90°</a></li>	

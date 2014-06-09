@@ -5,6 +5,7 @@ package cn.edu.cup.manage.dao;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -132,7 +133,7 @@ public class UserDao  {
 	
 	}
 	
-	private  void close()
+	public  void close()
 	{
 		tx.commit();
 		session.close();
@@ -180,15 +181,21 @@ public class UserDao  {
 	}
 	
 	public List<User> getUserList() {
-		SQLQuery q = session.createSQLQuery("select t.ID,t.username from t_user t");
+		SQLQuery q = session.createSQLQuery("select t.ID,t.username,t.AddTime,t.LastLoginTime,t.LoginTimes from t_user t");
 		List l = q.list();
 		List<User> re=new ArrayList<User>();
 		for(int i=0;i<l.size();i++)
 		{
-			  Object[] row = (Object[])l.get(i);;
+			  Object[] row = (Object[])l.get(i);
 			  Integer uid = (Integer)row[0];
 			  String uName = (String)row[1];  
-			  User user=new User(uid, uName,null,0,null,0,null);	 
+			  Date addTime=(Date)row[2];
+			  Date lastLoginTime=(Date)row[3];
+			  int loginTimes=0;
+			  if(row[4]!=null){
+				 loginTimes=(Integer)row[4];
+			  }  
+			  User user=new User(uid, uName,addTime,lastLoginTime,loginTimes); 
 			  re.add(user);
 		}
 		return re;
@@ -204,7 +211,25 @@ public class UserDao  {
 			return false;
 		}
 	}
-	
+
+
+	public int delUser(int userID) {
+//		tx = session.beginTransaction();
+		Query q = session.createSQLQuery(" delete from t_user where id=?");
+		q.setParameter(0, userID);
+		int result=q.executeUpdate();		
+		Query q1 = session.createSQLQuery(" delete from t_userrole where user_id=?");
+		q1.setParameter(0, userID);
+		int result1=result;
+		try{
+			result1=q1.executeUpdate();	
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+//		this.commit();
+		return result1;
+	}
+
 	public static String getUSERNAME() {
 		return USERNAME;
 	}

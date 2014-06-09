@@ -7,6 +7,10 @@ import cn.edu.cup.manage.business.RoleBase;
 import cn.edu.cup.manage.business.User;
 import cn.edu.cup.manage.dao.RoleDao;
 
+/**
+ * @author Administrator
+ *
+ */
 public class RoleAction {
 	List<User> userList;
 	List<RoleBase> roleList;
@@ -16,6 +20,54 @@ public class RoleAction {
 	int algID;
 	int userRoleID;
 	int algRoleID;
+
+	private int page;
+	private int records;
+	private int rows;
+	private int rowNum;
+	private int total;
+	private String sidx;
+	private String sord;
+	private int id;
+	private List<Integer> ids;
+	
+	
+	public List<Integer> getIds() {
+		return ids;
+	}
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getRecords() {
+		return records;
+	}
+	public void setRecords(int records) {
+		this.records = records;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
+	public String getSidx() {
+		return sidx;
+	}
+	public void setSidx(String sidx) {
+		this.sidx = sidx;
+	}
+	public String getSord() {
+		return sord;
+	}
+	public void setSord(String sord) {
+		this.sord = sord;
+	}
 	public List<User> getUserList() {
 		return userList;
 	}
@@ -60,6 +112,14 @@ public class RoleAction {
 	public String listRoles(){		
 		RoleDao dao=new RoleDao();
 		roleList=dao.getRolesList();
+		records=dao.getCountRole();
+
+		if(records!=0&&rows!=0){
+		total=records/rows;
+			if(records%rows!=0){
+				total++;
+			}
+		}
 		return "SUCCESS";
 	}
 	public String listAlgByRole(){		
@@ -79,17 +139,27 @@ public class RoleAction {
 	}
 	public String delRole(){		
 		RoleDao dao=new RoleDao();
-		dao.delRole(this.roleID);
+		if(!ids.isEmpty()){
+			for(int id:ids)
+				dao.delRole(id);
+		}
+		dao.commit();
 		return "SUCCESS";
 	}
 	public String addUserRole(){		
 		RoleDao dao=new RoleDao();
 		dao.addUserRole(this.userID,this.roleID);
 		return "SUCCESS";
+		
 	}
 	public String delUserRole(){		
 		RoleDao dao=new RoleDao();
-		dao.delUserRole(this.userRoleID);
+		if(!ids.isEmpty()){
+			for(int id:ids)
+			dao.delUserRole(id);
+		}
+		dao.commit();
+		
 		return "SUCCESS";
 	}
 	public String addAlgRole(){		
@@ -99,7 +169,11 @@ public class RoleAction {
 	}
 	public String delAlgRole(){		
 		RoleDao dao=new RoleDao();
-		dao.delAlgRole(this.algRoleID);
+		if(!ids.isEmpty()){
+			for(int id:ids)
+				dao.delAlgRole(id);
+		}
+		dao.commit();	
 		return "SUCCESS";
 	}
 	public static void main(String args[]){

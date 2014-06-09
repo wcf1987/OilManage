@@ -220,7 +220,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
 <div style="margin-top:200px;margin-left:450px;" class="footer">
-	        	<p> &copy; 2013 中国石油大学</p>
+	        	<div id="footer">
+		          <%@ include file="commons/footer.jsp" %>
+		        </div>
 </div>
 
 

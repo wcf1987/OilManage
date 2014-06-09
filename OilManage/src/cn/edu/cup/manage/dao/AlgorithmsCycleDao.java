@@ -73,9 +73,11 @@ public class AlgorithmsCycleDao {
 	public List<AlgorithmsCycle> getAlgorithmsList(int page, int rows,
 			String sidx, String sord) {
 		SQLQuery q = session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime,t1.Name,t1.ClassName from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID order by t1."+sidx+" "+sord);
-
-		q.setFirstResult((page-1)*rows);
-		q.setMaxResults(rows);
+		if(page>0&&rows>0){
+			q.setFirstResult((page-1)*rows);
+			q.setMaxResults(rows);
+		}
+		
 		List l = q.list();
 		List<AlgorithmsCycle> re=new ArrayList<AlgorithmsCycle>();
 		for(int i=0;i<l.size();i++)

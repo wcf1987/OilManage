@@ -203,7 +203,7 @@ $(document).ready(function(){
 	                <li><a href="pages/map.jsp">返回首页</a></li>
 	                <li class="active"><a href="pages/data.jsp">数据管理</a></li>
 	                <li><a href="pages/algorithm.jsp">算法管理</a></li>
-	                <li><a href="pages/home.jsp">系统管理</a></li>
+	                <li><a href="pages/admin.jsp">系统管理</a></li>
 			        <li><a href="pages/home.jsp">关于</a></li>
 			        <li><a href="pages/home.jsp">联系方式</a></li>
 	                <li class="dropdown">
@@ -338,9 +338,9 @@ $(document).ready(function(){
 
 	
 	      	<!-- FOOTER -->
-	      	<div class="footer">
-	        	<p>&copy; 2013 中国石油大学</p>
-	      	</div>
+	      	 <div id="footer">
+		          <%@ include file="commons/footer.jsp" %>
+		     </div>
 	
 	    </div><!-- /.container -->
 	    

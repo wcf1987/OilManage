@@ -121,7 +121,7 @@ public class RoleDao {
 		session.close();
 		//sessionFactory.close();
 	}
-	private  void commit()
+	public  void commit()
 	{
 		tx.commit();
 		session.close();
@@ -167,20 +167,20 @@ public class RoleDao {
 		return userR;
 	}
 	
-	public List<User> getUserList() {
-		SQLQuery q = session.createSQLQuery("select t.ID,t.username from t_user t");
-		List l = q.list();
-		List<User> re=new ArrayList<User>();
-		for(int i=0;i<l.size();i++)
-		{
-			  Object[] row = (Object[])l.get(i);;
-			  Integer uid = (Integer)row[0];
-			  String uName = (String)row[1];  
-			  User user=new User(uid, uName,null,0,null,0,null);	 
-			  re.add(user);
-		}
-		return re;
-	}
+//	public List<User> getUserList() {
+//		SQLQuery q = session.createSQLQuery("select t.ID,t.username from t_user t");
+//		List l = q.list();
+//		List<User> re=new ArrayList<User>();
+//		for(int i=0;i<l.size();i++)
+//		{
+//			  Object[] row = (Object[])l.get(i);;
+//			  Integer uid = (Integer)row[0];
+//			  String uName = (String)row[1];  
+//			  User user=new User(uid, uName,null,null,null,0);	 
+//			  re.add(user);
+//		}
+//		return re;
+//	}
 	
 	public Boolean findByUsername(String name){
 		SQLQuery q=session.createSQLQuery("select count(*) from t_user t where t.username=?");
@@ -198,7 +198,7 @@ public class RoleDao {
 		// TODO Auto-generated method stub
 		SQLQuery q = session.createSQLQuery("select t.id,t.RoleName,t.RoleDescription from t_roles t");
 		List l = q.list();
-		this.close();
+//		this.close();
 		List<RoleBase> re=new ArrayList<RoleBase>();
 		for(int i=0;i<l.size();i++)
 		{
@@ -213,7 +213,12 @@ public class RoleDao {
 		return re;
 		
 	}
-
+	public int getCountRole(){
+		String sql="select count(*) from t_roles t1 ";
+		SQLQuery q = session.createSQLQuery(sql);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
+	}
 
 	public List<AlgRoleBase> getAlgsListByRole(int roleID) {
 		// TODO Auto-generated method stub
@@ -232,7 +237,7 @@ public class RoleDao {
 					  
 					  Integer algid = (Integer)row[3];
 					  String algName = (String)row[4];
-					  AlgRoleBase algrole=new AlgRoleBase(id,rid,rName,algid,algName);
+					  AlgRoleBase algrole=new AlgRoleBase(i+1,id,rid,rName,algid,algName);
 					 re.add(algrole);
 				}
 				
@@ -257,7 +262,8 @@ public class RoleDao {
 			  
 			  Integer uid = (Integer)row[3];
 			  String uName = (String)row[4];
-			  User algrole=new User(id,rid,rName,uid,uName);
+			  User algrole=new User(i+1,id,rid,rName,uid,uName);
+//			  User algrole=new User();
 			 re.add(algrole);
 		}
 		
@@ -285,7 +291,7 @@ public class RoleDao {
 		q.setParameter(0, roleID);
 
 		int result=q.executeUpdate();		
-		this.commit();
+//		this.commit();
 		return result;
 	}
 
@@ -319,7 +325,7 @@ public class RoleDao {
 		q.setParameter(0, algRoleID);
 
 		int result=q.executeUpdate();		
-		this.commit();
+//		this.commit();
 		return result;
 		
 	}
@@ -331,7 +337,7 @@ public class RoleDao {
 		q.setParameter(0, userRoleID);
 
 		int result=q.executeUpdate();		
-		this.commit();
+//		this.commit();
 		return result;
 	
 	}
