@@ -106,11 +106,11 @@ var TabTools=function (){
 			datatype: "json" //设置数据类型 
 		}); 
 		$('#GUIProList').trigger("reloadGrid");
-		if(isFirst){//如果是刷新页面后在弹出框上点击的新建，则去掉关闭按钮
+	/*	if(isFirst){//如果是刷新页面后在弹出框上点击的新建，则去掉关闭按钮
 			$("#listGUIPro_modal_close").remove();
 		}else{
 			
-		}
+		}*/
 		$('#listGUIPro_modal').modal({  
 			backdrop:'static',
 		     keyboard:false,
@@ -121,14 +121,13 @@ var TabTools=function (){
 	this.createNewModal=function(isFirst){
 		newone=new Paintings();
 		platform.addPainting(newone.init());
-//		paintingArray.add(selectedPainting);
 		// 配置对话框
 		loadAuthorOptions();//加载作者选项
-		if(isFirst){//如果是刷新页面后在弹出框上点击的新建，则去掉关闭按钮
+	/*	if(isFirst){//如果是刷新页面后在弹出框上点击的新建，则去掉关闭按钮
 			$("#add_GUI_modal_close").remove();
 		}else{
 			
-		}
+		}*/
 		$('#add_GUI_modal').modal({  
 			backdrop:'static',//后面遮罩背景不允许关闭
 		     keyboard:false,//esc键禁用关闭

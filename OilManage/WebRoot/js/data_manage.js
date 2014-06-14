@@ -97,7 +97,7 @@ $(
 					position:"first"
 				
 			
-				}).jqGrid('navButtonDelete',"#PhysicalPager",{
+				}).jqGrid('navButtonAdd',"#PhysicalPager",{
 					title:'删除',
 					caption:"删除",	
 					id:"delete_PhysicalList",

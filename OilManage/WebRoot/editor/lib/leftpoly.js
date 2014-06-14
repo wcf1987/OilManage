@@ -1,28 +1,28 @@
 var Leftpolys = function() {
-	
-	 this.datagrid =jQuery("#PointPraList").jqGrid({
+	 var lastsel;
+	 var datagrid =jQuery("#PointPraList").jqGrid({
 		   	url:'listPointPra.action',
 			datatype: "json",
 			mtype : 'POST',
-		   	colNames:['ID','属性中文名称', '属性英文名称', '属性值','属性ISO值','单位名称','单位符号','操作'],
+		   	colNames:['ID','属性中文名称', '属性英文名称', '属性值','属性ISO值','单位名称','单位符号'],
 		   	colModel:[
-		   		{name:'ID',index:'ID', width:55,align:"center",hidden:true,editable:true},
-		   		{name:'par_display',index:'par_display', width:120, align:"center"},
+		   		{name:'ID',index:'ID', width:100,align:"center",hidden:true,editable:true},
+		   		{name:'par_display',index:'par_display', width:100, align:"center"},
 		   		{name:'par_name',index:'par_name', width:100,align:"center",hidden:true},
-		   		{name:'par_value',index:'par_value', width:80, align:"center",editable:true},
+		   		{name:'par_value',index:'par_value', width:100, align:"center",editable:true},
 		   		{name:'par_ISOValue',index:'par_ISOValue', width:100, align:"center",hidden:true,editable:true},		
-		   		{name:'measure_CName',index:'measure_CName', width:80,align:"center"},		
-		   		{name:'measure_Symbol',index:'measure_Symbol', width:150, align:"center"},
-		   		{name:'act',index:'act', width:75,sortable:false}
+		   		{name:'measure_CName',index:'measure_CName', width:100,align:"center"},		
+		   		{name:'measure_Symbol',index:'measure_Symbol', width:100, align:"center"},
+//		   		{name:'act',index:'act', width:75,sortable:false}
 		   	],
-		   	width:530,
+		   	width:700,//530
 		   	rowNum:10,
 		   	rowList:[10,20,30],
-//		   	pager: '#PointPraPager',
+		   	pager: '#PointPraPager',
 		   	sortname: 'id',
 		    viewrecords: true,
 		    sortorder: "desc",
-			gridComplete: function(){
+/*			gridComplete: function(){
 				var ids = jQuery("#PointPraList").jqGrid('getDataIDs');
 				for(var i=0;i < ids.length;i++){
 					var cl = ids[i];
@@ -31,16 +31,9 @@ var Leftpolys = function() {
 					ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#PointPraList').restoreRow('"+cl+"');\" />"; 
 					jQuery("#PointPraList").jqGrid('setRowData',ids[i],{act:be+se+ce});
 				}	
-			},
+			},*/
 			editurl: "editPointPra.action",
 			caption: "属性列表",
-			postData:{
-//				pointName:point_name,//相当于pointID
-//				pro_id:pro_id,
-//				pointType:point_type,
-//				pointID:1,
-				pointPraID:$("#gridTable").jqGrid("getRowData", $("#gridTable").jqGrid("getGridParam", "selrow")).ID
-		    },
 			jsonReader: {//读取后端json数据的格式
 				root: "pointPraList",//保存详细记录的名称
 				total: "total",//总共有多少页
@@ -49,17 +42,35 @@ var Leftpolys = function() {
 				repeatitems: false
 			},
 		});
-		 $('#PointPraList').trigger("reloadGrid");
-	/*	jQuery("#PointPraList").jqGrid('navGrid',"#PointPraPager",{edit:true,add:false,del:false});
-		jQuery("#PointPraList").jqGrid('inlineNav',"#PointPraPager");
-		jQuery("#PointPraList").jqGrid('navButtonAdd',"#PointPraPager",{
-			title:'编辑',
-			caption:"编辑",	
-			id:"updatePraVal",
-			onClickButton:updatePraVal,
-			position:"last"
-		});*/
-		 
+//		 $('#PointPraList').trigger("reloadGrid");
+	 datagrid.jqGrid('navGrid','#PointPraPager',{
+			edit : false,
+			add : false,
+			search:false,
+			del : false}).jqGrid('navButtonAdd',"#PointPraPager",{
+				title:'保存',
+				caption:"保存",	
+				id:"save_PointPraList",
+				onClickButton:function(){
+					var rowID = $("#PointPraList").jqGrid('getGridParam','selrow'); 				
+					jQuery("#PointPraList").jqGrid('saveRow',rowID, function(result) {
+							if (result.responseText=="") {alert("更新失败!"); return false;}
+							return true;
+						}
+					);
+					},
+				position:"first"
+			}).jqGrid('navButtonAdd',"#PointPraPager",{
+					title:'编辑',
+					caption:"编辑",
+					id:"edit_PointPraList",
+					onClickButton : function addModal(){
+						var rowID = $("#PointPraList").jqGrid('getGridParam','selrow'); 
+						jQuery("#PointPraList").jqGrid('editRow',rowID);
+					},
+					position:"first"
+				});
+
 	this.polys = new Array;
 	this.polyGroups = new Array;
 	this.connectionPoints = new Array;
@@ -460,10 +471,10 @@ var Leftpolys = function() {
 			 datatype: "json", //设置数据类型 
 			 postData: {
 				    pointName:point_name,//相当于pointID
-					pro_id:pro_id,
-					pointType:point_type,
+					pro_id:pro_id,//项目ID
+					pointType:point_type,//元素点的类型
 //					pointID:1,
-					pointPraID:$("#gridTable").jqGrid("getRowData", $("#gridTable").jqGrid("getGridParam", "selrow")).ID
+					pointPraID:$("#PointPraList").jqGrid("getRowData", $("#gridTable").jqGrid("getGridParam", "selrow")).ID
 					} 
 		 }); 
 		$('#PointPraList').trigger("reloadGrid");
