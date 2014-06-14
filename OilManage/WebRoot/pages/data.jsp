@@ -307,6 +307,9 @@ $(document).ready(function(){
 								<li>
 									<a href="#panel-3" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">参数管理</a>
 								</li>
+								<li>
+									<a href="#panel-4" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">控件管理</a>
+								</li>
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="panel-1">		
@@ -326,6 +329,12 @@ $(document).ready(function(){
 									<table id="ParameterList" class="table table-striped table-bordered table-hover datatable " ></table>
 						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
 						      			<div id="ParameterPager" ></div>
+						      		</div>
+								</div>
+								<div class="tab-pane" id="panel-4">							
+									<table id="GuiPointProperList" class="table table-striped table-bordered table-hover datatable " ></table>
+						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
+						      			<div id="GuiPointProperPager" ></div>
 						      		</div>
 								</div>
 							</div>
@@ -474,6 +483,47 @@ $(document).ready(function(){
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">物理单位：</label></td>
 		      				<td>
       							<select id="measureID" name="measureID">		                  
+			                	</select>
+		      					<em style="color:red">*</em>
+		      				</td>
+		      			</tr>		    				
+				   </table>
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	
+				
+    		<!-- 添加控件属性的模态框 -->   	
+		<div class="modal fade" id="add_PointProper_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加控件属性</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="addPointProperForm" action="addPointProper.action" method="post"> 
+		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">
+		      		
+		      			<tr>
+		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >控件类型名称：</label></td>				         
+				           	<td>
+				           	<select id="pointTypeID" name="pointTypeID">		                  
+			                	</select>
+		      					<em style="color:red">*</em>
+				           </td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">参数：</label></td>
+		      				<td>
+      							<select id="parID" name="parID">		                  
 			                	</select>
 		      					<em style="color:red">*</em>
 		      				</td>

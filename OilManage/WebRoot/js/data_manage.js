@@ -94,9 +94,7 @@ $(
 							$('#add_physical_modal').modal();
 					
 					},
-					position:"first"
-				
-			
+					position:"first"		
 				}).jqGrid('navButtonAdd',"#PhysicalPager",{
 					title:'删除',
 					caption:"删除",	
@@ -526,9 +524,180 @@ $(
 	            }); 
 	           } 
 	        } 
+		}
+	
+	/*
+	 * 控件属性管理列表
+	 */
+	var datagrid = jQuery("#GuiPointProperList")
+	.jqGrid(
+			{
+				url : "listPointProper.action",// 后端的数据交互程序，改为你的
+				datatype : "json",// 前后交互的格式是json数据
+				mtype : 'POST',// 交互的方式是发送httppost请求						
+				colNames : [ '编号', '参数显示', '参数名称','单位中文','单位符号','控件类型'],// 表格的列名
+				colModel : [
+						{
+							name : 'ID',
+							index : 'ID',
+							width : 50,
+							align : "center",
+							sortable:true,
+							sorttype:'int'
+						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
+						{
+							name : 'par_display',
+							index : 'par_display',
+							width : 150,
+							align : "center",
+							sortable:true
+						},
+						{
+							name : 'par_name',
+							index : 'par_name',
+							width : 200,
+							align : "center",
+							sortable:true
+						},
+						{
+							name:'measure_CName',
+							index:'measure_CName',
+							width:200,
+							align:"center",
+							sortable:true
+						},
+						{
+							name : 'measure_Symbol',
+							index : 'measure_Symbol',
+							width : 200,
+							align : "center",
+							sortable:true
+						},
+						{
+							name : 'point_type',
+							index : 'point_type',
+							width : 200,
+							align : "center",
+							sortable:true
+						}
+						],
+//				autowidth:true,
+				rowNum:10,//每一页的行数
+				height: 'auto',
+				width:1230,
+				rowList:[10,20,30],
+				pager: '#GuiPointProperPager',
+				sortname: 'ID',
+				viewrecords: true,
+				sortorder: "desc",
+				multiselect: true,  //可多选，出现多选框 
+			    multiselectWidth: 35, //设置多选列宽度 
+				jsonReader: {//读取后端json数据的格式
+					root: "pointProperList",//保存详细记录的名称
+					total: "total",//总共有多少页
+					page: "page",//当前是哪一页
+					records: "records",//总共记录数
+					repeatitems: false,
+					
+				},
+				data:{
+					pointTypeDic:"pointTypeDic"
+				},
+				caption: "控件管理"//表格名称
+				
+			});
+	
+	datagrid.jqGrid('filterToolbar',{searchOperators:true});
+	datagrid.jqGrid('navGrid','#GuiPointProperPager',{
+		edit : false,
+		add : false,
+		search:false,
+		del : false}).jqGrid('navButtonAdd',"#GuiPointProperPager",{
+				title:'添加',
+				caption:"添加",
+				id:"add_PointProperList",
+				onClickButton : function addModal(){
+					loadPointProperOptions();
+					loadParameterOptions();
+					$("#addPointProperForm").validate({
+						debug:true,
+						onsubmit:true,
+						onfocusout:false,
+						onkeyup:true,
+						rules:{
+							point_type:{
+								required:true
+							}
+						},
+						messages:{
+							point_type:{
+							required:"类型名称不能为空！",
+							}
+						},
+						submitHandler:function(){
+							add_PointProper();
+						}
+					});
+					// 配置对话框
+					
+					$('#add_PointProper_modal').modal();
+				
+				},
+				position:"first"
 			
+		
+			}).jqGrid('navButtonAdd',"#GuiPointProperPager",{
+				title:'删除',
+				caption:"删除",	
+				id:"delete_PointProperList",
+				onClickButton:deletePointProper,
+				position:"first"
+			});
+	function deletePointProper() {
+	        var sels = $("#GuiPointProperList").jqGrid('getGridParam','selarrrow'); 
+	        if(sels==""){ 
+	           //$().message("请选择要删除的项！"); 
+	           alert("请选择要删除的项!");
+	        }else{ 
+	        	var selectedIDs={};
+	        	$.each(sels,function(i,n){ 
+                  if(sels[i]!=""){ 
+                	  var rowData = $("#GuiPointProperList").jqGrid("getRowData", sels[i]);
+                	  selectedIDs["ids[" + i + "]"]=rowData.ID;
+                  } 
+	        	}); 
 
-	}
+	           if(confirm("您是否确认删除？")){ 
+	            $.ajax({ 
+	              type: "POST", 
+	              url: "delPointProper.action", 
+	              data: selectedIDs, 
+	              beforeSend: function() { 
+	                   $().message("正在请求..."); 
+	              }, 
+	              error:function(){ 
+	                   $().message("请求失败..."); 
+	              }, 
+	              
+	              success: function(msg){ 
+	            	alert("删除成功！");
+//	            	alert(msg);
+					$("#GuiPointProperList").trigger("reloadGrid");
+	                   if(msg!=0){ 	                      
+	                       $.each(arr,function(i,n){ 
+	                             if(arr[i]!=""){ 
+	                                 $("#GuiPointProperList").jqGrid('delRowData',n);  
+	                             } 
+	                       }); 
+	                       $().message("已成功删除!"); 
+	                   }else{ 
+	                       $().message("操作失败！"); 
+	                   } 
+	              } 
+	            }); 
+	           } 
+	        } 
+		}
 
 	
 	
@@ -616,7 +785,35 @@ function add_parameter() {
 		}
 	});
 	}
-	
+
+function add_PointProper() {
+
+	$.ajax({
+		type : 'POST',
+		url : 'addPointProper.action',
+		data : {
+			point_type:$("#pointTypeID").val(),
+			parID:$("#parID").val(),
+			//measureID:$("#measureID").val()
+		},
+		dataType:'json',
+		success : function(data) {
+//			if(data.exist==true){
+//				alert(data.name+"已存在！");
+//			}else{
+				alert("添加成功！");
+				$('#add_PointProper_modal').modal('hide');
+				$("#GuiPointProperList").trigger("reloadGrid");
+//			}
+		},
+		error:function(msg){
+			alert(msg);
+			$('#add_PointProper_modal').modal('hide');
+			$("#GuiPointProperList").trigger("reloadGrid");
+		}
+	});
+	}
+
 function loadPhysicalOptions(){
 	$.ajax({
 		url:'listPhysical.action',
@@ -673,4 +870,40 @@ function loadMeasureOptions(){
 		}
 	});
 	}
-
+function loadParameterOptions(){
+	$.ajax({
+		url:'listParameter.action',
+		type:'post',
+		data : {
+			sidx: 'ID',
+			sord: "desc"
+		},
+		dataType:'json',
+		success:function(data){
+		//alert(data.dataList[0].CName);
+			var items="";
+			$.each(data.dataList,function(i,parameter){
+				items+= "<option value=\"" + parameter.ID + "\">" + parameter.display + "</option>"; 
+			});
+			$("#parID").html(items);
+		}
+	});
+}
+function loadPointProperOptions(){
+	$.ajax({
+		url:'listPointProper.action',
+		type:'post',
+		data : {
+			sidx: 'ID',
+			sord: "desc"
+		},
+		dataType:'json',
+		success:function(data){
+			var items="";
+			$.each(data.pointTypeDic,function(i,pointType){
+				items+= "<option value=\"" + pointType + "\">" + pointType + "</option>"; 
+			});
+			$("#pointTypeID").html(items);
+		}
+	});
+	}

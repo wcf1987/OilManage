@@ -74,6 +74,7 @@ var Leftpolys = function() {
 	this.polys = new Array;
 	this.polyGroups = new Array;
 	this.connectionPoints = new Array;
+	
 	this.polys[0] = new Kinetic.Line({
 		x : 5,
 		y : 20,
@@ -81,11 +82,11 @@ var Leftpolys = function() {
 		fill : '#00D2FF',
 		stroke : 'black',
 		strokeWidth : 2,
-
 		name : 'test1',
 		closed : true
 	});
-
+	
+		
 	this.polys[1] = new Kinetic.Line({
 		x : 5,
 		y : 70,
@@ -145,7 +146,6 @@ var Leftpolys = function() {
 		fill : 'blue'
 	});
 	this.init = function() {
-
 		for ( var k=0;k<this.polys.length;k++) {
 			this.polyGroups[k] = new Kinetic.Group({
 				x : this.polys[k].x(),
@@ -487,4 +487,5 @@ var Leftpolys = function() {
 		
 	
 }
+
 

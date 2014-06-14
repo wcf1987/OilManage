@@ -475,7 +475,31 @@
 			</result>
 		</action>
 		<!-- GUI end -->
+		<!-- GUI point proper Config start  -->
+		<action name="listPointProper" class="cn.edu.cup.manage.action.GUIProperAction"
+			method="listPointProper">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addPointProper" class="cn.edu.cup.manage.action.GUIProperAction"
+			method="addPointProper">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		
+		<action name="delPointProper" class="cn.edu.cup.manage.action.GUIProperAction"
+			method="delPointProper">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+	
+		
+		<!-- GUI point proper Config end  -->
 		<action name="testData" class="cn.edu.cup.map.action.TableAction">
 			<result name="SUCCESS" type="json">
 			</result>

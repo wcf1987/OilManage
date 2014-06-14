@@ -313,6 +313,7 @@ var Platform=function(){
 	    
 	    this.gridlayer.add(bgGroup);
 		this.leftlayer.add(this.rectBackgroundLeft);
+		
 		this.centerlayer.add(this.rectBackgroundCenter);
 		this.outputlayer.add(this.rectBackgroundOutput);
 		this.outputlayer.add(this.rectBackgroundText);
@@ -406,7 +407,7 @@ var Platform=function(){
 	this.addLeft=function(left){
 		left.platform=this;
 		for (var k in left.polyGroups)
-		{this.leftlayer.add(left.polyGroups[k]);}
+		{this.leftlayer.add(left.polyGroups[k]);}		
 		this.leftlayer.draw();
 	}
 

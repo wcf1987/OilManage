@@ -15,6 +15,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.gui.business.GUIPro;
+import cn.edu.cup.gui.business.PointProper;
 import cn.edu.cup.gui.business.PointValue;
 import cn.edu.cup.manage.business.CalcInfo;
 import cn.edu.cup.manage.business.Measure;
@@ -348,6 +349,79 @@ public class GUIDao {
 		result=(Integer) q.uniqueResult(); 
 		return result;
 	}
+	
+	/**
+	 * 用来生成GUI空间的属性列表
+	 * @param page
+	 * @param rows
+	 * @param sidx
+	 * @param sord
+	 * @return
+	 */
+	public List<PointProper> getPointProperList(int page, int rows,
+			String sidx, String sord) {
+		
+		
+		 SQLQuery q = session.createSQLQuery("select t2.id,t2.point_type,t2.par_name,t2.par_display,t3.CName,t3.Symbol,t3.ID mess_id from t_guipointproper t2,t_measure t3 WHERE t2.par_messID=t3.ID  order by t2."+sidx+" "+sord);
+
+			q.setFirstResult((page-1)*rows);
+			q.setMaxResults(rows);
+		
+		
+
+		List l = q.list();
+		List<PointProper> re=new ArrayList<PointProper>();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+
+			  Object[] row = (Object[])l.get(i);;
+			  Integer id = ((Integer)row[0]);
+			  String point_type=((String)row[1]);
+			  String par_name=((String)row[2]);
+			  String par_display=((String)row[3]);
+	
+			  String measure_CName=((String)row[4]);
+			  String measure_Symbol=((String)row[5]);
+			  Integer mess_id = ((Integer)row[6]);
+			  PointProper p=new PointProper(id,point_type,par_display,par_name,measure_CName,measure_Symbol,mess_id);
+			  
+			  
+			  re.add(p);
+		}
+		tx.commit();
+		return re;
+	}
+	public int getCountPointProper() {
+		String sql="select count(*) from t_guipointproper t ";
+		SQLQuery q = session.createSQLQuery(sql);
+		
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
+
+	}
+	public int addProper(String point_type,String par_name, String par_display,
+			 int measure_id) {
+		Query q = session.createSQLQuery("insert into t_guipointproper (point_type,par_name,par_display,par_messID) values (?,?,?,?)");
+		q.setParameter(0, point_type);
+		q.setParameter(1, par_name);
+		q.setParameter(2, par_display);
+		q.setParameter(3, measure_id);
+
+		int result=q.executeUpdate();
+		tx.commit();
+		return 0;
+	}
+	public int deleteProper(int id) {
+		// TODO Auto-generated method stub
+		SQLQuery q = session.createSQLQuery("delete from t_guipointproper where ID=?");
+		q.setParameter(0, id);
+		int re=q.executeUpdate();
+//		tx.commit();
+		return re;
+	}
+
 
 
 
