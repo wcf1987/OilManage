@@ -72,9 +72,10 @@ var Leftpolys = function() {
 				});
 
 	this.polys = new Array;
+	this.imgobj=new Array;
 	this.polyGroups = new Array;
 	this.connectionPoints = new Array;
-	this.polys[0] = new Kinetic.Line({
+/*	this.polys[0] = new Kinetic.Line({
 		x : 5,
 		y : 20,
 		points : [ 0, 0, 90, 0, 90, 10, 0, 10 ],
@@ -85,68 +86,103 @@ var Leftpolys = function() {
 		name : 'test1',
 		closed : true
 	});
+*/  
+	this.imgLoad = function (url,i){
+	
+	    var img = new Image();
+	    img.src = url;
+	    if (img.complete) {
+	        this.createIMG(img,i);
+	    } else {
+	        img.onload = function () {
+	        	leftpoly.createIMG(img,i);
+	            img.onload = null;
+	        };
+	    };
+	};
+	this.createIMG = function (img,i){
+		leftpoly.polys[i] = new Kinetic.Image({
+		    x: 10,
+		    y: i*90,
+		    image: img,
+		    width: 90,
+		    height: 80
+		  });
+	}
 
-	this.polys[1] = new Kinetic.Line({
-		x : 5,
-		y : 70,
-		points : [ 0, 0, 90, 0, 90, 10, 0, 10 ],
-		fill : '#00FF00',
-		stroke : 'black',
-		strokeWidth : 2,
-		name : 'test2',
+	/*
+	this.imgobj[0] = new Image();
+	this.imgobj[0].onload = function() {
+		leftpoly.polys[0] = new Kinetic.Image({
+		    x: 0,
+		    y: 0,
+		    image: leftpoly.imgobj[0],
+		    width: 70,
+		    height: 70
+		  });
+		};
+		this.imgobj[0].src = 'editor/icons/icon0.png'
+			
+	this.imgobj[1] = new Image();
+	this.imgobj[1].onload = function() {
+			leftpoly.polys[1] = new Kinetic.Image({
+			    x: 0,
+			    y: 70,
+			    image: leftpoly.imgobj[1],
+			    width: 70,
+			    height: 70
+			  });
+			};
+			this.imgobj[1].src = 'editor/icons/icon1.png'
+		
+				this.imgobj[2] = new Image();
+			this.imgobj[2].onload = function() {
+				leftpoly.polys[2] = new Kinetic.Image({
+				    x: 0,
+				    y: 140,
+				    image: leftpoly.imgobj[2],
+				    width: 100,
+				    height: 70
+				  });
+				};
+				this.imgobj[2].src = 'editor/icons/icon2.png'
+					
+					this.imgobj[3] = new Image();
+				this.imgobj[3].onload = function() {
+					leftpoly.polys[3] = new Kinetic.Image({
+					    x: 0,
+					    y: 210,
+					    image: leftpoly.imgobj[3],
+					    width: 100,
+					    height: 70
+					  });
+					};
+					this.imgobj[3].src = 'editor/icons/icon3.png'
+						
+						this.imgobj[4] = new Image();
+					this.imgobj[4].onload = function() {
+						leftpoly.polys[4] = new Kinetic.Image({
+						    x: 0,
+						    y: 280,
+						    image: leftpoly.imgobj[4],
+						    width: 100,
+						    height: 70
+						  });
+						};
+						this.imgobj[4].src = 'editor/icons/icon4.png'
+							
+				
+	*/
+	
 
-		closed : true
-	});
-
-	this.polys[2] = new Kinetic.Line({
-		x : 5,
-		y : 120,
-		points : [ 0, 0, 90, 0, 90, 10, 0, 10 ],
-		fill : '#FF0000',
-		stroke : 'black',
-		strokeWidth : 2,
-		name : 'test3',
-		closed : true
-	});
-
-	this.polys[3] = new Kinetic.Line({
-		x : 5,
-		y : 170,
-		points : [ 0, 0, 90, 0, 90, 10, 0, 10 ],
-		fill : '#44ffee',
-		stroke : 'black',
-		strokeWidth : 2,
-		name : 'test4',
-		closed : true
-	});
-
-	this.polys[4] = new Kinetic.Circle({
-		x : 45,
-		y : 220,
-		radius : 15,
-		fill : 'red',
-		stroke : 'black',
-		strokeWidth : 2,
-		fillEnabled : true,
-		name : 'test5',
-		rotationDeg : -10
-	});
-
-	this.polys[5] = new Kinetic.Rect({
-		x : 9,
-		y : 270,
-		width : 80,
-		height : 30,
-		cornerRadius : 10,
-		scaleX : 1,
-		scaleY : 1,
-		RotationDeg : 0,
-		name : 'test6',
-		fill : 'blue'
-	});
+		
 	this.init = function() {
-
+		for(var i=0;i<5;i++){
+			this.imgLoad('editor/icons/icon'+i+'.png',i);
+		}	
 		for ( var k=0;k<this.polys.length;k++) {
+			
+			
 			this.polyGroups[k] = new Kinetic.Group({
 				x : this.polys[k].x(),
 				y : this.polys[k].y(),
@@ -156,7 +192,7 @@ var Leftpolys = function() {
 			});
 			var connPointsLeft = new Kinetic.Circle({
 				x : 0,
-				y : 5,
+				y : 40,
 
 				radius : 5,
 				fill : 'yellow',
@@ -166,7 +202,7 @@ var Leftpolys = function() {
 			});
 			var connPointsRight = new Kinetic.Circle({
 				x : 90,
-				y : 5,
+				y : 40,
 				name : 'connPointsRight',
 				radius : 5,
 				fill : 'yellow',
