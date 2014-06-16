@@ -328,6 +328,7 @@ function() {
 						var text = $(this).text();
 						if (text == '删除该节点') {		
 							clickshape.destroy();
+							showALLConnedPoints();
 							$("#contextmenu").hide();		
 							platform.selectPainting.p.draw();
 						} else if (text == '更改颜色') {
