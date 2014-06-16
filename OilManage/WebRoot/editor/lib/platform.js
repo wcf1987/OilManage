@@ -535,12 +535,15 @@ var Platform=function(){
 		this.paintingArray.push(paintings);
 		
 		this.selectPainting.showSelected();
+
+		
 		/*
-		 *加载模型后为每个元素添加 事件 
+		 *加载模型后为每个元素添加 事件 ，为每个元素添加图形支持
 		 */
 		var polys=this.selectPainting.p.getChildren();
 		var leftpolys=new Leftpolys();
 		for ( var k=0;k<polys.length;k++) {
+			setImage(polys[k]);
 			polys[k].dragBoundFunc(leftpolys.dragFun);
 			polys[k].on('click', leftpolys.clickFunc);
 			polys[k].on('dblclick', leftpolys.dbclickFun);
