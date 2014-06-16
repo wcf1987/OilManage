@@ -108,11 +108,11 @@ function() {
 		
 		leftpoly.polys[i] = new Kinetic.Image({
 		    x: 10,
-		    y: i*90,
+		    y: 10+i*70,
 		    image: img,
 		    width: 80,
 		    name : 'type'+i,
-		    height: 80
+		    height: 60
 		  });
 	}
 
@@ -144,7 +144,7 @@ function() {
 			});
 			var connPointsLeft = new Kinetic.Circle({
 				x : 0,
-				y : 40,
+				y : 30,
 
 				radius : this.radiusL,
 				fill : 'red',
@@ -154,7 +154,7 @@ function() {
 			});
 			var connPointsRight = new Kinetic.Circle({
 				x : 80,
-				y : 40,
+				y : 30,
 				name : 'connPointsRight',
 				radius : this.radiusL,
 				fill : 'red',
