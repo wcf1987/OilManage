@@ -1,4 +1,7 @@
-var Leftpolys = function() {
+var Leftpolys = /**
+ * 
+ */
+function() {
 	 var lastsel;
 	 var datagrid =jQuery("#PointPraList").jqGrid({
 		   	url:'listPointPra.action',
@@ -72,81 +75,61 @@ var Leftpolys = function() {
 				});
 
 	this.polys = new Array;
+	this.imgobj=new Array;
 	this.polyGroups = new Array;
 	this.connectionPoints = new Array;
-	
-	this.polys[0] = new Kinetic.Line({
+	this.radiusL=5;
+/*	this.polys[0] = new Kinetic.Line({
 		x : 5,
 		y : 20,
 		points : [ 0, 0, 90, 0, 90, 10, 0, 10 ],
 		fill : '#00D2FF',
 		stroke : 'black',
 		strokeWidth : 2,
+
 		name : 'test1',
 		closed : true
 	});
+*/  
+	this.imgLoad = function (url,i){
 	
+		this.imgobj[i] = new Image();
+		this.imgobj[i].src = url;
+	    if (this.imgobj[i].complete) {
+	        this.createIMG(this.imgobj[i],i);
+	    } else {
+	    	this.imgobj[i].onload = function () {
+	        	leftpoly.createIMG(leftpoly.imgobj[i],i);
+	        	leftpoly.imgobj[i].onload = null;
+	        };
+	    };
+	};
+	this.createIMG = function (img,i){
 		
-	this.polys[1] = new Kinetic.Line({
-		x : 5,
-		y : 70,
-		points : [ 0, 0, 90, 0, 90, 10, 0, 10 ],
-		fill : '#00FF00',
-		stroke : 'black',
-		strokeWidth : 2,
-		name : 'test2',
+		leftpoly.polys[i] = new Kinetic.Image({
+		    x: 10,
+		    y: i*90,
+		    image: img,
+		    width: 80,
+		    name : 'type'+i,
+		    height: 80
+		  });
+	}
 
-		closed : true
-	});
+	this.getImgage=function (g){
+		name=g.name();
+		index=name.substr(4,1);
+		return this.imgobj[index];
+	}
 
-	this.polys[2] = new Kinetic.Line({
-		x : 5,
-		y : 120,
-		points : [ 0, 0, 90, 0, 90, 10, 0, 10 ],
-		fill : '#FF0000',
-		stroke : 'black',
-		strokeWidth : 2,
-		name : 'test3',
-		closed : true
-	});
-
-	this.polys[3] = new Kinetic.Line({
-		x : 5,
-		y : 170,
-		points : [ 0, 0, 90, 0, 90, 10, 0, 10 ],
-		fill : '#44ffee',
-		stroke : 'black',
-		strokeWidth : 2,
-		name : 'test4',
-		closed : true
-	});
-
-	this.polys[4] = new Kinetic.Circle({
-		x : 45,
-		y : 220,
-		radius : 15,
-		fill : 'red',
-		stroke : 'black',
-		strokeWidth : 2,
-		fillEnabled : true,
-		name : 'test5',
-		rotationDeg : -10
-	});
-
-	this.polys[5] = new Kinetic.Rect({
-		x : 9,
-		y : 270,
-		width : 80,
-		height : 30,
-		cornerRadius : 10,
-		scaleX : 1,
-		scaleY : 1,
-		RotationDeg : 0,
-		name : 'test6',
-		fill : 'blue'
-	});
+		
 	this.init = function() {
+		for(var i=0;i<5;i++){
+			this.imgLoad('editor/icons/type'+i+'.png',i);
+		}	
 		for ( var k=0;k<this.polys.length;k++) {
+			
+			
 			this.polyGroups[k] = new Kinetic.Group({
 				x : this.polys[k].x(),
 				y : this.polys[k].y(),
@@ -156,19 +139,19 @@ var Leftpolys = function() {
 			});
 			var connPointsLeft = new Kinetic.Circle({
 				x : 0,
-				y : 5,
+				y : 40,
 
-				radius : 5,
+				radius : this.radiusL,
 				fill : 'yellow',
 				stroke : 'black',
 				name : 'connPointsLeft',
 				strokeWidth : 2
 			});
 			var connPointsRight = new Kinetic.Circle({
-				x : 90,
-				y : 5,
+				x : 80,
+				y : 40,
 				name : 'connPointsRight',
-				radius : 5,
+				radius : this.radiusL,
 				fill : 'yellow',
 				stroke : 'black',
 				strokeWidth : 2
@@ -177,6 +160,19 @@ var Leftpolys = function() {
 			this.polys[k].x(0);
 			this.polys[k].y(0);
 			this.polyGroups[k].add(this.polys[k]);
+			if(k==0){
+				this.polyGroups[k].add(connPointsRight);				
+				connPointsRight.hide();	
+				this.initPoint(this.polyGroups[k]);
+				continue;
+			}
+			if(k==1){
+				this.polyGroups[k].add(connPointsLeft);				
+				connPointsLeft.hide();
+				this.initPoint(this.polyGroups[k]);
+				continue;
+			}
+			
 			
 			this.polyGroups[k].add(connPointsLeft);
 			this.polyGroups[k].add(connPointsRight);
@@ -402,8 +398,11 @@ var Leftpolys = function() {
 			return node.getName() == 'connPointsLeft'
 					|| node.getName() == 'connPointsRight'
 		});
-		tempArray[0].show();
-		tempArray[1].show();
+		for(var i=0;i<tempArray.length;i++){
+			tempArray[i].show();
+		
+		}
+		
 		g.draw();
 	}
 	hideConnection = function(g) {
@@ -411,50 +410,55 @@ var Leftpolys = function() {
 			return node.getName() == 'connPointsLeft'
 					|| node.getName() == 'connPointsRight'
 		});
-		tempArray[0].hide();
-		tempArray[1].hide();
+		for(var i=0;i<tempArray.length;i++){
+			tempArray[i].hide();
+		
+		}
 
 	}
+	/*
+	 * 检查控件之间连接关系
+	 */
 	checkConn = function(g) {
-		tempArray = g.getChildren(function(node) {
-			return node.getName() == 'connPointsLeft'
-					|| node.getName() == 'connPointsRight'
-		});
+		leftCir=getLeftPoint(g);
+		rightCir=getRightPoint(g);
 		points = platform.getAllChildren();
 		var re=null;
 		for (li = 0; li < points.length; li++) {
-			tempArray2 = points[li].getChildren(function(node) {
-				return node.getName() == 'connPointsLeft'
-						|| node.getName() == 'connPointsRight'
-			});
-			if (checkCircle(tempArray[0], tempArray2[1],
-					tempArray[0].radius()*platform.selectPainting.scaleN  * 2)) {
-
-				re= {
-						g : points[li],
-						right : tempArray2[1],
-						left : 0,
-						x : tempArray[0].getAbsolutePosition().x
-								- tempArray2[1].getAbsolutePosition().x,
-						y : tempArray[0].getAbsolutePosition().y
-								- tempArray2[1].getAbsolutePosition().y,
-					}
-				return re;
-			}
-			if (checkCircle(tempArray[1], tempArray2[0],
-					tempArray[0].radius()*platform.selectPainting.scaleN * 2)) {
+			var tempL=getLeftPoint(points[li]);
+		
+			if (checkCircle(rightCir, tempL,
+					leftpoly.radiusL*platform.selectPainting.scaleN * 2)) {
 				
 				re= {
 					g : points[li],
 					right : 0,
-					left : tempArray2[0],
-					x : tempArray[1].getAbsolutePosition().x
-							- tempArray2[0].getAbsolutePosition().x,
-					y : tempArray[1].getAbsolutePosition().y
-							- tempArray2[0].getAbsolutePosition().y,
+					left : tempL,
+					x : rightCir.getAbsolutePosition().x
+							- tempL.getAbsolutePosition().x,
+					y : rightCir.getAbsolutePosition().y
+							- tempL.getAbsolutePosition().y,
 				}
 				return re;
 			}
+		}
+		for (li = 0; li < points.length; li++) {
+			var tempR=getRightPoint(points[li]);
+			if (checkCircle(leftCir, tempR,
+					leftpoly.radiusL*platform.selectPainting.scaleN  * 2)) {
+
+				re= {
+						g : points[li],
+						right : tempR,
+						left : 0,
+						x : leftCir.getAbsolutePosition().x
+								- tempR.getAbsolutePosition().x,
+						y : leftCir.getAbsolutePosition().y
+								- tempR.getAbsolutePosition().y,
+					}
+				return re;
+			}
+			
 		}
 		return re;
 	}
@@ -487,5 +491,4 @@ var Leftpolys = function() {
 		
 	
 }
-
 

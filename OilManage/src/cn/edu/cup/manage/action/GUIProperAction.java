@@ -157,7 +157,6 @@ public class GUIProperAction {
 		this.par_name=p.getName();
 		this.measure_id=Integer.parseInt(p.getMeasureID());
 		ID=dao.addProper(this.point_type,this.par_name,this.par_display,this.measure_id);
-		
 		return "SUCCESS";
 	}
 	public String delPointProper(){		
