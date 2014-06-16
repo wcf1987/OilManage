@@ -121,7 +121,12 @@ function() {
 		index=name.substr(4,1);
 		return this.imgobj[index];
 	}
-
+	this.reloadIMG=function(){
+		for ( var k=0;k<this.polys.length;k++) {
+		this.polys[k].setImage(this.imgobj[k]);
+		}
+		platform.drawLeft();
+	}
 		
 	this.init = function() {
 		for(var i=0;i<5;i++){
