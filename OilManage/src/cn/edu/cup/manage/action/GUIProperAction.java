@@ -18,7 +18,7 @@ public class GUIProperAction {
 	private String sord;
 	private List<Integer> ids;
 	private List<PointProper> pointProperList;
-	private List<String> pointTypeDic=Arrays.asList("type1","type2","type3","type4","type5","type6");
+	private List<String> pointTypeDic=Arrays.asList("type0","type1","type2","type3","type4","type5","type6");
 	
 	public int getPage() {
 		return page;

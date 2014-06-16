@@ -53,7 +53,38 @@ function checkPoint(pos, rect) {
 	}
 	return false;
 };
+function getLeftPoint(g){
+	tempArray1 = g.getChildren(function(node) {
+		return node.getName() == 'connPointsLeft'				
+	});
+	
+		return tempArray1[0];
+	
+}
+function setImage(g){
+	kinImg=getImagePoint(g);
+	kinImg.setImage(leftpoly.getImgage(g));
+}
+function getImagePoint(g){
+	tempArrayI = g.getChildren(function(node) {
+		return node.getName() != 'connPointsLeft' &&node.getName() != 'connPointsRight'				
+	});
+	
+		return tempArrayI[0];
+	
+}
+function getRightPoint(g){
+	tempArray2 = g.getChildren(function(node) {
+		return  node.getName() == 'connPointsRight'
+	});
+	
+	return tempArray2[0];
+	
+}
 function checkCircle(v1,v2,length){
+	if(v2==null || v1==null){
+		return false;
+	}
 	if((Math.pow((v1.getAbsolutePosition().x-v2.getAbsolutePosition().x),2)+Math.pow((v1.getAbsolutePosition().y-v2.getAbsolutePosition().y),2))<(length*length))
 		{
 		return true;

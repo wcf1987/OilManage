@@ -460,6 +460,24 @@ function() {
 			}
 			
 		}
+		for (li = 0; li < points.length; li++) {
+			var tempR=getRightPoint(points[li]);
+			if (checkCircle(leftCir, tempR,
+					leftpoly.radiusL*platform.selectPainting.scaleN  * 2)) {
+
+				re= {
+						g : points[li],
+						right : tempR,
+						left : 0,
+						x : leftCir.getAbsolutePosition().x
+								- tempR.getAbsolutePosition().x,
+						y : leftCir.getAbsolutePosition().y
+								- tempR.getAbsolutePosition().y,
+					}
+				return re;
+			}
+			
+		}
 		return re;
 	}
 	
