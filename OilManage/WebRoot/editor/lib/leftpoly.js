@@ -459,7 +459,7 @@ function() {
 					y : rightCir.getAbsolutePosition().y
 							- tempL.getAbsolutePosition().y,
 				}
-				return re;
+				
 			}
 		}
 		for (li = 0; li < points.length; li++) {
@@ -476,7 +476,7 @@ function() {
 						y : leftCir.getAbsolutePosition().y
 								- tempR.getAbsolutePosition().y,
 					}
-				return re;
+				
 			}
 			
 		}		
