@@ -147,7 +147,7 @@ function() {
 				y : 40,
 
 				radius : this.radiusL,
-				fill : 'yellow',
+				fill : 'red',
 				stroke : 'black',
 				name : 'connPointsLeft',
 				strokeWidth : 2
@@ -157,7 +157,7 @@ function() {
 				y : 40,
 				name : 'connPointsRight',
 				radius : this.radiusL,
-				fill : 'yellow',
+				fill : 'red',
 				stroke : 'black',
 				strokeWidth : 2
 			});
@@ -265,7 +265,7 @@ function() {
 			this.destroy();// 不在中间画布就摧毁
 
 		}
-		hideALLConnPoints();
+		showALLConnedPoints();
 		platform.centerlayer.draw(this);
 		platform.stage.draw();
 	};
@@ -360,7 +360,7 @@ function() {
 							showPrameter(point_name,pro_id,point_type,attrtop,attrleft);									
 							platform.selectPainting.p.draw();
 						}
-						hideALLConnPoints();					
+						//hideALLConnPoints();					
 						// $("#contextmenu").hide();
 					});
 			var shapes = clickshape.getChildren(function(node){
@@ -388,6 +388,19 @@ function() {
 		}
 		platform.draw();
 		platform.setConnShowed(true);
+	}
+	showALLConnedPoints = function() {
+		points = platform.getAllChildren();
+		for (i1 = 0; i1 < points.length; i1++) {
+			right=getRightPoint(points[i1]);
+			left=getLeftPoint(points[i1]);
+			if (right!=null) right.fill('red');
+			if (left!=null) left.fill('red');
+		}
+		for (i1 = 0; i1 < points.length; i1++) {
+			checkConn(points[i1]);
+		}
+		
 	}
 	hideALLConnPoints = function() {//隐藏所有连接点
 		points = platform.getAllChildren();
@@ -421,6 +434,7 @@ function() {
 		}
 
 	}
+	
 	/*
 	 * 检查控件之间连接关系
 	 */
@@ -464,25 +478,7 @@ function() {
 				return re;
 			}
 			
-		}
-		for (li = 0; li < points.length; li++) {
-			var tempR=getRightPoint(points[li]);
-			if (checkCircle(leftCir, tempR,
-					leftpoly.radiusL*platform.selectPainting.scaleN  * 2)) {
-
-				re= {
-						g : points[li],
-						right : tempR,
-						left : 0,
-						x : leftCir.getAbsolutePosition().x
-								- tempR.getAbsolutePosition().x,
-						y : leftCir.getAbsolutePosition().y
-								- tempR.getAbsolutePosition().y,
-					}
-				return re;
-			}
-			
-		}
+		}		
 		return re;
 	}
 	

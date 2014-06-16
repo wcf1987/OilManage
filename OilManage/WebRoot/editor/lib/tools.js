@@ -87,6 +87,8 @@ function checkCircle(v1,v2,length){
 	}
 	if((Math.pow((v1.getAbsolutePosition().x-v2.getAbsolutePosition().x),2)+Math.pow((v1.getAbsolutePosition().y-v2.getAbsolutePosition().y),2))<(length*length))
 		{
+		v1.fill('yellow');
+		v2.fill('yellow');
 		return true;
 		}
 		else{

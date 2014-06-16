@@ -307,7 +307,7 @@ var Platform=function(){
 		this.centerlayer.on('click',function(e){//如果点击在中央层的背景上则隐藏点击菜单
 			if(e.target.name()==='rectBackgroundCenter')
 			$('#contextmenu').hide();
-			hideALLConnPoints();
+			//hideALLConnPoints();
 		});
 	    bgGroup.add(bgRect);
 	    
