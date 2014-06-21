@@ -27,6 +27,7 @@ import cn.edu.cup.manage.business.User;
 import cn.edu.cup.map.business.Line;
 import cn.edu.cup.map.business.MapPro;
 import cn.edu.cup.test.TestHibernate;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 
 public class UserDao  {
@@ -42,17 +43,22 @@ public class UserDao  {
 
 	public UserDao()
 	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+		
+		session = HibernateSessionManager.getThreadLocalSession();
+		
 	
 	}
-	
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
 
 	//遍历
 	public  void all()
@@ -83,12 +89,13 @@ public class UserDao  {
 	}
 	
 	public int addUser(String username,String password){
-		
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into T_User (username,password) values (?,?)");
 		q.setParameter(0, username);
 		q.setParameter(1, password);
 		int result=q.executeUpdate();
-		tx.commit();
+	
 		return result;
 	}
 
@@ -110,30 +117,18 @@ public class UserDao  {
 		session.save(user);
 	}
 	
-	 SessionFactory sessionFactory;
+	 
 	 Session session ;
-	 Transaction tx ;
+	
 	
 
 	public void initDao()
 	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+		session = HibernateSessionManager.getThreadLocalSession();
 	
 	}
 	
-	public  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
+
 	
 	public User searchUser(String name,String pass,String type){
 		
@@ -215,6 +210,8 @@ public class UserDao  {
 
 	public int delUser(int userID) {
 //		tx = session.beginTransaction();
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery(" delete from t_user where id=?");
 		q.setParameter(0, userID);
 		int result=q.executeUpdate();		

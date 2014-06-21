@@ -17,9 +17,21 @@ import cn.edu.cup.manage.business.Measure;
 import cn.edu.cup.manage.business.Physical;
 import cn.edu.cup.manage.business.Style;
 import cn.edu.cup.test.TestHibernate;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 public class PhysicalDao {
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
 
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+	 Session session ;
 
 	//遍历
 	public  void all()
@@ -39,17 +51,10 @@ public class PhysicalDao {
 		}
 	}
 	
-	//读取
-	public  void load()
-	{
-		TestHibernate obj = (TestHibernate) session.load(TestHibernate.class, new Long(2));
-		
-			
-		
-		//System.out.println(obj.getUsername());
-	}
+
 	public int addPhysical(String CName,String EName, String Description,String ISOBasicUnit){
-		
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into T_Physical (CName,EName,Description,ISOBasicUnit) values (?,?,?,?)");
 		q.setParameter(0, CName);
 		q.setParameter(1, EName);
@@ -57,7 +62,6 @@ public class PhysicalDao {
 		q.setParameter(3, ISOBasicUnit);
 		int result=q.executeUpdate();
 		
-		tx.commit();
 		return result;
 	}
 	
@@ -67,6 +71,8 @@ public class PhysicalDao {
 	
 	
 	public int addMessure(String PhysicalID,String EName,String CName,String Symbol,String RatioA,String RatioB,String styleID) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into T_Measure (PhysicalID,EName,CName,Symbol,RatioA,RatioB,StyleID) values (?,?,?,?,?,?,?)");
 		q.setParameter(0, PhysicalID);
 		q.setParameter(1, EName);
@@ -77,7 +83,6 @@ public class PhysicalDao {
 		q.setParameter(6, styleID);
 		int result=q.executeUpdate();
 		
-		tx.commit();
 		return result;
 		
 	}
@@ -100,34 +105,15 @@ public class PhysicalDao {
 		session.save(user);
 	}
 	
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
 	
 
 	public PhysicalDao()
 	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+		session = HibernateSessionManager.getThreadLocalSession();
 	
 	}
 	
-	public  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
-	public void commit(){
-		tx.commit();
-		session.close();
-	}
+
 	public int getCountMessure(int mid,String CName,String EName,String Symbol,String RatioA,String RatioB,String PCName,String StyleName){
 		 StringBuilder where = new StringBuilder();
 		 where.append(" where t1.PhysicalID=t2.ID and t1.StyleID=t3.StyleID ");
@@ -315,6 +301,8 @@ public class PhysicalDao {
 	}
 	
 	public int deleteMessure(int  id) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from T_Measure where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
@@ -322,6 +310,8 @@ public class PhysicalDao {
 		
 	}
 	public int deletePhysical(int id) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from T_Physical where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
@@ -331,6 +321,8 @@ public class PhysicalDao {
 
 	public int updatePhysical(String iD, String cName, String eName,
 			String description, String iSOBasicUnit) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		// TODO Auto-generated method stub
 		SQLQuery q = session.createSQLQuery("update T_Physical t set EName=?,CName=?,description=?,iSOBasicUnit=? where t.ID=?");
 		q.setParameter(0, eName);
@@ -339,13 +331,14 @@ public class PhysicalDao {
 		q.setParameter(3, iSOBasicUnit);
 		q.setParameter(4, iD);
 		int re=q.executeUpdate();
-		tx.commit();
 		return re;
 	}
 
 	public int updateMessure(int id, String physicalID, String eName,
 			String cName, String symbol, String ratioA, String ratioB,
 			String styleID) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		// TODO Auto-generated method stub
 		SQLQuery q = session.createSQLQuery("update T_Measure set physicalID=?,eName=?,cName=?,symbol=?,ratioA=?,ratioB=?,styleID=? where id=?");
 		q.setParameter(0, physicalID);
@@ -357,7 +350,6 @@ public class PhysicalDao {
 		q.setParameter(1, styleID);
 		q.setParameter(2, id);
 		int re=q.executeUpdate();
-		tx.commit();
 		return re;
 		
 	}

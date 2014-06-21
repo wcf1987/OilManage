@@ -120,7 +120,7 @@ public class PhysicalAction  extends ActionSupport{
 			if(records%rows!=0){
 				total++;
 			}
-		}
+		}dao.close();
 		return "SUCCESS";
 	}
 
@@ -161,7 +161,7 @@ public class PhysicalAction  extends ActionSupport{
 		PhysicalDao dao=new PhysicalDao();
 		
 		int result=dao.addPhysical(CName, EName, Description, ISOBasicUnit);
-
+		dao.close();
 		return "SUCCESS";
 	}
 	public String delete(){
@@ -171,8 +171,7 @@ public class PhysicalAction  extends ActionSupport{
 			for(int id:ids){
 				dao.deletePhysical(id);
 			}
-		}
-		dao.commit();
+		}dao.close();
 		
 		return "SUCCESS";
 	}
@@ -188,6 +187,7 @@ public class PhysicalAction  extends ActionSupport{
 	public String update(){
 		PhysicalDao dao=new PhysicalDao();
 		int re=dao.updatePhysical(ID,CName, EName, Description, ISOBasicUnit);
+		dao.close();
 		return "SUCCESS"; 
 	}
 	

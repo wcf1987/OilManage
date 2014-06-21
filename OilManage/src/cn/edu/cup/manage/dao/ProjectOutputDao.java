@@ -16,35 +16,36 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.manage.business.ProjectInputs;
 import cn.edu.cup.manage.business.ProjectOutputs;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 public class ProjectOutputDao {
 
 	
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
-		
-	public  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
+
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
 	}
+
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+	 Session session ;
+		
+	
 
 	public ProjectOutputDao()
 	{	
-		Configuration cfg = new Configuration();  
-     cfg.configure();          
-     ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-     SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-               
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+		session = HibernateSessionManager.getThreadLocalSession();
 	
 	}
 	
 	public int cleanLastResult(int pro_id){
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_projectoutputs  where Pro_ID=?");
 		q.setParameter(0, pro_id);
 		int re=q.executeUpdate();
@@ -116,6 +117,8 @@ public class ProjectOutputDao {
 	}
 	public int addInput(int pro_id,int param_id,double value) {
 		ParameterDao pDao=new ParameterDao();
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		double ISOValue=pDao.getISOValue(param_id, value);
 		Query q = session.createSQLQuery("INSERT into t_projectinputs  select NULL,?,t1.id,t1.display,?,t1.name,t1.measureID,? from t_parameters t1 where t1.ID=?;");
 		q.setParameter(0, pro_id);
@@ -125,7 +128,6 @@ public class ProjectOutputDao {
 		
 		int result=q.executeUpdate();
 		
-		tx.commit();
 		int ret_id=0; 
 		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()"); 
 		ret_id=((BigInteger) q2.uniqueResult()).intValue();
@@ -133,6 +135,8 @@ public class ProjectOutputDao {
 	}
 	
 	public int deleteInput(int  id) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_projectinputs where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
@@ -143,17 +147,21 @@ public class ProjectOutputDao {
 
 
 	public int updateInput(int iD, double value) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();
 		SQLQuery q = session.createSQLQuery("update t_projectinputs t set t.par_value=? where t.ID=?");
 		q.setParameter(0, value);
 		q.setParameter(1, iD);
 		int re=q.executeUpdate();
-		tx.commit();
+
 		return re;
 	}
 
 	public int save(int pro_id, String name, double paramOutput) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		ParameterDao pDao=new ParameterDao();
 		double MessValue=pDao.getMessValueByName(name, paramOutput);
 		Query q = session.createSQLQuery("INSERT into t_projectoutputs  select NULL,?,t1.id,t1.display,?,t1.name,t1.measureID,? from t_parameters t1 where t1.name=?;");
@@ -164,7 +172,6 @@ public class ProjectOutputDao {
 		
 		int result=q.executeUpdate();
 		
-		tx.commit();
 		int ret_id=0; 
 		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()"); 
 		ret_id=((BigInteger) q2.uniqueResult()).intValue();

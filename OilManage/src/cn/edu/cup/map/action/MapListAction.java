@@ -64,6 +64,7 @@ public class MapListAction extends ActionSupport{
 		}else{
 			re="删除成功";
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 	public String add(){
@@ -71,7 +72,7 @@ public class MapListAction extends ActionSupport{
 		FileToGraphi a=new FileToGraphi();
 		graphi=a.FileTrans(filePath);
 		dao.addPro(proName, filePath,graphi);
-		
+		dao.close();
 
 		return "SUCCESS";
 	}
@@ -111,6 +112,7 @@ public class MapListAction extends ActionSupport{
 		if(records%rows!=0){
 			total++;
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 	private String changePath(String AbsolutePath){
@@ -172,6 +174,7 @@ public class MapListAction extends ActionSupport{
 		//filePath=dao.getFilePath(id);
 		//graphi=a.FileTrans(filePath);
 		graphi=dao.getGraphiByID(id);
+		dao.close();
 		return "SUCCESS";
 	}
 

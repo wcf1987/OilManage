@@ -120,21 +120,25 @@ public class RoleAction {
 				total++;
 			}
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 	public String listAlgByRole(){		
 		RoleDao dao=new RoleDao();
 		algList=dao.getAlgsListByRole(roleID);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String listUserByRole(){		
 		RoleDao dao=new RoleDao();
 		userList=dao.getUsersListByRole(roleID);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String addRole(){		
 		RoleDao dao=new RoleDao();
 		dao.addRole(roleName,roleDes);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String delRole(){		
@@ -143,12 +147,13 @@ public class RoleAction {
 			for(int id:ids)
 				dao.delRole(id);
 		}
-		dao.commit();
+		dao.close();
 		return "SUCCESS";
 	}
 	public String addUserRole(){		
 		RoleDao dao=new RoleDao();
 		dao.addUserRole(this.userID,this.roleID);
+		dao.close();
 		return "SUCCESS";
 		
 	}
@@ -158,13 +163,14 @@ public class RoleAction {
 			for(int id:ids)
 			dao.delUserRole(id);
 		}
-		dao.commit();
+		dao.close();
 		
 		return "SUCCESS";
 	}
 	public String addAlgRole(){		
 		RoleDao dao=new RoleDao();
 		dao.addAlgRole(this.algID,this.roleID);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String delAlgRole(){		
@@ -173,7 +179,7 @@ public class RoleAction {
 			for(int id:ids)
 				dao.delAlgRole(id);
 		}
-		dao.commit();	
+		dao.close();
 		return "SUCCESS";
 	}
 	public static void main(String args[]){
