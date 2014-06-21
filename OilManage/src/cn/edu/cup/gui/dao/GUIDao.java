@@ -24,7 +24,7 @@ import cn.edu.cup.manage.dao.PhysicalDao;
 
 public class GUIDao {
 
-	
+	 
 	 SessionFactory sessionFactory;
 	 Session session ;
 	 Transaction tx ;
@@ -138,7 +138,7 @@ public class GUIDao {
 	
 	public List<GUIPro> getGUIProsList(int page, int rows,
 			String sidx, String sord) {
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime from t_guipro t1,t_user t2 where t1.AuthorID=t2.ID order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime from t_guipro t1,t_user t2 where t1.AuthorID=t2.ID and t1.type=0 order by t1."+sidx+" "+sord);
 
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
@@ -420,6 +420,64 @@ public class GUIDao {
 		int re=q.executeUpdate();
 //		tx.commit();
 		return re;
+	}
+	public GUIPro getGUISubProView(int pid,String subid) {
+		// TODO Auto-generated method stub
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t1.AddTime ,t3.JSONData , t3.ScalN from t_guipro t1, t_guijson t3 where t1.subID=? and t1.id=t3.id");
+		q.setParameter(0, subid);
+		GUIPro temp=null;
+		List l = q.list();
+		if(l.size()==0){
+			Date addDate=new Date();
+			q = session.createSQLQuery("insert into t_guipro (description,authorID,addtime,name,type,parentPro,subID) values (?,?,?,?,?,?,?)");
+			q.setParameter(0, "");
+			q.setParameter(1, 0);
+			q.setParameter(2, addDate);
+			q.setParameter(3, "sub");
+			q.setParameter(4, 1);
+			q.setParameter(5, pid);
+			q.setParameter(6, subid);
+			int result=q.executeUpdate();	
+			
+			int ret_id = 0;
+			Query q2 = session.createSQLQuery("select LAST_INSERT_ID()");
+			ret_id = ((BigInteger) q2.uniqueResult()).intValue();
+			
+			q = session.createSQLQuery("insert into t_guijson (id,JSONData,ScalN) select ?,JSONData,1 from t_guijson t where t.id=112 ");
+			q.setParameter(0, ret_id);			
+			result=q.executeUpdate();
+			tx.commit();
+			
+			
+			
+		}
+		q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,'username',t1.AddTime ,t3.JSONData , t3.ScalN from t_guipro t1,t_guijson t3 where  t1.subID=? and t1.id=t3.id");
+		q.setParameter(0, subid);		
+		l = q.list();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+
+			Object[] row = (Object[])l.get(i);;
+			  Integer id = ((Integer)row[0]);
+			  String proname = ((String)row[1]);
+			  String description=(String)row[2];
+			  Integer aid=((Integer)row[3]);
+			  String author=(String)row[4];
+			  Date addTime=(Date)row[5];
+			  String jsondata=(String)row[6];
+			  Double ScalN=(Double)row[7];
+			  temp=new GUIPro(id, proname, aid, author, description, addTime);
+			  temp.setScalN(ScalN);
+			  temp.setJSONData(jsondata);
+			  return temp;
+			 
+			  
+		}
+		
+		
+		return temp;
 	}
 
 

@@ -526,12 +526,13 @@ var Platform=function(){
 	}
 	this.paintingArray=new Array;
 	
-	this.addLoadPainting=function(newone,scalN) {
+	this.addLoadPainting=function(newone,scalN,id) {
 		paintings=new Paintings();
 		paintings.init();
 		paintings.p=newone;
 		paintings.initPoint();
 		paintings.scaleN=scalN;
+		paintings.ID=id;
 		this.addPainting(paintings);
 		this.paintingArray.push(paintings);
 		
@@ -542,14 +543,15 @@ var Platform=function(){
 		 *加载模型后为每个元素添加 事件 ，为每个元素添加图形支持
 		 */
 		var polys=this.selectPainting.p.getChildren();
-		var leftpolys=new Leftpolys();
+		//var leftpolys=new Leftpolys();
+		leftpoly
 		for ( var k=0;k<polys.length;k++) {
 			setImage(polys[k]);
-			polys[k].dragBoundFunc(leftpolys.dragFun);
-			polys[k].on('click', leftpolys.clickFunc);
-			polys[k].on('dblclick', leftpolys.dbclickFun);
-			polys[k].on('dragend', leftpolys.cloneFun);
-			polys[k].on('mousedown touchstart', leftpolys.cloneFun2);
+			polys[k].dragBoundFunc(leftpoly.dragFun);
+			polys[k].on('click', leftpoly.clickFunc);
+			polys[k].on('dblclick', leftpoly.dbclickFun);
+			polys[k].on('dragend', leftpoly.cloneFun);
+			polys[k].on('mousedown touchstart', leftpoly.cloneFun2);
 			polys[k].on('mouseover', function() {
 				document.body.style.cursor = 'pointer';
 			});
@@ -557,6 +559,7 @@ var Platform=function(){
 				document.body.style.cursor = 'default';
 			});
 		}
+		showALLConnedPoints();
 		/*
 		 *加载模型后为每个元素添加 事件  结束
 		 */
@@ -590,6 +593,7 @@ var Platform=function(){
 		this.selectPainting.updateConnects();
 		this.selectPainting.updatePoints();
 	}
+	
 
 };
 	

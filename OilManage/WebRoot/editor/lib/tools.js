@@ -61,6 +61,30 @@ function getLeftPoint(g){
 		return tempArray1[0];
 	
 }
+function getLeftLine(g){
+	tempArray1 = g.getChildren(function(node) {
+		return node.getName() == 'lineLeft'				
+	});
+	
+		return tempArray1[0];
+	
+}
+function getRightLine(g){
+	tempArray1 = g.getChildren(function(node) {
+		return node.getName() == 'lineRight'				
+	});
+	
+		return tempArray1[0];
+	
+}
+function getPoly(g){
+	tempArray1 = g.getChildren(function(node) {
+		return node.getName() != 'lineRight'&&node.getName() != 'lineLeft'&&node.getName() != 'connPointsLeft'&&node.getName() != 'connPointsRight'				
+	});
+	
+		return tempArray1[0];
+	
+}
 function setImage(g){
 	kinImg=getImagePoint(g);
 	kinImg.setImage(leftpoly.getImgage(g));
@@ -126,4 +150,13 @@ function initMouseWheel(){
 				platform.scaleCenter(cur_scale);
 				platform.draw();
 	    });
+}
+function moveLeft(l,lc,p){
+	pos=p.position();
+	posl={
+			x:pos.x,
+			y:pos.y+leftpoly.polyhight
+	}
+	l.position(posl);
+	lc.position(posl);
 }

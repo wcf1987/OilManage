@@ -176,15 +176,30 @@ public class GUIAction {
 	public String getSord() {
 		return sord;
 	}
-
+	String subID;
+	int parentID;
+	public int getParentID() {
+		return parentID;
+	}
+	public void setParentID(int parentID) {
+		this.parentID = parentID;
+	}
+	public String getSubID() {
+		return subID;
+	}
+	public void setSubID(String subID) {
+		this.subID = subID;
+	}
 	public String getView(){		
 
 		GUIDao dao=new GUIDao();
-		
+		if(type==0){
 		
 		
 		dataView=dao.getGUIProView(this.ID);
-
+		}else{
+			dataView=dao.getGUISubProView(this.parentID,this.subID);
+		}
 
 		
 		return "SUCCESS";

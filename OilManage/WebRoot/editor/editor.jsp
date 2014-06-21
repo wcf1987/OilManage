@@ -276,6 +276,7 @@ body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", san
 
 
 	<ul id="contextmenu" style="display:none;z-index:100">	
+		<li><a>解除锁定</a></li>
 		<li><a>顺时针旋转90°</a></li>
 		<li><a>逆时针旋转90°</a></li>	
 		<li><a>更改颜色</a></li>
