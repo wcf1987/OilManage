@@ -82,7 +82,7 @@ function() {
 	this.polyhight=30;
 	this.polywidth=40;
 	this.polylineLength=20;
-	this.lpoints=[ 0, 0, 20, 0];
+	this.lpoints=[ 0, 0, -20, 0];
 	this.rpoints=[ 0, 0, 20, 0];
 /*	this.polys[0] = new Kinetic.Line({
 		x : 5,
@@ -139,7 +139,6 @@ function() {
 		}	
 		for ( var k=0;k<this.polys.length;k++) {
 			
-			
 			this.polyGroups[k] = new Kinetic.Group({
 				x : this.polys[k].x(),
 				y : this.polys[k].y(),
@@ -147,9 +146,30 @@ function() {
 				draggable : true
 
 			});
+			var PointLeft = new Kinetic.Circle({
+				x : this.polylineLength,
+				y : this.polyhight,
+
+				radius : 0,
+				fill : 'black',
+				stroke : 'black',
+				name : 'PointLeft',
+				strokeWidth : 1
+			});
+			
+			var PointRight = new Kinetic.Circle({
+				x : this.polywidth+this.polylineLength,
+				y : this.polyhight,
+				name : 'PointRight',
+				radius : 0,
+				fill : 'black',
+				stroke : 'black',
+				strokeWidth : 1
+			});
+			
 			var lineLeft = new Kinetic.Line({
-				 x: 0,
-				 y: this.polyhight,
+				x : this.polylineLength,
+				y : this.polyhight,
 				points : 	this.lpoints.concat(),
 				 
 				 stroke : 'black',
@@ -160,8 +180,8 @@ function() {
 				
 			});
 			var lineRight = new Kinetic.Line({
-				x: 0+this.polywidth+this.polylineLength,
-				 y: this.polyhight,
+				x : this.polywidth+this.polylineLength,
+				y : this.polyhight,
 				 points : this.rpoints.concat(),
 				
 				 stroke : 'black',
@@ -197,14 +217,17 @@ function() {
 			this.lock=false;
 			if(k==0){
 				this.polyGroups[k].add(lineRight);
-				this.polyGroups[k].add(connPointsRight);				
+				this.polyGroups[k].add(connPointsRight);
+				this.polyGroups[k].add(PointRight);
+				
 				connPointsRight.hide();	
 				this.initPoint(this.polyGroups[k]);
 				continue;
 			}
 			if(k==1){
 				this.polyGroups[k].add(lineLeft);
-				this.polyGroups[k].add(connPointsLeft);				
+				this.polyGroups[k].add(connPointsLeft);	
+				this.polyGroups[k].add(PointLeft);
 				connPointsLeft.hide();
 				this.initPoint(this.polyGroups[k]);
 				continue;
@@ -212,7 +235,9 @@ function() {
 			this.polyGroups[k].add(lineRight);
 			this.polyGroups[k].add(lineLeft);
 			this.polyGroups[k].add(connPointsLeft);
+			this.polyGroups[k].add(PointLeft);
 			this.polyGroups[k].add(connPointsRight);
+			this.polyGroups[k].add(PointRight);
 			connPointsLeft.hide();
 			connPointsRight.hide();	
 			this.initPoint(this.polyGroups[k]);
@@ -239,7 +264,7 @@ function() {
 
 	// var platform=null;
 	this.dragFun = function(pos) {
-		platform.selectPainting.hasChange();
+		
 		if (checkPoint(pos, platform.centerlayer)) {		
 			if((this.lock==null||this.lock==false)){
 				
@@ -249,9 +274,11 @@ function() {
 					y : pos.y
 				};
 			}else{
+				platform.selectPainting.hasChange();
+				
 				point={
-						x:pos.x-this.getAbsolutePosition().x,
-						y:pos.y-this.getAbsolutePosition().y
+						x:this.getAbsolutePosition().x-pos.x,
+						y:this.getAbsolutePosition().y-pos.y
 					}
 				
 				l=getLeftLine(this);
@@ -259,18 +286,41 @@ function() {
 				r=getRightLine(this);
 				rc=getRightPoint(this);
 				poly=getPoly(this);
+				//lch=getRightPointHide(this);
+				//rch=getRightPointHide(this);
+				//this.removeChildren();
+				//this.add(poly);
+				//this.add(lch);
+				//this.add(rch);
+				//rcp=rc.getAbsolutePosition();
+				//lcp=lc.getAbsolutePosition();
 				//poly.position(point);
 				if(l!=null&&lc.fill()=='red'){
-					//moveLeft(l,lc,poly);
+					
+					//this.setAbsolutePosition(pos);					
+					//rc.move(point);
+					//drawLine(r,point);
+					
 				}
 				if(l!=null&&lc.fill()=='yellow'){
+					this.setAbsolutePosition(pos);	
+					lc.move(point);
+					drawLine(l,point);
 					
 				}
 				if(r!=null&&rc.fill()=='red'){
-					//moveRight(r,rc,poly);
+					//this.add(r);
+					//this.add(rc);
+					//this.setAbsolutePosition(pos);
+					//this.add(lc);
+					//lc.move(point);
+					//drawLine(l,point);
+					
 				}
 				if(r!=null&&rc.fill()=='yellow'){
-					
+					this.setAbsolutePosition(pos);	
+					rc.move(point);
+					drawLine(r,point);
 				}
 				
 				/*dis=null;

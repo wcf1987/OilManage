@@ -4,7 +4,7 @@
 	else alert("Please Select Row");
 }*/
 var TabTools=function (){
-
+	
 	/*
 	 * 图形项目列表
 	 */
@@ -179,7 +179,7 @@ var TabTools=function (){
 					name:$('#proname').val(),
 					data:jsondata,
 					authorID:$("#authorID").val(),
-					type:$('#type').val()
+					type:0
 				},
 				success : function(data) {
 					if(data.nameFlag=="true"){
