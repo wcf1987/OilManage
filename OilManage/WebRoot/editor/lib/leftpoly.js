@@ -103,6 +103,7 @@ function() {
 	        	leftpoly.imgobj[i].onload = null;
 	        };
 	    };
+	    
 	};
 	this.createIMG = function (img,i){
 		
@@ -207,11 +208,17 @@ function() {
 
 	// var platform=null;
 	this.dragFun = function(pos) {
+		if(platform.selectPainting==null){
+			return {
+				x : this.getAbsolutePosition().x,
+				y : this.getAbsolutePosition().y
+			};
+		}
 		platform.selectPainting.hasChange();
 		if (checkPoint(pos, platform.centerlayer)) {
 			
 			showConnect(this);
-			showALLConnPoints();
+			//showALLConnPoints();
 			
 			/*poss = checkConn(this);
 			if (poss != null) {
@@ -239,7 +246,7 @@ function() {
 	this.cloneFun = function(e) {
 
 		var userPos = platform.stage.getPointerPosition();
-		if (checkPoint(userPos, platform.centerlayer))// 如果在中间画布上面
+		if (platform.selectPainting!=null &&checkPoint(userPos, platform.centerlayer))// 如果在中间画布上面
 
 		{
 			if (this.getParent() != platform.selectPainting.p) {
@@ -259,13 +266,14 @@ function() {
 				this.y((this.y() - (poss.y/platform.selectPainting.scaleN)));
 				platform.draw();
 			}
-
+			showALLConnedPoints();
 		} else {
-
+			if(platform.selectPainting!=null){
 			this.destroy();// 不在中间画布就摧毁
+			}
 
 		}
-		showALLConnedPoints();
+		
 		platform.centerlayer.draw(this);
 		platform.stage.draw();
 	};
@@ -273,7 +281,7 @@ function() {
 	this.cloneFun2 = function(e) {
 
 		if (e.type == 'mousedown'
-				&& this.getLayer() != platform.selectPainting.p) {
+				&&platform.selectPainting!=null &&this.getLayer() != platform.selectPainting.p) {
 			var cloneOfItem = this.clone();
 
 			// cloneOfItem.off('mousedown touchstart');

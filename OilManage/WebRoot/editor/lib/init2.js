@@ -9,8 +9,8 @@ function initLight() {
 	leftpoly=new Leftpolys();
 	leftpoly.init();
 	platform.addLeft(leftpoly);
-	paintings=new Paintings();
-	platform.addPainting(paintings.init());
+	//paintings=new Paintings();
+	//platform.addPainting(paintings.init());
 
 	tabtools=new TabTools(); 
 	
