@@ -352,9 +352,9 @@ User userlogin=(User)(session.getAttribute("user"));
 			<li><a>解除锁定</a></li>
 			<li><a>顺时针旋转90°</a></li>
 			<li><a>逆时针旋转90°</a></li>	
-			<li><a>更改颜色</a></li>
+			<!--<li><a>更改颜色</a></li>
 			<li><a>放大</a></li>
-			<li><a>缩小</a></li>	
+			<li><a>缩小</a></li>	-->		
 			<li><a>删除该节点</a></li>
 			<li><a>属性</a></li>
 			<li><a>进入站点</a></li>

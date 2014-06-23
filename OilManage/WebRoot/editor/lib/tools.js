@@ -109,11 +109,79 @@ function getPoly(g){
 		return tempArray1[0];
 	
 }
-function drawLine(line,dis){
+function resizePoint(g){
+	l=getLeftLine(g);
+	lc=getLeftPoint(g);
+	//lch=getLeftPointHide(g);
+	r=getRightLine(g);
+	rc=getRightPoint(g);
+	//rch=getRightPointHide(g);
+	//poly=getPoly(g);	
+	if(lc!=null){
+	lc.x(0);
+	lc.y(leftpoly.polyhight);
+	l.points(leftpoly.lpoints.concat());
 	
+	}
+	if(rc!=null){
+	
+		rc.x(leftpoly.polywidth+leftpoly.polylineLength*2);
+		rc.y(leftpoly.polyhight);
+		r.points(leftpoly.rpoints.concat());
+	}
+}
+function movePoint(point,dis,rotation){
+	if(rotation%360==0){
+		realDis=dis
+		
+	}
+	if(rotation%360==90){
+		realDis={
+				x:dis.y,
+				y:-dis.x
+		}	
+	}
+	if(rotation%360==180){
+		realDis={
+				x:-dis.x,
+				y:-dis.y
+		}	
+	}
+	if(rotation%360==270){
+		realDis={
+				x:-dis.y,
+				y:dis.x
+		}	
+	}
+	//logD('dis.x:'+realDis.x+' y:'+realDis.y);
+	point.move(realDis);
+}
+function drawLine(line,dis,rotation){
+	if(rotation%360==0){
+		realDis=dis
+		
+	}
+	if(rotation%360==90){
+		realDis={
+				x:dis.y,
+				y:-dis.x
+		}	
+	}
+	if(rotation%360==180){
+		realDis={
+				x:-dis.x,
+				y:-dis.y
+		}	
+	}
+	if(rotation%360==270){
+		realDis={
+				x:-dis.y,
+				y:dis.x
+		}	
+	}
 	lines=line.points();	
-	lines[2]=lines[2]+dis.x;
-	lines[3]=lines[3]+dis.y;
+	lines[2]=lines[2]+realDis.x;
+	lines[3]=lines[3]+realDis.y;
 	line.points(lines);
 	
 }
@@ -176,12 +244,10 @@ function initMouseWheel(){
 				platform.draw();
 	    });
 }
-function moveLeft(l,lc,p){
-	pos=p.position();
-	posl={
-			x:pos.x,
-			y:pos.y+leftpoly.polyhight
-	}
-	l.position(posl);
-	lc.position(posl);
+function log(i){
+	platform.log(i);
+}
+function logD(i){
+	console.log(i);
+	platform.log(i);
 }

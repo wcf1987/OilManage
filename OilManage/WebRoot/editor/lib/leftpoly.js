@@ -278,109 +278,41 @@ function() {
 			if((this.lock==null||this.lock==false)){
 
 				
-				//showALLConnPoints();			
+				resizePoint(this);	
 				return {
 					x : pos.x,
 					y : pos.y
 				};
 			}else{
-				platform.selectPainting.hasChange();
-				
-				point={
-						x:this.getAbsolutePosition().x-pos.x,
-						y:this.getAbsolutePosition().y-pos.y
+				platform.selectPainting.hasChange();				
+				dis={
+						x:(this.getAbsolutePosition().x-pos.x)/platform.selectPainting.scaleN,
+						y:(this.getAbsolutePosition().y-pos.y)/platform.selectPainting.scaleN
 					}
 				
 				l=getLeftLine(this);
 				lc=getLeftPoint(this);
+				lch=getLeftPointHide(this);
 				r=getRightLine(this);
 				rc=getRightPoint(this);
-				poly=getPoly(this);
-				//lch=getRightPointHide(this);
-				//rch=getRightPointHide(this);
-				//this.removeChildren();
-				//this.add(poly);
-				//this.add(lch);
-				//this.add(rch);
-				//rcp=rc.getAbsolutePosition();
-				//lcp=lc.getAbsolutePosition();
-				//poly.position(point);
-				if(l!=null&&lc.fill()=='red'){
-					
-					//this.setAbsolutePosition(pos);					
-					//rc.move(point);
-					//drawLine(r,point);
-					
-				}
-				if(l!=null&&lc.fill()=='yellow'){
+				poly=getPoly(this);				
+				if(l!=null&&lc.fill()!='red'){
 					this.setAbsolutePosition(pos);	
-					lc.move(point);
-					drawLine(l,point);
-					
-				}
-				if(r!=null&&rc.fill()=='red'){
-					//this.add(r);
-					//this.add(rc);
-					//this.setAbsolutePosition(pos);
-					//this.add(lc);
+					//logD('一次移动');
+					//logD('lch.x:'+lch.x()+' y:'+lch.y());
+					//logD('lc.x:'+lc.x()+' y:'+lc.y());
+					movePoint(lc,dis,this.rotation());
 					//lc.move(point);
-					//drawLine(l,point);
-					
-				}
-				if(r!=null&&rc.fill()=='yellow'){
+					//logD('move to lc.x:'+lc.x()+' y:'+lc.y());
+					//logD('');
+					drawLine(l,dis,this.rotation());					
+				}				
+				if(r!=null&&rc.fill()!='red'){
 					this.setAbsolutePosition(pos);	
-					rc.move(point);
-					drawLine(r,point);
-				}
-				
-				/*dis=null;
-				if(l!=null){
-					
-					lp=l.points();
-					lp[2]=point.x;
-					lp[3]=point.y;
-					l.points(lp);
-					dis={
-							x:lp[2],
-							y:lp[3]
-						}
-				}
-				
-				if(r!=null){
-					rp=r.points();
-					if(dis!=null){		
-						this.lpoints=[ 0, 0, 20, 0];
-						this.rpoints=[ 60, 0, 80, 0];
-						if(rp[2]-lp[0]==0){
-							xw=0;
-						}
-						if(rp[2]-lp[0]>0){
-							xw=leftpoly.polywidth;
-							
-						}
-						if(rp[2]-lp[0]<0){
-							xw=leftpoly.polywidth*-1;
-						}
-						if(rp[3]-lp[1]==0){
-							yw=0;
-						}
-						if(rp[3]-lp[1]>0){
-							yw=leftpoly.polywidth;
-							
-						}
-						if(rp[3]-lp[1]<0){
-							yw=leftpoly.polywidth*-1;
-						}
-						rp[0]=dis.x+xw;
-						rp[1]=dis.y+yw;
-					}else{
-					rp[0]=point.x;
-					rp[1]=point.y;
-					}
-					r.points(rp);
-					//r.fillLinearGradientEndPoint(point);
-				}*/
-				platform.draw();
+					movePoint(rc,dis,this.rotation());
+					drawLine(r,dis,this.rotation());
+				}				
+				//platform.draw();
 				return {
 					x : this.getAbsolutePosition().x,
 					y : this.getAbsolutePosition().y
@@ -506,13 +438,21 @@ function() {
 									+ "," + Math.floor(Math.random() * 250) + ","
 									+ Math.floor(Math.random() * 250);
 						} else if (text == '顺时针旋转90°') {
+							if(clickshape.lock){
+								alert('控件已锁定，无法旋转');
+							}else{
 							clickshape.rotate(90);
 							// centerlayer.draw(this);
 							platform.selectPainting.p.draw();
+							}
 						} else if (text == '逆时针旋转90°') {
+							if(clickshape.lock){
+								alert('控件已锁定，无法旋转');
+							}else{
 							clickshape.rotate(-90);
 							// centerlayer.draw(this);
 							platform.selectPainting.p.draw();
+							}
 						} else if (text == '放大') {
 							clickshape.scale({
 								x : clickshape.scaleX() * 2,
