@@ -352,9 +352,9 @@ User userlogin=(User)(session.getAttribute("user"));
 			<li><a>解除锁定</a></li>
 			<li><a>顺时针旋转90°</a></li>
 			<li><a>逆时针旋转90°</a></li>	
-			<li><a>更改颜色</a></li>
+			<!--<li><a>更改颜色</a></li>
 			<li><a>放大</a></li>
-			<li><a>缩小</a></li>	
+			<li><a>缩小</a></li>	-->		
 			<li><a>删除该节点</a></li>
 			<li><a>属性</a></li>
 			<li><a>进入站点</a></li>
@@ -375,7 +375,7 @@ User userlogin=(User)(session.getAttribute("user"));
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" id="add_GUI_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加图形文件</h4>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">新建项目</h4>
 		      </div>
 		      <div class="modal-body">
 		     	 <form id="addGUIForm" action="addGUIPro.action" method="post"> 

@@ -108,7 +108,7 @@ var Platform=function(){
 	      padding: 20,
 //      	  fill:'green',
 	      lineHeight:1,
-	      text:'输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出输出'
+	      text:'输出：\n'
     	});
     this.areas = new Kinetic.Group();
 	this.scrollbars = new Kinetic.Group();
@@ -593,7 +593,11 @@ var Platform=function(){
 		this.selectPainting.updateConnects();
 		this.selectPainting.updatePoints();
 	}
-	
+	this.log=function(str){
+		s=this.rectBackgroundText.text();
+		this.rectBackgroundText.text(s+str+'\n');
+		this.outputlayer.draw();
+	}
 
 };
 	
