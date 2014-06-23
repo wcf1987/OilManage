@@ -65,12 +65,14 @@ public class UserAction extends ActionSupport{
 		UserDao dao=new UserDao();
 		int flag=1;
 		dataList=dao.getUserList(flag);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String listUserNoRole(){		
 		UserDao dao=new UserDao();
 		int flag=0;
 		dataList=dao.getUserList(flag);
+		dao.close();
 		return "SUCCESS";
 	}
 	

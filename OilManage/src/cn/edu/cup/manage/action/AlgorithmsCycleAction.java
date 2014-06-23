@@ -197,6 +197,7 @@ public class AlgorithmsCycleAction {
 		inputList=inputdao.getAlgorithmInputList(page, rows, sidx, sord, ID);
 		AlgorithmOutputDao outputdao=new AlgorithmOutputDao();
 		outputList=outputdao.getAlgorithmOutputList(page, rows, sidx, sord, ID);
+		dao.close();
 		return "SUCCESS";
 	}
 	
@@ -216,6 +217,7 @@ public class AlgorithmsCycleAction {
 				total++;
 			}
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 
@@ -225,6 +227,7 @@ public class AlgorithmsCycleAction {
 		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
 	
 		int result=dao.addAlgorithm(this.Description,this.authorID,this.name,this.filePath,this.className);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String delete(){
@@ -246,7 +249,7 @@ public class AlgorithmsCycleAction {
 		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
 //		int re=dao.updateParameter(ID, this.inputID,this.planID, this.outputID,this.Description,this.name);
 		int re=dao.updateAlgorithm(ID, this.Description, authorID, name, filePath, className);
-				
+		dao.close();
 		return "SUCCESS"; 
 	}
 	

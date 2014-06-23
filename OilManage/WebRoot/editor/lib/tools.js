@@ -61,6 +61,62 @@ function getLeftPoint(g){
 		return tempArray1[0];
 	
 }
+function getRightPoint(g){
+	tempArray2 = g.getChildren(function(node) {
+		return  node.getName() == 'connPointsRight'
+	});
+	
+	return tempArray2[0];
+	
+}
+function getLeftLine(g){
+	tempArray1 = g.getChildren(function(node) {
+		return node.getName() == 'lineLeft'				
+	});
+	
+		return tempArray1[0];
+	
+}
+function getRightLine(g){
+	tempArray1 = g.getChildren(function(node) {
+		return node.getName() == 'lineRight'				
+	});
+	
+		return tempArray1[0];
+	
+}
+function getLeftPointHide(g){
+	tempArray1 = g.getChildren(function(node) {
+		return node.getName() == 'PointLeft'				
+	});
+	
+		return tempArray1[0];
+	
+}
+function getRightPointHide(g){
+	tempArray1 = g.getChildren(function(node) {
+		return node.getName() == 'PointRight'				
+	});
+	
+		return tempArray1[0];
+	
+}
+function getPoly(g){
+	tempArray1 = g.getChildren(function(node) {
+		return node.getName() != 'PointLeft'&&node.getName() != 'PointRight'&&node.getName() != 'lineRight'&&node.getName() != 'lineLeft'&&node.getName() != 'connPointsLeft'&&node.getName() != 'connPointsRight'				
+	});
+	
+		return tempArray1[0];
+	
+}
+function drawLine(line,dis){
+	
+	lines=line.points();	
+	lines[2]=lines[2]+dis.x;
+	lines[3]=lines[3]+dis.y;
+	line.points(lines);
+	
+}
 function setImage(g){
 	kinImg=getImagePoint(g);
 	kinImg.setImage(leftpoly.getImgage(g));
@@ -73,14 +129,7 @@ function getImagePoint(g){
 		return tempArrayI[0];
 	
 }
-function getRightPoint(g){
-	tempArray2 = g.getChildren(function(node) {
-		return  node.getName() == 'connPointsRight'
-	});
-	
-	return tempArray2[0];
-	
-}
+
 function checkCircle(v1,v2,length){
 	if(v2==null || v1==null){
 		return false;
@@ -126,4 +175,13 @@ function initMouseWheel(){
 				platform.scaleCenter(cur_scale);
 				platform.draw();
 	    });
+}
+function moveLeft(l,lc,p){
+	pos=p.position();
+	posl={
+			x:pos.x,
+			y:pos.y+leftpoly.polyhight
+	}
+	l.position(posl);
+	lc.position(posl);
 }

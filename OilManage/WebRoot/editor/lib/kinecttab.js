@@ -4,7 +4,7 @@
 	else alert("Please Select Row");
 }*/
 var TabTools=function (){
-
+	
 	/*
 	 * 图形项目列表
 	 */
@@ -179,7 +179,7 @@ var TabTools=function (){
 					name:$('#proname').val(),
 					data:jsondata,
 					authorID:$("#authorID").val(),
-					type:$('#type').val()
+					type:0
 				},
 				success : function(data) {
 					if(data.nameFlag=="true"){
@@ -203,12 +203,10 @@ var TabTools=function (){
 
 	this.save=function() {
 		//selectPainting=Kinetic.Node.create(jsondata, 'container')
-		var selectedID=$('#selectedID').val();
-		if(selectedID==''){
-			createNewModal();
-		}else{
+		var selectedID=platform.selectPainting.ID;
+		
 			updateGUI();
-		}		
+				
 	}
 	function updateGUI(){
 		paintingtemp=platform.selectPainting;
@@ -217,10 +215,11 @@ var TabTools=function (){
 	function updateGUIByIndex(index){
 		paintingtemp=platform.getPaintingByIndex(index);
 		updateGUIByPaint(paintingtemp);
+		
 	}
 	function updateGUIByPaint(paintingtemp){
 		
-		paintingtemp=platform.getPaintingByIndex(index);
+		//paintingtemp=platform.getPaintingByIndex(index);
 		paintingtemp.updateConnects();
 		paintingtemp.updatePoints();
 		jsondata=paintingtemp.p.toJSON();
@@ -236,7 +235,7 @@ var TabTools=function (){
 				Conns: s,
 				scaleN:paintingtemp.scaleN,
 				
-				ID:$('#selectedID').val(),
+				ID:paintingtemp.ID,
 			},
 			success : function(data) {
 				alert('图形化保存成功!');
@@ -255,7 +254,43 @@ var TabTools=function (){
 				platform.showPainting(selectedID);
 		
 	}
-	
+	this.loadSubPro=function(id){
+		$.ajax({
+			type : 'POST',
+			url : 'viewGUIPro.action',
+			data : {
+				parentID:0,
+				subID:id,
+				type:1
+				
+			},
+			success : function(data) {
+//				alert('图形化载入成功!');
+				
+				//data=jQuery.parseJSON(data);
+				$('#listGUIPro_modal').modal('hide');
+				try{
+					saveData=data['dataView']['JSONData'];
+				}catch(err){
+					alert('该项目模型为空！');
+				}
+				//alert(saveData);
+				//console.log(saveData['JSONData']);
+				newone=Kinetic.Node.create(saveData);
+				id=data['dataView']['id'];
+				//$('#selectedID').val(data['dataView']['id']);
+				scalN=data['dataView']['scalN'];
+				index=platform.addLoadPainting(newone,scalN,id);				
+				createTab(data['dataView']['proname'],index,selectedID);
+				//createNewTab(data['dataView']['proname']);
+				platform.draw();
+						
+			},
+			error:function(msg){
+				alert(msg);
+			}
+		});
+	}
 	this.load=function(selectedID) {
 		var exist=0;
 		$("input[name='proID']").each(function(){
@@ -273,12 +308,12 @@ var TabTools=function (){
 				url : 'viewGUIPro.action',
 				data : {
 					
-					ID:selectedID
-					
+					ID:selectedID,
+					type:0
 				},
 				success : function(data) {
 //					alert('图形化载入成功!');
-					$('#selectedID').val(selectedID);
+					//$('#selectedID').val(selectedID);
 					//data=jQuery.parseJSON(data);
 					$('#listGUIPro_modal').modal('hide');
 					try{
@@ -290,7 +325,8 @@ var TabTools=function (){
 					//console.log(saveData['JSONData']);
 					newone=Kinetic.Node.create(saveData);
 					scalN=data['dataView']['scalN'];
-					index=platform.addLoadPainting(newone,scalN);				
+					id=data['dataView']['id'];
+					index=platform.addLoadPainting(newone,scalN,id);				
 					createTab(data['dataView']['proname'],index,selectedID);
 					//createNewTab(data['dataView']['proname']);
 					platform.stage.draw();
@@ -314,7 +350,7 @@ var TabTools=function (){
 	this.showPainting=function(obj,paintingIndex,proID){
 		$("#paintingTabs").children().removeClass("active");
 		$(obj).parent().addClass("active");
-		$('#selectedID').val(proID);
+		//$('#selectedID').val(proID);
 		platform.selectPainting.saveScroll();
 		platform.showPainting(paintingIndex);
 	}

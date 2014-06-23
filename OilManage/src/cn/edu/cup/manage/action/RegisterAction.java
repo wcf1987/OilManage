@@ -79,6 +79,7 @@ public class RegisterAction extends ActionSupport
 			errorMessage = "用户名或者密码不能为空。";
 			success = false;
 		}
+		userDAO.close();
 		return SUCCESS;
 	}
 
@@ -103,6 +104,7 @@ public class RegisterAction extends ActionSupport
 		userExists = false;;//可以注册
 		success = true;
 		login = false;
+		userDAO.close();
 		return SUCCESS;
 	}
 	

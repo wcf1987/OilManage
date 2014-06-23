@@ -158,6 +158,7 @@ public class AlgorithmProjectsAction {
 		if(records%rows!=0){
 			total++;
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 
@@ -167,6 +168,7 @@ public class AlgorithmProjectsAction {
 		AlgorithmProDao dao=new AlgorithmProDao();
 	
 		int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
+		dao.close();
 		return "SUCCESS";
 	}
 	public int getInputID() {
@@ -214,16 +216,19 @@ public class AlgorithmProjectsAction {
 	public String update(){
 		AlgorithmProDao dao=new AlgorithmProDao();
 		int re=dao.updatePro(ID, this.name,this.Description);
+		dao.close();
 		return "SUCCESS"; 
 	}
 	public String searchProAlg(){
 		AlgorithmProDao dao=new AlgorithmProDao();
 		this.algID=dao.searchProAlg(this.ID);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String selectAlg(){
 		AlgorithmProDao dao=new AlgorithmProDao();
 		int re=dao.addAlgorithm(this.ID,this.algID);
+		dao.close();
 		return "SUCCESS";
 	}
 	String className;
@@ -254,6 +259,7 @@ public class AlgorithmProjectsAction {
 
 		
 	}
+		dao.close();
 		return "SUCCESS"; 
 }
 }

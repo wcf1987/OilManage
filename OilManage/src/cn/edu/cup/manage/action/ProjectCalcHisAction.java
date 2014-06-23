@@ -100,14 +100,14 @@ public class ProjectCalcHisAction {
 
 		ProjectCalcHisDao dao=new ProjectCalcHisDao();
 		dataList=dao.getCalcHis(this.proID);
-		
+		dao.close();
 		return "SUCCESS";
 	}
 	public String getInputslist(){		
 
 		ProjectCalcHisDao dao=new ProjectCalcHisDao();
 		inputList=dao.getCalcInputsHis(this.ID);
-		
+		dao.close();
 		return "SUCCESS";
 	}
 	public int getID() {
@@ -120,7 +120,7 @@ public class ProjectCalcHisAction {
 
 		ProjectCalcHisDao dao=new ProjectCalcHisDao();
 		outputList=dao.getCalcOutputsHis(this.ID);
-		
+		dao.close();
 		return "SUCCESS";
 	}
 
@@ -141,6 +141,7 @@ public class ProjectCalcHisAction {
 		ProjectCalcHisDao dao=new ProjectCalcHisDao();
 		dao.addCalcHis(pro_id,start);
 		//int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String delete(){

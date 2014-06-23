@@ -188,6 +188,7 @@ public class MeasureAction extends ActionSupport{
 	public String add(){
 		PhysicalDao dao=new PhysicalDao();
 		int re=dao.addMessure(this.PhysicalID,this.mEName,this.mCName,this.Symbol,this.RatioA,this.RatioB,this.StyleID);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String list(){		
@@ -200,6 +201,7 @@ public class MeasureAction extends ActionSupport{
 				total++;
 			}
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 	
@@ -211,14 +213,14 @@ public class MeasureAction extends ActionSupport{
 			for(int id:ids)
 				dao.deleteMessure(id);
 		}
-		dao.commit();
+		dao.close();
 		return "SUCCESS";
 	}
 		
 	public String update(){
 		PhysicalDao dao=new PhysicalDao();
 		int re=dao.updateMessure(this.mid,this.PhysicalID,this.mEName,this.mCName,this.Symbol,this.RatioA,this.RatioB,this.StyleID);
-	
+		dao.close();
 		return "SUCCESS"; 
 	}
 	
@@ -232,6 +234,7 @@ public class MeasureAction extends ActionSupport{
 	public String listPhysicalStyle(){
 		PhysicalDao dao=new PhysicalDao();
 		styleList=dao.getPhysicalStyleList();
+		dao.close();
 		return "SUCCESS";
 	}
 	

@@ -16,34 +16,33 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.manage.business.CalcInfo;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 public class AlgorithmProDao {
 
-	
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
-		
-	public  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
 	}
+
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+	 Session session ;
+
+		
+	
 
 	public AlgorithmProDao()
 	{	
-		Configuration cfg = new Configuration();  
-      cfg.configure();          
-      ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-      SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+		session = HibernateSessionManager.getThreadLocalSession();
 	}
 	public List<AlgorithmPro> getAlgorithmProsList(int page, int rows,
 			String sidx, String sord) {
+		
 		SQLQuery q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime,t1.LastCalcTime ,t1.CalcHisNum from t_projects t1,t_user t2 where t1.AuthorID=t2.ID order by t1."+sidx+" "+sord);
 
 		q.setFirstResult((page-1)*rows);
@@ -86,6 +85,7 @@ public class AlgorithmProDao {
 	}
 	public int addAlgorithmPro(String description, int authorID,String name) {
 		Date addDate=new Date();
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into t_projects (description,authorID,addtime,name) values (?,?,?,?)");
 		q.setParameter(0, description);
 		q.setParameter(1, authorID);
@@ -93,11 +93,12 @@ public class AlgorithmProDao {
 		q.setParameter(3, name);
 		int result=q.executeUpdate();
 		
-		tx.commit();
+	
 		return result;
 	}
 	
 	public int deletePro(int  id) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_projects where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
@@ -110,12 +111,13 @@ public class AlgorithmProDao {
 	public int updatePro(int iD, String name, String description) {
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("update t_projects t set Name=?, Description=? where t.ID=?");
 		q.setParameter(0, name);
 		q.setParameter(1, description);
 		q.setParameter(2, iD);
 		int re=q.executeUpdate();
-		tx.commit();
+
 		return re;
 	}
 	public int searchProAlg(int proID){
@@ -123,15 +125,16 @@ public class AlgorithmProDao {
 		q.setParameter(0, proID);
 		int result=0;
 		result=(Integer) q.uniqueResult(); 
-		tx.commit();
+
 		return result;
 	}
 	public int addAlgorithm(int iD,int algID){
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("update t_projects t set t.algorithm_ID =? where t.ID=? ");
 		q.setParameter(0, algID);
 		q.setParameter(1, iD);
 		int result=q.executeUpdate();		
-		tx.commit();
+	
 		return result;
 	}
 	public String getAlgorithmFile(int pro_id) {
@@ -201,6 +204,7 @@ public class AlgorithmProDao {
 	}
 
 	public void updateProInfo(int id) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		Date modifyTime=new Date();
 		SQLQuery q = session.createSQLQuery("update t_projects t set t.CalcHisNum=(select count(*) from t_calchis t1 where t1.Pro_ID=?),t.LastCalcTime=(select max(t2.Calc_EndTime) from t_calchis t2 where t2.Pro_ID=?) where t.ID=?");
 		

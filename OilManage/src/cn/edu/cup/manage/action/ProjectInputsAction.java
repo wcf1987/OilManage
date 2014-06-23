@@ -179,7 +179,7 @@ public class ProjectInputsAction {
 			if(records%rows!=0){
 				total++;
 			}
-		}
+		}dao.close();
 		return "SUCCESS";
 	}
 
@@ -187,6 +187,7 @@ public class ProjectInputsAction {
 
 		ProjectInputDao dao=new ProjectInputDao();
 		input=dao.searchInput(ID);
+		dao.close();
 		return "SUCCESS";
 	}
 	
@@ -198,7 +199,7 @@ public class ProjectInputsAction {
 		
 		ParameterDao paraDao=new ParameterDao();
 		param=paraDao.searchParameter(param_id);
-		
+		dao.close();
 		return "SUCCESS";
 	}
 	public String getName() {

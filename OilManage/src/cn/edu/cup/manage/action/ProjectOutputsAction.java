@@ -179,7 +179,7 @@ public class ProjectOutputsAction {
 			if(records%rows!=0){
 				total++;
 			}
-		}
+		}dao.close();
 		return "SUCCESS";
 	}
 
@@ -187,6 +187,7 @@ public class ProjectOutputsAction {
 
 		ProjectInputDao dao=new ProjectInputDao();
 		input=dao.searchInput(ID);
+		dao.close();
 		return "SUCCESS";
 	}
 	

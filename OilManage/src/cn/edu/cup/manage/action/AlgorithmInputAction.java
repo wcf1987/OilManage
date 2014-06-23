@@ -186,6 +186,7 @@ public class AlgorithmInputAction {
 				total++;
 			}
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 
@@ -218,11 +219,13 @@ public class AlgorithmInputAction {
 	public String delete(){
 		AlgorithmInputDao dao=new AlgorithmInputDao();
 		dao.deleteAlgorithm(ID);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String update(){
 		AlgorithmInputDao dao=new AlgorithmInputDao();
 		int re=dao.updateParameter(ID, this.CycleID,this.ParamID);
+		dao.close();
 		return "SUCCESS"; 
 	}
 }
