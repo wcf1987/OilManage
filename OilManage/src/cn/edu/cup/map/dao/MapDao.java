@@ -23,9 +23,24 @@ import cn.edu.cup.map.business.Line;
 import cn.edu.cup.map.business.MapPro;
 import cn.edu.cup.map.business.Point;
 import cn.edu.cup.test.TestHibernate;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 public class MapDao {
+	
+	 Session session ;
+	 
+		
+		public void close() {
+			// TODO Auto-generated method stub
+			HibernateSessionManager.commitThreadLocalTransaction();
+			HibernateSessionManager.closeThreadLocalSession();
+		}
 
+		public void roll() {
+			// TODO Auto-generated method stub
+			HibernateSessionManager.rollbackThreadLocalTransaction();
+			HibernateSessionManager.closeThreadLocalSession();
+		}
 	//遍历
 	public  void all()
 	{
@@ -65,7 +80,6 @@ public class MapDao {
 		
 		addPoint(proid,graphi);
 		addLine(proid,graphi);
-		tx.commit();
 		return result;
 	}
 	private void addLine(int proid,Graphi graphi) {
@@ -119,30 +133,16 @@ public class MapDao {
 		session.save(user);
 	}
 	
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
+
 	
 
 	public MapDao()
 	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+		session = HibernateSessionManager.getThreadLocalSession();
 	
 	}
 	
-	private  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
+	
 	public int getMax(){
 		SQLQuery q = session.createSQLQuery("select count(*) from t_MapPro");
 		Integer a=((BigInteger)q.uniqueResult()).intValue();
@@ -239,10 +239,11 @@ public class MapDao {
 	}
 
 	public int deleteMap(int id) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_MapPro where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
-		tx.commit();
+		
 		return re;
 		
 	}

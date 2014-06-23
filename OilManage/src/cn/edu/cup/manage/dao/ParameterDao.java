@@ -18,20 +18,33 @@ import cn.edu.cup.manage.business.Parameters;
 import cn.edu.cup.manage.business.Physical;
 import cn.edu.cup.manage.business.Style;
 import cn.edu.cup.test.TestHibernate;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 public class ParameterDao {
 
 
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+	 Session session ;
 	
 	public int addParameter(int mid,String display, String name){
-		
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into t_parameters (measureID,display,name) values (?,?,?)");
 		q.setParameter(0, mid);
 		q.setParameter(1, display);
 		q.setParameter(2, name);
 		int result=q.executeUpdate();
 		
-		tx.commit();
 		return result;
 	}
 	
@@ -43,32 +56,14 @@ public class ParameterDao {
 
 
 	
-
-	
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
 	
 
 	public ParameterDao()
 	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+		session = HibernateSessionManager.getThreadLocalSession();
 	
 	}
 	
-	public  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
 
 	public int getCountParameters(){
 		SQLQuery q = session.createSQLQuery("select count(*) from t_parameters");
@@ -131,6 +126,8 @@ public class ParameterDao {
 
 	
 	public int deleteParameter(int  id) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_parameters where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
@@ -142,6 +139,8 @@ public class ParameterDao {
 
 	public int updateParameter(int iD, int mid, String display,
 			String name) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		// TODO Auto-generated method stub
 		SQLQuery q = session.createSQLQuery("update t_parameters t set measureID=?,display=?,name=? where t.ID=?");
 		q.setParameter(0, mid);
@@ -149,7 +148,7 @@ public class ParameterDao {
 		q.setParameter(2, name);
 		q.setParameter(3, iD);
 		int re=q.executeUpdate();
-		tx.commit();
+	
 		return re;
 	}
 

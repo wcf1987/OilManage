@@ -21,40 +21,29 @@ import cn.edu.cup.manage.business.CalcInfo;
 import cn.edu.cup.manage.business.Measure;
 import cn.edu.cup.manage.dao.ParameterDao;
 import cn.edu.cup.manage.dao.PhysicalDao;
+import cn.edu.cup.tools.HibernateSessionFactory;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 public class GUIDao {
 
-	
-	 SessionFactory sessionFactory;
+	 
+	 //SessionFactory sessionFactory;
 	 Session session ;
 	 Transaction tx ;
 		
-	public  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
-	public  void roll()
-	{
-		tx.rollback();
 
-		//sessionFactory.close();
-	}
 	public GUIDao()
 	{	
-	 Configuration cfg = new Configuration();  
-     cfg.configure();          
-     ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-     SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
+	 
                
 		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+		session = HibernateSessionManager.getThreadLocalSession();
+		
 	}
 	
 	public List<PointValue> getPointPraList(int pro_id,String name,String type,int page, int rows,
 			String sidx, String sord) {
+		tx = HibernateSessionManager.getThreadLocalTransaction();
 		String sql="select count(*) from t_guipointvalue t where t.pro_id=? and t.point_name=? and t.point_type=?";
 		SQLQuery q = session.createSQLQuery(sql);
 		q.setParameter(0, pro_id);
@@ -98,7 +87,9 @@ public class GUIDao {
 			  
 			  re.add(p);
 		}
-		tx.commit();
+		
+		
+		
 		return re;
 	}
 	
@@ -108,6 +99,7 @@ public class GUIDao {
 		SQLQuery q = session.createSQLQuery(sql);
 		q.setParameter(0, pointType);
 		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		
 		return count;
 
 	}
@@ -115,6 +107,7 @@ public class GUIDao {
 	public int updatePointPra(int iD, double par_value) {
 		// TODO Auto-generated method stub
 //		Date modifyTime=new Date();
+		tx = HibernateSessionManager.getThreadLocalTransaction();
 		String sql="select max(t1.par_messID) from t_guipointproper t1,t_guipointvalue t2 where t2.id=? and t2.proper_id=t1.id ";
 		SQLQuery q = session.createSQLQuery(sql);
 		q.setParameter(0, iD);
@@ -132,13 +125,13 @@ public class GUIDao {
 		q.setParameter(0, par_value);
 		q.setParameter(1, ISOvalue);
 		int re=q.executeUpdate();
-		tx.commit();
+		
 		return re;
 	}
 	
 	public List<GUIPro> getGUIProsList(int page, int rows,
 			String sidx, String sord) {
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime from t_guipro t1,t_user t2 where t1.AuthorID=t2.ID order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime from t_guipro t1,t_user t2 where t1.AuthorID=t2.ID and t1.type=0 order by t1."+sidx+" "+sord);
 
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
@@ -179,6 +172,7 @@ public class GUIDao {
 
 	
 	public int deletePro(int  id) {
+		tx = HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_guipro where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
@@ -190,7 +184,7 @@ public class GUIDao {
 
 	public int updatePro(int iD, String data,Date modifyTime,String ScalN) {
 		// TODO Auto-generated method stub
-		
+		tx = HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("update t_guipro t set addtime=? where t.ID=?");
 		q.setParameter(1, iD);
 		q.setParameter(0, modifyTime);
@@ -211,7 +205,7 @@ public class GUIDao {
 		q.setParameter(0, proID);
 		int result=0;
 		result=(Integer) q.uniqueResult(); 
-		tx.commit();
+
 		return result;
 	}
 
@@ -250,6 +244,7 @@ public class GUIDao {
 
 	public void updateProInfo(int id) {
 		Date modifyTime=new Date();
+		tx = HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("update t_projects t set t.CalcHisNum=(select count(*) from t_calchis t1 where t1.Pro_ID=?),t.LastCalcTime=(select max(t2.Calc_EndTime) from t_calchis t2 where t2.Pro_ID=?) where t.ID=?");
 		
 		q.setParameter(0, id);
@@ -269,6 +264,7 @@ public class GUIDao {
 	
 	public int addPro(String description,String name, String data, Date date, int authorID,int type) {
 		Date addDate=new Date();
+		tx = HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into t_guipro (description,authorID,addtime,name,type) values (?,?,?,?,?)");
 		q.setParameter(0, description);
 		q.setParameter(1, authorID);
@@ -285,11 +281,12 @@ public class GUIDao {
 		q.setParameter(0, ret_id);
 		q.setParameter(1, data);
 		result=q.executeUpdate();
-		tx.commit();
+	
 		return ret_id;
 		
 	}
 	public void clearOld(int id){
+		tx = HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("update t_guipoint t set t.statusNow=-1 where t.statusNow=1 and t.pro_id=?");
 		q.setParameter(0, id);
 		int result=q.executeUpdate();
@@ -299,7 +296,7 @@ public class GUIDao {
 	}
 	public void addPoint(int iD, String name, int type, String typeName,Date addDate) {
 		// TODO Auto-generated method stub
-		
+		tx = HibernateSessionManager.getThreadLocalTransaction();
 		
 		Query q = session.createSQLQuery("insert into t_guipoint (pro_id,name,type,typename,statusNow,updateTime) values (?,?,?,?,?,?)");
 		q.setParameter(0, iD);
@@ -325,6 +322,7 @@ public class GUIDao {
 
 	public void addConnect(int iD, String left, String right,Date addDate) {
 		// TODO Auto-generated method stub
+		tx = HibernateSessionManager.getThreadLocalTransaction();
 		int left_id=getPointIDByName(left,iD);
 		int right_id=getPointIDByName(right,iD);
 		Query q = session.createSQLQuery("insert into t_guiconnect (pro_id,left_id,pointleft,right_id,pointright,statusNow,updateTime) values (?,?,?,?,?,?,?)");
@@ -390,7 +388,7 @@ public class GUIDao {
 			  
 			  re.add(p);
 		}
-		tx.commit();
+	
 		return re;
 	}
 	public int getCountPointProper() {
@@ -403,6 +401,7 @@ public class GUIDao {
 	}
 	public int addProper(String point_type,String par_name, String par_display,
 			 int measure_id) {
+		tx = HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into t_guipointproper (point_type,par_name,par_display,par_messID) values (?,?,?,?)");
 		q.setParameter(0, point_type);
 		q.setParameter(1, par_name);
@@ -410,16 +409,88 @@ public class GUIDao {
 		q.setParameter(3, measure_id);
 
 		int result=q.executeUpdate();
-		tx.commit();
+
 		return 0;
 	}
 	public int deleteProper(int id) {
+		tx = HibernateSessionManager.getThreadLocalTransaction();
 		// TODO Auto-generated method stub
 		SQLQuery q = session.createSQLQuery("delete from t_guipointproper where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
 //		tx.commit();
 		return re;
+	}
+	public GUIPro getGUISubProView(int pid,String subid) {
+		// TODO Auto-generated method stub
+		tx = HibernateSessionManager.getThreadLocalTransaction();
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t1.AddTime ,t3.JSONData , t3.ScalN from t_guipro t1, t_guijson t3 where t1.subID=? and t1.id=t3.id");
+		q.setParameter(0, subid);
+		GUIPro temp=null;
+		List l = q.list();
+		if(l.size()==0){
+			Date addDate=new Date();
+			q = session.createSQLQuery("insert into t_guipro (description,authorID,addtime,name,type,parentPro,subID) values (?,?,?,?,?,?,?)");
+			q.setParameter(0, "");
+			q.setParameter(1, 0);
+			q.setParameter(2, addDate);
+			q.setParameter(3, "sub");
+			q.setParameter(4, 1);
+			q.setParameter(5, pid);
+			q.setParameter(6, subid);
+			int result=q.executeUpdate();	
+			
+			int ret_id = 0;
+			Query q2 = session.createSQLQuery("select LAST_INSERT_ID()");
+			ret_id = ((BigInteger) q2.uniqueResult()).intValue();
+			
+			q = session.createSQLQuery("insert into t_guijson (id,JSONData,ScalN) select ?,JSONData,1 from t_guijson t where t.id=112 ");
+			q.setParameter(0, ret_id);			
+			result=q.executeUpdate();
+
+			
+			
+			
+		}
+		q = session.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,'username',t1.AddTime ,t3.JSONData , t3.ScalN from t_guipro t1,t_guijson t3 where  t1.subID=? and t1.id=t3.id");
+		q.setParameter(0, subid);		
+		l = q.list();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+
+			Object[] row = (Object[])l.get(i);;
+			  Integer id = ((Integer)row[0]);
+			  String proname = ((String)row[1]);
+			  String description=(String)row[2];
+			  Integer aid=((Integer)row[3]);
+			  String author=(String)row[4];
+			  Date addTime=(Date)row[5];
+			  String jsondata=(String)row[6];
+			  Double ScalN=(Double)row[7];
+			  temp=new GUIPro(id, proname, aid, author, description, addTime);
+			  temp.setScalN(ScalN);
+			  temp.setJSONData(jsondata);
+			  return temp;
+			 
+			  
+		}
+		
+		
+		return temp;
+	}
+
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
 	}
 
 

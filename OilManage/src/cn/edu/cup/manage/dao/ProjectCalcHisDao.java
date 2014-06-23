@@ -18,30 +18,25 @@ import cn.edu.cup.manage.business.CalcHisInput;
 import cn.edu.cup.manage.business.CalcHisOutput;
 import cn.edu.cup.manage.business.ProjectCalcHis;
 import cn.edu.cup.manage.business.ProjectInputs;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 public class ProjectCalcHisDao {
 
-	SessionFactory sessionFactory;
-	Session session;
-	Transaction tx;
-
 	public void close() {
-		tx.commit();
-		session.close();
-		// sessionFactory.close();
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
 	}
 
-	public ProjectCalcHisDao() {
-		Configuration cfg = new Configuration();
-		cfg.configure();
-		ServiceRegistry sr = new ServiceRegistryBuilder().applySettings(
-				cfg.getProperties()).buildServiceRegistry();
-		SessionFactory sessionFactory = cfg.buildSessionFactory(sr);
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+	 Session session ;
 
-		// sessionFactory = new
-		// Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+	public ProjectCalcHisDao() {
+		session = HibernateSessionManager.getThreadLocalSession();
 
 	}
 
@@ -112,6 +107,8 @@ public class ProjectCalcHisDao {
 
 	public int addInput(int pro_id, int param_id, double value) {
 		ParameterDao pDao = new ParameterDao();
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		double ISOValue = pDao.getISOValue(param_id, value);
 		Query q = session
 				.createSQLQuery("INSERT into t_projectinputs  select NULL,?,t1.id,t1.display,?,t1.name,t1.measureID,? from t_parameters t1 where t1.ID=?;");
@@ -122,7 +119,6 @@ public class ProjectCalcHisDao {
 
 		int result = q.executeUpdate();
 
-		tx.commit();
 		int ret_id = 0;
 		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()");
 		ret_id = ((BigInteger) q2.uniqueResult()).intValue();
@@ -142,17 +138,20 @@ public class ProjectCalcHisDao {
 	public int updateInput(int iD, double value) {
 		// TODO Auto-generated method stub
 		Date modifyTime = new Date();
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session
 				.createSQLQuery("update t_projectinputs t set t.par_value=? where t.ID=?");
 		q.setParameter(0, value);
 		q.setParameter(1, iD);
 		int re = q.executeUpdate();
-		tx.commit();
+
 		return re;
 	}
 
 	public int addCalcHis(int pro_id, Date start) {
 
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session
 				.createSQLQuery("INSERT into t_calchis (ID,Pro_ID,Algorith_ID,Calc_StartTime,Calc_EndTime,Calc_re) select null,t2.id,t2.algorithm_id,?,now(),t2.CalcRes from t_projects t2 where t2.id=?");
 		q.setParameter(0, start);
@@ -178,7 +177,6 @@ public class ProjectCalcHisDao {
 
 		result = q4.executeUpdate();
 
-		tx.commit();
 		return ret_id;
 
 	}

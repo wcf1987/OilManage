@@ -79,6 +79,11 @@ function() {
 	this.polyGroups = new Array;
 	this.connectionPoints = new Array;
 	this.radiusL=5;
+	this.polyhight=30;
+	this.polywidth=40;
+	this.polylineLength=20;
+	this.lpoints=[ 0, 0, -20, 0];
+	this.rpoints=[ 0, 0, 20, 0];
 /*	this.polys[0] = new Kinetic.Line({
 		x : 5,
 		y : 20,
@@ -130,11 +135,10 @@ function() {
 	}
 		
 	this.init = function() {
-		for(var i=0;i<5;i++){
+		for(var i=0;i<6;i++){
 			this.imgLoad('editor/icons/type'+i+'.png',i);
 		}	
 		for ( var k=0;k<this.polys.length;k++) {
-			
 			
 			this.polyGroups[k] = new Kinetic.Group({
 				x : this.polys[k].x(),
@@ -143,9 +147,53 @@ function() {
 				draggable : true
 
 			});
+			var PointLeft = new Kinetic.Circle({
+				x : this.polylineLength,
+				y : this.polyhight,
+
+				radius : 0,
+				fill : 'black',
+				stroke : 'black',
+				name : 'PointLeft',
+				strokeWidth : 1
+			});
+			
+			var PointRight = new Kinetic.Circle({
+				x : this.polywidth+this.polylineLength,
+				y : this.polyhight,
+				name : 'PointRight',
+				radius : 0,
+				fill : 'black',
+				stroke : 'black',
+				strokeWidth : 1
+			});
+			
+			var lineLeft = new Kinetic.Line({
+				x : this.polylineLength,
+				y : this.polyhight,
+				points : 	this.lpoints.concat(),
+				 
+				 stroke : 'black',
+				strokeWidth : 5,
+
+				name : 'lineLeft',
+				closed : true
+				
+			});
+			var lineRight = new Kinetic.Line({
+				x : this.polywidth+this.polylineLength,
+				y : this.polyhight,
+				 points : this.rpoints.concat(),
+				
+				 stroke : 'black',
+				strokeWidth : 5,
+
+				name : 'lineRight',
+				closed : true
+			});
 			var connPointsLeft = new Kinetic.Circle({
 				x : 0,
-				y : 30,
+				y : this.polyhight,
 
 				radius : this.radiusL,
 				fill : 'red',
@@ -153,9 +201,10 @@ function() {
 				name : 'connPointsLeft',
 				strokeWidth : 2
 			});
+			
 			var connPointsRight = new Kinetic.Circle({
-				x : 80,
-				y : 30,
+				x : this.polywidth+this.polylineLength*2,
+				y : this.polyhight,
 				name : 'connPointsRight',
 				radius : this.radiusL,
 				fill : 'red',
@@ -166,22 +215,30 @@ function() {
 			this.polys[k].x(0);
 			this.polys[k].y(0);
 			this.polyGroups[k].add(this.polys[k]);
+			this.lock=false;
 			if(k==0){
-				this.polyGroups[k].add(connPointsRight);				
+				this.polyGroups[k].add(lineRight);
+				this.polyGroups[k].add(connPointsRight);
+				this.polyGroups[k].add(PointRight);
+				
 				connPointsRight.hide();	
 				this.initPoint(this.polyGroups[k]);
 				continue;
 			}
 			if(k==1){
-				this.polyGroups[k].add(connPointsLeft);				
+				this.polyGroups[k].add(lineLeft);
+				this.polyGroups[k].add(connPointsLeft);	
+				this.polyGroups[k].add(PointLeft);
 				connPointsLeft.hide();
 				this.initPoint(this.polyGroups[k]);
 				continue;
 			}
-			
-			
+			this.polyGroups[k].add(lineRight);
+			this.polyGroups[k].add(lineLeft);
 			this.polyGroups[k].add(connPointsLeft);
+			this.polyGroups[k].add(PointLeft);
 			this.polyGroups[k].add(connPointsRight);
+			this.polyGroups[k].add(PointRight);
 			connPointsLeft.hide();
 			connPointsRight.hide();	
 			this.initPoint(this.polyGroups[k]);
@@ -208,34 +265,128 @@ function() {
 
 	// var platform=null;
 	this.dragFun = function(pos) {
+
 		if(platform.selectPainting==null){
 			return {
 				x : this.getAbsolutePosition().x,
 				y : this.getAbsolutePosition().y
 			};
 		}
-		platform.selectPainting.hasChange();
-		if (checkPoint(pos, platform.centerlayer)) {
-			
-			showConnect(this);
-			//showALLConnPoints();
-			
-			/*poss = checkConn(this);
-			if (poss != null) {
+	
+		
+		if (checkPoint(pos, platform.centerlayer)) {		
+			if((this.lock==null||this.lock==false)){
+
 				
-				this.x(pos.x - poss.x);
-				this.y(pos.y - poss.y);
+				//showALLConnPoints();			
+				return {
+					x : pos.x,
+					y : pos.y
+				};
+			}else{
+				platform.selectPainting.hasChange();
+				
+				point={
+						x:this.getAbsolutePosition().x-pos.x,
+						y:this.getAbsolutePosition().y-pos.y
+					}
+				
+				l=getLeftLine(this);
+				lc=getLeftPoint(this);
+				r=getRightLine(this);
+				rc=getRightPoint(this);
+				poly=getPoly(this);
+				//lch=getRightPointHide(this);
+				//rch=getRightPointHide(this);
+				//this.removeChildren();
+				//this.add(poly);
+				//this.add(lch);
+				//this.add(rch);
+				//rcp=rc.getAbsolutePosition();
+				//lcp=lc.getAbsolutePosition();
+				//poly.position(point);
+				if(l!=null&&lc.fill()=='red'){
+					
+					//this.setAbsolutePosition(pos);					
+					//rc.move(point);
+					//drawLine(r,point);
+					
+				}
+				if(l!=null&&lc.fill()=='yellow'){
+					this.setAbsolutePosition(pos);	
+					lc.move(point);
+					drawLine(l,point);
+					
+				}
+				if(r!=null&&rc.fill()=='red'){
+					//this.add(r);
+					//this.add(rc);
+					//this.setAbsolutePosition(pos);
+					//this.add(lc);
+					//lc.move(point);
+					//drawLine(l,point);
+					
+				}
+				if(r!=null&&rc.fill()=='yellow'){
+					this.setAbsolutePosition(pos);	
+					rc.move(point);
+					drawLine(r,point);
+				}
+				
+				/*dis=null;
+				if(l!=null){
+					
+					lp=l.points();
+					lp[2]=point.x;
+					lp[3]=point.y;
+					l.points(lp);
+					dis={
+							x:lp[2],
+							y:lp[3]
+						}
+				}
+				
+				if(r!=null){
+					rp=r.points();
+					if(dis!=null){		
+						this.lpoints=[ 0, 0, 20, 0];
+						this.rpoints=[ 60, 0, 80, 0];
+						if(rp[2]-lp[0]==0){
+							xw=0;
+						}
+						if(rp[2]-lp[0]>0){
+							xw=leftpoly.polywidth;
+							
+						}
+						if(rp[2]-lp[0]<0){
+							xw=leftpoly.polywidth*-1;
+						}
+						if(rp[3]-lp[1]==0){
+							yw=0;
+						}
+						if(rp[3]-lp[1]>0){
+							yw=leftpoly.polywidth;
+							
+						}
+						if(rp[3]-lp[1]<0){
+							yw=leftpoly.polywidth*-1;
+						}
+						rp[0]=dis.x+xw;
+						rp[1]=dis.y+yw;
+					}else{
+					rp[0]=point.x;
+					rp[1]=point.y;
+					}
+					r.points(rp);
+					//r.fillLinearGradientEndPoint(point);
+				}*/
 				platform.draw();
 				return {
-					x : this.x(),
-					y : this.y()
+					x : this.getAbsolutePosition().x,
+					y : this.getAbsolutePosition().y
 				};
-
-			}*/
-			return {
-				x : pos.x,
-				y : pos.y
-			};
+			}
+			
 		}
 		return {
 			x : this.getAbsolutePosition().x,
@@ -261,7 +412,7 @@ function() {
 			}
 			poss = checkConn(this);
 			if (poss != null) {
-				
+				this.lock=true;
 				this.x((this.x() - (poss.x/platform.selectPainting.scaleN))			);
 				this.y((this.y() - (poss.y/platform.selectPainting.scaleN)));
 				platform.draw();
@@ -273,9 +424,10 @@ function() {
 			}
 
 		}
-		
-		platform.centerlayer.draw(this);
-		platform.stage.draw();
+
+		showALLConnedPoints();
+		platform.draw();
+
 	};
 
 	this.cloneFun2 = function(e) {
@@ -283,7 +435,7 @@ function() {
 		if (e.type == 'mousedown'
 				&&platform.selectPainting!=null &&this.getLayer() != platform.selectPainting.p) {
 			var cloneOfItem = this.clone();
-
+			showConnect(this);
 			// cloneOfItem.off('mousedown touchstart');
 			platform.leftlayer.add(cloneOfItem);
 
@@ -334,7 +486,17 @@ function() {
 							return;
 						}		
 						var text = $(this).text();
-						if (text == '删除该节点') {		
+						if (text == '进入站点') {		
+							if(point_type=='type5'){
+								tabtools.loadSubPro(point_name);
+							}
+							$("#contextmenu").hide();		
+							platform.draw();
+						} else if (text == '解除锁定') {		
+							clickshape.lock=false;	
+							$("#contextmenu").hide();		
+							platform.selectPainting.p.draw();
+						} else	if (text == '删除该节点') {		
 							clickshape.destroy();
 							showALLConnedPoints();
 							$("#contextmenu").hide();		
@@ -388,7 +550,12 @@ function() {
 		    },300);
 		}
 	};
+	unlockConnects=function(g){
 
+	}
+	getConnectedStatus=function(g){
+		
+	}
 	showALLConnPoints = function() {
 		points = platform.getAllChildren();
 		for (i1 = 0; i1 < points.length; i1++) {
@@ -405,20 +572,21 @@ function() {
 			left=getLeftPoint(points[i1]);
 			if (right!=null) right.fill('red');
 			if (left!=null) left.fill('red');
+			points[i1].lock=false;
 		}
 		for (i1 = 0; i1 < points.length; i1++) {
 			checkConn(points[i1]);
 		}
 		
 	}
-	hideALLConnPoints = function() {//隐藏所有连接点
+/*	hideALLConnPoints = function() {//隐藏所有连接点
 		points = platform.getAllChildren();
 		for (i1 = 0; i1 < points.length; i1++) {
 			hideConnection(points[i1]);
 		}
 		platform.draw();
 		platform.setConnShowed(false);
-	}
+	}*/
 	showConnect = function(g) {
 
 		tempArray = g.getChildren(function(node) {
@@ -432,7 +600,7 @@ function() {
 		
 		g.draw();
 	}
-	hideConnection = function(g) {
+/*	hideConnection = function(g) {
 		tempArray = g.getChildren(function(node) {
 			return node.getName() == 'connPointsLeft'
 					|| node.getName() == 'connPointsRight'
@@ -442,7 +610,7 @@ function() {
 		
 		}
 
-	}
+	}*/
 	
 	/*
 	 * 检查控件之间连接关系
@@ -457,7 +625,8 @@ function() {
 		
 			if (checkCircle(rightCir, tempL,
 					leftpoly.radiusL*platform.selectPainting.scaleN * 2)) {
-				
+				g.lock=true;
+				points[li].lock=true;
 				re= {
 					g : points[li],
 					right : 0,
@@ -474,7 +643,8 @@ function() {
 			var tempR=getRightPoint(points[li]);
 			if (checkCircle(leftCir, tempR,
 					leftpoly.radiusL*platform.selectPainting.scaleN  * 2)) {
-
+				g.lock=true;
+				points[li].lock=true;
 				re= {
 						g : points[li],
 						right : tempR,
@@ -490,7 +660,7 @@ function() {
 		}		
 		return re;
 	}
-	
+
 
 	/*
 	 * 属性编辑列表

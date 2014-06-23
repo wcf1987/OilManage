@@ -16,31 +16,27 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.manage.business.AlgorithmsCycle;
 import cn.edu.cup.manage.business.Parameters;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 public class AlgorithmsCycleDao {
 	
-	 SessionFactory sessionFactory;
 	 Session session ;
-	 Transaction tx ;
+	
 		
-	public  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
+		public void close() {
+			// TODO Auto-generated method stub
+			HibernateSessionManager.commitThreadLocalTransaction();
+			HibernateSessionManager.closeThreadLocalSession();
+		}
+
+		public void roll() {
+			// TODO Auto-generated method stub
+			HibernateSessionManager.rollbackThreadLocalTransaction();
+			HibernateSessionManager.closeThreadLocalSession();
+		}
 
 	public AlgorithmsCycleDao()
-	{	
-		Configuration cfg = new Configuration();  
-       cfg.configure();          
-       ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-       SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                 
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-	
+	{	session = HibernateSessionManager.getThreadLocalSession();
 	}
 	
 	public AlgorithmsCycle getAlgorithmDetail(int ID){
@@ -117,6 +113,7 @@ public class AlgorithmsCycleDao {
 	}
 	public int addAlgorithm(String description, String authorID,String name,String filePath,String className) {
 		Date addDate=new Date();
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into t_algorithmscycle (description,authorID,addtime,LastUpdateTime,inputID,planID,outputID,Name,FilePath,ClassName) values (?,?,?,?,0,0,0,?,?,?)");
 		q.setParameter(0, description);
 		q.setParameter(1, authorID);
@@ -127,11 +124,11 @@ public class AlgorithmsCycleDao {
 		q.setParameter(6, className);
 		int result=q.executeUpdate();
 		
-		tx.commit();
 		return result;
 	}
 	
 	public int deleteAlgorithm(int  id) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_algorithmscycle where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
@@ -142,6 +139,7 @@ public class AlgorithmsCycleDao {
 
 	public int updateAlgorithm(int id,String description, String authorID,String name,String filePath,String className) {
 		Date updateDate=new Date();
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("update t_algorithmscycle t set description=?,authorID=?,LastUpdateTime=?,Name=?,FilePath=?,ClassName=? where t.ID=?");
 		q.setParameter(0, description);
 		q.setParameter(1, authorID);
@@ -152,7 +150,6 @@ public class AlgorithmsCycleDao {
 		q.setParameter(6,id);
 		int result=q.executeUpdate();
 		
-		tx.commit();
 		return result;
 	}
 	
@@ -160,6 +157,7 @@ public class AlgorithmsCycleDao {
 			String outputID, String description,String name) {
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("update t_algorithmscycle t set inputID=?,planID=?,outputID=?,Description=?,LastUpdateTime=? , Name=? where t.ID=?");
 		q.setParameter(0, inputID);
 		q.setParameter(1, planID);
@@ -170,7 +168,7 @@ public class AlgorithmsCycleDao {
 		q.setParameter(5, name);
 		q.setParameter(6, iD);
 		int re=q.executeUpdate();
-		tx.commit();
+		
 		return re;
 	}
 

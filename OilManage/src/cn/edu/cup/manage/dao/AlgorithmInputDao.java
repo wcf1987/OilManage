@@ -15,29 +15,28 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.manage.business.AlgorithmInput;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 public class AlgorithmInputDao {
-	 SessionFactory sessionFactory;
+	
 	 Session session ;
-	 Transaction tx ;
+	 
 		
-	public  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
+		public void close() {
+			// TODO Auto-generated method stub
+			HibernateSessionManager.commitThreadLocalTransaction();
+			HibernateSessionManager.closeThreadLocalSession();
+		}
+
+		public void roll() {
+			// TODO Auto-generated method stub
+			HibernateSessionManager.rollbackThreadLocalTransaction();
+			HibernateSessionManager.closeThreadLocalSession();
+		}
 
 	public AlgorithmInputDao()
 	{	
-		Configuration cfg = new Configuration();  
-      cfg.configure();          
-      ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-      SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+		session = HibernateSessionManager.getThreadLocalSession();
 	
 	}
 	public List<AlgorithmInput> getAlgorithmInputList(int page, int rows,
@@ -104,6 +103,7 @@ public class AlgorithmInputDao {
 	}
 	public int addAlgorithm(int cycleID, int paramID) {
 		Date addDate=new Date();
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into t_algorithminput (cycleID,paramID) values (?,?)");
 		q.setParameter(0, cycleID);
 		q.setParameter(1, paramID);
@@ -114,15 +114,17 @@ public class AlgorithmInputDao {
 	}
 	
 	public int deleteAlgorithm(int  id) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_algorithminput where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
-		tx.commit();
+	
 		return re;
 		
 	}
 
 	public int deleteAlgorithmByCycle(int  cycleId) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_algorithminput where cycleID=?");
 		q.setParameter(0, cycleId);
 		int re=q.executeUpdate();
@@ -133,13 +135,13 @@ public class AlgorithmInputDao {
 	
 	public int updateParameter(int iD, int cycleID, int paramID) {
 		// TODO Auto-generated method stub
-		
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("update t_algorithminput t set cycleID=?,paramID=? where t.ID=?");
 		q.setParameter(0, cycleID);
 		q.setParameter(1, paramID);
 		q.setParameter(2, iD);
 		int re=q.executeUpdate();
-		tx.commit();
+		
 		return re;
 	}
 }

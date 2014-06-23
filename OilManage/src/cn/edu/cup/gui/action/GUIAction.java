@@ -176,17 +176,32 @@ public class GUIAction {
 	public String getSord() {
 		return sord;
 	}
-
+	String subID;
+	int parentID;
+	public int getParentID() {
+		return parentID;
+	}
+	public void setParentID(int parentID) {
+		this.parentID = parentID;
+	}
+	public String getSubID() {
+		return subID;
+	}
+	public void setSubID(String subID) {
+		this.subID = subID;
+	}
 	public String getView(){		
 
 		GUIDao dao=new GUIDao();
-		
+		if(type==0){
 		
 		
 		dataView=dao.getGUIProView(this.ID);
+		}else{
+			dataView=dao.getGUISubProView(this.parentID,this.subID);
+		}
 
-
-		
+		dao.close();
 		return "SUCCESS";
 	}
 	public List<GUIPro> getDataList() {
@@ -222,6 +237,7 @@ public class GUIAction {
 		if(records%rows!=0){
 			total++;
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 	List<String> Points;
@@ -245,6 +261,7 @@ public class GUIAction {
 		 }catch(Exception  e){
 			e.printStackTrace(); 
 		 }
+		 
 	}
 	public List<String> getConns() {
 		return Conns;
@@ -289,7 +306,7 @@ public class GUIAction {
 			nameFlag="false";
 			ID=dao.addPro(this.description,this.name,this.data,new Date(),this.authorID,this.type);
 		}
-		
+		dao.close();
 		return "SUCCESS";
 	}
 	public int getAuthorID() {
@@ -361,11 +378,13 @@ public class GUIAction {
 		if(records%rows!=0){
 			total++;
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 	public String updatePointPra(){
 		GUIDao dao=new GUIDao();
 		int re=dao.updatePointPra(ID,this.par_value);
+		dao.close();
 		return "SUCCESS"; 
 	}
 

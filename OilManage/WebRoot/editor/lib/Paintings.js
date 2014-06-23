@@ -5,6 +5,7 @@ var connectC=function(){
 var Paintings = function() {
 	this.points=new Array;
 	this.changed=false;
+	this.ID=0;
 	this.hasChange=function(){
 		this.changed=true;
 		if($("#paintingTabs>.active > a:first").children().length==0){

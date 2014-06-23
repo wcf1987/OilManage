@@ -114,6 +114,7 @@ public class ParametersManageAction extends ActionSupport{
 	public String search(){
 		ParameterDao dao=new ParameterDao();
 		param=dao.searchParameter(ID);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String list(){		
@@ -130,6 +131,7 @@ public class ParametersManageAction extends ActionSupport{
 				total++;
 			}
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 
@@ -144,7 +146,7 @@ public class ParametersManageAction extends ActionSupport{
 		}else{
 			this.exist=true;
 		}
-		
+		dao.close();
 		return "SUCCESS";
 	}
 	public String delete(){
@@ -162,6 +164,7 @@ public class ParametersManageAction extends ActionSupport{
 	public String update(){
 		ParameterDao dao=new ParameterDao();
 		int re=dao.updateParameter(ID, measureID, display, name);
+		dao.close();
 		return "SUCCESS"; 
 	}
 }

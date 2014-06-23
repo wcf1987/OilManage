@@ -189,6 +189,7 @@ public class AlgorithmOutputAction {
 				total++;
 			}
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 
@@ -220,11 +221,13 @@ public class AlgorithmOutputAction {
 	public String delete(){
 		AlgorithmOutputDao dao=new AlgorithmOutputDao();
 		dao.deleteAlgorithmOutput(ID);
+		dao.close();
 		return "SUCCESS";
 	}
 	public String update(){
 		AlgorithmOutputDao dao=new AlgorithmOutputDao();
 		int re=dao.updateAlgorithmOutput(ID, this.CycleID,this.ParamID);
+		dao.close();
 		return "SUCCESS"; 
 	}
 }

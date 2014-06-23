@@ -17,21 +17,27 @@ import cn.edu.cup.manage.business.AlgRoleBase;
 import cn.edu.cup.manage.business.RoleBase;
 import cn.edu.cup.manage.business.User;
 import cn.edu.cup.test.TestHibernate;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 public class RoleDao {
 
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
 
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+	 Session session ;
 		
 
 	public RoleDao()
 	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
+		session = HibernateSessionManager.getThreadLocalSession();
 		
 	
 	}
@@ -66,7 +72,8 @@ public class RoleDao {
 	}
 	
 	public int addUser(String username,String password,int usergroupid,String email,String state,String info){
-		
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into T_User (username,password,usergroupid,email,state,info) values (?,?,?,?,?,?)");
 		q.setParameter(0, username);
 		q.setParameter(1, password);
@@ -76,7 +83,6 @@ public class RoleDao {
 		q.setParameter(5, info);
 		int result=q.executeUpdate();
 		
-		tx.commit();
 		return result;
 	}
 
@@ -98,35 +104,13 @@ public class RoleDao {
 		session.save(user);
 	}
 	
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
+	 
 	
 
-	public void initDao()
-	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
 	
-	}
 	
-	private  void close()
-	{
-		session.close();
-		//sessionFactory.close();
-	}
-	public  void commit()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
+	
+
 	public User searchUser(String name,String pass,String type){
 		
 		
@@ -273,20 +257,23 @@ public class RoleDao {
 
 
 	public int addRole(String roleName, String roleDes) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		
-		tx = session.beginTransaction();
 		Query q = session.createSQLQuery(" insert into t_roles (roleName,roleDescription) VALUES(?,?)");
 		q.setParameter(0, roleName);
 		q.setParameter(1, roleDes);
 		int result=q.executeUpdate();		
-		this.commit();
+		
 		return result;
 		
 	}
 
 
 	public int delRole(int roleID) {
-		tx = session.beginTransaction();
+
+		HibernateSessionManager.getThreadLocalTransaction();
+		
 		Query q = session.createSQLQuery(" delete from t_roles where id=?");
 		q.setParameter(0, roleID);
 
@@ -297,30 +284,36 @@ public class RoleDao {
 
 
 	public int addUserRole(int userID, int roleID) {
-		tx = session.beginTransaction();
+
+		HibernateSessionManager.getThreadLocalTransaction();
+
 		Query q = session.createSQLQuery(" insert into t_userrole (user_id,role_id) VALUES(?,?)");
 		q.setParameter(0, userID);
 		q.setParameter(1, roleID);
 		int result=q.executeUpdate();		
-		this.commit();
+
 		return result;
 	}
 
 
 	public int addAlgRole(int algID, int roleID) {
-		tx = session.beginTransaction();
+
+		HibernateSessionManager.getThreadLocalTransaction();
+		
 		Query q = session.createSQLQuery(" insert into t_algrole (role_id,algorithm_id,type,other) VALUES(?,?,0,0)");
 		q.setParameter(0, roleID);
 		q.setParameter(1, algID);
 		int result=q.executeUpdate();		
-		this.commit();
+
 		return result;
 
 	}
 
 
 	public int delAlgRole(int algRoleID) {
-		tx = session.beginTransaction();
+
+		HibernateSessionManager.getThreadLocalTransaction();
+
 		Query q = session.createSQLQuery(" delete from t_algrole where id=?");
 		q.setParameter(0, algRoleID);
 
@@ -332,7 +325,9 @@ public class RoleDao {
 
 
 	public int delUserRole(int userRoleID) {
-		tx = session.beginTransaction();
+
+		HibernateSessionManager.getThreadLocalTransaction();
+
 		Query q = session.createSQLQuery(" delete from t_userrole where id=?");
 		q.setParameter(0, userRoleID);
 

@@ -16,35 +16,32 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.manage.business.ProjectInputs;
+import cn.edu.cup.tools.HibernateSessionManager;
 
 public class AlgProInputDao {
 
-	
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
-		
-	public  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
 	}
+
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+	 Session session ;
 
 	public AlgProInputDao()
 	{	
-		Configuration cfg = new Configuration();  
-      cfg.configure();          
-      ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-      SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
+		session = HibernateSessionManager.getThreadLocalSession();
 	
 	}
 	public List<ProjectInputs> getAlgorithmProInputsList(int page, int rows,
 			String sidx, String sord,int algCycleID,int pro_id) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("select count(*) from t_calcinput_his t1 ,t_projects t4 where t1.Pro_ID=t4.ID");
 
 		//q.setFirstResult((page-1)*rows);
@@ -60,7 +57,7 @@ public class AlgProInputDao {
 			q.setParameter(0, pro_id);
 			q.setParameter(1, algCycleID);
 			int result=q.executeUpdate();
-			tx.commit();
+	
 			
 		}
 		q = session.createSQLQuery("select t0.id,t3.name,t3.display,CONCAT(t4.CName,'(',t4.Symbol,')'),t0.Input_Par_Value from t_calcinput_his t0,t_parameters t3,t_measure t4 where t0.Calc_ID=-1 and t0.Pro_ID=? and t0.Input_Par_ID=t3.ID  and t3.measureID=t4.ID");
@@ -103,13 +100,15 @@ public class AlgProInputDao {
 	public int updateProInputs(int iD, double value) {
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();
+
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("update t_calcinput_his t set Input_Par_Value=? where t.ID=?");
 		q.setParameter(0, value);
 		q.setParameter(1, iD);
 
 
 		int re=q.executeUpdate();
-		tx.commit();
+
 		return re;
 	}
 
