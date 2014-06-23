@@ -373,7 +373,7 @@ User userlogin=(User)(session.getAttribute("user"));
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" id="add_GUI_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加图形文件</h4>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">新建项目</h4>
 		      </div>
 		      <div class="modal-body">
 		     	 <form id="addGUIForm" action="addGUIPro.action" method="post"> 
