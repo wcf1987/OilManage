@@ -135,19 +135,19 @@ function movePoint(point,dis,rotation){
 		realDis=dis
 		
 	}
-	if(rotation%360==90){
+	if(rotation%360==90||rotation%360==-270){
 		realDis={
 				x:dis.y,
 				y:-dis.x
 		}	
 	}
-	if(rotation%360==180){
+	if(rotation%360==180||rotation%360==-180){
 		realDis={
 				x:-dis.x,
 				y:-dis.y
 		}	
 	}
-	if(rotation%360==270){
+	if(rotation%360==270||rotation%360==-90){
 		realDis={
 				x:-dis.y,
 				y:dis.x
@@ -161,19 +161,19 @@ function drawLine(line,dis,rotation){
 		realDis=dis
 		
 	}
-	if(rotation%360==90){
+	if(rotation%360==90||rotation%360==-270){
 		realDis={
 				x:dis.y,
 				y:-dis.x
 		}	
 	}
-	if(rotation%360==180){
+	if(rotation%360==180||rotation%360==-180){
 		realDis={
 				x:-dis.x,
 				y:-dis.y
 		}	
 	}
-	if(rotation%360==270){
+	if(rotation%360==270||rotation%360==-90){
 		realDis={
 				x:-dis.y,
 				y:dis.x
