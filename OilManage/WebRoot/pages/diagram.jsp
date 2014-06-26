@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
  <%
-User userlogin=(User)(session.getAttribute("user"));
+//User userlogin=(User)(session.getAttribute("user"));
 %> 
     <base href="<%=basePath%>">
     
@@ -51,8 +51,11 @@ User userlogin=(User)(session.getAttribute("user"));
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/colorPicker_new.css" />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/processui.css" /> 
+	<!-- 自定义 -->
+	<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+	  
 	<style type="text/css">
-		body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", sans-serif; }
+		body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", sans-serif;background: linear-gradient(45deg, #020031 0%, #6d3353 100%); }
 		.big-link { display: block; margin-top: 100px; text-align: center; font-size: 70px; color: #06f; }
 		#contextmenu {
 			border: 1px solid #aaa;
@@ -88,11 +91,13 @@ User userlogin=(User)(session.getAttribute("user"));
 	
   </head>
   
-  <body style="background-color:#CCCCCC;" onload="initLight('');" id="body">
+  <body  style="background-color:#CCCCCC;" onload="initLight('');" id="body"><!-- background-image:url(images/background.jpg); -->
  
  	
-	   	
-	  <div class="navbar-wrapper">
+	  <div id="head">
+		    <%@ include file="commons/header.jsp" %>
+	  </div>  	
+	  <%-- <div class="navbar-wrapper" style="position:static">
 	      <div class="container">
 	        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
 	          <div class="container">
@@ -113,19 +118,7 @@ User userlogin=(User)(session.getAttribute("user"));
 		                <li class="active"><a href="#">系统建模</a></li>
 		                <li><a href="pages/home.jsp">系统优化</a></li>
 				        <li><a href="pages/home.jsp">关于</a></li>
-				        <li><a href="pages/home.jsp">联系方式</a></li>
-		                <li class="dropdown">
-		                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-		                  <ul class="dropdown-menu">
-		                    <li><a href="#">Action</a></li>
-		                    <li><a href="#">Another action</a></li>
-		                    <li><a href="#">Something else here</a></li>
-		                    <li class="divider"></li>
-		                    <li class="dropdown-header">Nav header</li>
-		                    <li><a href="#">Separated link</a></li>
-		                    <li><a href="#">One more separated link</a></li>
-		                  </ul>
-		                </li>
+				        <li><a href="pages/home.jsp">联系方式</a></li>		               
 	              	</ul>
 	                
 	               	<%if (userlogin!=null) {%>
@@ -142,13 +135,13 @@ User userlogin=(User)(session.getAttribute("user"));
 	        </div>
 	
 	      </div>
-	    </div>
+	    </div> --%>
 	 
 		    
 		    <!-- Carousel
 	    ================================================== -->
-	    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-	      	<!-- Indicators -->
+	   <!--  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+	      	Indicators
 			<ol class="carousel-indicators">
 			  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 			  <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -159,10 +152,10 @@ User userlogin=(User)(session.getAttribute("user"));
 				  <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:地图建模" alt="地图建模">
 				  <div class="container">
 				    <div class="carousel-caption">
-				      <!-- <h1>与GIS接口</h1>  -->
+				      <h1>与GIS接口</h1> 
 				      <p>与地理信息系统的接口，提供地图呈现和实际管网展现功能。</p>
 				      <p></p>
-				      <!-- <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p> -->
+				      <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
 				    </div>
 				  </div>
 				</div>
@@ -170,10 +163,10 @@ User userlogin=(User)(session.getAttribute("user"));
 				  <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:地图建模" alt="地图建模">
 				  <div class="container">
 				    <div class="carousel-caption">
-				       <!-- <h1>与3D地形接口</h1> -->
+				       <h1>与3D地形接口</h1>
 				      <p>与3D地形呈现系统的接口，提供数字三维地图的展示。</p>
 				      <p></p>
-				      <!--  <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>-->
+				       <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
 				    </div>
 				  </div>
 				</div>
@@ -181,23 +174,23 @@ User userlogin=(User)(session.getAttribute("user"));
 		          <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:地图建模" alt="地图建模">
 		          <div class="container">
 		            <div class="carousel-caption">
-		              <!-- <h1>与现场数据接口</h1> -->
+		              <h1>与现场数据接口</h1>
 		              <p>与现场采集数据的接口。</p>
 		              <p></p>
-		              <!--  <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>-->
+		               <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
 		            </div>
 		          </div>
 		        </div>
 	      </div>
 	      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
 	      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-		</div><!-- /.carousel -->
-
+		</div>/.carousel
+ -->
     	 <!-- Marketing messaging and featurettes
 	    ================================================== -->
 	    <!-- Wrap the rest of the page in another container to center all the content. -->
 	    
-		<div class="container marketing" style="width:1200px;margin-top:-55px;">
+		<div class="container marketing condiv" style="width:1200px;margin-top:55px;">
 	    	
 	    	<div class="container-fluid">
 				<div class="row-fluid">
@@ -339,15 +332,13 @@ User userlogin=(User)(session.getAttribute("user"));
 										
 					</div>
 				</div>
-			</div>
-
-	      	<hr class="featurette-divider">
-			  <!--end of main content-->
-		     <div id="footer">
-		          <%@ include file="commons/footer.jsp" %>
-		     </div>   
+			</div> 
 	    </div><!-- /.container -->		
-		
+		<hr class="featurette-divider">
+      	<div id="footer">
+	        <%@ include file="commons/footer.jsp" %>
+	    </div>
+	    
 		<ul id="contextmenu" style="display:none;z-index:100">	
 			<li><a>解除锁定</a></li>
 			<li><a>顺时针旋转90°</a></li>
@@ -368,6 +359,7 @@ User userlogin=(User)(session.getAttribute("user"));
 				<div id="PointPraPager" ></div>
 			</div>		
 		</div>
+
 		
 		<!-- 新建图形项目的模态框 -->   	
 		<div class="modal fade" id="add_GUI_modal">

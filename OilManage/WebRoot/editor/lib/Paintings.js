@@ -6,18 +6,37 @@ var Paintings = function() {
 	this.points=new Array;
 	this.changed=false;
 	this.ID=0;
+	this.name;//项目名称
+	this.index=-1;//初始化序列号为-1
 	this.hasChange=function(){
 		this.changed=true;
-		if($("#paintingTabs>.active > a:first").children().length==0){
-			$("#paintingTabs>.active > a:first").append("<span>*</span>");
-		}
-		
+		var $index=this.index;
+		$("input[name='paintingIndex']").each(function($index){//去掉改变标识*
+            if($(this).val()==$index){
+            	var $showobj=$(this).parent().find("a[name='show']");
+            	if($showobj.children("span[name='change']").length==0){
+            		$showobj.append("<span name='change'>*</span>");
+            	}            	
+            }
+         });
+//		if($("#paintingTabs>.active > a:first").children().length==0){
+//			$("#paintingTabs>.active > a:first").append("<span name='change'>*</span>");
+//		}	
 	}
 	this.clearChange=function(){
 		this.changed=false;
-		if($("#paintingTabs>.active > a:first").children().length!=0){
-			$("#paintingTabs>.active > a:first").children().remove();
-		}
+//		if($("#paintingTabs>.active > a:first").children().length!=0){
+//			$("#paintingTabs>.active > a:first").children().remove();
+//		}
+		var $index=this.index;
+		$("input[name='paintingIndex']").each(function($index){//去掉改变标识*
+            if($(this).val()==$index){
+            	var $changeobj=$(this).parent().find("span[name='change']");
+            	if($changeobj.length!=0){
+            		$changeobj.remove();
+            	}	
+            }
+         });
 		
 	}
 	this.getChange=function(){

@@ -26,17 +26,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>
 	<script src="js/global.js"></script>
 	
-	<style>body{
-						margin-top: 20px;
-					}</style>
 
   </head>
 	
   <body >
-	  <div class="container">
+ 	<div id="head">
+	    <%@ include file="commons/header.jsp" %>
+  	</div>
+	  <div class="container condiv">
 	  
-	    <div id="header">
-	    	<!--  <div id="banner"><a href="#" ><img src="images/banner.jpg" alt="主页" title="" /></a></div>-->
+	  <!--   <div id="header">
+	    	 <div id="banner"><a href="#" ><img src="images/banner.jpg" alt="主页" title="" /></a></div>
 	    	<div id="nav" class="masthead">
 	    			<h3 class="text-muted" style="color:#4AA4EB;margin-left:20px;">煤层气集输系统</h3>
 	    		    <ul class="nav nav-justified navbar navbar-inverse">
@@ -48,26 +48,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			          <li><a href="pages/home.jsp">联系方式</a></li>
 			        </ul>
 	    	</div>
-	    </div>
-	    
-	    
-	    
-	    		 	
-	    
-	    
-	    
-	    <div class="jumbotron">
+	    </div> -->
+  
+	    <div class="jumbotron" style="color:white">
 		  <h1>系统说明</h1>
 		  <p>煤层气模拟软件集管网，井筒，煤层气藏的储运输送的模拟软件，该软件将能够处理复杂的煤层气集输系统，可轻松使用屏幕拖放技术来创建模型，并且可以加载GIS铺垫SHAPEFILE地图文件，能够模拟单相、气液两相（或三相管流），识别系统瓶颈，模拟新井对系统的影响，可以加载CBM地下开产，对全气田进行模拟和预测。</p>
 		  <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p>
 		</div>
 
-	    <div id="content"></div>
-	     <div id="footer">
-		          <%@ include file="commons/footer.jsp" %>
-		 </div>
 	</div>
-	   
+	<hr class="featurette-divider">
+     	<div id="footer">
+        <%@ include file="commons/footer.jsp" %>
+    </div>   
 	
   </body>
 </html>

@@ -108,7 +108,7 @@ var Platform=function(){
 	      padding: 20,
 //      	  fill:'green',
 	      lineHeight:1,
-	      text:'输出：\n'
+	      //text:'输出：\n'
     	});
     this.areas = new Kinetic.Group();
 	this.scrollbars = new Kinetic.Group();
@@ -526,16 +526,17 @@ var Platform=function(){
 	}
 	this.paintingArray=new Array;
 	
-	this.addLoadPainting=function(newone,scalN,id) {
+	this.addLoadPainting=function(newone,scalN,id,name) {
 		paintings=new Paintings();
 		paintings.init();
 		paintings.p=newone;
 		paintings.initPoint();
 		paintings.scaleN=scalN;
-		paintings.ID=id;
+		paintings.ID=id;//项目ID,t_guipro的id列
+		paintings.name=name;//项目名称,t_guipro的proname列
 		this.addPainting(paintings);
 		this.paintingArray.push(paintings);
-		
+		paintings.index=this.paintingArray.indexOf(paintings);
 		this.selectPainting.showSelected();
 
 		

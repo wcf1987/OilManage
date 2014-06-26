@@ -185,17 +185,15 @@ var TabTools=function (){
 					if(data.nameFlag=="true"){
 						alert("项目名称已经存在，请重新填写！");
 					}else{
-						alert('图形化项目新建成功!');
+						alert('项目新建成功!');
+						log('项目'+data.name+'新建成功!');
 						$('#add_GUI_modal').modal('hide');
-						tabtools.load(data.ID);
-					}
-					//$("#AlgorithmList").trigger("reloadGrid");		
+						tabtools.load(data.ID);						
+					}	
 				},
 				error:function(msg){
 					alert(msg);
-					$('#add_GUI_modal').modal('hide');
-					//$("#AlgorithmList").trigger("reloadGrid");
-					
+					$('#add_GUI_modal').modal('hide');				
 				}
 			});
 
@@ -204,9 +202,19 @@ var TabTools=function (){
 	this.save=function() {
 		//selectPainting=Kinetic.Node.create(jsondata, 'container')
 		var selectedID=platform.selectPainting.ID;
-		
-			updateGUI();
+		recSaveChildren(selectedID);
+		updateGUI();
 				
+	}
+	function recSaveChildren(selectedID){//递归保存所有子项目的painting
+		$("input[name='fProID']").each(function(){//找出所有子项目painting。	
+            if($(this).val()==selectedID){
+            	var $proID=$(this).parent().find("input[name='proID']").val();
+            	recSaveChildren($proID);//保存之前先保存子项目
+            	var $index=$(this).parent().find("input[name='paintingIndex']").val();
+            	updateGUIByIndex($index);
+            }
+         });
 	}
 	function updateGUI(){
 		paintingtemp=platform.selectPainting;
@@ -233,18 +241,19 @@ var TabTools=function (){
 				data:jsondata,
 				Points:JSON.parse(JSON.stringify(paintingtemp.points)),
 				Conns: s,
-				scaleN:paintingtemp.scaleN,
-				
+				scaleN:paintingtemp.scaleN,				
 				ID:paintingtemp.ID,
 			},
 			success : function(data) {
-				alert('图形化保存成功!');
+				//alert('项目保存成功!');
+				log('项目'+paintingtemp.name+'已保存！');
 				paintingtemp.clearChange();
 				//$('#addAlgorithmInput_modal').modal('hide');
 				//$("#AlgorithmInputList").trigger("reloadGrid");			
 			},
 			error:function(msg){
 				alert(msg);
+				log('项目'+paintingtemp.name+'保存失败！');
 				//$('#addAlgorithmInput_modal').modal('hide');
 				//$("#AlgorithmList").trigger("reloadGrid");
 			}
@@ -254,42 +263,51 @@ var TabTools=function (){
 				platform.showPainting(selectedID);
 		
 	}
-	this.loadSubPro=function(id){
-		$.ajax({
-			type : 'POST',
-			url : 'viewGUIPro.action',
-			data : {
-				parentID:0,
-				subID:id,
-				type:1
-				
-			},
-			success : function(data) {
-//				alert('图形化载入成功!');
-				
-				//data=jQuery.parseJSON(data);
-				$('#listGUIPro_modal').modal('hide');
-				try{
-					saveData=data['dataView']['JSONData'];
-				}catch(err){
-					alert('该项目模型为空！');
+	this.loadSubPro=function(subID,fProID){//subid为子站对应的父元件的nameID,pro_id为父站项目ID
+		var exist=0;
+		$("input[name='subID']").each(function(){
+            if($(this).val()==subID){
+				$(this).next().click();
+				exist=1;
+            }
+         });
+		
+		if(exist==0){
+			$.ajax({
+				type : 'POST',
+				url : 'viewGUIPro.action',
+				data : {
+					parentID:fProID,
+					subID:subID,
+					type:1
+					
+				},
+				success : function(data) {
+					$('#listGUIPro_modal').modal('hide');
+					try{
+						saveData=data['dataView']['JSONData'];
+					}catch(err){
+						alert('该项目模型为空！');
+					}
+					//alert(saveData);
+					//console.log(saveData['JSONData']);
+					newone=Kinetic.Node.create(saveData);
+					id=data['dataView']['id'];
+					//$('#selectedID').val(data['dataView']['id']);
+					scalN=data['dataView']['scalN'];
+					name=data['dataView']['proname'];
+					index=platform.addLoadPainting(newone,scalN,id,name);					
+					createTab(data['dataView']['proname'],index,subID,id,fProID,"sub");
+					//createNewTab(data['dataView']['proname']);
+					platform.draw();
+					log('子站点'+name+'已打开！');
+							
+				},
+				error:function(msg){
+					alert(msg);
 				}
-				//alert(saveData);
-				//console.log(saveData['JSONData']);
-				newone=Kinetic.Node.create(saveData);
-				id=data['dataView']['id'];
-				//$('#selectedID').val(data['dataView']['id']);
-				scalN=data['dataView']['scalN'];
-				index=platform.addLoadPainting(newone,scalN,id);				
-				createTab(data['dataView']['proname'],index,selectedID);
-				//createNewTab(data['dataView']['proname']);
-				platform.draw();
-						
-			},
-			error:function(msg){
-				alert(msg);
-			}
-		});
+			});
+		}
 	}
 	this.load=function(selectedID) {
 		var exist=0;
@@ -326,11 +344,12 @@ var TabTools=function (){
 					newone=Kinetic.Node.create(saveData);
 					scalN=data['dataView']['scalN'];
 					id=data['dataView']['id'];
-					index=platform.addLoadPainting(newone,scalN,id);				
-					createTab(data['dataView']['proname'],index,selectedID);
+					name=data['dataView']['proname'];
+					index=platform.addLoadPainting(newone,scalN,id,name);				
+					createTab(name,index,null,id,null,"pro");
 					//createNewTab(data['dataView']['proname']);
 					platform.stage.draw();
-							
+					log('项目'+name+'已打开！');		
 				},
 				error:function(msg){
 					alert(msg);
@@ -342,12 +361,17 @@ var TabTools=function (){
 	var tabY=50;
 	var position;
 	 
-	function createTab(proname,paintingIndex,proID){
+	function createTab(proname,paintingIndex,subID,proID,fProID,type){
 		$("#paintingTabs").children().removeClass("active");
-		var tabItem="<li class=\"tab active\"> <input name='proID' value='"+proID+"' style='display: none;'/> <a style='float:left' href=\"javascript:void(0)\" onclick=\"tabtools.showPainting(this,'"+ paintingIndex + "','"+proID+"')\">"+proname+"</a><a  onclick=\"tabtools.hidePainting(this,'"+ paintingIndex + "')\" style='float:right;margin-top:-14px;padding-right:2px;'>x</a></li>";
+		var tabItem;
+		if(type=="sub"){
+			tabItem="<li class=\"tab active\"><input name='paintingIndex' value='"+paintingIndex+"' style='display: none;'/><input name='proID' value='"+proID+"' style='display: none;'/> <input name='subID' value='"+subID+"' style='display: none;'/> <a name='show' style='float:left' href=\"javascript:void(0)\" onclick=\"tabtools.showPainting(this,'"+ paintingIndex + "','"+proID+"')\">"+proname+"</a><input name='fProID' value='"+fProID+"' style='display: none;'/><a  name='hide' onclick=\"tabtools.hidePainting(this,'"+ paintingIndex + "')\" style='float:right;margin-top:-14px;padding-right:2px;'>x</a></li>";			
+		}else{
+			tabItem="<li class=\"tab active\"><input name='paintingIndex' value='"+paintingIndex+"' style='display: none;'/><input name='proID' value='"+proID+"' style='display: none;'/> <a name='show' style='float:left' href=\"javascript:void(0)\" onclick=\"tabtools.showPainting(this,'"+ paintingIndex + "','"+proID+"')\">"+proname+"</a><a  name='hide' onclick=\"tabtools.hidePainting(this,'"+ paintingIndex +"')\" style='float:right;margin-top:-14px;padding-right:2px;'>x</a></li>";
+		}
 		$("#paintingTabs").append(tabItem);
 	}
-	this.showPainting=function(obj,paintingIndex,proID){
+	this.showPainting=function(obj,paintingIndex){
 		$("#paintingTabs").children().removeClass("active");
 		$(obj).parent().addClass("active");
 		//$('#selectedID').val(proID);
@@ -357,14 +381,29 @@ var TabTools=function (){
 	this.hidePainting=function(obj,paintingIndex){
 //		$("#paintingTabs").children().removeClass("active");
 //		$(obj).parent().removeClass("active");
-		if(platform.getPaintingByIndex(paintingIndex).getChange()){
+		var proIDtemp=$(obj).parent().find("input[name='proID']").val();
+		if(proIDtemp){
+			$("input[name='fProID']").each(function(){//找出所有子项目painting，并尝试关闭操作。	
+	            if($(this).val()==proIDtemp){
+	            	$(this).parent().find("a[name='show']").click();
+					$(this).parent().find("a[name='hide']").click();		
+	            }
+	         });
+		}
+		
+		if(platform.getPaintingByIndex(paintingIndex).getChange()){//检测该画布是否已经改变，若改变提示保存。
 			if(confirm("该模型已经改变，是否保存？")){
-				updateGUIByIndex(paintingIndex);
+				updateGUIByIndex(paintingIndex);		
 			}
 		}
-		$(obj).parent().remove();
-//		platform.selectPainting.saveScroll();
-		platform.hidePainting(paintingIndex);
+		var $prevTab=$(obj).parent().prev();//将前一个tab激活
+		if($prevTab){
+			$prevTab.find("a[name='show']").click();
+		}
+		
+		$(obj).parent().remove();//删除tab
+		platform.hidePainting(paintingIndex);//删除tab下的painting画布		
+		
 	}
 
 	/*

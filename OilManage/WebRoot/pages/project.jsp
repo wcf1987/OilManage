@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
 <%
 
-User userlogin=(User)(session.getAttribute("user"));
+//User userlogin=(User)(session.getAttribute("user"));
 //if (userlogin==null){
 //response.sendRedirect("login.jsp");
 //return;
@@ -77,118 +77,14 @@ User userlogin=(User)(session.getAttribute("user"));
   
   <body style="background-color:#CCCCCC;">
  
- 	
-	   	
-	  <div class="navbar-wrapper">
-	      <div class="container">
-	        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
-	          <div class="container">
-	            <div class="navbar-header">
-	              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-	                <span class="sr-only">Toggle navigation</span>
-	                <span class="icon-bar"></span>
-	                <span class="icon-bar"></span>
-	                <span class="icon-bar"></span>
-	              </button>
-	              <a class="navbar-brand" href="#"><div style="font-color:#99CCFF;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统</div></a>
-	            </div>
-	            <div class="navbar-collapse collapse">
-	              <ul class="nav navbar-nav">
-	                <li><a href="pages/home.jsp">首页</a></li>
-	                <li><a href="pages/map.jsp">地图建模</a></li>
-	                <li  class="active"><a href="pages/project.jsp">工程管理</a></li>
-	                <li><a href="pages/diagram.jsp">系统建模</a></li>
-	                <li><a href="pages/home.jsp">系统优化</a></li>
-			        <li><a href="pages/home.jsp">关于</a></li>
-			        <li><a href="pages/home.jsp">联系方式</a></li>
-	                <li class="dropdown">
-	                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-	                  <ul class="dropdown-menu">
-	                    <li><a href="#">Action</a></li>
-	                    <li><a href="#">Another action</a></li>
-	                    <li><a href="#">Something else here</a></li>
-	                    <li class="divider"></li>
-	                    <li class="dropdown-header">Nav header</li>
-	                    <li><a href="#">Separated link</a></li>
-	                    <li><a href="#">One more separated link</a></li>
-	                  </ul>
-	                </li>
-	              </ul>
-	                
-	               	<%if (userlogin!=null) {%>
-			      <div class="text-center" style="margin-top:8px;margin-right:25px;" id="userId">
-			      	<div style="margin-left:5px;margin-top:5px;"><a  style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">注销</a></div>	     
-			        <div style="font-size:20;color:#FFFFFF;float:right">您好,<a href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>
-			      </div>
-			       <%}else{ %>
-		        	 <div class="text-center" style="margin-top:8px;"><a  class="btn btn-default" href="pages/login.jsp">管理员登陆</a></div>
-	            	<%} %>
-			      	
-			      
-			     
-			  
-	              
-	            </div>
-	          </div>
-	        </div>
-	
-	      </div>
-	    </div>
-	 
-		    
-		    <!-- Carousel
-	    ================================================== -->
-	    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-	      	<!-- Indicators -->
-			<ol class="carousel-indicators">
-			  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-			  <li data-target="#myCarousel" data-slide-to="1"></li>
-			  <li data-target="#myCarousel" data-slide-to="2"></li>
-			</ol>
-			<div class="carousel-inner">
-				<div class="item active">
-				  <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:地图建模" alt="地图建模">
-				  <div class="container">
-				    <div class="carousel-caption">
-				      <!-- <h1>与GIS接口</h1>  -->
-				      <p>与地理信息系统的接口，提供地图呈现和实际管网展现功能。</p>
-				      <p></p>
-				      <!-- <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p> -->
-				    </div>
-				  </div>
-				</div>
-				<div class="item">
-				  <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:地图建模" alt="地图建模">
-				  <div class="container">
-				    <div class="carousel-caption">
-				       <!-- <h1>与3D地形接口</h1> -->
-				      <p>与3D地形呈现系统的接口，提供数字三维地图的展示。</p>
-				      <p></p>
-				      <!--  <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>-->
-				    </div>
-				  </div>
-				</div>
-		        <div class="item">
-		          <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:地图建模" alt="地图建模">
-		          <div class="container">
-		            <div class="carousel-caption">
-		              <!-- <h1>与现场数据接口</h1> -->
-		              <p>与现场采集数据的接口。</p>
-		              <p></p>
-		              <!--  <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>-->
-		            </div>
-		          </div>
-		        </div>
-	      </div>
-	      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-	      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-		</div><!-- /.carousel -->
-
+	 	<div id="head">
+		   <%@ include file="commons/header.jsp" %>
+		</div>  
     	 <!-- Marketing messaging and featurettes
 	    ================================================== -->
 	    <!-- Wrap the rest of the page in another container to center all the content. -->
 	    
-		<div class="container marketing" style="width:1200px;">
+		<div class="container marketing condiv" style="width:1200px;">
 	    	
 	    	<div class="container-fluid">
 				<div class="row-fluid">
@@ -213,16 +109,11 @@ User userlogin=(User)(session.getAttribute("user"));
 					</div>
 				</div>
 			</div>
-
-	      	<hr class="featurette-divider">
-
-	
-	      	<!-- FOOTER -->
-	      	 <div id="footer">
-		          <%@ include file="commons/footer.jsp" %>
-		     </div>
-	
 	    </div><!-- /.container -->
+	    <hr class="featurette-divider">
+      	<div id="footer">
+	        <%@ include file="commons/footer.jsp" %>
+	    </div>
 	    
 	     <!-- 查看计算历史的输入输出的模态框 -->   	
 		<div class="modal fade" id="view_input_output_modal">

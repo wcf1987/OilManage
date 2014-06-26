@@ -420,7 +420,11 @@ function() {
 						var text = $(this).text();
 						if (text == '进入站点') {		
 							if(point_type=='type5'){
-								tabtools.loadSubPro(point_name);
+								fProID=$(".active > input[name='proID']").val();
+//								if(pro_id=null){
+//									pro_id=$(".active > input[name='fproID']").val();
+//								}
+								tabtools.loadSubPro(point_name,fProID);
 							}
 							$("#contextmenu").hide();		
 							platform.draw();

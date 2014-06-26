@@ -428,13 +428,13 @@ public class GUIDao {
 		q.setParameter(0, subid);
 		GUIPro temp=null;
 		List l = q.list();
-		if(l.size()==0){
+		if(l.size()==0){//如果不存在子站，则建立子站
 			Date addDate=new Date();
 			q = session.createSQLQuery("insert into t_guipro (description,authorID,addtime,name,type,parentPro,subID) values (?,?,?,?,?,?,?)");
 			q.setParameter(0, "");
 			q.setParameter(1, 0);
 			q.setParameter(2, addDate);
-			q.setParameter(3, "sub");
+			q.setParameter(3, "sub"+subid);
 			q.setParameter(4, 1);
 			q.setParameter(5, pid);
 			q.setParameter(6, subid);
