@@ -21,7 +21,7 @@ else{
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="pages/home.jsp"><div style="font-color:#99CCFF;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统后台管理</div></a>
+            <a class="navbar-brand" href="pages/home.jsp"><div style="color:#16A085;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统后台管理</div></a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">              

@@ -11,7 +11,7 @@ User userlogin=(User)(session.getAttribute("user"));
          <div class="container">
            <div class="navbar-header">
              
-             <a class="navbar-brand" href="pages/home.jsp"><div style="font-color:#99CCFF;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统</div></a>
+             <a class="navbar-brand" href="pages/home.jsp"><div style="color:#428BCA;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统</div></a>
            </div>
            <div class="navbar-collapse collapse">
           		<ul class="nav navbar-nav">
