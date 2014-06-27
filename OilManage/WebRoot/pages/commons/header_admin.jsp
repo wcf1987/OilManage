@@ -21,7 +21,7 @@ else{
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="pages/home.jsp"><div style="font-color:#99CCFF;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统后台管理</div></a>
+            <a class="navbar-brand" href="pages/home.jsp"><div style="color:#16A085;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统后台管理</div></a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">              
@@ -34,7 +34,7 @@ else{
                        
 	      <div class="text-center" style="margin-top:8px;margin-right:25px;" id="userId">
 	      	<div style="margin-left:5px;margin-top:5px;"><a  style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">注销</a></div>
-	        <div style="font-size:20;color:#FFFFFF;float:right">您好,<a href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>	
+	        <div style="color:#428BCA;float:right;margin-top:5px;">您好,<a href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>	
 	      </div>
     
           </div>

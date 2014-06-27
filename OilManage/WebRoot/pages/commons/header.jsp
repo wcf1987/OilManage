@@ -11,7 +11,7 @@ User userlogin=(User)(session.getAttribute("user"));
          <div class="container">
            <div class="navbar-header">
              
-             <a class="navbar-brand" href="pages/home.jsp"><div style="font-color:#99CCFF;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统</div></a>
+             <a class="navbar-brand" href="pages/home.jsp"><div style="color:#428BCA;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统</div></a>
            </div>
            <div class="navbar-collapse collapse">
           		<ul class="nav navbar-nav">
@@ -27,7 +27,7 @@ User userlogin=(User)(session.getAttribute("user"));
               	<%if (userlogin!=null) {%>
 			      <div class="text-center" style="margin-top:8px;margin-right:25px;" id="userId">
 			      	<div style="margin-left:5px;margin-top:5px;"><a  style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">注销</a></div>	     
-			        <div style="font-size:20;color:#FFFFFF;float:right">您好,<a href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>
+			        <div style="color:#428BCA;float:right;margin-top:5px;">您好,<a href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>
 			      </div>
 		       	<%}else{ %>
 	        	  <div class="text-center" style="margin-top:8px;"><a  class="btn btn-default" href="pages/login.jsp">管理员登陆</a></div>
