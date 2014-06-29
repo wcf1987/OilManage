@@ -277,7 +277,7 @@ function() {
 		if (checkPoint(pos, platform.centerlayer)) {		
 			if((this.lock==null||this.lock==false)){
 
-				
+				platform.selectPainting.hasChange();		
 				resizePoint(this);	
 				return {
 					x : pos.x,
@@ -420,19 +420,23 @@ function() {
 						var text = $(this).text();
 						if (text == '进入站点') {		
 							if(point_type=='type5'){
+								platform.selectPainting.hasChange();	
 								fProID=$(".active > input[name='proID']").val();
 //								if(pro_id=null){
 //									pro_id=$(".active > input[name='fproID']").val();
 //								}
 								tabtools.loadSubPro(point_name,fProID);
 							}
+							
 							$("#contextmenu").hide();		
 							platform.draw();
 						} else if (text == '解除锁定') {		
 							clickshape.lock=false;	
+							platform.selectPainting.hasChange();	
 							$("#contextmenu").hide();		
 							platform.selectPainting.p.draw();
-						} else	if (text == '删除该节点') {		
+						} else	if (text == '删除该节点') {
+							platform.selectPainting.hasChange();		
 							clickshape.destroy();
 							showALLConnedPoints();
 							$("#contextmenu").hide();		
@@ -445,6 +449,7 @@ function() {
 							if(clickshape.lock){
 								alert('控件已锁定，无法旋转');
 							}else{
+								platform.selectPainting.hasChange();	
 							clickshape.rotate(90);
 							// centerlayer.draw(this);
 							platform.selectPainting.p.draw();
@@ -453,6 +458,7 @@ function() {
 							if(clickshape.lock){
 								alert('控件已锁定，无法旋转');
 							}else{
+								platform.selectPainting.hasChange();	
 							clickshape.rotate(-90);
 							// centerlayer.draw(this);
 							platform.selectPainting.p.draw();
@@ -470,6 +476,7 @@ function() {
 							});
 							platform.selectPainting.p.draw();
 						}else if (text == '属性') {
+							platform.selectPainting.hasChange();	
 							$("#contextmenu").hide();
 							pro_id=$(".active > input[name='proID']").val();
 							showPrameter(point_name,pro_id,point_type,attrtop,attrleft);									
