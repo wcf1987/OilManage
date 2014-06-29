@@ -575,6 +575,12 @@ var Platform=function(){
 		return this.selectPainting=this.paintingArray[index];
 	
 	}
+	this.getPaintingByID=function(id){
+		for (var i=0;i<this.paintingArray.length;i++){
+			if(this.paintingArray[i].ID==id)
+			return this.selectPainting=this.paintingArray[i];
+		}
+	}
 	this.hidePainting=function(index){
 		this.selectPainting=this.paintingArray[index];
 		this.selectPainting.hideSelected();

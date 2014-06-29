@@ -11,14 +11,18 @@ var Paintings = function() {
 	this.hasChange=function(){
 		this.changed=true;
 		var $index=this.index;
-		$("input[name='paintingIndex']").each(function($index){//去掉改变标识*
+	/*	$("input[name='paintingIndex']").each(function($index){//去掉改变标识*
             if($(this).val()==$index){
             	var $showobj=$(this).parent().find("a[name='show']");
             	if($showobj.children("span[name='change']").length==0){
             		$showobj.append("<span name='change'>*</span>");
             	}            	
             }
-         });
+         });*/
+		var showobj=$("#"+this.ID).parent().find("a[name='show']");
+    	if(showobj.children("span[name='change']").length==0){
+    		showobj.append("<span name='change'>*</span>");
+    	}
 //		if($("#paintingTabs>.active > a:first").children().length==0){
 //			$("#paintingTabs>.active > a:first").append("<span name='change'>*</span>");
 //		}	
@@ -28,7 +32,7 @@ var Paintings = function() {
 //		if($("#paintingTabs>.active > a:first").children().length!=0){
 //			$("#paintingTabs>.active > a:first").children().remove();
 //		}
-		var $index=this.index;
+/*		var $index=this.index;
 		$("input[name='paintingIndex']").each(function($index){//去掉改变标识*
             if($(this).val()==$index){
             	var $changeobj=$(this).parent().find("span[name='change']");
@@ -36,7 +40,11 @@ var Paintings = function() {
             		$changeobj.remove();
             	}	
             }
-         });
+         });*/
+		var $changeobj=$("#"+this.ID).parent().find("span[name='change']");	
+    	if($changeobj.length!=0){
+    		$changeobj.remove();
+    	}	
 		
 	}
 	this.getChange=function(){

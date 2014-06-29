@@ -203,7 +203,7 @@ var TabTools=function (){
 		//selectPainting=Kinetic.Node.create(jsondata, 'container')
 		var selectedID=platform.selectPainting.ID;
 		recSaveChildren(selectedID);
-		updateGUI();
+		updateGUIByID(selectedID);
 				
 	}
 	function recSaveChildren(selectedID){//递归保存所有子项目的painting
@@ -216,8 +216,8 @@ var TabTools=function (){
             }
          });
 	}
-	function updateGUI(){
-		paintingtemp=platform.selectPainting;
+	function updateGUIByID(ID){
+		paintingtemp=platform.getPaintingByID(ID);
 		updateGUIByPaint(paintingtemp);
 	}
 	function updateGUIByIndex(index){
@@ -231,9 +231,9 @@ var TabTools=function (){
 		paintingtemp.updateConnects();
 		paintingtemp.updatePoints();
 		jsondata=paintingtemp.p.toJSON();
-		console.log(jsondata);
+		//console.log(jsondata);
 		s=JSON.stringify(paintingtemp.connects);
-		console.log(s);
+		//console.log(s);
 		$.ajax({
 			type : 'POST',
 			url : 'updateGUIPro.action',
@@ -365,9 +365,9 @@ var TabTools=function (){
 		$("#paintingTabs").children().removeClass("active");
 		var tabItem;
 		if(type=="sub"){
-			tabItem="<li class=\"tab active\"><input name='paintingIndex' value='"+paintingIndex+"' style='display: none;'/><input name='proID' value='"+proID+"' style='display: none;'/> <input name='subID' value='"+subID+"' style='display: none;'/> <a name='show' style='float:left' href=\"javascript:void(0)\" onclick=\"tabtools.showPainting(this,'"+ paintingIndex + "','"+proID+"')\">"+proname+"</a><input name='fProID' value='"+fProID+"' style='display: none;'/><a  name='hide' onclick=\"tabtools.hidePainting(this,'"+ paintingIndex + "')\" style='float:right;margin-top:-14px;padding-right:2px;'>x</a></li>";			
+			tabItem="<li class=\"tab active\"><input name='paintingIndex' value='"+paintingIndex+"' style='display: none;'/><input id="+proID+" name='proID' value='"+proID+"' style='display: none;'/> <input name='subID' value='"+subID+"' style='display: none;'/> <a name='show' style='float:left' href=\"javascript:void(0)\" onclick=\"tabtools.showPainting(this,'"+ paintingIndex + "','"+proID+"')\">"+proname+"</a><input name='fProID' value='"+fProID+"' style='display: none;'/><a  name='hide' onclick=\"tabtools.hidePainting(this,'"+ paintingIndex + "')\" style='float:right;margin-top:-14px;padding-right:2px;'>x</a></li>";			
 		}else{
-			tabItem="<li class=\"tab active\"><input name='paintingIndex' value='"+paintingIndex+"' style='display: none;'/><input name='proID' value='"+proID+"' style='display: none;'/> <a name='show' style='float:left' href=\"javascript:void(0)\" onclick=\"tabtools.showPainting(this,'"+ paintingIndex + "','"+proID+"')\">"+proname+"</a><a  name='hide' onclick=\"tabtools.hidePainting(this,'"+ paintingIndex +"')\" style='float:right;margin-top:-14px;padding-right:2px;'>x</a></li>";
+			tabItem="<li class=\"tab active\"><input name='paintingIndex' value='"+paintingIndex+"' style='display: none;'/><input id="+proID+" name='proID' value='"+proID+"' style='display: none;'/> <a name='show' style='float:left' href=\"javascript:void(0)\" onclick=\"tabtools.showPainting(this,'"+ paintingIndex + "','"+proID+"')\">"+proname+"</a><a  name='hide' onclick=\"tabtools.hidePainting(this,'"+ paintingIndex +"')\" style='float:right;margin-top:-14px;padding-right:2px;'>x</a></li>";
 		}
 		$("#paintingTabs").append(tabItem);
 	}
