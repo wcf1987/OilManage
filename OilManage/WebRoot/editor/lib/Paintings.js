@@ -152,8 +152,9 @@ var Paintings = function() {
 		this.show();
 
 		for(var i=0;i<platform.paintingArray.length;i++){
-			if (platform.paintingArray[i]!=this){
-				platform.paintingArray[i].hide();
+			p1=platform.paintingArray[i]
+			if (p1!=null&&p1!=this){
+				p1.hide();
 			}
 		}
 	

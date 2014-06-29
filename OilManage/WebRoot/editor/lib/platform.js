@@ -572,18 +572,21 @@ var Platform=function(){
 		this.stage.draw();
 	}
 	this.getPaintingByIndex=function(index){
-		return this.selectPainting=this.paintingArray[index];
+		return this.paintingArray[index];
 	
 	}
+	//this.selectPainting=
 	this.getPaintingByID=function(id){
 		for (var i=0;i<this.paintingArray.length;i++){
-			if(this.paintingArray[i].ID==id)
-			return this.selectPainting=this.paintingArray[i];
+			if(this.paintingArray[i]!=null&&this.paintingArray[i].ID==id)
+				return this.paintingArray[i];
 		}
 	}
 	this.hidePainting=function(index){
-		this.selectPainting=this.paintingArray[index];
-		this.selectPainting.hideSelected();
+		
+		temp=this.paintingArray[index];
+		temp.hideSelected();
+		this.paintingArray[index]=null;
 		this.stage.draw();
 	}
 	this.draw=function(){
