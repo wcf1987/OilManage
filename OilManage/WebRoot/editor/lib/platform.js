@@ -545,7 +545,7 @@ var Platform=function(){
 		 */
 		var polys=this.selectPainting.p.getChildren();
 		//var leftpolys=new Leftpolys();
-		leftpoly
+		
 		for ( var k=0;k<polys.length;k++) {
 			setImage(polys[k]);
 			polys[k].dragBoundFunc(leftpoly.dragFun);

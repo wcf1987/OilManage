@@ -341,11 +341,11 @@ var TabTools=function (){
 					}
 					//alert(saveData);
 					//console.log(saveData['JSONData']);
-					newone=Kinetic.Node.create(saveData);
-					scalN=data['dataView']['scalN'];
-					id=data['dataView']['id'];
-					name=data['dataView']['proname'];
-					index=platform.addLoadPainting(newone,scalN,id,name);				
+					var newone=Kinetic.Node.create(saveData);
+					var scalN=data['dataView']['scalN'];
+					var id=data['dataView']['id'];
+					var name=data['dataView']['proname'];
+					var index=platform.addLoadPainting(newone,scalN,id,name);				
 					createTab(name,index,null,id,null,"pro");
 					//createNewTab(data['dataView']['proname']);
 					platform.stage.draw();
