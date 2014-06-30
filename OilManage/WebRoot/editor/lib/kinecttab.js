@@ -291,12 +291,12 @@ var TabTools=function (){
 					}
 					//alert(saveData);
 					//console.log(saveData['JSONData']);
-					newone=Kinetic.Node.create(saveData);
-					id=data['dataView']['id'];
+					var newone=Kinetic.Node.create(saveData);
+					var id=data['dataView']['id'];
 					//$('#selectedID').val(data['dataView']['id']);
-					scalN=data['dataView']['scalN'];
-					name=data['dataView']['proname'];
-					index=platform.addLoadPainting(newone,scalN,id,name);					
+					var scalN=data['dataView']['scalN'];
+					var name=data['dataView']['proname'];
+					var index=platform.addLoadPainting(newone,scalN,id,name);					
 					createTab(data['dataView']['proname'],index,subID,id,fProID,"sub");
 					//createNewTab(data['dataView']['proname']);
 					platform.draw();
