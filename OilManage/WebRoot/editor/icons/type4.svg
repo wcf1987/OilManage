@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- 由 Microsoft Visio 11.0, SVG Export, v1.0 生成 type5.svg 页-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="6.95549in"
+		height="4.8497in" viewBox="0 0 500.795 349.178" xml:space="preserve" color-interpolation-filters="sRGB" class="st2">
+	<v:documentProperties v:langID="2052" v:metric="true" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#85a446;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st2 {fill:none;fill-rule:evenodd;font-size:12;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>页-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<g id="group3-1" transform="translate(0.24,-24.9413)" v:mID="3" v:groupContext="group">
+			<title>工作表.3</title>
+			<g id="shape2-2" v:mID="2" v:groupContext="shape" transform="translate(349.178,49.8826) rotate(90)">
+				<title>三角形.2</title>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(12):26"/>
+				</v:userDefs>
+				<path d="M322.45 349.18 L149.65 92.08 L-23.15 349.18 L322.45 349.18 Z" class="st1"/>
+			</g>
+			<g id="shape1-4" v:mID="1" v:groupContext="shape" transform="translate(151.137,349.178) rotate(-90)">
+				<title>三角形.1</title>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(12):26"/>
+				</v:userDefs>
+				<path d="M322.45 349.18 L149.65 103.49 L-23.15 349.18 L322.45 349.18 Z" class="st1"/>
+			</g>
+		</g>
+	</g>
+</svg>

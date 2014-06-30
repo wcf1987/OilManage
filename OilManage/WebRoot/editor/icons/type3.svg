@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- 由 Microsoft Visio 11.0, SVG Export, v1.0 生成 type3.svg 页-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="2.22615in"
+		height="1.38462in" viewBox="0 0 160.283 99.6926" xml:space="preserve" color-interpolation-filters="sRGB" class="st3">
+	<v:documentProperties v:langID="2052" v:metric="true" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#85a446}
+		.st2 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st3 {fill:none;fill-rule:evenodd;font-size:12;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>页-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<v:layer v:name="流程图" v:index="0"/>
+		<g id="shape1-1" v:mID="1" v:groupContext="shape" v:layerMember="0" transform="translate(0.24,-0.24)">
+			<title>直接数据</title>
+			<v:custProps>
+				<v:cp v:nameU="Cost" v:lbl="成本" v:type="7" v:format="@" v:langID="2052"/>
+				<v:cp v:nameU="Duration" v:lbl="持续时间" v:type="2" v:langID="2052"/>
+				<v:cp v:nameU="Resources" v:lbl="资源" v:langID="2052"/>
+			</v:custProps>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(12):26"/>
+			</v:userDefs>
+			<path d="M12.4 0.48 L147.4 0.48 A105.413 105.413 0 0 1 147.4 99.69 L12.4 99.69 A105.413 105.413 0 0 1 12.4 0.48 Z"
+					class="st1"/>
+			<path d="M12.4 0.48 L147.4 0.48 A105.413 105.413 0 0 1 147.4 99.69 L12.4 99.69 A105.413 105.413 0 0 1 12.4 0.48"
+					class="st2"/>
+			<path d="M147.4 0.48 A105.413 105.413 -180 0 0 147.4 99.69" class="st2"/>
+		</g>
+	</g>
+</svg>
