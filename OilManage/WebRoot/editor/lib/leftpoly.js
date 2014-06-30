@@ -238,7 +238,7 @@ function() {
 	this.initPoint = function(point){
 		point.dragBoundFunc(this.dragFun);
 		point.on('click', this.clickFunc);
-		point.on('dblclick', this.dbclickFun);
+//		point.on('dblclick', this.dbclickFun);
 		point.on('dragend', this.cloneFun);
 		point.on('mousedown touchstart', this.cloneFun2);
 		point.on('mouseover', function() {

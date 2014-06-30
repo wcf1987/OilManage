@@ -119,13 +119,13 @@ public class GUIDao {
 		PhysicalDao phydao=new PhysicalDao();
 		Measure m=phydao.getMess(messid);
 		double ISOvalue=m.getRatioA()*par_value+m.getRatioB();
-		phydao.close();
+		
 		q = session.createSQLQuery("update t_guipointvalue t set par_value=?, par_ISOvalue=? where t.ID=?");
 		q.setParameter(2, iD);
 		q.setParameter(0, par_value);
 		q.setParameter(1, ISOvalue);
 		int re=q.executeUpdate();
-		
+		phydao.close();
 		return re;
 	}
 	
