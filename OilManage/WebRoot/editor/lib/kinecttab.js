@@ -382,6 +382,12 @@ var TabTools=function (){
 //		$("#paintingTabs").children().removeClass("active");
 //		$(obj).parent().removeClass("active");
 		var proIDtemp=$(obj).parent().find("input[name='proID']").val();
+		if(platform.getPaintingByIndex(paintingIndex).getChange()){//检测该画布是否已经改变，若改变提示保存。
+			if(confirm("该模型已经改变，是否保存？")){
+				recSaveChildren(proIDtemp);
+				updateGUIByID(proIDtemp);		
+			}
+		}
 		if(proIDtemp){
 			$("input[name='fProID']").each(function(){//找出所有子项目painting，并尝试关闭操作。	
 	            if($(this).val()==proIDtemp){
@@ -391,11 +397,7 @@ var TabTools=function (){
 	         });
 		}
 		
-		if(platform.getPaintingByIndex(paintingIndex).getChange()){//检测该画布是否已经改变，若改变提示保存。
-			if(confirm("该模型已经改变，是否保存？")){
-				updateGUIByIndex(paintingIndex);		
-			}
-		}
+		
 		var $prevTab=$(obj).parent().prev();//将前一个tab激活
 		if($prevTab){
 			$prevTab.find("a[name='show']").click();
