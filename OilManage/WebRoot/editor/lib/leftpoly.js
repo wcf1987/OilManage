@@ -82,8 +82,13 @@ function() {
 	this.polyhight=25;
 	this.polywidth=50;
 	this.polylineLength=20;
-	this.lpoints=[ 0, 0, -20, 0];
-	this.rpoints=[ 0, 0, 20, 0];
+	
+	this.lpoints=[ 0, 0, -this.polylineLength, 0];
+	this.rpoints=[ 0, 0, this.polylineLength, 0];
+	//画布显示时，加大了线的长度
+	this.polylineLengthPainting=60;
+	this.lpointsPainting=[ 0, 0, -this.polylineLengthPainting, 0];
+	this.rpointsPainting=[ 0, 0,this.polylineLengthPainting, 0];
 /*	this.polys[0] = new Kinetic.Line({
 		x : 5,
 		y : 20,
@@ -147,29 +152,9 @@ function() {
 				draggable : true
 
 			});
-			var PointLeft = new Kinetic.Circle({
-				x : this.polylineLength-20,
-				y : this.polyhight,
-
-				radius : 0,
-				fill : 'black',
-				stroke : 'black',
-				name : 'PointLeft',
-				strokeWidth : 1
-			});
-			
-			var PointRight = new Kinetic.Circle({
-				x : this.polywidth+this.polylineLength-20,
-				y : this.polyhight,
-				name : 'PointRight',
-				radius : 0,
-				fill : 'black',
-				stroke : 'black',
-				strokeWidth : 1
-			});
 			
 			var lineLeft = new Kinetic.Line({
-				x : this.polylineLength-20,
+				x : 0,
 				y : this.polyhight,
 				points : 	this.lpoints.concat(),
 				 
@@ -181,7 +166,7 @@ function() {
 				
 			});
 			var lineRight = new Kinetic.Line({
-				x : this.polywidth+this.polylineLength-20,
+				x : this.polywidth,
 				y : this.polyhight,
 				 points : this.rpoints.concat(),
 				
@@ -192,7 +177,7 @@ function() {
 				closed : true
 			});
 			var connPointsLeft = new Kinetic.Circle({
-				x : 0-20,
+				x : 0-this.polylineLength,
 				y : this.polyhight,
 
 				radius : this.radiusL,
@@ -203,7 +188,7 @@ function() {
 			});
 			
 			var connPointsRight = new Kinetic.Circle({
-				x : this.polywidth+this.polylineLength*2-20,
+				x : this.polywidth+this.polylineLength,
 				y : this.polyhight,
 				name : 'connPointsRight',
 				radius : this.radiusL,
@@ -216,29 +201,33 @@ function() {
 			this.polys[k].y(0);
 			this.polyGroups[k].add(this.polys[k]);
 			this.lock=false;
-			if(k==0||k==1){
+			
+			//起点
+			if(k==0){
 				this.polyGroups[k].add(lineRight);
 				this.polyGroups[k].add(connPointsRight);
-				this.polyGroups[k].add(PointRight);
+				//this.polyGroups[k].add(PointRight);
 				
 				connPointsRight.hide();	
 				this.initPoint(this.polyGroups[k]);
 				continue;
 			}
-	/*		if(k==1){
+			
+			//终点
+			if(k==1){
 				this.polyGroups[k].add(lineLeft);
 				this.polyGroups[k].add(connPointsLeft);	
-				this.polyGroups[k].add(PointLeft);
+				//this.polyGroups[k].add(PointLeft);
 				connPointsLeft.hide();
 				this.initPoint(this.polyGroups[k]);
 				continue;
-			}*/
+			}
 			this.polyGroups[k].add(lineRight);
 			this.polyGroups[k].add(lineLeft);
 			this.polyGroups[k].add(connPointsLeft);
-			this.polyGroups[k].add(PointLeft);
+			//this.polyGroups[k].add(PointLeft);
 			this.polyGroups[k].add(connPointsRight);
-			this.polyGroups[k].add(PointRight);
+			//this.polyGroups[k].add(PointRight);
 			connPointsLeft.hide();
 			connPointsRight.hide();	
 			this.initPoint(this.polyGroups[k]);
@@ -345,7 +334,7 @@ function() {
 			poss = checkConn(this);
 			if (poss != null) {
 				this.lock=true;
-				this.x((this.x() - (poss.x/platform.selectPainting.scaleN))			);
+				this.x((this.x() - (poss.x/platform.selectPainting.scaleN)));
 				this.y((this.y() - (poss.y/platform.selectPainting.scaleN)));
 				platform.draw();
 			}

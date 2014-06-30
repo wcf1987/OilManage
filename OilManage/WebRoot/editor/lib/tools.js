@@ -118,16 +118,16 @@ function resizePoint(g){
 	//rch=getRightPointHide(g);
 	//poly=getPoly(g);	
 	if(lc!=null){
-	lc.x(0);
+	lc.x(0-leftpoly.polylineLengthPainting);
 	lc.y(leftpoly.polyhight);
-	l.points(leftpoly.lpoints.concat());
+	l.points(leftpoly.lpointsPainting.concat());
 	
 	}
 	if(rc!=null){
 	
-		rc.x(leftpoly.polywidth+leftpoly.polylineLength*2);
+		rc.x(leftpoly.polywidth+leftpoly.polylineLengthPainting);
 		rc.y(leftpoly.polyhight);
-		r.points(leftpoly.rpoints.concat());
+		r.points(leftpoly.rpointsPainting.concat());
 	}
 }
 function movePoint(point,dis,rotation){
