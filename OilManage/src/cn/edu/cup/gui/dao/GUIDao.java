@@ -444,7 +444,7 @@ public class GUIDao {
 			Query q2 = session.createSQLQuery("select LAST_INSERT_ID()");
 			ret_id = ((BigInteger) q2.uniqueResult()).intValue();
 			
-			q = session.createSQLQuery("insert into t_guijson (id,JSONData,ScalN) select ?,JSONData,1 from t_guijson t where t.id=112 ");
+			q = session.createSQLQuery("insert into t_guijson (id,JSONData,ScalN) select ?,jsonData,1 from t_guiback t where t.id=1 ");
 			q.setParameter(0, ret_id);			
 			result=q.executeUpdate();
 
