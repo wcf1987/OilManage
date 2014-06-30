@@ -79,8 +79,8 @@ function() {
 	this.polyGroups = new Array;
 	this.connectionPoints = new Array;
 	this.radiusL=5;
-	this.polyhight=30;
-	this.polywidth=40;
+	this.polyhight=25;
+	this.polywidth=50;
 	this.polylineLength=20;
 	this.lpoints=[ 0, 0, -20, 0];
 	this.rpoints=[ 0, 0, 20, 0];
@@ -113,12 +113,12 @@ function() {
 	this.createIMG = function (img,i){
 		
 		leftpoly.polys[i] = new Kinetic.Image({
-		    x: 10,
+		    x: 25,
 		    y: 10+i*70,
 		    image: img,
-		    width: 80,
+		    width: 50,
 		    name : 'type'+i,
-		    height: 60
+		    height: 50
 		  });
 	}
 
@@ -136,7 +136,7 @@ function() {
 		
 	this.init = function() {
 		for(var i=0;i<6;i++){
-			this.imgLoad('editor/icons/type'+i+'.png',i);
+			this.imgLoad('editor/icons/type'+i+'.svg',i);
 		}	
 		for ( var k=0;k<this.polys.length;k++) {
 			
@@ -148,7 +148,7 @@ function() {
 
 			});
 			var PointLeft = new Kinetic.Circle({
-				x : this.polylineLength,
+				x : this.polylineLength-20,
 				y : this.polyhight,
 
 				radius : 0,
@@ -159,7 +159,7 @@ function() {
 			});
 			
 			var PointRight = new Kinetic.Circle({
-				x : this.polywidth+this.polylineLength,
+				x : this.polywidth+this.polylineLength-20,
 				y : this.polyhight,
 				name : 'PointRight',
 				radius : 0,
@@ -169,7 +169,7 @@ function() {
 			});
 			
 			var lineLeft = new Kinetic.Line({
-				x : this.polylineLength,
+				x : this.polylineLength-20,
 				y : this.polyhight,
 				points : 	this.lpoints.concat(),
 				 
@@ -181,7 +181,7 @@ function() {
 				
 			});
 			var lineRight = new Kinetic.Line({
-				x : this.polywidth+this.polylineLength,
+				x : this.polywidth+this.polylineLength-20,
 				y : this.polyhight,
 				 points : this.rpoints.concat(),
 				
@@ -192,7 +192,7 @@ function() {
 				closed : true
 			});
 			var connPointsLeft = new Kinetic.Circle({
-				x : 0,
+				x : 0-20,
 				y : this.polyhight,
 
 				radius : this.radiusL,
@@ -203,7 +203,7 @@ function() {
 			});
 			
 			var connPointsRight = new Kinetic.Circle({
-				x : this.polywidth+this.polylineLength*2,
+				x : this.polywidth+this.polylineLength*2-20,
 				y : this.polyhight,
 				name : 'connPointsRight',
 				radius : this.radiusL,
@@ -216,7 +216,7 @@ function() {
 			this.polys[k].y(0);
 			this.polyGroups[k].add(this.polys[k]);
 			this.lock=false;
-			if(k==0){
+			if(k==0||k==1){
 				this.polyGroups[k].add(lineRight);
 				this.polyGroups[k].add(connPointsRight);
 				this.polyGroups[k].add(PointRight);
@@ -225,14 +225,14 @@ function() {
 				this.initPoint(this.polyGroups[k]);
 				continue;
 			}
-			if(k==1){
+	/*		if(k==1){
 				this.polyGroups[k].add(lineLeft);
 				this.polyGroups[k].add(connPointsLeft);	
 				this.polyGroups[k].add(PointLeft);
 				connPointsLeft.hide();
 				this.initPoint(this.polyGroups[k]);
 				continue;
-			}
+			}*/
 			this.polyGroups[k].add(lineRight);
 			this.polyGroups[k].add(lineLeft);
 			this.polyGroups[k].add(connPointsLeft);
