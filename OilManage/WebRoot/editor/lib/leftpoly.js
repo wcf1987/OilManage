@@ -506,10 +506,10 @@ function() {
 		platform.setConnShowed(true);
 	}
 	showALLConnedPoints = function() {
-		points = platform.getAllChildren();
+		var points = platform.getAllChildren();
 		for (i1 = 0; i1 < points.length; i1++) {
-			right=getRightPoint(points[i1]);
-			left=getLeftPoint(points[i1]);
+			var right=getRightPoint(points[i1]);
+			var left=getLeftPoint(points[i1]);
 			if (right!=null) right.fill('red');
 			if (left!=null) left.fill('red');
 			points[i1].lock=false;
@@ -556,9 +556,9 @@ function() {
 	 * 检查控件之间连接关系
 	 */
 	checkConn = function(g) {
-		leftCir=getLeftPoint(g);
-		rightCir=getRightPoint(g);
-		points = platform.getAllChildren();
+		var leftCir=getLeftPoint(g);
+		var rightCir=getRightPoint(g);
+		var points = platform.getAllChildren();
 		var re=null;
 		for (li = 0; li < points.length; li++) {
 			var tempL=getLeftPoint(points[li]);

@@ -527,7 +527,7 @@ var Platform=function(){
 	this.paintingArray=new Array;
 	
 	this.addLoadPainting=function(newone,scalN,id,name) {
-		paintings=new Paintings();
+		var paintings=new Paintings();
 		paintings.init();
 		paintings.p=newone;
 		paintings.initPoint();
