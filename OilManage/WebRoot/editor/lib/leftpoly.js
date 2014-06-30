@@ -396,8 +396,8 @@ function() {
 			point_name=clickshape.id();
 			point_type=clickshape.name();
 			// 当前位置弹出菜单（div）
-			var attrtop=this.getAbsolutePosition().y + 300;//300
-			var attrleft=this.getAbsolutePosition().x + 450;//450
+			var attrtop=this.getAbsolutePosition().y+260;//300
+			var attrleft=this.getAbsolutePosition().x + 250;//450
 			var flagin = leftpoly.flag;// 当前序列
 			leftpoly.flag++;
 			/* 右键菜单处理 */
@@ -480,7 +480,7 @@ function() {
 				 }
 				});//找出元件group中除了连接点外的真正的图形
 			$("#contextmenu").css({
-				top : clickshape.getAbsolutePosition().y+300,//300
+				top : clickshape.getAbsolutePosition().y+250,//300
 				left : clickshape.getAbsolutePosition().x + ($(window).width()-1200)/2+1*shapes[0].width(),//450
 			});
 		    //执行延时
