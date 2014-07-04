@@ -116,7 +116,7 @@ function() {
 	    		leftpoly.createIMG(leftpoly.imgobj[i],i);
 	 	        leftpoly.imgobj[i].onload = null;
 	        	//alert('in');
-	 	        platform.leftDraw();
+	 	       
 	        };
 	    };
 	    //setTimeout("leftpoly.imgobj["+i+"].src = "+url+";",1000); 
@@ -132,6 +132,7 @@ function() {
 		    name : 'type'+i,
 		    height: 50
 		  });
+		 platform.leftDraw();
 	}
 
 	this.getImgage=function (g){
