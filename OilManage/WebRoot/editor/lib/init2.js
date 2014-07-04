@@ -2,6 +2,8 @@ jQuery.ajaxSettings.traditional = true;
 var platform;
 var leftpoly;
 var tabtools;
+
+
 function initLight() {
 	
 	platform=new Platform();

@@ -88,12 +88,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		.tab a.active { font-weight: bold; }
 		.tab-container .panel-container { background: #fff; border: solid #666 1px; padding: 10px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
 	</style>
-	
+
   </head>
-  
-  <body  style="background-color:#CCCCCC;" onload="initLight('');" id="body"><!-- background-image:url(images/background.jpg); -->
+    
+  <body  style="background-color:#CCCCCC;" id="body"  onload="initLight();"><!-- background-image:url(images/background.jpg); -->
  
- 	
+
 	  <div id="head">
 		    <%@ include file="commons/header.jsp" %>
 	  </div>  	
@@ -483,6 +483,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$("#pointPra").hide();
 	
 			}
+	 	
+	 	
 		</script>
   </body>
   

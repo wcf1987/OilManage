@@ -104,16 +104,23 @@ function() {
 	this.imgLoad = function (url,i){
 	
 		this.imgobj[i] = new Image();
-		this.imgobj[i].src = url;
+	
 	    if (this.imgobj[i].complete) {
 	        this.createIMG(this.imgobj[i],i);
-	    } else {
-	    	this.imgobj[i].onload = function () {
-	        	leftpoly.createIMG(leftpoly.imgobj[i],i);
-	        	leftpoly.imgobj[i].onload = null;
+	        platform.leftDraw();
+	   } else {
+	    	
+	    	this.imgobj[i].onload = function () {	    		
+	    		 //alert('get');
+	    		//leftpoly.imgobj[i].src = url;
+	    		leftpoly.createIMG(leftpoly.imgobj[i],i);
+	 	        leftpoly.imgobj[i].onload = null;
+	        	//alert('in');
+	 	        platform.leftDraw();
 	        };
 	    };
-	    
+	    //setTimeout("leftpoly.imgobj["+i+"].src = "+url+";",1000); 
+	    this.imgobj[i].src = url;
 	};
 	this.createIMG = function (img,i){
 		
@@ -320,7 +327,7 @@ function() {
 		var userPos = platform.stage.getPointerPosition();
 		if (platform.selectPainting!=null &&checkPoint(userPos, platform.centerlayer))// 如果在中间画布上面
 
-		{
+		{	showConnect(this);
 			if (this.getParent() != platform.selectPainting.p) {
 
 				this.x((this.x() - platform.selectPainting.mx)
@@ -356,7 +363,9 @@ function() {
 		if (e.type == 'mousedown'
 				&&platform.selectPainting!=null &&this.getLayer() != platform.selectPainting.p) {
 			var cloneOfItem = this.clone();
-			showConnect(this);
+			hideConnection(this);
+			
+			hideConnection(cloneOfItem);
 			// cloneOfItem.off('mousedown touchstart');
 			platform.leftlayer.add(cloneOfItem);
 
@@ -393,8 +402,8 @@ function() {
 			// 取消上次延时未执行的方法
 		    clearTimeout(TimeFn);
 		    var clickshape = e.target.getParent();
-			point_name=clickshape.id();
-			point_type=clickshape.name();
+			var point_name=clickshape.id();
+			var point_type=clickshape.name();
 			// 当前位置弹出菜单（div）
 			var attrtop=this.getAbsolutePosition().y+260;//300
 			var attrleft=this.getAbsolutePosition().x + 250;//450
@@ -497,7 +506,7 @@ function() {
 		
 	}
 	showALLConnPoints = function() {
-		points = platform.getAllChildren();
+		var points = platform.getAllChildren();
 		for (i1 = 0; i1 < points.length; i1++) {
 			showConnect(points[i1]);
 
@@ -529,7 +538,7 @@ function() {
 	}*/
 	showConnect = function(g) {
 
-		tempArray = g.getChildren(function(node) {
+		var tempArray = g.getChildren(function(node) {
 			return node.getName() == 'connPointsLeft'
 					|| node.getName() == 'connPointsRight'
 		});
@@ -540,7 +549,7 @@ function() {
 		
 		g.draw();
 	}
-/*	hideConnection = function(g) {
+	hideConnection = function(g) {
 		tempArray = g.getChildren(function(node) {
 			return node.getName() == 'connPointsLeft'
 					|| node.getName() == 'connPointsRight'
@@ -550,7 +559,7 @@ function() {
 		
 		}
 
-	}*/
+	}
 	
 	/*
 	 * 检查控件之间连接关系

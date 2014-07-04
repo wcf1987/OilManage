@@ -592,6 +592,9 @@ var Platform=function(){
 	this.draw=function(){
 		this.selectPainting.p.draw();
 	}
+	this.leftDraw=function(){
+		this.leftlayer.draw();
+	}
 	this.getConnShowed=function(){
 		return this.selectPainting.showConned;
 	}

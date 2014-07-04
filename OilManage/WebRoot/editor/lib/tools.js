@@ -251,3 +251,13 @@ function logD(i){
 	console.log(i);
 	platform.log(i);
 }
+function sleep(milliSeconds){    
+    var startTime = new Date().getTime();  // get the current time   
+    while (new Date().getTime() < startTime + milliSeconds);  // hog cpu
+    }
+function imgLoadA(url){
+	
+	var img = new Image();
+	img.src = url;
+	return img;
+};
