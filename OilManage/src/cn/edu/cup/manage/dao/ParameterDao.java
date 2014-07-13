@@ -36,13 +36,14 @@ public class ParameterDao {
 	}
 	 Session session ;
 	
-	public int addParameter(int mid,String display, String name){
+	public int addParameter(int mid,String display, String name,int type){
 
 		HibernateSessionManager.getThreadLocalTransaction();
-		Query q = session.createSQLQuery("insert into t_parameters (measureID,display,name) values (?,?,?)");
+		Query q = session.createSQLQuery("insert into t_parameters (measureID,display,name,type) values (?,?,?,?)");
 		q.setParameter(0, mid);
 		q.setParameter(1, display);
 		q.setParameter(2, name);
+		q.setParameter(3, type);
 		int result=q.executeUpdate();
 		
 		return result;
@@ -81,7 +82,7 @@ public class ParameterDao {
 		
 	}
 	public Parameters searchParameter(int id){
-		SQLQuery q = session.createSQLQuery("SELECT t1.id,t1.measureID,CONCAT(CName,'(',t2.Symbol,')'),t1.display,t1.name from t_parameters t1,t_measure t2 where t1.measureID=t2.ID and t1.id=?");
+		SQLQuery q = session.createSQLQuery("SELECT t1.id,t1.measureID,CONCAT(CName,'(',t2.Symbol,')'),t1.display,t1.name,t1.type from t_parameters t1,t_measure t2 where t1.measureID=t2.ID and t1.id=?");
 		q.setParameter(0, id);
 		Object[] row=(Object[]) q.uniqueResult();
 		Integer Id = (Integer)row[0];
@@ -89,14 +90,14 @@ public class ParameterDao {
 		String mSymbol = (String)row[2];  
 		String display=(String)row[3];
 		String name=(String)row[4];
-		  
-		Parameters p=new Parameters(Id, mid, mSymbol, display, name);
+		int type=  (Integer)row[5];
+		Parameters p=new Parameters(Id, mid, mSymbol, display, name,type);
 		return p;
 
 	}
 	public List<Parameters> getParametersList(int page,int rows,String sidx,String sord) {
 
-		SQLQuery q = session.createSQLQuery("SELECT t1.id,t1.measureID,CONCAT(CName,'(',t2.Symbol,')'),t1.display,t1.name from t_parameters t1,t_measure t2 where t1.measureID=t2.ID order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("SELECT t1.id,t1.measureID,CONCAT(CName,'(',t2.Symbol,')'),t1.display,t1.name ,t1.type from t_parameters t1,t_measure t2 where t1.measureID=t2.ID order by t1."+sidx+" "+sord);
 
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
@@ -113,8 +114,9 @@ public class ParameterDao {
 			  String mSymbol = (String)row[2];  
 			  String display=(String)row[3];
 			  String name=(String)row[4];
+			  int type=(Integer)row[5];
 			  
-			  Parameters p=new Parameters(id, mid, mSymbol, display, name);
+			  Parameters p=new Parameters(id, mid, mSymbol, display, name,type);
 
 			  
 			  re.add(p);
@@ -151,7 +153,12 @@ public class ParameterDao {
 	
 		return re;
 	}
-
+	public int getParType(int paramid){
+		SQLQuery q = session.createSQLQuery("select t.type from t_parameters t where t.ID=?");
+		q.setParameter(0, paramid);
+		Integer a=(Integer)(q.uniqueResult());				
+		return a;
+	}
 	public double getISOValue(int paramid,double value){
 		SQLQuery q = session.createSQLQuery("select t.measureID from t_parameters t where t.ID=?");
 		q.setParameter(0, paramid);

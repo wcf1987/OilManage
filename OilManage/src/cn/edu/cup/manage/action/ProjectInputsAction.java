@@ -1,5 +1,6 @@
 package cn.edu.cup.manage.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -163,7 +164,7 @@ public class ProjectInputsAction {
 	}
 	int pro_id;
 	int param_id;
-	double value;
+	String value;
 	public String list(){		
 
 		ProjectInputDao dao=new ProjectInputDao();
@@ -194,10 +195,22 @@ public class ProjectInputsAction {
 	public String add(){
 
 		ProjectInputDao dao=new ProjectInputDao();
-	
-		ID=dao.addInput(this.pro_id,this.param_id,this.value);
-		
 		ParameterDao paraDao=new ParameterDao();
+		int type=paraDao.getParType(this.param_id);
+		if(type==0){
+			double valueD=Double.valueOf(this.value);
+			ID=dao.addInput(this.pro_id,this.param_id,valueD);
+		
+		}
+		if(type==1){
+			List<Double> valueList=new ArrayList<Double>();
+			String[] temp=this.value.split(",");
+			for (int i=0;i<temp.length;i++){
+				valueList.add(Double.valueOf(temp[i]));
+			}
+			ID=dao.addInput(this.pro_id,this.param_id,valueList);
+		
+		}
 		param=paraDao.searchParameter(param_id);
 		dao.close();
 		return "SUCCESS";
@@ -220,12 +233,7 @@ public class ProjectInputsAction {
 	public void setParam_id(int param_id) {
 		this.param_id = param_id;
 	}
-	public double getValue() {
-		return value;
-	}
-	public void setValue(double value) {
-		this.value = value;
-	}
+
 	
 	public String delete(){
 		ProjectInputDao dao=new ProjectInputDao();
@@ -246,9 +254,16 @@ public class ProjectInputsAction {
 	}
 	public String update(){
 		ProjectInputDao dao=new ProjectInputDao();
-		int re=dao.updateInput(ID, this.value);
+		double valueD=Double.valueOf(this.value);
+		int re=dao.updateInput(ID, valueD);
 		dao.close();
 		return "SUCCESS"; 
+	}
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
 	}
 	
 }

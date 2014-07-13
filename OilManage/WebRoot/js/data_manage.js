@@ -355,7 +355,7 @@ $(
 				url : "listParameter.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httppost请求						
-				colNames : [ '编号', '显示', '名称','单位符号'],// 表格的列名
+				colNames : [ '编号', '显示', '名称','单位符号','参数类型'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -382,7 +382,14 @@ $(
 						{
 							name : 'measureSymbol',
 							index : 'measureSymbol',
-							width : 200,
+							width : 250,
+							align : "center",
+							sortable:true
+						},
+						{
+							name : 'typeS',
+							index : 'typeS',
+							width : 100,
 							align : "center",
 							sortable:true
 						}
@@ -434,6 +441,7 @@ $(
 							measureID:{
 								required:true
 							}
+							
 						},
 						messages:{
 							name:{
@@ -445,6 +453,7 @@ $(
 							measureID:{
 								required:"请选择单位！"
 							}
+							
 						},
 						submitHandler:function(){
 							add_parameter();
@@ -766,7 +775,8 @@ function add_parameter() {
 		data : {
 			name:$("#name").val(),
 			display:$("#display").val(),
-			measureID:$("#measureID").val()
+			measureID:$("#measureID").val(),
+			type:$("#type").val()
 		},
 		dataType:'json',
 		success : function(data) {

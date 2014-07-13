@@ -372,7 +372,17 @@ $(document).ready(function(){
 			                	</select>
 		      					<em style="color:red">*</em>
 		      				</td>
-		      			</tr>		    				
+		      			</tr>		 
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">参数类型：</label></td>
+		      				<td>
+      							<select id="type" name="type">
+      							 <option value ="0" SELECTED>单值</option>
+  								 <option value ="1">列表</option>		                  
+			                	</select>
+		      					<em style="color:red">*</em>
+		      				</td>
+		      			</tr>	   				
 				   </table>
 				   <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

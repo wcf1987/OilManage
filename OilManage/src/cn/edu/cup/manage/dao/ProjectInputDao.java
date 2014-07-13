@@ -16,6 +16,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.manage.business.ProjectInputs;
 import cn.edu.cup.tools.HibernateSessionManager;
+import cn.edu.cup.tools.Tools;
 
 public class ProjectInputDao {
 
@@ -43,7 +44,7 @@ public class ProjectInputDao {
 	public ProjectInputs searchInput(int iD) {
 		// TODO Auto-generated method stub
 		Date modifyTime=new Date();
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')') from t_projectinputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.ID=? ");
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')'),par_type,par_listUUID from t_projectinputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.ID=? ");
 		q.setParameter(0, iD);
 		Object[] row=(Object[]) q.uniqueResult();
 		Integer id = ((Integer)row[0]);
@@ -54,14 +55,17 @@ public class ProjectInputDao {
 		double vaule=(Double)row[5];
 		Integer pid = ((Integer)row[6]);
 		String messSymbol=(String)row[7];
-		  
-		ProjectInputs p=new ProjectInputs(id,display,parid,meid,name,vaule,pid,messSymbol);
+
+		  int type=(Integer)row[8];
+
+		  String listUUID=(String)row[9];
+		ProjectInputs p=new ProjectInputs(id,display,parid,meid,name,vaule,pid,messSymbol,type,listUUID);
 		return p;
 	}
 	
 	public List<ProjectInputs> getProInputsList(int pro_id,int page, int rows,
 			String sidx, String sord) {
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')') from t_projectinputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.Pro_ID=? order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')'),t1.type,t1.par_type,t1.par_listUUID from t_projectinputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.Pro_ID=? order by t1."+sidx+" "+sord);
 		q.setParameter(0, pro_id);
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
@@ -81,17 +85,39 @@ public class ProjectInputDao {
 			  double vaule=(Double)row[5];
 			  Integer pid = ((Integer)row[6]);
 			  String messSymbol=(String)row[7];
+
+			  int type=(Integer)row[8];
+
+			  String listUUID=(String)row[9];
 			  
-			  
-			  ProjectInputs p=new ProjectInputs(id,display,parid,meid,name,vaule,pid,messSymbol);
-			  
+			  ProjectInputs p=new ProjectInputs(id,display,parid,meid,name,vaule,pid,messSymbol,type,listUUID);
+			  if(type==1){
+				  
+				  p.setValuelist(getListValueByUUID(listUUID));
+			  }
 			  
 			  re.add(p);
 		}
 		
 		return re;
 	}
+	public List<Double> getListValueByUUID(String UUID){
+		List<Double> list=new ArrayList<Double>();
+		SQLQuery q = session.createSQLQuery("select t1.list_index,t1.list_value from t_projectinputlist t1 where  t1.UUID=? order by t1.list_index desc");
+		q.setParameter(0, UUID);
+		List l = q.list();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
 
+			  Object[] row = (Object[])l.get(i);;
+			  Integer id = ((Integer)row[0]);
+			  double value=(Double)row[1];
+			  list.add(value);
+		}
+		return list;
+	}
 	public int getCountProInputs(int proid) {
 		// TODO Auto-generated method stub
 		String sql="select count(*) from t_projectinputs t2 where t2.pro_id=? ";
@@ -103,10 +129,12 @@ public class ProjectInputDao {
 	}
 	public int addInput(int pro_id,int param_id,double value) {
 		ParameterDao pDao=new ParameterDao();
-
+		
+		
 		HibernateSessionManager.getThreadLocalTransaction();
+
 		double ISOValue=pDao.getISOValue(param_id, value);
-		Query q = session.createSQLQuery("INSERT into t_projectinputs  select NULL,?,t1.id,t1.display,?,t1.name,t1.measureID,? from t_parameters t1 where t1.ID=?;");
+		Query q = session.createSQLQuery("INSERT into t_projectinputs  select NULL,?,t1.id,t1.display,?,t1.name,t1.measureID,?,0,0 from t_parameters t1 where t1.ID=?;");
 		q.setParameter(0, pro_id);
 		q.setParameter(1, value);
 		q.setParameter(2, ISOValue);
@@ -118,8 +146,43 @@ public class ProjectInputDao {
 		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()"); 
 		ret_id=((BigInteger) q2.uniqueResult()).intValue();
 		return ret_id;
+		
 	}
-	
+	public int addInput(int pro_id,int param_id,List<Double> value) {
+		ParameterDao pDao=new ParameterDao();
+		
+		
+		HibernateSessionManager.getThreadLocalTransaction();
+		String ListID=Tools.getUUID();
+		Query q = session.createSQLQuery("INSERT into t_projectinputs  select NULL,?,t1.id,t1.display,0,t1.name,t1.measureID,0,1,? from t_parameters t1 where t1.ID=?;");
+		q.setParameter(0, pro_id);
+		q.setParameter(1, ListID);
+		q.setParameter(2, param_id);
+		
+		int result=q.executeUpdate();
+		
+		int ret_id=0; 
+		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()"); 
+		ret_id=((BigInteger) q2.uniqueResult()).intValue();
+		
+		for(int i=0;i<value.size();i++){
+			double ISOValue=pDao.getISOValue(param_id, value.get(i));
+			q = session.createSQLQuery("INSERT into t_projectinputlist  (UUID,pro_id,par_id,list_index,list_value,list_ISOValue) values(?,?,?,?,?,?)");
+
+			q.setParameter(0, ListID);
+			q.setParameter(1, pro_id);
+			q.setParameter(2, param_id);
+			q.setParameter(3, i);
+			q.setParameter(4, value.get(i));
+			q.setParameter(5, ISOValue);
+			
+			result=q.executeUpdate();
+		}
+		
+		return ret_id;
+		
+		
+	}
 	public int deleteInput(int  id) {
 
 		HibernateSessionManager.getThreadLocalTransaction();

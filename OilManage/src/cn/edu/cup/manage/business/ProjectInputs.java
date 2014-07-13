@@ -1,10 +1,21 @@
 package cn.edu.cup.manage.business;
 
+import java.util.List;
+
 public class ProjectInputs {
 	int ID;
 	int pro_id;
 	int par_id;
 	double value;
+	String UUID;
+	int type;
+	List<Double> valuelist;
+	public List<Double> getValuelist() {
+		return valuelist;
+	}
+	public void setValuelist(List<Double> valuelist) {
+		this.valuelist = valuelist;
+	}
 	String Name;
 	String Display;
 	String Mess;
@@ -63,7 +74,7 @@ public class ProjectInputs {
 	}
 	public ProjectInputs(Integer id2, String display2, Integer parid,
 			Integer meid, String name2, double vaule2, Integer pid,
-			String messSymbol) {
+			String messSymbol,int type2,String UUID2) {
 		// TODO Auto-generated constructor stub
 		this.ID=id2;
 		this.Display=display2;
@@ -73,6 +84,14 @@ public class ProjectInputs {
 		this.Name=name2;
 		this.value=vaule2;
 		this.pro_id=pid;
+		this.type=type2;
+		this.UUID=UUID2;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
 	
 }

@@ -14,6 +14,13 @@ public class ParametersManageAction extends ActionSupport{
 	private int measureID;
 	private String display;
 	private int rows;
+	private int type;
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
 	private int rowNum;
 	private int total;
 	private String sidx;
@@ -141,7 +148,7 @@ public class ParametersManageAction extends ActionSupport{
 		ParameterDao dao=new ParameterDao();
 		int count=dao.isExistParameter(name);
 		if(count==0){
-			int result=dao.addParameter(measureID, display, name);
+			int result=dao.addParameter(measureID, display, name,type);
 			this.exist=false;
 		}else{
 			this.exist=true;
