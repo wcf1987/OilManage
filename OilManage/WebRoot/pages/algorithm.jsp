@@ -146,7 +146,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    						<em style="color:red">*</em><br> <br> 
    						类名：<input type="text" name="className" id='className'/><em style="color:red">*</em>
 			        	<br> <br> 
-			        	<input type="file" name="xxx" id="algorithmfile" /> 
+			        	<input type="file" name="algorithmfile" id="algorithmfile" /> 
 			        </p>  		 
 			 		
 			      <div class="modal-footer">

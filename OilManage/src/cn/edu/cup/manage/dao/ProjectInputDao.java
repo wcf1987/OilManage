@@ -65,7 +65,7 @@ public class ProjectInputDao {
 	
 	public List<ProjectInputs> getProInputsList(int pro_id,int page, int rows,
 			String sidx, String sord) {
-		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')'),t1.type,t1.par_type,t1.par_listUUID from t_projectinputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.Pro_ID=? order by t1."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("select t1.ID,t1.par_display,t1.par_id,t1.par_messID,t1.par_name,t1.par_value,t1.Pro_ID,CONCAT(t2.CName,'(',t2.Symbol,')'),t1.par_type,t1.par_listUUID from t_projectinputs t1,t_measure t2 where t1.par_messID=t2.ID and t1.Pro_ID=? order by t1."+sidx+" "+sord);
 		q.setParameter(0, pro_id);
 		q.setFirstResult((page-1)*rows);
 		q.setMaxResults(rows);
@@ -183,17 +183,50 @@ public class ProjectInputDao {
 		
 		
 	}
+	public int getType(int id){
+		String sql="select t2.par_type from t_projectinputs t2 where t2.ID=? ";
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, id);
+		Integer type=((Integer)q.uniqueResult()).intValue();
+		return type;
+	}
+	public String getUUID(int id){
+		String sql="select t2.par_listUUID from t_projectinputs t2 where t2.ID=? ";
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, id);
+		String UUID=((String)q.uniqueResult());
+		return UUID;
+	}
 	public int deleteInput(int  id) {
 
 		HibernateSessionManager.getThreadLocalTransaction();
-		SQLQuery q = session.createSQLQuery("delete from t_projectinputs where ID=?");
+		
+		int type=this.getType(id);
+		SQLQuery q ;
+		if(type==1){
+			String uuid=this.getUUID(id);
+			q= session.createSQLQuery("delete from t_projectinputlist where UUID=?");
+			q.setParameter(0, uuid);
+			q.executeUpdate();
+		}
+		q = session.createSQLQuery("delete from t_projectinputs where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
 //		tx.commit();
 		return re;
 		
 	}
+	
+	public int deleteListInput(int  UUID) {
 
+		HibernateSessionManager.getThreadLocalTransaction();
+		SQLQuery q = session.createSQLQuery("delete from t_projectinputs where UUID=?");
+		q.setParameter(0, UUID);
+		int re=q.executeUpdate();
+//		tx.commit();
+		return re;
+		
+	}
 
 	public int updateInput(int iD, double value) {
 		// TODO Auto-generated method stub

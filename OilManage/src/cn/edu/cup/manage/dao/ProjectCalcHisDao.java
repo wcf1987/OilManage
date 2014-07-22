@@ -181,6 +181,20 @@ public class ProjectCalcHisDao {
 		q4.setParameter(1, pro_id);
 
 		result = q4.executeUpdate();
+		
+		Query q5 = session
+				.createSQLQuery("INSERT into t_calcinputlist_his  (ID,UUID,pro_id,par_id,list_index,list_value,list_ISOValue,Calc_ID) select NULL,t1.UUID,t1.pro_id,t1.par_id,t1.list_index,t1.list_value,t1.list_ISOValue,? from t_projectinputlist t1 where t1.pro_id=?");
+		q5.setParameter(0, ret_id);
+		q5.setParameter(1, pro_id);
+
+		result = q5.executeUpdate();
+		
+		Query q6 = session
+				.createSQLQuery("INSERT into t_calcoutputlist_his  (ID,UUID,pro_id,par_id,list_index,list_value,list_ISOValue,Calc_ID) select NULL,t1.UUID,t1.pro_id,t1.par_id,t1.list_index,t1.list_value,t1.list_ISOValue,? from t_projectoutputlist t1 where t1.pro_id=?");
+		q6.setParameter(0, ret_id);
+		q6.setParameter(1, pro_id);
+
+		result = q6.executeUpdate();
 
 		return ret_id;
 

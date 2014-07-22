@@ -153,11 +153,34 @@ public class AlgorithmProDao {
 		
 		return className;
 	}
+	public List<Double> getListInput(String UUID){
+		SQLQuery q3 = session.createSQLQuery("select t.list_ISOValue from t_projectinputlist t where  t.UUID=? order by list_index asc");
+		q3.setParameter(0, UUID);
+		
+		List l = q3.list();
+		List<Double> temp=new ArrayList<Double>();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+
+			  
+			  Double value=(Double)l.get(i);
+			  temp.add(value);
+			  
+			 
+			  
+		}
+		return temp;
+	}
 	public CalcInfo getProInfo(int pro_id) {
 		// TODO Auto-generated method stub
-		SQLQuery q = session.createSQLQuery("SELECT t.par_name,t.par_ISOValue from t_projectinputs t where t.Pro_ID=?");
-		q.setParameter(0, pro_id);
 		CalcInfo temp=new CalcInfo();
+		
+	
+		SQLQuery q = session.createSQLQuery("SELECT t.par_name,t.par_ISOValue,t.par_type,t.par_listUUID from t_projectinputs t where t.Pro_ID=?");
+		q.setParameter(0, pro_id);
+		
 		List l = q.list();
 		for(int i=0;i<l.size();i++)
 		{
@@ -168,11 +191,23 @@ public class AlgorithmProDao {
 			  
 			  String name=(String)row[0];
 			  Double value=(Double)row[1];
+			  int type=(Integer)row[2];
+				//加载单值
+			  if(type==0){
 			  temp.addParamInput(name, value);
-			  
+			  }
+			  //加载多值
+			  if(type==1){
+				  String UUID=(String)row[3];
+				  List temp2=this.getListInput(UUID);
+				  temp.addListInput(name, temp2);
+			  }
 			 
 			  
 		}
+	
+		
+		
 		
 		String sql="select Algorithm_ID from t_projects t where  t.id=?";
 		SQLQuery q2 = session.createSQLQuery(sql);

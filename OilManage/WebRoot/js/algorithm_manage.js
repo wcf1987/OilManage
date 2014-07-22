@@ -828,8 +828,9 @@ function loadAuthorOptions(){
 	
 var hideFilePath;
 $(document).ready(function() {
+	
 	$('#algorithmfile').uploadify({
-		'swf' : 'js/upload/uploadify.swf',
+		'swf' : 'js/upload/uploadify.swf?var='+(new Date()).getTime(),
 		'uploader' : 'uploadAlgorithm.action',
 		'queueID' : 'fileQueue',
 		'auto' : true,

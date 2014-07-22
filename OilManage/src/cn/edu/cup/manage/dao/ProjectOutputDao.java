@@ -17,6 +17,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import cn.edu.cup.manage.business.ProjectInputs;
 import cn.edu.cup.manage.business.ProjectOutputs;
 import cn.edu.cup.tools.HibernateSessionManager;
+import cn.edu.cup.tools.Tools;
 
 public class ProjectOutputDao {
 
@@ -164,7 +165,7 @@ public class ProjectOutputDao {
 		HibernateSessionManager.getThreadLocalTransaction();
 		ParameterDao pDao=new ParameterDao();
 		double MessValue=pDao.getMessValueByName(name, paramOutput);
-		Query q = session.createSQLQuery("INSERT into t_projectoutputs  select NULL,?,t1.id,t1.display,?,t1.name,t1.measureID,? from t_parameters t1 where t1.name=?;");
+		Query q = session.createSQLQuery("INSERT into t_projectoutputs  select NULL,?,t1.id,t1.display,?,t1.name,t1.measureID,?,t1.type,0 from t_parameters t1 where t1.name=?;");
 		q.setParameter(0, pro_id);
 		q.setParameter(1, MessValue);
 		q.setParameter(2, paramOutput);
@@ -175,6 +176,42 @@ public class ProjectOutputDao {
 		int ret_id=0; 
 		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()"); 
 		ret_id=((BigInteger) q2.uniqueResult()).intValue();
+		return ret_id;
+		
+	}
+	public int save(int pro_id, String name, List<Double> Output) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
+		ParameterDao pDao=new ParameterDao();
+		//double MessValue=pDao.getMessValueByName(name, paramOutput);
+		String ListID=Tools.getUUID();
+		Query q = session.createSQLQuery("INSERT into t_projectoutputs  select NULL,?,t1.id,t1.display,?,t1.name,t1.measureID,?,t1.type,? from t_parameters t1 where t1.name=?;");
+		q.setParameter(0, pro_id);
+		q.setParameter(1, 0);
+		q.setParameter(2, 0);
+		q.setParameter(3, ListID);
+		q.setParameter(4, name);
+		
+		int result=q.executeUpdate();
+		
+		int ret_id=0; 
+		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()"); 
+		ret_id=((BigInteger) q2.uniqueResult()).intValue();
+		
+		for(int i=0;i<Output.size();i++){
+			double MessValue=pDao.getMessValueByName(name, Output.get(i));
+			int param_id=pDao.getParID(name);
+			q = session.createSQLQuery("INSERT into t_projectoutputlist  (UUID,pro_id,par_id,list_index,list_value,list_ISOValue) values(?,?,?,?,?,?)");
+
+			q.setParameter(0, ListID);
+			q.setParameter(1, pro_id);
+			q.setParameter(2, param_id);
+			q.setParameter(3, i);
+			q.setParameter(4, MessValue);
+			q.setParameter(5, Output.get(i));
+			
+			result=q.executeUpdate();
+		}
 		return ret_id;
 		
 	}

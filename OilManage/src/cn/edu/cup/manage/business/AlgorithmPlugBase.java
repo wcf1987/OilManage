@@ -34,6 +34,12 @@ public abstract class AlgorithmPlugBase implements AlgorithmJarPlug{
 			dao.save(pro_id,name,info.getParamOutput(name));
 		}
 		
+		iter=info.listOutputs.keySet().iterator();
+		for (;iter.hasNext();){
+			String name=iter.next();
+			dao.save(pro_id,name,info.getListOutput(name));
+		}
+		
 	}
 
 }

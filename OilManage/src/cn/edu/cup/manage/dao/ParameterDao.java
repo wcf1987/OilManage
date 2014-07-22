@@ -159,6 +159,12 @@ public class ParameterDao {
 		Integer a=(Integer)(q.uniqueResult());				
 		return a;
 	}
+	public int getParID(String paramName){
+		SQLQuery q = session.createSQLQuery("select t.id from t_parameters t where t.name=?");
+		q.setParameter(0, paramName);
+		Integer a=(Integer)(q.uniqueResult());				
+		return a;
+	}
 	public double getISOValue(int paramid,double value){
 		SQLQuery q = session.createSQLQuery("select t.measureID from t_parameters t where t.ID=?");
 		q.setParameter(0, paramid);
