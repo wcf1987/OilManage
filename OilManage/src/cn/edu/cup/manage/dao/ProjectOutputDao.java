@@ -8,13 +8,12 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 
-import cn.edu.cup.manage.business.ProjectInputs;
+import cn.edu.cup.manage.business.AlgorithmGraphi;
+import cn.edu.cup.manage.business.GraphOutput;
+import cn.edu.cup.manage.business.GraphiLine;
+import cn.edu.cup.manage.business.GraphiPoint;
+import cn.edu.cup.manage.business.Parameters;
 import cn.edu.cup.manage.business.ProjectOutputs;
 import cn.edu.cup.tools.HibernateSessionManager;
 import cn.edu.cup.tools.Tools;
@@ -216,5 +215,183 @@ public class ProjectOutputDao {
 		
 	}
 
+	public GraphOutput getProGraphi(int pro_id, int graphID) {
+		// TODO Auto-generated method stub
+		AlgorithmGraphiDao graphiDao=new AlgorithmGraphiDao();
+		int type=graphiDao.getGraphiTypeByID(graphID);
+		GraphOutput temp=new GraphOutput();
+		if(type==0){
+			//线形图
+			temp.setType(type);
+			temp.setTypeS(AlgorithmGraphi.getTypeSByNum(type));
+			temp.setGraphiName(graphiDao.getGraphiNameByID(graphID));
+			temp.setX(this.getProGraphiLineX(pro_id,graphID));
+			temp.setY(this.getProGraphiLineY(pro_id,graphID));
+			
+		}
+		if(type==1){
+			//饼图
+			temp.setType(type);
+			temp.setTypeS(AlgorithmGraphi.getTypeSByNum(type));
+			temp.setGraphiName(graphiDao.getGraphiNameByID(graphID));
+			temp.setPoints(this.getProGraphiPoint(pro_id,graphID));		
+			}
+		if(type==2){
+			//柱状图
+			temp.setType(type);
+			temp.setTypeS(AlgorithmGraphi.getTypeSByNum(type));
+			temp.setGraphiName(graphiDao.getGraphiNameByID(graphID));
+			temp.setHistogram(this.getProGraphiHistogram(pro_id, graphID));
+			
+			
+		}
+		return temp;
+	}
+	
+	
+	public List<GraphiLine> getProGraphiHistogram(int pro_id, int graphID) {
+		// TODO Auto-generated method stub
+		AlgorithmGraphiDao graphiDao=new AlgorithmGraphiDao();
+		ParameterDao pDao=new ParameterDao();
+		GraphiLine line;
+		List<Integer> paramids=graphiDao.getGraphiDetailByInfo(graphID,"");
+		List<GraphiLine> lines=new ArrayList<GraphiLine>(paramids.size());
+		
+		for(int i=0;i<paramids.size();i++){
+			line=new GraphiLine();
+			int pid=paramids.get(i);
+			String display=pDao.getDisplayName(pid);
+			String messure=pDao.getMessureShow(pid);
+			line.setDisplay(display);
+			line.setMessure(messure);
+			List<Double> value=this.getListOutputValueByParID(pro_id,pid);
+			List<Double> ISOvalue=this.getListOutputISOValueByParID(pro_id,pid);
+			line.setValue(value);
+			line.setISOValue(ISOvalue);
+			lines.add(line);
+		}
+		return lines;
+	}
+	private List<GraphiPoint> getProGraphiPoint(int pro_id, int graphID) {
+
+		ParameterDao pDao=new ParameterDao();
+		GraphiPoint point;
+		List<GraphiPoint> points=new ArrayList<GraphiPoint>();
+		SQLQuery q3 = session.createSQLQuery("select t1.display ,t.par_value,t.par_ISOValue,t.par_id from t_projectoutputs t,t_parameters t1,t_graphdetail t2 where t.par_id=t1.ID and t2.ParamID=t.Par_ID and t2.graphid=? and t.Pro_ID=? order by t.id  desc ");
+		q3.setParameter(0, graphID);
+		q3.setParameter(1, pro_id);
+		
+		List l=q3.list();
+		
+		for(int i=0;i<l.size();i++){
+			point=new GraphiPoint();
+
+			  Object[] row = (Object[])l.get(i);
+			
+			  
+			String display= (String)row[0];
+			String messure=pDao.getMessureShow((Integer)(row[3]));
+			point.setDisplay(display);
+			point.setMessure(messure);
+			point.setValue((Double)row[1]);
+			point.setISOValue((Double)row[2]);
+			points.add(point);
+		}
+		return points;
+	}
+
+	public GraphiLine getProGraphiLineX(int pro_id, int graphID) {
+		// TODO Auto-generated method stub
+		AlgorithmGraphiDao graphiDao=new AlgorithmGraphiDao();
+		ParameterDao pDao=new ParameterDao();
+		GraphiLine line=new GraphiLine();
+		List<Integer> paramids=graphiDao.getGraphiDetailByInfo(graphID,"X");
+		
+		
+		String display=pDao.getDisplayName(paramids.get(0));
+		String messure=pDao.getMessureShow(paramids.get(0));
+		line.setDisplay(display);
+		line.setMessure(messure);
+		List<Double> value=this.getListOutputValueByParID(pro_id,paramids.get(0));
+		List<Double> ISOvalue=this.getListOutputISOValueByParID(pro_id,paramids.get(0));
+		line.setValue(value);
+		line.setISOValue(ISOvalue);
+		
+		return line;
+	}
+	public List<GraphiLine> getProGraphiLineY(int pro_id, int graphID) {
+		// TODO Auto-generated method stub
+		AlgorithmGraphiDao graphiDao=new AlgorithmGraphiDao();
+		ParameterDao pDao=new ParameterDao();
+		GraphiLine line;
+		List<Integer> paramids=graphiDao.getGraphiDetailByInfo(graphID,"Y");
+		List<GraphiLine> lines=new ArrayList<GraphiLine>(paramids.size());
+		
+		for(int i=0;i<paramids.size();i++){
+			line=new GraphiLine();
+			int pid=paramids.get(i);
+			String display=pDao.getDisplayName(pid);
+			String messure=pDao.getMessureShow(pid);
+			line.setDisplay(display);
+			line.setMessure(messure);
+			List<Double> value=this.getListOutputValueByParID(pro_id,pid);
+			List<Double> ISOvalue=this.getListOutputISOValueByParID(pro_id,pid);
+			line.setValue(value);
+			line.setISOValue(ISOvalue);
+			lines.add(line);
+		}
+		return lines;
+	}
+	private List<Double> getListOutputValueByParID(int pro_id, int par_id) {
+			String UUID=getOutputUUID(pro_id,par_id);
+			SQLQuery q3 = session.createSQLQuery("select t.list_value from t_projectoutputlist t where  t.UUID=? order by list_index asc");
+			q3.setParameter(0, UUID);
+			
+			List l = q3.list();
+			List<Double> temp=new ArrayList<Double>();
+			for(int i=0;i<l.size();i++)
+			{
+				//TestDb user = (TestDb)l.get(i);
+				//System.out.println(user.getUsername());
+
+				  
+				  Double value=(Double)l.get(i);
+				  temp.add(value);
+				  
+				 
+				  
+			}
+			return temp;
+		
+	}
+	private List<Double> getListOutputISOValueByParID(int pro_id, int par_id) {
+		String UUID=getOutputUUID(pro_id,par_id);
+		SQLQuery q3 = session.createSQLQuery("select t.list_ISOvalue from t_projectoutputlist t where  t.UUID=? order by list_index asc");
+		q3.setParameter(0, UUID);
+		
+		List l = q3.list();
+		List<Double> temp=new ArrayList<Double>();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
+
+			  
+			  Double value=(Double)l.get(i);
+			  temp.add(value);
+			  
+			 
+			  
+		}
+		return temp;
+	
+}
+	public String getOutputUUID(int pro_id,int paramid){		
+		SQLQuery q = session.createSQLQuery("select par_listUUID from t_projectoutputs t where t.pro_id=? and t.par_id=? ");
+		q.setParameter(0, pro_id);
+		q.setParameter(1, paramid);
+		String re=(String)q.uniqueResult();
+		return re;
+	}
 
 }

@@ -320,6 +320,72 @@
 
 			</result>
 		</action>
+		<!-- 算法图形输出配置-->
+		
+		
+		<action name="listGraphiByAlgID" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="listGraphiByAlgID">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateGraphi" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="updateGraphi">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delGraphi" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="delGraphi">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addGraphi" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="addGraphi">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		
+				<action name="listGraphiDetailByGraphID" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="listGraphiDetailByGraphID">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+
+		<action name="delGraphiDetail" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="delGraphiDetail">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addGraphiDetail" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="addGraphiDetail">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		
+		
+		<action name="getProGraphi" class="cn.edu.cup.manage.action.ProjectOutputsAction"
+			method="ProGraphiByGraphID">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<!-- 算法图形输出配置 -->
+		
+		
 		<!-- 工程 -->
 		<action name="listAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
 			method="list">

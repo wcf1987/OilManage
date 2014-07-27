@@ -16,13 +16,18 @@ public class Parameters {
 		display=display2;
 		name=name2;
 		type=type2;
+		typeS=this.getTypeSByNum(type2);
+		// TODO Auto-generated constructor stub
+	}
+	public static String getTypeSByNum(int type){
+		String typeStr="";
 		if(type==0){
-			typeS="单值";
+			typeStr="单值";
 		}
 		if(type==1){
-			typeS="列表";
+			typeStr="列表";
 		}
-		// TODO Auto-generated constructor stub
+		return typeStr;
 	}
 	public int getType() {
 		return type;

@@ -3,6 +3,7 @@ package cn.edu.cup.manage.action;
 import java.util.Date;
 import java.util.List;
 
+import cn.edu.cup.manage.business.GraphOutput;
 import cn.edu.cup.manage.business.Parameters;
 import cn.edu.cup.manage.business.ProjectInputs;
 import cn.edu.cup.manage.business.ProjectOutputs;
@@ -240,5 +241,32 @@ public class ProjectOutputsAction {
 		dao.close();
 		return "SUCCESS"; 
 	}
-	
+	//图形运算结果输出
+	public String ProGraphiByGraphID(){
+		ProjectOutputDao dao=new ProjectOutputDao();
+		Graphi=dao.getProGraphi(this.pro_id,this.graphID);
+		return "SUCCESS"; 
+	}
+	int algID;
+	int graphID;
+	GraphOutput Graphi;
+
+	public int getAlgID() {
+		return algID;
+	}
+	public void setAlgID(int algID) {
+		this.algID = algID;
+	}
+	public int getGraphID() {
+		return graphID;
+	}
+	public void setGraphID(int graphID) {
+		this.graphID = graphID;
+	}
+	public GraphOutput getGraphi() {
+		return Graphi;
+	}
+	public void setGraphi(GraphOutput graphi) {
+		Graphi = graphi;
+	}
 }
