@@ -14,6 +14,12 @@ public class AlgorithmGraphi {
 	int id;
 	int graphiType;
 	String graphiName;
+	public String getGraphiTypeS() {
+		return graphiTypeS;
+	}
+	public void setGraphiTypeS(String graphiTypeS) {
+		this.graphiTypeS = graphiTypeS;
+	}
 	String graphiTypeS;
 	public static String getTypeSByNum(int type){
 		String typeStr="其他图";
