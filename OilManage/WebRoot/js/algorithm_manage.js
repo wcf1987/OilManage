@@ -84,7 +84,7 @@ $(
 									state) {
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setGraphi('"
-										+ rows.ID + "')\">图表参数设置</a>"
+										+ rows.ID + "','"+rows.name+"')\">图表参数设置</a>"
 							}
 						},
 						{
@@ -601,13 +601,13 @@ function setOutput(algID){
 /*
  * 设置输出图形化界面参数配置
  * */
-function setGraphi(algID){
+function setGraphi(algID,name){
 	$("#ItemOutputList").empty();
 	$('#outputAlgID').val(algID);
 	//loadParameterOptions("#outputParameterID");
 	//loadGraphilist(algID);
 	$('#listGraphi_modal').modal();
-	loadGraphi(algID);
+	loadGraphi(algID,name);
 	
 	
 	

@@ -1,10 +1,33 @@
 
 
-	var datagridGraph;
-	var AlgID;
-	function loadGraphi(CycleID) {	
-			AlgID=CycleID;
-		 datagridGraph = jQuery("#GraphiList").jqGrid(
+	var dataGraph;
+
+	function loadGraphi(CycleID,name){
+			
+		
+		if(dataGraph==null){
+			dataGraph=new GraphiConfig();
+			dataGraph.init(CycleID);
+		}
+		reloadGraphi(CycleID,name);
+			
+		
+	}
+	function reloadGraphi(algid,Name){
+		dataGraph.datagridGraph.setCaption(Name+"输出图管理");//表格名称
+		dataGraph.AlgID=algid;
+		dataGraph.Name=Name;
+		   var queryData={
+				   GraphiID:algid
+	               };
+		   dataGraph.datagridGraph.jqGrid("setGridParam", {   
+			   postData:{CycleID:algid}}).trigger("reloadGrid");
+	}
+	
+	
+	function GraphiConfig() {	
+		this.init=function(CycleID){
+		 this.datagridGraph = jQuery("#GraphiList").jqGrid(
 			{
 				url : "listGraphiByAlgID.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
@@ -55,7 +78,7 @@
 									state) {
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewGraphiDetail('"
-										+ rows.id + "' , '"+rows.graphiType+"')\">查看</a>"
+										+ rows.id + "' , '"+rows.graphiType+"','"+rows.graphiName+"')\">查看</a>"
 							}
 						}
 	
@@ -83,12 +106,12 @@
 				
 			});
 		//datagridGraph.jqGrid('filterToolbar',{searchOperators:true});
-		datagridGraph.jqGrid('navGrid','#GraphiPager',{
+		 this.datagridGraph.jqGrid('navGrid','#GraphiPager',{
 		edit : false,
 		add : false,
 		search:false,
 		del : false});
-		datagridGraph.jqGrid('navButtonAdd',"#GraphiPager",{
+		 this.datagridGraph.jqGrid('navButtonAdd',"#GraphiPager",{
 				title:'添加',
 				caption:"添加",
 				id:"add_Graphi",
@@ -112,7 +135,7 @@
 							}
 						},
 						submitHandler:function(){
-							add_Graphi();
+							add_Graphi(dataGraph.AlgID);
 						}
 					});
 						
@@ -179,7 +202,7 @@
 				position:"last"
 		
 			});*/
-			datagridGraph.jqGrid('navButtonAdd',"#GraphiPager",{
+		 this.datagridGraph.jqGrid('navButtonAdd',"#GraphiPager",{
 				title:'删除',
 				caption:"删除",	
 				id:"delete_GraphiList",
@@ -189,13 +212,13 @@
 	}//function end;
 	
 //添加新输出图
-	function add_Graphi() {
+	function add_Graphi(algID) {
 		//alert(hideFilePath);
 		$.ajax({
 			type : 'POST',
 			url : 'addGraphi.action',
 			data : {
-				CycleID:AlgID,
+				CycleID:algID,
 				graphiName : $("#graphiName").val(),
 				graphiType:$("#graphiType").val(),
 			},
@@ -286,4 +309,5 @@
 	        }); 
 	       } 
 	    } 
+	}
 	}
