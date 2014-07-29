@@ -18,6 +18,12 @@ public class TestList extends AlgorithmPlugBase{
 			b.add(a.get(i)*a.get(i));
 		}
 		this.info.addListOutput("listout", b);
+		this.info.addParamOutput("A1", 1.5);
+		this.info.addParamOutput("A2", 1.648);
+		this.info.addParamOutput("A3", 0.7);
+		this.info.addParamOutput("A4", 3.198);
+		
+		
 		return null;
 	}
 }

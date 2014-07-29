@@ -152,7 +152,7 @@ public class AlgorithmGraphiDao {
 			 q = session.createSQLQuery("select paramID from t_graphdetail t where t.graphid=? ");
 			 q.setParameter(0, graphID);
 		}else{
-			 q = session.createSQLQuery("select paramID from t_graphdetail t where t.graphid=? and t.info=? ");
+			 q = session.createSQLQuery("select paramID from t_graphdetail t where t.graphid=? and t.info1=? ");
 			 q.setParameter(0, graphID);
 			 q.setParameter(1, info);
 		}

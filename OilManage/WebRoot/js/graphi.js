@@ -295,12 +295,12 @@
 	        	alert("删除成功！");
 				$("#GraphiList").trigger("reloadGrid");
 	               if(msg!=0){ 
-	                   var arr = msg.split(','); 
+	                  /* var arr = msg.split(','); 
 	                   $.each(arr,function(i,n){ 
 	                         if(arr[i]!=""){ 
 	                             $("#GraphiList").jqGrid('delRowData',n);  
 	                         } 
-	                   }); 
+	                   }); */
 	                   $().message("已成功删除!"); 
 	               }else{ 
 	                   $().message("操作失败！"); 

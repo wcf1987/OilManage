@@ -202,7 +202,7 @@ public class ParameterDao {
 		return a;
 	}
 	public String getMessureShow(int paramid){
-		SQLQuery q = session.createSQLQuery("select CONCAT(t2.CName,'(',t2.Symbol,')') from t_parameters t,t_measure t2   where and t.measureID=t2.ID and t.ID=?");
+		SQLQuery q = session.createSQLQuery("select CONCAT(t2.CName,'(',t2.Symbol,')') from t_parameters t,t_measure t2   where  t.measureID=t2.ID and t.ID=?");
 		q.setParameter(0, paramid);
 		String a=(String)(q.uniqueResult());				
 		return a;
