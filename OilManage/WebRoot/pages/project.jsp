@@ -45,6 +45,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 
 	 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	 <link rel="stylesheet" type="text/css" href="bootstrap/css/carousel.css">
+	 <link rel="stylesheet" href="css/docs-5892f62386325d472ddefdaec9d29018.css"> 
+	 <link rel="stylesheet" type="text/css" media="screen" href="css/tabs.css" />
 	<!-- 自定义 -->
 	
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>
@@ -56,7 +58,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="bootstrap/js/holder.min.js"></script>
-	 
+	
+
 	<script src="js/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript"></script>
 	<script src="js/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 	
@@ -64,6 +67,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="js/upload/jquery.uploadify.min.js"></script>
 	<script type="text/javascript" src="js/jquery-validation-1.11.1/dist/jquery.validate.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery.message.js"></script>
+	<script src="js/easytabs/jquery.hashchange.min.js" type="text/javascript"></script>
+	<script src="js/easytabs/jquery.ba-hashchange.js" type="text/javascript"></script>
+	<script src="js/easytabs/jquery.easing.1.3.js" type="text/javascript"></script>
+	
+	<script src="js/easytabs/jquery.easytabs.js" type="text/javascript"></script>
+	<script src="js/easytabs/jquery.raptorize.1.0.js" type="text/javascript"></script>
+	
 	<!-- 自定义 -->
 	<script src="js/global.js"></script>
 	
@@ -94,7 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<ul class="nav nav-tabs">
 								<li class="active">
 									<a href="#panel-1" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">工程管理</a>
-								</li>
+								</li>							
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="panel-1">		
@@ -102,14 +112,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
 						      			<div id="ProjectPager" ></div>
 						      		</div>	      		
-								</div>						
-							</div>
+								</div>	
 						</div>
-										
+						
+						
+						      						
 					</div>
 				</div>
 			</div>
 	    </div><!-- /.container -->
+	    </div>
 	    <hr class="featurette-divider">
       	<div id="footer">
 	        <%@ include file="commons/footer.jsp" %>
@@ -552,13 +564,157 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div><!-- /.modal -->
 		
 		
-	
+		
+		
+		<!-- 查看详情的模态框 -->   	
+		<div class="modal fade" id="view_detail_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		      </div>
+		      <div class="modal-body">  
+		      	<div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<dl class="dl-horizontal">
+								<dt>
+									编号
+								</dt>
+								<dd id="AlgID">
+									
+								</dd>
+								<dt>
+									名称
+								</dt>
+								<dd id="AlgName">
+									
+								</dd>
+							
+								<dt>
+									描述
+								</dt>
+								<dd id="AlgDes">
+									
+								</dd>
+								<dt>
+									类名
+								</dt>
+								<dd id="AlgClassName">
+									
+								</dd>
+								<dt>
+									添加时间
+								</dt>
+								<dd id="AlgAddDate">
+									
+								</dd>
+								<dt>
+									最后更新时间
+								</dt>
+								<dd id="AlgLastUpdateDate">
+									
+								</dd>
+								<dt>
+									作者
+								</dt>
+								<dd id="AlgAuthor">
+									
+								</dd>
+							</dl>	
+							
+							<hr size=1 style="COLOR:#ff9999;border-style:double;width:490"> 
+							
+							<dl class="dl-horizontal">
+								
+								<dt>
+									输入参数明细
+								</dt>
+								<dd>
+									<table id="inputTable" class="table" >
+										<thead>
+											<tr>
+												<th>
+													编号
+												</th>
+												<th>
+													参数名
+												</th>
+												<th>
+													符号
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr id=inputTr>
+												<td>											
+												</td>
+												<td>											
+												</td>
+												<td>											
+												</td>						
+											</tr>									
+										</tbody>
+									</table>	
+								</dd>
+								<dt>
+									输出明细
+								</dt>
+								<dd>
+									<table id="outputTable" class="table" >
+										<thead>
+											<tr>
+												<th>
+													编号
+												</th>
+												<th>
+													参数名
+												</th>
+												<th>
+													符号
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr id=outputTr>
+												<td>											
+												</td>
+												<td>											
+												</td>
+												<td>											
+												</td>						
+											</tr>									
+										</tbody>
+									</table>	
+								</dd>															
+							</dl>						
+						</div>
+					</div>
+				</div>
+				<!-- 
+	      		<table id="AlgorithmInputList" class="table table-striped table-bordered table-hover datatable " style="width:600px;" ></table>
+	      		<div>
+	      			<div id="AlgorithmInputMeasurePager" ></div>
+	      		</div>	
+	      		 -->	  
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 			
 					
     	
-		
+		<script type="text/javascript">
+	/* 		$(function(){
+				$('#tab-side-container').easytabs({
+					  animate: false,
+					  tabActiveClass: "selected-tab",
+					  panelActiveClass: "displayed"
+					});
+			}); */
+		</script>
   </body>
-  
 </html>
 
 

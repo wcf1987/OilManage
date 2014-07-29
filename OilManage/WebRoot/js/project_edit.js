@@ -5,6 +5,42 @@ $(
 	
 	function() {
 		
+		setInput($("#proID").val());
+		selectAlgorithm($("#proID").val());
+		/*
+		 * 算法列表菜单
+		 */
+		$.ajax({
+			url:'listAlgorithmsCycle.action',
+			type:'post',
+			dataType:'json',
+			data : {
+				sidx: 'id',
+				sord: "desc"
+			},
+			success:function(data){
+				var items="";
+				var itemsTabs="";
+				$.each(data.dataList,function(i,algorithm){
+					
+					items+="<li style=\"width:200px;line-height:25px;font-size:15px;\"><a style='color:#444444;font-weight:bold' value='"+algorithm.ID+"' onclick='listAlgorithmDetail(this,"+algorithm.ID+")'>"+algorithm.name+"</a></li>";
+					
+					//items+="<li style=\"width:200px;\"><a value='"+algorithm.ID+"' href='#tabs"+algorithm.ID+"'>"+algorithm.name+"</a></li>";
+					
+					//itemsTabs+="<div id='tabs"+algorithm.ID+"' style=\"margin-left:120px;\">aaaa </div>";
+					//listAlgorithmDetail(algorithm.ID);
+				
+				  
+				});
+				$("#alglist").html(items);	
+//				$(".panel-container").html(itemsTabs);
+				/*$('#tab-side-container').easytabs({
+					  animate: false,
+					  tabActiveClass: "selected-tab",
+					  panelActiveClass: "displayed"
+					});*/
+			}
+		});
 		
 		$("li>input").blur(function() {
 			alert("test");
@@ -31,6 +67,7 @@ $(
 				}
 			});
 		});
+			
 		
 		
 	/*
@@ -98,7 +135,8 @@ $(
 							name : 'input',
 							index : 'input',
 							width : 100,
-							align : "center",					
+							align : "center",
+							hidden:true,
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
@@ -111,6 +149,7 @@ $(
 							index : 'select_algorithm',
 							width : 100,
 							align : "center",
+							hidden:true,
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
@@ -123,6 +162,7 @@ $(
 							index : 'execute',
 							width : 100,
 							align : "center",
+							hidden:true,
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
@@ -135,6 +175,7 @@ $(
 							index : 'output',
 							width : 100,
 							align : "center",
+							hidden:true,
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
@@ -163,7 +204,7 @@ $(
 									state) {
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"editProject('"
-										+ rows.ID +"','"+rows.name+ "')\">打开</a>"
+										+ rows.ID + "')\">打开</a>"
 							}
 						}
 						],
@@ -420,7 +461,8 @@ function viewHisInputOutput(obj){
 	$("#view_input_output_modal").css("z-index","9999");
 	$("#view_calchistory_modal").css("z-index","9998");
 }
-function viewOutput(proID){
+function viewOutput(){
+	$("#viewOutputDl").css("display","block");
 	$("#outputID").text("");
 	$("#outputName").text("");
 	$("#outputValue").text("");
@@ -430,7 +472,7 @@ function viewOutput(proID){
 		type:"post",
 		dataType:'json',
 		data:{
-			pro_id:proID,
+			pro_id:$("#proID").val(),
 			sidx: 'id',
 			sord: "desc"
 				
@@ -442,15 +484,14 @@ function viewOutput(proID){
 			$("#outputSymbol").text(data.dataList[0].mess);
 		}
 	});
-	$("#view_output_modal").modal();
 }
-function runAlg(proID){
+function runAlg(){
 	$.ajax({
 		url:'runAlgPro.action',
 		type:'post',
 		dataTpye:'json',
 		data:{
-			ID:proID
+			ID:$("#proID").val()
 		},
 		beforeSend: function() { 
               $().message("正在请求..."); 
@@ -474,7 +515,7 @@ function runAlg(proID){
  */
 function selectAlgorithm(proID){
 
-	$('#select_algorithm_modal').modal();
+	//$('#select_algorithm_modal').modal();
 	$('#proID2').val(proID);
 	loadAlgorithmOptions();
 	$("#selectAlgorithmForm").validate({
@@ -644,7 +685,7 @@ function setInput(proID){
 			add_proInput();
 		}
 	});
-	$('#setProjectInput_modal').modal();
+	//$('#setProjectInput_modal').modal();
 }
 /*
  * 加载参数下拉列表
@@ -834,8 +875,115 @@ function loadAuthorOptions(){
 	}
 
 
+function listAlgorithmDetail(obj,rowId){
+	$("#alglist li a").css("color","#000000");
+	$(obj).css({
+		'color':'#02A0CC',		
+	});
+	$("#loadAlgDiv").css('display','block');
+	$("#proinputTr").nextAll().remove();
+	$("#proinputTr").show();	
+	$("#proalgOutputTr").nextAll().remove();
+	$("#proalgOutputTr").show();	
+	$.ajax({
+		type:"post",
+		url:"viewAlgorithmDetail.action",
+		data:{
+			ID:rowId,
+			sidx:"ID",
+			sord:"asc"
+		},
+		success:function(data){
+			$("#proAlgID").text(data.algorithm.ID);
+			$("#proAlgName").text(data.algorithm.name);
+			$("#proAlgDes").text(data.algorithm.description);
+			$("#proAlgAddDate").text(data.algorithm.addDates);
+			$("#proAlgLastUpdateDate").text(data.algorithm.lastUpdateDates);
+			$("#proAlgAuthor").text(data.algorithm.authorName);
+			
+	
+			var tr=$("#proinputTr");
+			$.each(data.inputList,function(index,row){	
+				var clonedTr=tr.clone();
+				var _index=index;
+				clonedTr.children("td").each(function(inner_index){
+					switch(inner_index){
+						case(0):$(this).html(row.paramID);break;
+						case(1):$(this).html(row.display);break;
+						case(2):$(this).html("<input/>");break;
+						case(3):$(this).html(row.symbol);break;
+					
+					}//end switch
+				});//end children.each
+				clonedTr.insertAfter(tr);	
+			});//end $each
+			$("#proinputTr").hide();
+			$("#proinputTable").show();	
+			var tr=$("#proalgOutputTr");
+			$.each(data.outputList,function(index,row){
+				var clonedTr=tr.clone();
+				var _index=index;
+				clonedTr.children("td").each(function(inner_index){
+					switch(inner_index){
+//						case(0):$(this).html(row.ID);break;
+						case(0):$(this).html(row.display);break;
+						case(1):$(this).html("<span></span>");break;
+						case(2):$(this).html(row.symbol);break;
+					
+					}//end switch
+				});//end children.each
+				clonedTr.insertAfter(tr);		
+			});//end $each
+			$("#proalgOutputTr").hide();
+			$("#proalgOutputTable").show();			
+			
+		}
+	});
+}
 
-function editProject(projectID,projectName){
-	window.location.href="pages/project_edit.jsp?projectID="+projectID+"&projectName="+projectName+"&backurl="+window.location.href; 
+function saveProjectInput(){
+	var proID=$("#proID").val();
+	var paramID="";
+	var inputValue="";
+	var flag=1;
+	$("#proinputTable>tbody>tr").each(function(index,trItem){
+		
+		$(trItem).children("td").each(function(index,tdItem){
+			if(index==0){
+				paramID=$(tdItem).text();
+			}else if(index==2){
+				inputValue=$(tdItem).find("input").val();
+			}
+		});
+	
+		if(paramID!=null&&inputValue!=null){
+			$.ajax({
+				type : 'POST',
+				url : 'addProInputs.action',
+				data : {
+					pro_id:proID,
+					param_id:paramID,
+					value:inputValue
+				},
+				success : function(data) {
+					//alert('参数保存成功!');
+					/*items="<input style='display:none;' value="+data.ID+"'/><li><label class='control-label'>"+data.param.display+"</label>" +
+							"&nbsp;&nbsp;<input  style='width:60px;vertical-align:middle;' class='valuechange' name='modifyInputValue' value="+data.value+" '/> &nbsp;&nbsp;" +
+									"<span>"+data.param.measureSymbol+"</span>&nbsp;&nbsp;" +
+											"<button type='button' onclick='updateInputItem(this,"+data.ID+");' title='保存'>&radic;</button>&nbsp;&nbsp;" +
+													"<button type='button' onclick='deleteInputItem(this,"+data.ID+");' title='删除'>×</button></li>";
+					$("#ItemInputList").append(items);	*/	
+				},
+				error:function(msg){
+					alert(msg);
+					flag=0;
+				}
+			});
+		}
+		
+	});	
+	if(flag==1){
+		alert('参数保存成功!');
+	}
 }
 
