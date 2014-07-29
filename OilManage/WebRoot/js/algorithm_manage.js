@@ -13,7 +13,7 @@ $(
 				url : "listAlgorithmsCycle.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '名称', '作者','描述','添加时间','输入参数添加','输出参数设置','查看详情'],// 表格的列名
+				colNames : [ '编号', '名称', '作者','描述','添加时间','输入参数添加','输出参数设置','输出图表设置','查看详情'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -73,6 +73,18 @@ $(
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setOutput('"
 										+ rows.ID + "')\">输出参数设置</a>"
+							}
+						},
+						{
+							name : 'graphi',
+							index : 'graphi',
+							width : 100,
+							align : "center",
+							formatter : function(value, grid, rows,
+									state) {
+//								alert(rows.ID);
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setGraphi('"
+										+ rows.ID + "','"+rows.name+"')\">图表参数设置</a>"
 							}
 						},
 						{
@@ -581,6 +593,44 @@ function setOutput(algID){
 		}
 	});
 	$('#addAlgorithmOutput_modal').modal();
+}
+
+
+
+
+/*
+ * 设置输出图形化界面参数配置
+ * */
+function setGraphi(algID,name){
+	$("#ItemOutputList").empty();
+	$('#outputAlgID').val(algID);
+	//loadParameterOptions("#outputParameterID");
+	//loadGraphilist(algID);
+	$('#listGraphi_modal').modal();
+	loadGraphi(algID,name);
+	
+	
+	
+	/*$("#addAlgorithmOutputForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			outputParameterID:{
+				required:true
+			}
+		},
+		messages:{
+			outputParameterID:{
+				required:"请选择输入参数！"
+			}
+		},
+		submitHandler:function(){
+			add_algOutput();
+		}
+	});
+	$('#addAlgorithmOutput_modal').modal();*/
 }
 /*
  * 加载已有的算法输出列表

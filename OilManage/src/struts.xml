@@ -204,6 +204,13 @@
 			<result name="SUCCESS" type="json">
 			</result>
 		</action>
+				<action name="listParameterByCondition" class="cn.edu.cup.manage.action.ParametersManageAction"
+			method="listByCondition">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		
 		<action name="updateParameter" class="cn.edu.cup.manage.action.ParametersManageAction"
 			method="update">
 

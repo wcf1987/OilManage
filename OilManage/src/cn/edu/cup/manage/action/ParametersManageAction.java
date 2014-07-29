@@ -141,7 +141,37 @@ public class ParametersManageAction extends ActionSupport{
 		dao.close();
 		return "SUCCESS";
 	}
+	int algID;
+	int gtype;
+	public int getAlgID() {
+		return algID;
+	}
+	public void setAlgID(int algID) {
+		this.algID = algID;
+	}
+	public int getGtype() {
+		return gtype;
+	}
+	public void setGtype(int gtype) {
+		this.gtype = gtype;
+	}
+	public String listByCondition(){		
 
+		ParameterDao dao=new ParameterDao();
+
+		dataList=dao.getParametersListByCondition(algID,gtype,page,rows,sidx,sord);
+	
+		records=dao.getCountParameters();
+
+		if(records!=0&&rows!=0){
+			total=records/rows;
+			if(records%rows!=0){
+				total++;
+			}
+		}
+		dao.close();
+		return "SUCCESS";
+	}
 
 	public String add(){
 

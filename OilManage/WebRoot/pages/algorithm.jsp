@@ -60,7 +60,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 	<script type="text/javascript" src="js/algorithm_manage.js"></script>
-
+	<script type="text/javascript" src="js/graphi.js"></script>
+	<script type="text/javascript" src="js/graphiDetail.js"></script>
   </head>
   
   <body style="background-color:#CCCCCC;">
@@ -465,6 +466,193 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      		 -->	  
 		      </div>
 		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
+		
+		
+		 <!-- 查看输出图参数的模态框 -->   	
+		<div class="modal fade" id="listGraphi_modal"  >
+		  <div class="modal-dialog">
+		    <div class="modal-content" style="width: 870px;">		      
+		      <div class="modal-body" >  
+		      	<div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table id="GraphiList" class="table table-striped table-bordered table-hover datatable " ></table>
+						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:800" >
+						      			<div id="GraphiPager" ></div>
+						      		</div>	
+						</div>
+					</div>
+				</div>				  
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		<!-- /.添加新的图形输出参数 -->
+		<div id="addnewGraphiModal" class="modal fade">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title">添加新图表</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<form id="addGraphiForm" action="addGraphi.action" method="post"> 
+			        <p> 
+			        <!-- 上传文件选择 -->
+			        	 图名称：<input type="text" name="graphiName" id='graphiName'/><em style="color:red">*</em><br> <br> 
+			        	  图类型：  	<select id="graphiType" name="graphiType">
+  								<option value ="0" SELECTED>线形图</option>
+  								<option value ="1">饼图</option>
+  								<option value="2">柱状图</option>
+  								<option value="3">其他</option>
+								</select>
+   						<em style="color:red">*</em><br> <br> 
+   					
+			        </p>  		 
+			 		
+			      <div class="modal-footer">
+			       	<button type="submit" class="btn btn-primary">保存 &nbsp;</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        </div>
+		      	</form>
+		       </div>
+		       
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
+		
+				 <!-- 查看输出图详细参数的模态框 -->   	
+		<div class="modal fade" id="listGraphiDetail_modal"  >
+		  <div class="modal-dialog">
+		    <div class="modal-content" style="width: 870px;">		      
+		      <div class="modal-body" >  
+		      	<div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table id="GraphiDetailList" class="table table-striped table-bordered table-hover datatable " ></table>
+						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:800" >
+						      			<div id="GraphiDetailPager" ></div>
+						      		</div>	
+						</div>
+					</div>
+				</div>				  
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		<!-- /.添加新的图形输出参数 -->
+		<div id="addnewGraphiDetailModal0" class="modal fade">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title">线形图参数设置(只能添加列表参数)</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<form id="addGraphiDetailForm" action="addGraphiDetail.action" method="post"> 
+			       <div class="centent"> 
+		      	  	<input id="algID" style="display: none;"/> 
+		      	  	 参数选择：
+				    <select  id="addParameterDetailID" name="addParameterDetailID" style="width:200px;height:auto;">  
+				    
+				    </select>  
+				    <em style="color:red">*</em><br> <br> 
+				   				   
+				   	坐标轴：<select name="info1" id="info1">
+  								<option value ="X" SELECTED>X轴</option>
+  								<option value ="Y">Y轴</option>
+								</select>
+								
+								<em style="color:red">*</em><br> <br>;
+				   	
+				   		
+				  </div> 
+			 		
+			      <div class="modal-footer">
+			       	<button type="submit" class="btn btn-primary">保存 &nbsp;</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        </div>
+		      	</form>
+		       </div>
+		       
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
+		<!-- /.添加新的图形输出参数 -->
+		<div id="addnewGraphiDetailModal1" class="modal fade">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title">饼图参数设置(只能添加单值参数)</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<form id="addGraphiDetailForm1" action="addGraphiDetail.action" method="post"> 
+			       <div class="centent"> 
+		      	  	<input id="algID" style="display: none;"/> 
+		      	  	 参数选择：
+				    <select  id="addParameterDetailID1" name="addParameterDetailID1" style="width:200px;height:auto;">  
+				    
+				    </select>  
+				    <em style="color:red">*</em><br> <br> 
+				   				   
+				   	
+				   		
+				  </div> 
+			 		
+			      <div class="modal-footer">
+			       	<button type="submit" class="btn btn-primary">保存 &nbsp;</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        </div>
+		      	</form>
+		       </div>
+		       
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
+		<!-- /.添加新的图形输出参数 -->
+		<div id="addnewGraphiDetailModal2" class="modal fade">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title">柱状图参数设置(只能添加列表参数)</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<form id="addGraphiDetailForm2" action="addGraphiDetail.action" method="post"> 
+			       <div class="centent"> 
+		      	  	<input id="algID" style="display: none;"/> 
+		      	  	 参数选择：
+				    <select  id="addParameterDetailID2" name="addParameterDetailID2" style="width:200px;height:auto;">  
+				    
+				    </select>  
+				    <em style="color:red">*</em><br> <br> 
+				   
+				   		
+				  </div> 
+			 		
+			      <div class="modal-footer">
+			       	<button type="submit" class="btn btn-primary">保存 &nbsp;</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        </div>
+		      	</form>
+		       </div>
+		       
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->

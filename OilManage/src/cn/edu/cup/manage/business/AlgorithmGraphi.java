@@ -14,7 +14,29 @@ public class AlgorithmGraphi {
 	int id;
 	int graphiType;
 	String graphiName;
+	public String getGraphiTypeS() {
+		return graphiTypeS;
+	}
+	public void setGraphiTypeS(String graphiTypeS) {
+		this.graphiTypeS = graphiTypeS;
+	}
 	String graphiTypeS;
+	public static int getParTypeNeedByNum(int type){
+		int typeNeed=0;
+		if(type==0){
+			typeNeed=1;
+		}
+		if(type==1){
+			typeNeed=0;
+		}
+		if(type==2){
+			typeNeed=1;
+		}
+		if(type==3){
+			typeNeed=-1;
+		}
+		return typeNeed;
+	}
 	public static String getTypeSByNum(int type){
 		String typeStr="其他图";
 		if(type==0){

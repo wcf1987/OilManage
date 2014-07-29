@@ -13,6 +13,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
+import cn.edu.cup.manage.business.AlgorithmGraphi;
 import cn.edu.cup.manage.business.Measure;
 import cn.edu.cup.manage.business.Parameters;
 import cn.edu.cup.manage.business.Physical;
@@ -124,8 +125,43 @@ public class ParameterDao {
 		
 		return re;
 	}
+	public List<Parameters> getParametersListByCondition(int algID,int gtype,int page,int rows,String sidx,String sord) {
+		String SQL="SELECT t1.id,t1.measureID,CONCAT(CName,'(',t2.Symbol,')'),t1.display,t1.name ,t1.type from t_parameters t1,t_measure t2,t_algorithmoutput t3 where t1.measureID=t2.ID and t1.ID=t3.ParamID and t3.CycleID=? and t1.type=? order by t1."+sidx+" "+sord;
+		
+		int needType=AlgorithmGraphi.getParTypeNeedByNum(gtype);
+		if(needType==-1){
+			SQL="SELECT t1.id,t1.measureID,CONCAT(CName,'(',t2.Symbol,')'),t1.display,t1.name ,t1.type from t_parameters t1,t_measure t2,t_algorithmoutput t3 where t1.measureID=t2.ID and t1.ID=t3.ParamID and t3.ID=? and -1=? order by t1."+sidx+" "+sord;
+			
+		}
+		SQLQuery q = session.createSQLQuery(SQL);
+		q.setParameter(0, algID);
+		q.setParameter(1, needType);
+		q.setFirstResult((page-1)*rows);
+		q.setMaxResults(rows);
+		List l = q.list();
+		List<Parameters> re=new ArrayList<Parameters>();
+		for(int i=0;i<l.size();i++)
+		{
+			//TestDb user = (TestDb)l.get(i);
+			//System.out.println(user.getUsername());
 
+			  Object[] row = (Object[])l.get(i);
+			  Integer id = (Integer)row[0];
+			  String mid = row[1].toString();  
+			  String mSymbol = (String)row[2];  
+			  String display=(String)row[3];
+			  String name=(String)row[4];
+			  int type=(Integer)row[5];
+			  
+			  Parameters p=new Parameters(id, mid, mSymbol, display, name,type);
 
+			  
+			  re.add(p);
+		}
+		
+		return re;
+	}
+	
 	
 	public int deleteParameter(int  id) {
 

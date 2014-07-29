@@ -57,7 +57,7 @@ public class AlgorithmGraphiDao {
 	}
 	
 	public List<AlgorithmGraphiDetail> getAlgGraphiDetailList(int GraphiID) {
-		SQLQuery q = session.createSQLQuery("select t.id,t.paramid,t1.display,t1.type,CONCAT(t2.CName,'(',t2.Symbol,')') from t_graphdetail t,t_parameters t1,t_measure t2  where t.ParamID=t1.ID and t1.measureID=t2.ID and t.graphid=? order by t.id desc");
+		SQLQuery q = session.createSQLQuery("select t.id,t.paramid,t1.display,t1.type,CONCAT(t2.CName,'(',t2.Symbol,')') , t.info1 , t.info2 from t_graphdetail t,t_parameters t1,t_measure t2  where t.ParamID=t1.ID and t1.measureID=t2.ID and t.graphid=? order by t.id desc");
 		q.setParameter(0, GraphiID);
 
 		List l = q.list();
@@ -73,9 +73,10 @@ public class AlgorithmGraphiDao {
 			  String displayName = ((String)row[2]);
 			  int type = ((Integer)row[3]);	
 			  String displayMess = ((String)row[4]);
-			  
+			  String info1=((String)row[5]);
+			  String info2=((String)row[6]);
 			  String typeS=Parameters.getTypeSByNum(type);
-			  AlgorithmGraphiDetail p=new AlgorithmGraphiDetail(id,GraphiID,paramid,displayName,typeS,displayMess);
+			  AlgorithmGraphiDetail p=new AlgorithmGraphiDetail(id,GraphiID,paramid,displayName,typeS,displayMess,info1,info2);
 			  re.add(p);
 		}
 		
@@ -94,11 +95,13 @@ public class AlgorithmGraphiDao {
 		return re;
 	}
 
-	public int addAlgGraphiDetail(int graphiID, int paramID) {
+	public int addAlgGraphiDetail(int graphiID, int paramID,String info1,String info2) {
 		HibernateSessionManager.getThreadLocalTransaction();
-		SQLQuery q = session.createSQLQuery("insert into t_graphdetail (graphid,ParamID) values (?,?)");
+		SQLQuery q = session.createSQLQuery("insert into t_graphdetail (graphid,ParamID,info1,info2) values (?,?,?,?)");
 		q.setParameter(0, graphiID);
 		q.setParameter(1, paramID);
+		q.setParameter(2, info1);
+		q.setParameter(3, info2);
 		int re=q.executeUpdate();
 		
 		return re;
