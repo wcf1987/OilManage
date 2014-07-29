@@ -607,8 +607,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    <select  id="addParameterDetailID1" name="addParameterDetailID1" style="width:200px;height:auto;">  
 				    
 				    </select>  
+				    
 				    <em style="color:red">*</em><br> <br> 
-				   				   
+				   				
 				   	
 				   		
 				  </div> 
@@ -642,7 +643,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    
 				    </select>  
 				    <em style="color:red">*</em><br> <br> 
-				   
+				   坐标轴：<select name="info2_1" id="info2_1">
+  								<option value ="X" SELECTED>X轴</option>
+  								<option value ="Y">Y轴</option>
+								</select>
+								
+								<em style="color:red">*</em><br> <br>;	   
 				   		
 				  </div> 
 			 		

@@ -21,15 +21,22 @@ function GraphiCharts(){
 				
 				for (var i=0;i<listGraphi.length;i++){
 					var temp=listGraphi[i];
+					 
+					var drawnew= document.createElement('div');
+					//drawnew.innerHTML = "test";
+					drawnew.id="graphi"+i;
+					drawnew.style="width:50%; height:400px;margin-top:10px;margin-left:200px;";
+					$("#graphiDraw").append(drawnew)
+					
 					//alert(temp.graphiType);
 					if (temp.graphiType==0){
-						graphiCharts.loadLines(pro_id,temp.id,i);
-					}
-					if (temp.graphiType==1){
-						graphiCharts.loadBars(pro_id,temp.id,i);
+						graphiCharts.loadLines(pro_id,temp.id,i,drawnew.id);
 					}
 					if (temp.graphiType==2){
-						graphiCharts.loadPies(pro_id,temp.id,i);
+						graphiCharts.loadBars(pro_id,temp.id,i,drawnew.id);
+					}
+					if (temp.graphiType==1){
+						graphiCharts.loadPies(pro_id,temp.id,i,drawnew.id);
 					}
 					
 					
@@ -38,7 +45,7 @@ function GraphiCharts(){
 			}
 		});
 	}
-	this.loadLines=function(pro_id,graphid,index){
+	this.loadLines=function(pro_id,graphid,index,container){
 		$.ajax({
 			url:'getProGraphi.action',
 			type:'post',
@@ -49,20 +56,14 @@ function GraphiCharts(){
 			},
 			success:function(data){				
 					var graphitemp=data['graphi'];
-					graphiCharts.graphiArray[index]=graphiCharts.drawLines(graphitemp['y'][0].messure);
+					var chart=graphiCharts.drawLines(graphitemp['y'][0].messure,container);
 					//alert(1);
 					var X=graphitemp['x'];
-					var chart=graphiCharts.graphiArray[index];
-					 chart.addAxis({ // Secondary yAxis
-		                    title : {
-		                        text : X.display
-		                    },
-		                    lineWidth : 5,
-		                    lineColor : '#08F',
-		                   
-		                    categories : X.value
-		                },true);
-					 
+					//var chart=graphiCharts.graphiArray[index];
+					chart.xAxis[0].setCategories(X.value,true);
+					chart.xAxis[0].setTitle({
+						text: X.display+"   "+X.messure				
+						},true); 
 					
 					var Y=graphitemp['y'];
 					
@@ -71,17 +72,54 @@ function GraphiCharts(){
 						chart.addSeries({
 		                    id:k,
 		                    name: Y[k].display,
-		                    data: Y[k].Value		
+		                    data: Y[k].value		
 		                    }); 
 					}
-					/*chart.addSeries( {
-		                name: 'London',
-		                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-		            })*/
+					
 			}
 			});
 	}
-	this.loadBars=function(pro_id,graphid,index){
+	this.drawLines=function(tip,container){
+		  var	chart = new Highcharts.Chart({
+			  		chart: {
+			  			renderTo: container,
+				        type: 'line'
+				                      },
+		            title: {
+		                text: '',
+		                x: -20 //center
+		            },
+		            subtitle: {
+		                text: '',
+		                x: -20
+		            },
+		            xAxis: {
+		               // categories: ['0.1','0.2','0.3','0.4','0.5','0.6']
+		            },
+		            yAxis: {
+		                title: {
+		                    text: ''
+		                },
+		                plotLines: [{
+		                    value: 0,
+		                    width: 0.01,
+		                    color: '#808080'
+		                }]
+		            },
+		            tooltip: {
+		                valueSuffix: tip
+		            },
+		            legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'middle',
+		                borderWidth: 0
+		            },
+		            series: []
+		        });
+		     return  chart;
+		}
+	this.loadBars=function(pro_id,graphid,index,container){
 		$.ajax({
 			url:'getProGraphi.action',
 			type:'post',
@@ -91,40 +129,31 @@ function GraphiCharts(){
 				graphID:graphid
 			},
 			success:function(data){				
-					var graphitemp=data['graphi'];
-					graphiCharts.graphiArray[index]=graphiCharts.drawBars(graphitemp['y'][0].messure);
-					
-					var X=graphitemp['x'];
-					var chart=graphiCharts.graphiArray[index];
-					 chart.addAxis({ // Secondary yAxis
-		                    title : {
-		                        text : X.display
-		                    },
-		                    lineWidth : 5,
-		                    lineColor : '#08F',
-		                   
-		                    categories : X.value
-		                },true);
-					 
-					
-					var Y=graphitemp['y'];
-					
-					chart.setTitle({text:graphitemp.graphiName});
-					for(var k=0;k<Y.length;k++){
-						chart.addSeries({
-		                    id:k,
-		                    name: Y[k].display,
-		                    data: Y[k].Value		
-		                    }); 
-					}
-					/*chart.addSeries( {
-		                name: 'London',
-		                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-		            })*/
+				var graphitemp=data['graphi'];
+				var chart=graphiCharts.drawBars(graphitemp['y'][0].messure,container);
+				//alert(1);
+				var X=graphitemp['x'];
+				//var chart=graphiCharts.graphiArray[index];
+				chart.xAxis[0].setCategories(X.value,true);
+				chart.xAxis[0].setTitle({
+					text: X.display+"   "+X.messure				
+					},true); 
+				
+				var Y=graphitemp['y'];
+				
+				chart.setTitle({text:graphitemp.graphiName});
+				for(var k=0;k<Y.length;k++){
+					chart.addSeries({
+	                    id:k,
+	                    name: Y[k].display,
+	                    data: Y[k].value		
+	                    }); 
+				}
+				
 			}
 			});
 	}
-	this.loadPies=function(pro_id,graphid,index){
+	this.loadPies=function(pro_id,graphid,index,container){
 		$.ajax({
 			url:'getProGraphi.action',
 			type:'post',
@@ -139,31 +168,19 @@ function GraphiCharts(){
 						return;
 					}
 					var temp=graphitemp['points'][0];
-					var chart=graphiCharts.drawPies(temp.messure);
-					//alert(1);
-					//graphiCharts.graphiArray[index]=chart;
-					/*
-					chart.addAxis({ // Secondary yAxis
-		                    title : {
-		                        text : X.display
-		                    },
-		                    lineWidth : 5,
-		                    lineColor : '#08F',
-		                   
-		                    categories : X.value
-		                },true);*/
-					 
-					
+					var chart=graphiCharts.drawPies(temp.messure,container);					
 					temp=graphitemp['points']
 					
 					chart.setTitle({text:graphitemp.graphiName});
+					var tempArr=new Array;
 					for(var k=0;k<temp.length;k++){
-						chart.addSeries({
-		                    id:k,
-		                    name: temp[k].display,
-		                    data: temp[k].Value		
-		                    }); 
+						tempArr[k]=new Array(temp[k].display,temp[k].value);
 					}
+					chart.addSeries({
+			                type: 'pie',
+			                name: '占比',
+			                data:tempArr
+		            }); 
 					/*chart.addSeries( {
 		                name: 'London',
 		                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
@@ -171,51 +188,11 @@ function GraphiCharts(){
 			}
 			});
 	}
-	this.drawLines=function(tip){
-	  var	chart = new Highcharts.Chart({
-		  		chart: {
-		  			renderTo: 'container1',
-			        type: 'line'
-			                      },
-	            title: {
-	                text: '',
-	                x: -20 //center
-	            },
-	            subtitle: {
-	                text: '',
-	                x: -20
-	            },
-	            /*xAxis: {
-	                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-	                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-	            },*/
-	            yAxis: {
-	                title: {
-	                    text: ''
-	                },
-	                plotLines: [{
-	                    value: 0,
-	                    width: 1,
-	                    color: '#808080'
-	                }]
-	            },
-	            tooltip: {
-	                valueSuffix: tip
-	            },
-	            legend: {
-	                layout: 'vertical',
-	                align: 'right',
-	                verticalAlign: 'middle',
-	                borderWidth: 0
-	            },
-	            series: []
-	        });
-	     return  chart;
-	}
-	this.drawBars=function(tip){
+	
+	this.drawBars=function(tip,container){
 		  var	chart = new Highcharts.Chart({
 			  		chart: {
-			  			renderTo: 'container0',
+			  			renderTo: container,
 				        type: 'bar'
 				                      },
 		            title: {
@@ -256,45 +233,32 @@ function GraphiCharts(){
 		        });
 		     return  chart;
 		}
-	this.drawPies=function(tip){
+	this.drawPies=function(tip,container){
 		  var	chart = new Highcharts.Chart({
-			  		chart: {
-			  			renderTo: 'container2',
-				        type: 'pie'
-				                      },
-		            title: {
-		                text: '',
-		                x: -20 //center
-		            },
-		            subtitle: {
-		                text: '',
-		                x: -20
-		            },
-		            /*xAxis: {
-		                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-		                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-		            },*/
-		            yAxis: {
-		                title: {
-		                    text: ''
-		                },
-		                plotLines: [{
-		                    value: 0,
-		                    width: 1,
-		                    color: '#808080'
-		                }]
-		            },
-		            tooltip: {
-		                valueSuffix: tip
-		            },
-		            legend: {
-		                layout: 'vertical',
-		                align: 'right',
-		                verticalAlign: 'middle',
-		                borderWidth: 0
-		            },
-		            series: []
-		        });
+			  chart: {
+	                plotBackgroundColor: null,
+	                renderTo: container,
+	                plotBorderWidth: null,
+	                plotShadow: false
+	            },
+	            title: {
+	                text: 'Browser market shares at a specific website, 2014'
+	            },
+	            tooltip: {
+	        	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	            },
+	            plotOptions: {
+	                pie: {
+	                    allowPointSelect: true,
+	                    cursor: 'pointer',
+	                    dataLabels: {
+	                        enabled: false
+	                    },
+	                    showInLegend: true
+	                }
+	            },
+
+	        });
 		     return  chart;
 		}
 		

@@ -55,11 +55,25 @@ public class AlgorithmGraphiAction {
 	}
 	public String  addGraphiDetail(){
 		AlgorithmGraphiDao dao=new AlgorithmGraphiDao();
-
+		error="";
+		if(dao.checkExists(this.GraphiID,this.paramID)){
+			dao.close();
+			error="已经添加过，一幅图中一个参数只能出现一次";
+			return "SUCCESS";
+		}
+		if(dao.checkXExists(this.GraphiID,this.paramID,this.info1)){
+			dao.close();
+			error="已经添加过，一幅图中X轴只有一个";
+			return "SUCCESS";
+		}
 		int re=dao.addAlgGraphiDetail(this.GraphiID,this.paramID,this.info1,this.info2);
 		dao.close();
 		return "SUCCESS";
 	}
+	public String getError() {
+		return error;
+	}
+	String error;
 	String info1;
 	String info2;
 	public String getInfo1() {

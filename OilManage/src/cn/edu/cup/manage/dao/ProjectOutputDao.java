@@ -241,7 +241,8 @@ public class ProjectOutputDao {
 			temp.setType(type);
 			temp.setTypeS(AlgorithmGraphi.getTypeSByNum(type));
 			temp.setGraphiName(graphiDao.getGraphiNameByID(graphID));
-			temp.setHistogram(this.getProGraphiHistogram(pro_id, graphID));
+			temp.setX(this.getProGraphiLineX(pro_id,graphID));
+			temp.setY(this.getProGraphiLineY(pro_id,graphID));
 			
 			
 		}

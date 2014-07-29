@@ -31,9 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body style="background-color:#CCCCCC;">
- 		<div id="container0" style="width:100%; height:400px;"></div>
- 		<div id="container1" style="width:100%; height:400px;margin-top:10px;"></div>
- 		<div id="container2" style="width:100%; height:400px;margin-top:10px;"></div>
+  <div id="graphiDraw" style="width:100%; height:auto;margin-left:200px;"></div> 		
   </body>
   
 </html>

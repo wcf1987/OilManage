@@ -2,6 +2,7 @@ package cn.edu.cup.manage.business;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.manage.dao.ProjectCalcHisDao;
@@ -41,5 +42,18 @@ public abstract class AlgorithmPlugBase implements AlgorithmJarPlug{
 		}
 		
 	}
-
+	public void save(String paramName,List<Double> value){
+		 info.addListOutput(paramName,value);
+		
+	}
+	public void save(String paramName,Double value){
+		 info.addParamOutput(paramName,value);
+		
+	}
+	public List<Double> getList(String name){
+		return info.getListInput(name);
+	}
+	public Double getParam(String name){
+		return info.getParamInput(name);
+	}
 }

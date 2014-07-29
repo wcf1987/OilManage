@@ -1,5 +1,6 @@
 package cn.edu.cup.manage.dao;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +107,27 @@ public class AlgorithmGraphiDao {
 		
 		return re;
 	}
-
+	public boolean checkExists(int graphiID, int paramID){
+		SQLQuery q = session.createSQLQuery("select count(*) from t_graphdetail t where t.graphid=? and t.paramID=? ");
+		q.setParameter(0, graphiID);
+		q.setParameter(1, paramID);
+		int re=((BigInteger)q.uniqueResult()).intValue();
+		if(re>0){
+			return true;
+		}
+		return false;
+	}
+	public boolean checkXExists(int graphiID, int paramID,String info1){
+		if(info1.equalsIgnoreCase("X")){
+		SQLQuery q = session.createSQLQuery("select count(*) from t_graphdetail t where t.graphid=? and t.info1='X'");
+		q.setParameter(0, graphiID);
+		int re=((BigInteger)q.uniqueResult()).intValue();
+		if(re>0){
+			return true;
+		}
+		}
+		return false;
+	}
 	public int delAlgGraphi(int graphiID) {
 		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_algorithmgraph where ID=?");

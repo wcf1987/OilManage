@@ -194,7 +194,7 @@ public class AlgorithmProDao {
 			  int type=(Integer)row[2];
 				//加载单值
 			  if(type==0){
-			  temp.addParamInput(name, value);
+				  temp.addParamInput(name, value);
 			  }
 			  //加载多值
 			  if(type==1){
@@ -215,7 +215,7 @@ public class AlgorithmProDao {
 		Integer alg=((Integer)q2.uniqueResult()).intValue();
 		temp.setAlgorthm(alg);
 		
-		SQLQuery q3 = session.createSQLQuery("SELECT t1.name from t_algorithmoutput t,t_parameters t1 where t.CycleID=? and t.ParamID=t1.ID");
+		/*SQLQuery q3 = session.createSQLQuery("SELECT t1.name from t_algorithmoutput t,t_parameters t1 where t.CycleID=? and t.ParamID=t1.ID");
 		q3.setParameter(0, alg);
 		
 		l = q3.list();
@@ -232,7 +232,7 @@ public class AlgorithmProDao {
 			  
 			 
 			  
-		}
+		}*/
 		
 		
 		return temp;

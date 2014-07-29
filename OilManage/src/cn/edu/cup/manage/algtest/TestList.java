@@ -12,18 +12,26 @@ public class TestList extends AlgorithmPlugBase{
 	}
 
 	public String startCalc() {
-		List<Double> a=this.info.getListInput("listin");
+		List<Double> a=getList("listin");
 		List<Double> b=new ArrayList<Double>();
 		for(int i=0;i<a.size();i++){
 			b.add(a.get(i)*a.get(i));
 		}
-		this.info.addListOutput("listout", b);
-		this.info.addParamOutput("A1", 1.5);
-		this.info.addParamOutput("A2", 1.648);
-		this.info.addParamOutput("A3", 0.7);
-		this.info.addParamOutput("A4", 3.198);
-		
-		
+		List<Double> x=getList("Xp1");
+		List<Double> sinx=new ArrayList<Double>();
+		List<Double> cosx=new ArrayList<Double>();
+		for(int i=0;i<x.size();i++){
+			sinx.add(Math.sin(x.get(i)));
+			cosx.add(Math.cos(x.get(i)));
+		}
+		save("listout", b);
+		save("A1", 1.5);
+		save("A2", 1.648);
+		save("A3", 0.7);
+		save("A4", 3.198);
+		save("Xp1", x);
+		save("sinx1", sinx);
+		save("cosx", cosx);
 		return null;
 	}
 }

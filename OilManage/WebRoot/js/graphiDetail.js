@@ -272,6 +272,10 @@ function GraphiDetail() {
 							info2:'',
 						},
 						success : function(data) {
+							if(data.error!=''){
+								alert(data.error);
+								return
+							}
 							alert('添加图表配置成功');
 							$('#addnewGraphiDetailModal0').modal('hide');
 							
@@ -296,6 +300,10 @@ function GraphiDetail() {
 							info2:'',
 						},
 						success : function(data) {
+							if(data.error!=''){
+								alert(data.error);
+								return
+							}
 							alert('添加图表配置成功');							
 								$('#addnewGraphiDetailModal1').modal('hide');
 						
@@ -319,10 +327,14 @@ function GraphiDetail() {
 						data : {
 							GraphiID:gid,
 							paramID : $("#addParameterDetailID2").val(),
-							info1:'',
+							info1:$("#info2_1").val(),
 							info2:'',
 						},
 						success : function(data) {
+							if(data.error!=''){
+								alert(data.error);
+								return
+							}
 							alert('添加图表配置成功');
 							$('#addnewGraphiDetailModal2').modal('hide');
 							
