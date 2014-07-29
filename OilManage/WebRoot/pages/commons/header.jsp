@@ -54,6 +54,9 @@ User userlogin=(User)(session.getAttribute("user"));
    			case "/OilManage/pages/project.jsp":
    				$("#project").parent().addClass("active");
    				break;
+   		 	case "/OilManage/pages/project_edit.jsp":
+   				$("#project").parent().addClass("active");
+   				break; 
    			case "/OilManage/pages/optimize.jsp":
    				$("#optimize").parent().addClass("active");
    				break;
