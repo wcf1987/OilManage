@@ -1,13 +1,12 @@
 package cn.edu.cup.manage.algtest;
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import cn.edu.cup.manage.business.AlgorithmJarPlug;
+import cn.edu.cup.algjar.AlgorithmPlug;
 
 public class Test {
 
@@ -33,7 +32,7 @@ public class Test {
            
             Constructor c1=c.getDeclaredConstructor(new Class[]{int.class});   
             c1.setAccessible(true);   
-            AlgorithmJarPlug a1=(AlgorithmJarPlug)c1.newInstance(new Object[]{3});   
+            AlgorithmPlug a1=(AlgorithmPlug)c1.newInstance(new Object[]{3});   
 	        
 
 	        System.out.println(a1.startCalc());//调用Jar中的类方法

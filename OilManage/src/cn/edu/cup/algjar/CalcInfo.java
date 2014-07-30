@@ -1,16 +1,16 @@
-package cn.edu.cup.manage.business;
+package cn.edu.cup.algjar;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CalcInfo {
-	Map<String,Double> paramInputs=new HashMap<String,Double>();
-	Map<String,Double> paramOutputs=new HashMap<String,Double>();
+	public Map<String,Double> paramInputs=new HashMap<String,Double>();
+	public Map<String,Double> paramOutputs=new HashMap<String,Double>();
 
-	Map<String,List<Double>> listInputs=new HashMap<String,List<Double>>();
-	Map<String,List<Double>> listOutputs=new HashMap<String,List<Double>>();
-	int Algorthm;
+	public Map<String,List<Double>> listInputs=new HashMap<String,List<Double>>();
+	public Map<String,List<Double>> listOutputs=new HashMap<String,List<Double>>();
+	public int Algorthm;
 	public Map<String, Double> getParamInputs() {
 		return paramInputs;
 	}

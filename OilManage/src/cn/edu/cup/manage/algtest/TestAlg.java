@@ -1,20 +1,15 @@
 package cn.edu.cup.manage.algtest;
 
-import cn.edu.cup.manage.business.AlgorithmPlugBase;
+import cn.edu.cup.algjar.AlgorithmPlug;
 
-public class TestAlg extends AlgorithmPlugBase{
+public class TestAlg extends AlgorithmPlug{
 	
-	public TestAlg(int pro_id) {
-		super(pro_id);
-		// TODO Auto-generated constructor stub
+	public TestAlg() {
+	
 	}
 
 	public String startCalc() {
-		double a=this.info.getParamInput("a");
-		double b=this.info.getParamInput("b");
-		double c=a+b;
-		this.info.addParamOutput("c", c);
-		System.out.println(c);
+
 		return null;
 	}
 }

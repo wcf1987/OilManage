@@ -5,12 +5,12 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 
-import cn.edu.cup.manage.business.AlgorithmJarPlug;
+import cn.edu.cup.algjar.AlgorithmPlug;
 import cn.edu.cup.manage.business.MyClassLoader;
 
 public class JarTools {
-	public static AlgorithmJarPlug getPlug(String filename,String ClassName,int pro_id){
-		String class_path = "cn.edu.cup.manage.algtest."+ClassName;//Jar中的所需要加载的类的类名
+	public static AlgorithmPlug getPlug(String filename,String ClassName,int pro_id){
+		String class_path = ClassName;//Jar中的所需要加载的类的类名
 
 	    String jar_path = "file:/"+filename;//jar所在的文件的URL
 	    
@@ -26,9 +26,9 @@ public class JarTools {
 	         
            
            
-            Constructor c1=cla.getDeclaredConstructor(new Class[]{int.class});   
+            Constructor c1=cla.getDeclaredConstructor(new Class[]{});   
             c1.setAccessible(true);   
-            AlgorithmJarPlug a1=(AlgorithmJarPlug)c1.newInstance(new Object[]{pro_id});   
+            AlgorithmPlug a1=(AlgorithmPlug)c1.newInstance(new Object[]{});   
 	        
             return a1;
 	        //System.out.println(a1.startCalc());//调用Jar中的类方法

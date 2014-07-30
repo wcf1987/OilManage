@@ -8,20 +8,13 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.cup.gui.business.GUIPro;
 import cn.edu.cup.gui.business.PointProper;
 import cn.edu.cup.gui.business.PointValue;
-import cn.edu.cup.manage.business.CalcInfo;
 import cn.edu.cup.manage.business.Measure;
-import cn.edu.cup.manage.dao.ParameterDao;
 import cn.edu.cup.manage.dao.PhysicalDao;
-import cn.edu.cup.tools.HibernateSessionFactory;
 import cn.edu.cup.tools.HibernateSessionManager;
 
 public class GUIDao {

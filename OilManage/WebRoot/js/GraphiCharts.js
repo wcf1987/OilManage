@@ -1,6 +1,6 @@
 
 var graphiCharts=new GraphiCharts();
-graphiCharts.init(24,7);
+graphiCharts.init(26,7);
 
 function GraphiCharts(){
 	

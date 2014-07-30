@@ -3,7 +3,8 @@ package cn.edu.cup.manage.action;
 import java.util.Date;
 import java.util.List;
 
-import cn.edu.cup.manage.business.AlgorithmJarPlug;
+import cn.edu.cup.algjar.AlgorithmPlug;
+import cn.edu.cup.manage.business.AlgorithmPlugHelp;
 import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.tools.JarTools;
@@ -267,13 +268,15 @@ public class AlgorithmProjectsAction {
 		AlgorithmProDao dao = new AlgorithmProDao();
 		String algFile = dao.getAlgorithmFile(this.ID);
 		String clsName = dao.getAlgorithmClass(this.ID);
-		AlgorithmJarPlug alg = JarTools.getPlug(algFile, clsName, this.ID);
+		AlgorithmPlug alg = JarTools.getPlug(algFile, clsName, this.ID);
 		if (alg != null) {
 			Date start = new Date();
 			try {
+				AlgorithmPlugHelp help=new AlgorithmPlugHelp(this.ID);
+				alg.injectInfo(help.getInfo());
 				alg.startCalc();
-				alg.save();
-				alg.saveHis(start);
+				help.save();
+				help.saveHis(start);
 				dao.updateProInfo(this.ID);
 				dao.close();
 				this.exeSuccess = true;

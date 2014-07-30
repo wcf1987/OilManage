@@ -13,7 +13,6 @@ import cn.edu.cup.gui.business.GUIPro;
 import cn.edu.cup.gui.dao.GUIDao;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.gui.business.PointValue;
-import cn.edu.cup.manage.business.AlgorithmJarPlug;
 import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.tools.JarTools;
 

@@ -3,12 +3,10 @@ package cn.edu.cup.manage.algtest;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.edu.cup.manage.business.AlgorithmPlugBase;
-
-public class TestList extends AlgorithmPlugBase{
-	public TestList(int pro_id) {
-		super(pro_id);
-		// TODO Auto-generated constructor stub
+import cn.edu.cup.algjar.AlgorithmPlug;
+//extends AlgorithmPlugBase
+public class TestList  extends AlgorithmPlug{
+	public TestList() {		
 	}
 
 	public String startCalc() {
