@@ -446,6 +446,44 @@ $(document).ready(function(){
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 	
+		
+		<!-- 添加控件图标的模态框 -->   	
+		<div class="modal fade" id="add_PointType_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加控件图标</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="addPointTypeForm" action="addPointType.action" method="post"> 
+		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">
+		      		
+		      			<tr>
+		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >控件类型名称：</label></td>				         
+				           	<td>
+				           	<input id="type_name" name="type_name"/>		                  			                
+		      					<em style="color:red">*</em>
+				           </td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">备注：</label></td>
+		      				<td>
+      							<input id="type_remark" name="type_remark"/>		                 
+		      					<em style="color:red">*</em>
+		      				</td>
+		      			</tr>		    				
+				   </table>
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 	
   </body>
   

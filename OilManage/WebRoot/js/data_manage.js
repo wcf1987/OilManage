@@ -612,10 +612,8 @@ $(
 				title:'添加',
 				caption:"添加",
 				id:"add_PointTypeList",
-				onClickButton : function addModal(){
-					loadPointProperOptions();
-					loadParameterOptions();
-					$("#addPointProperForm").validate({
+				onClickButton : function addModal(){										
+					$("#addPointTypeForm").validate({
 						debug:true,
 						onsubmit:true,
 						onfocusout:false,
@@ -631,11 +629,11 @@ $(
 							}
 						},
 						submitHandler:function(){
-							add_PointProper();
+							add_PointType();
 						}
 					});
 					// 配置对话框
-					$('#add_PointProper_modal').modal();
+					$('#add_PointType_modal').modal();
 				},
 				position:"first"
 			}).jqGrid('navButtonAdd',"#GuiPointTypePager",{
@@ -645,6 +643,51 @@ $(
 				onClickButton:deletePointType,
 				position:"first"
 			});
+	
+	function deletePointType() {
+        var sels = $("#GuiPointTypeList").jqGrid('getGridParam','selarrrow'); 
+        if(sels==""){ 
+           //$().message("请选择要删除的项！"); 
+           alert("请选择要删除的项!");
+        }else{ 
+        	var selectedIDs={};
+        	$.each(sels,function(i,n){ 
+              if(sels[i]!=""){ 
+            	  var rowData = $("#GuiPointTypeList").jqGrid("getRowData", sels[i]);
+            	  selectedIDs["ids[" + i + "]"]=rowData.ID;
+              } 
+        	}); 
+
+           if(confirm("您是否确认删除？")){ 
+            $.ajax({ 
+              type: "POST", 
+              url: "delPointType.action", 
+              data: selectedIDs, 
+              beforeSend: function() { 
+                   $().message("正在请求..."); 
+              }, 
+              error:function(){ 
+                   $().message("请求失败..."); 
+              },            
+              success: function(msg){ 
+            	alert("删除成功！");
+//            	alert(msg);
+				$("#GuiPointTypeList").trigger("reloadGrid");
+                   if(msg!=0){ 	                      
+                       $.each(arr,function(i,n){ 
+                             if(arr[i]!=""){ 
+                                 $("#GuiPointTypeList").jqGrid('delRowData',n);  
+                             } 
+                       }); 
+                       $().message("已成功删除!"); 
+                   }else{ 
+                       $().message("操作失败！"); 
+                   } 
+              } 
+            }); 
+           } 
+        } 
+	}
 	
 	
 	
@@ -906,6 +949,35 @@ function add_parameter() {
 			alter(msg);
 			$('#add_measure_modal').modal('hide');
 			$("#ParameterList").trigger("reloadGrid");
+		}
+	});
+	}
+
+
+function add_PointType() {
+
+	$.ajax({
+		type : 'POST',
+		url : 'addPointType.action',
+		data : {
+			type:$("#type_name").val(),
+			remark:$("#type_remark").val(),
+			path:$("#type_icon_path").val()
+		},
+		dataType:'json',
+		success : function(data) {
+//			if(data.exist==true){
+//				alert(data.name+"已存在！");
+//			}else{
+				alert("添加成功！");
+				$('#add_PointType_modal').modal('hide');
+				$("#GuiPointTypeList").trigger("reloadGrid");
+//			}
+		},
+		error:function(msg){
+			alert(msg);
+			$('#add_PointType_modal').modal('hide');
+			$("#GuiPointTypeList").trigger("reloadGrid");
 		}
 	});
 	}

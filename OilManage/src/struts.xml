@@ -548,6 +548,26 @@
 			</result>
 		</action>
 		<!-- GUI end -->
+		
+			<!-- GUI point type Config start  -->
+		<action name="listPointType" class="cn.edu.cup.manage.action.GUIPointTypeAction"
+			method="listPointType">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="addPointType" class="cn.edu.cup.manage.action.GUIPointTypeAction"
+			method="addPointType">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="delPointType" class="cn.edu.cup.manage.action.GUIPointTypeAction"
+			method="delPointType">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<!-- GUI point type Config end  -->
+		
+		
 		<!-- GUI point proper Config start  -->
 		<action name="listPointProper" class="cn.edu.cup.manage.action.GUIProperAction"
 			method="listPointProper">
@@ -570,9 +590,9 @@
 			<result name="SUCCESS" type="json">
 			</result>
 		</action>
-	
-		
 		<!-- GUI point proper Config end  -->
+		
+		
 		<action name="testData" class="cn.edu.cup.map.action.TableAction">
 			<result name="SUCCESS" type="json">
 			</result>
