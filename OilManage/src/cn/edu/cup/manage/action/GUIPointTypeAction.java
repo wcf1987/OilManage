@@ -16,8 +16,8 @@ public class GUIPointTypeAction {
 	private int rows;
 	private int rowNum;
 	private int total;
-	private String sidx;
-	private String sord;
+	private String sidx="ID";
+	private String sord="asc";
 	private List<Integer> ids;
 	private List<PointType> pointTypeList;
 

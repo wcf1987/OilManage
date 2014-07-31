@@ -40,11 +40,10 @@ public class GUIPointTypeDao {
 	public List<PointType> getPointTypeList(int page, int rows,
 			String sidx, String sord) {
 		
-		
-		 SQLQuery q = session.createSQLQuery("select t.id,t.type,t.remark,t.path from t_guipointtype t  order by t."+sidx+" "+sord);
+		SQLQuery q = session.createSQLQuery("select t.id,t.type,t.remark,t.path from t_guipointtype t  order by t."+sidx+" "+sord);
 
-			q.setFirstResult((page-1)*rows);
-			q.setMaxResults(rows);
+		q.setFirstResult((page-1)*rows);
+		q.setMaxResults(rows);
 		
 		
 

@@ -17,7 +17,13 @@ $(
 		'onUploadSuccess' : uploadComplete,
 		'method' : 'post',
 		'fileTypeDesc' : 'Image Files',
-	    'fileTypeExts' : '*.gif; *.jpg; *.png;*.svg;'
+	    'fileTypeExts' : '*.gif; *.jpg; *.png;*.svg;',
+//        'onUploadFile': function(file) {
+//        	alert('The file ' + file.name + ' is being uploaded.');
+//        	alert(1);
+//            $("#iconfile").uploadify("settings", 'formData', {'fileName': iconfile.name});
+//        	}
+   
 		
 	});
 	
@@ -1006,7 +1012,8 @@ function add_PointProper() {
 		type : 'POST',
 		url : 'addPointProper.action',
 		data : {
-			point_type:$("#pointTypeID").val(),
+			point_type:$("#pointTypeID").find("option:selected").text(),
+			point_type_id:$("#pointTypeID").val(),
 			parID:$("#parID").val(),
 			//measureID:$("#measureID").val()
 		},
@@ -1105,7 +1112,7 @@ function loadParameterOptions(){
 }
 function loadPointProperOptions(){
 	$.ajax({
-		url:'listPointProper.action',
+		url:'listPointType.action',
 		type:'post',
 		data : {
 			sidx: 'ID',
@@ -1114,8 +1121,8 @@ function loadPointProperOptions(){
 		dataType:'json',
 		success:function(data){
 			var items="";
-			$.each(data.pointTypeDic,function(i,pointType){
-				items+= "<option value=\"" + pointType + "\">" + pointType + "</option>"; 
+			$.each(data.pointTypeList,function(i,pointType){
+				items+= "<option value=\"" + pointType.ID + "\">" + pointType.type + "</option>"; 
 			});
 			$("#pointTypeID").html(items);
 		}
@@ -1132,7 +1139,7 @@ function uploadComplete(file, data, response) {
 	//viewMap(tempJson);
 	
 	var tempJson = jQuery.parseJSON(data);
-	$("#type_icon_path").html(tempJson['filePath']);
+	$("#type_icon_path").html(tempJson['relativePath']);
 	alert("上传成功！");
 
 };

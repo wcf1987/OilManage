@@ -143,12 +143,20 @@ public class GUIProperAction {
 	String measure_CName;
 	String measure_Symbol;
 	String point_type;
+	int point_type_id;
 	int measure_id;
 	public int getParID() {
 		return parID;
 	}
 	public void setParID(int parID) {
 		this.parID = parID;
+	}
+	
+	public int getPoint_type_id() {
+		return point_type_id;
+	}
+	public void setPoint_type_id(int point_type_id) {
+		this.point_type_id = point_type_id;
 	}
 	public String addPointProper(){		
 		GUIDao dao=new GUIDao();
@@ -157,7 +165,7 @@ public class GUIProperAction {
 		this.par_display=p.getDisplay();
 		this.par_name=p.getName();
 		this.measure_id=Integer.parseInt(p.getMeasureID());
-		ID=dao.addProper(this.point_type,this.par_name,this.par_display,this.measure_id);
+		ID=dao.addProper(this.point_type_id,this.point_type,this.par_name,this.par_display,this.measure_id);
 		dao.close();
 		return "SUCCESS";
 	}

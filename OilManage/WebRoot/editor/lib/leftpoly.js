@@ -148,9 +148,22 @@ function() {
 	}
 		
 	this.init = function() {
-		for(var i=0;i<6;i++){
+		
+        $.ajax({ 
+            type: "POST", 
+            url: "listPointType.action",
+            success: function(data){ 
+            		pointTypeList=data.pointTypeList;
+            		$.each(pointTypeList, function( index, pointType ) {             		           		
+            			leftpoly.imgLoad(pointType.path,index);     
+            			//alert(index+pointType.path);
+            	    	 }); 
+            } 
+          }); 
+         
+	/*	for(var i=0;i<6;i++){
 			this.imgLoad('editor/icons/type'+i+'.svg',i);
-		}	
+		}*/	
 		for ( var k=0;k<this.polys.length;k++) {
 			
 			this.polyGroups[k] = new Kinetic.Group({

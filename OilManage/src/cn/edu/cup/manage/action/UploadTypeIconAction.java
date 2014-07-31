@@ -24,11 +24,13 @@ import com.opensymphony.xwork2.ActionSupport;
 public class UploadTypeIconAction  extends ActionSupport{
 	private static final long serialVersionUID = 837481714629791752L;
 	private File iconfile;
+	private String fileName;
 //	private File mapfile;
 	//private String mapfileContentType;
 	//private String mapfileFileName;
 	//private Graphi graphi;
 	private String FilePath;
+	private String relativePath;
 	public static String UPLOADPATH="editor\\icons\\";
 	private static String   WEB_ROOT_PATH;
 
@@ -37,9 +39,15 @@ public class UploadTypeIconAction  extends ActionSupport{
 	}*/
 
 
-
+	
 	public String re;
 
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 	public String getWebFileRoot(){
 		 ActionContext ac = ActionContext.getContext();     
 	     ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);     
@@ -53,42 +61,15 @@ public class UploadTypeIconAction  extends ActionSupport{
 	        try {
 	           
 	            reader = new BufferedReader(new FileReader(iconfile));
-	            String tempString = null;
-//	            int line = 1;
-//	            // 一次读入一行，直到读入null为文件结束
-//	            while ((tempString = reader.readLine()) != null) {
-//	                // 显示行号
-//	                //System.out.println("line " + line + ": " + tempString);
-//	                line++;
-//	                tempString=tempString.trim();
-//	                System.out.println( tempString);
-//	                if(tempString!=null&&!tempString.trim().equals("")){
-//	                if(Integer.valueOf(tempString.substring(0,1))<4){
-//	                	Point a=analyzePoint(tempString);
-//	                	if (a!=null){
-//	                		graphi.addPoint(a);
-//	                		//System.out.println(a.getLatitude());
-//	                	}else{
-//	                		re="文件格式有误";
-//	                	break;
-//	                	}
-//	                }else{
-//	                	Line b=analyzeLine(tempString);
-//	                	if(b!=null){
-//	                		graphi.addLine(b.getStart(), b.getEnd());
-//	                	}else{
-//	                		
-//	                		re="文件格式有误";
-//	                	break;
-//	                	}
-//	                }
-	                //re="文件解析成功";
-	                String path=getWebFileRoot()+this.UPLOADPATH;
+	           
+	            	String path=getWebFileRoot()+this.UPLOADPATH;
+	            	relativePath=this.UPLOADPATH+String.valueOf(System.currentTimeMillis())+".svg";	        
 	                path=path+String.valueOf(System.currentTimeMillis())+".svg";
+	                
 	                FilePath=path;
 	                
 	                copyFile(iconfile,new File(FilePath));
-	            //}}
+	       
 	            reader.close();
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -107,6 +88,10 @@ public class UploadTypeIconAction  extends ActionSupport{
 
     public String getFilePath() {
 		return FilePath;
+	}
+    
+	public String getRelativePath() {
+		return relativePath;
 	}
 	private void copyFile(File sourceFile, File targetFile) throws IOException {
         BufferedInputStream inBuff = null;

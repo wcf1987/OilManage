@@ -5,7 +5,7 @@ public class PointType {
 	String type;
 	String path;
 	String remark;
-	public PointType(int iD, String type, String path, String remark) {
+	public PointType(int iD, String type, String remark, String path) {
 		super();
 		ID = iD;
 		this.type = type;

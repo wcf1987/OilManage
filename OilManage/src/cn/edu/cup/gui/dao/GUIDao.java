@@ -394,15 +394,15 @@ public class GUIDao {
 		return count;
 
 	}
-	public int addProper(String point_type,String par_name, String par_display,
+	public int addProper(int point_type_id,String point_type,String par_name, String par_display,
 			 int measure_id) {
 		tx = HibernateSessionManager.getThreadLocalTransaction();
-		Query q = session.createSQLQuery("insert into t_guipointproper (point_type,par_name,par_display,par_messID) values (?,?,?,?)");
+		Query q = session.createSQLQuery("insert into t_guipointproper (point_type,par_name,par_display,par_messID,point_type_id) values (?,?,?,?,?)");
 		q.setParameter(0, point_type);
 		q.setParameter(1, par_name);
 		q.setParameter(2, par_display);
 		q.setParameter(3, measure_id);
-
+		q.setParameter(4, point_type_id);
 		int result=q.executeUpdate();
 
 		return 0;
