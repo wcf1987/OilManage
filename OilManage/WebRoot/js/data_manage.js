@@ -535,6 +535,120 @@ $(
 	        } 
 		}
 	
+	
+	/*
+	 * 控件类型列表
+	 */
+	var datagrid = jQuery("#GuiPointTypeList")
+	.jqGrid(
+			{
+				url : "listPointType.action",// 后端的数据交互程序，改为你的
+				datatype : "json",// 前后交互的格式是json数据
+				mtype : 'POST',// 交互的方式是发送httppost请求						
+				colNames : [ '编号', '类型名称', '说明','图片保存路径'],// 表格的列名
+				colModel : [
+						{
+							name : 'ID',
+							index : 'ID',
+							width : 50,
+							align : "center",
+							sortable:true,
+							sorttype:'int'
+						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
+						{
+							name : 'type',
+							index : 'type',
+							width : 150,
+							align : "center",
+							sortable:true
+						},
+						{
+							name : 'remark',
+							index : 'remark',
+							width : 200,
+							align : "center",
+							sortable:true
+						},
+						{
+							name:'path',
+							index:'path',
+							width:200,
+							align:"center",
+							sortable:true,
+							hidden:true
+						}
+						],
+//				autowidth:true,
+				rowNum:10,//每一页的行数
+				height: 'auto',
+				width:1230,
+				rowList:[10,20,30],
+				pager: '#GuiPointTypePager',
+				sortname: 'ID',
+				viewrecords: true,
+				sortorder: "desc",
+				multiselect: true,  //可多选，出现多选框 
+			    multiselectWidth: 35, //设置多选列宽度 
+				jsonReader: {//读取后端json数据的格式
+					root: "pointTypeList",//保存详细记录的名称
+					total: "total",//总共有多少页
+					page: "page",//当前是哪一页
+					records: "records",//总共记录数
+					repeatitems: false,
+					
+				},
+//				data:{
+//					pointTypeDic:"pointTypeDic"
+//				},
+				caption: "控件类型管理"//表格名称
+				
+			});
+	datagrid.jqGrid('filterToolbar',{searchOperators:true});
+	datagrid.jqGrid('navGrid','#GuiPointTypePager',{
+		edit : false,
+		add : false,
+		search:false,
+		del : false}).jqGrid('navButtonAdd',"#GuiPointTypePager",{
+				title:'添加',
+				caption:"添加",
+				id:"add_PointTypeList",
+				onClickButton : function addModal(){
+					loadPointProperOptions();
+					loadParameterOptions();
+					$("#addPointProperForm").validate({
+						debug:true,
+						onsubmit:true,
+						onfocusout:false,
+						onkeyup:true,
+						rules:{
+							point_type:{
+								required:true
+							}
+						},
+						messages:{
+							point_type:{
+							required:"类型名称不能为空！",
+							}
+						},
+						submitHandler:function(){
+							add_PointProper();
+						}
+					});
+					// 配置对话框
+					$('#add_PointProper_modal').modal();
+				},
+				position:"first"
+			}).jqGrid('navButtonAdd',"#GuiPointTypePager",{
+				title:'删除',
+				caption:"删除",	
+				id:"delete_PointTypeList",
+				onClickButton:deletePointType,
+				position:"first"
+			});
+	
+	
+	
+	
 	/*
 	 * 控件属性管理列表
 	 */

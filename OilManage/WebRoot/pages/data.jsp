@@ -199,8 +199,12 @@ $(document).ready(function(){
 									<a href="#panel-3" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">参数管理</a>
 								</li>
 								<li>
-									<a href="#panel-4" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">控件管理</a>
+									<a href="#panel-4" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">控件图标管理</a>
 								</li>
+								<li>
+									<a href="#panel-5" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">控件参数管理</a>
+								</li>
+								
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="panel-1">		
@@ -223,6 +227,12 @@ $(document).ready(function(){
 						      		</div>
 								</div>
 								<div class="tab-pane" id="panel-4">							
+									<table id="GuiPointTypeList" class="table table-striped table-bordered table-hover datatable " ></table>
+						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
+						      			<div id="GuiPointTypePager" ></div>
+						      		</div>
+								</div>
+								<div class="tab-pane" id="panel-5">							
 									<table id="GuiPointProperList" class="table table-striped table-bordered table-hover datatable " ></table>
 						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
 						      			<div id="GuiPointProperPager" ></div>
