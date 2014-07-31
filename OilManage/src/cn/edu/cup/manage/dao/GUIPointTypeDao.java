@@ -80,7 +80,7 @@ public class GUIPointTypeDao {
 	
 	public int addType(String type,String remark, String path) {
 		tx = HibernateSessionManager.getThreadLocalTransaction();
-		Query q = session.createSQLQuery("insert into t_guipointype (type,remark,path) values (?,?,?)");
+		Query q = session.createSQLQuery("insert into t_guipointtype (type,remark,path) values (?,?,?)");
 		q.setParameter(0, type);
 		q.setParameter(1, remark);
 		q.setParameter(2, path);

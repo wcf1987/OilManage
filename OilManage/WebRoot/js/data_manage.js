@@ -3,6 +3,24 @@ $(
 	
 	function() {
 
+	$('#iconfile').uploadify({
+		'swf' : 'js/upload/uploadify.swf',
+		'script'      : 'js/upload/uploadify.php',
+		'cancelImg'   : 'js/upload/cancel.png',
+		'uploader' : 'uploadTypeIcon.action',
+		'queueID' : 'fileQueue',
+		'auto' : true,
+		'multi' : false,
+		'buttonText' : '上传图标',
+		'fileSizeLimit' : '5MB',
+		'fileObjName' : 'iconfile',
+		'onUploadSuccess' : uploadComplete,
+		'method' : 'post',
+		'fileTypeDesc' : 'Image Files',
+	    'fileTypeExts' : '*.gif; *.jpg; *.png;*.svg;'
+		
+	});
+	
 	var datagrid = jQuery("#PhysicalList")
 			.jqGrid(
 					{
@@ -619,12 +637,12 @@ $(
 						onfocusout:false,
 						onkeyup:true,
 						rules:{
-							point_type:{
+							type_name:{
 								required:true
 							}
 						},
 						messages:{
-							point_type:{
+							type_name:{
 							required:"类型名称不能为空！",
 							}
 						},
@@ -962,7 +980,7 @@ function add_PointType() {
 		data : {
 			type:$("#type_name").val(),
 			remark:$("#type_remark").val(),
-			path:$("#type_icon_path").val()
+			path:$("#type_icon_path").html()
 		},
 		dataType:'json',
 		success : function(data) {
@@ -1103,3 +1121,18 @@ function loadPointProperOptions(){
 		}
 	});
 	}
+
+function uploadComplete(file, data, response) {
+	// event,事件对象
+	// id:上传进度队列id
+	// fileObj={"name":"文件名","filePath":"上传后的服务器文件路径","size":"文件的大小","creationDate":"文件创建时间","modificationDate":"文件最后修改时间","type":"扩展名"}
+	// response:文件上传后返回的文本，其实也可以在这里返回文件路径比较简单
+	// data={"fileCount":"上传队列中还剩下的文件数","speed":"上传的平均速度"}
+	//var tempJson = jQuery.parseJSON(data);
+	//viewMap(tempJson);
+	
+	var tempJson = jQuery.parseJSON(data);
+	$("#type_icon_path").html(tempJson['filePath']);
+	alert("上传成功！");
+
+};

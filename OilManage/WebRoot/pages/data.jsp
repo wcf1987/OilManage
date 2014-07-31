@@ -48,10 +48,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="js/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript"></script>
 	<script src="js/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 	
-	
 	<script type="text/javascript" src="js/upload/jquery.uploadify.min.js"></script>
+	
 	<script type="text/javascript" src="js/jquery-validation-1.11.1/dist/jquery.validate.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery.message.js"></script>
+	
 	<!-- 自定义 -->
 	<script src="js/global.js"></script>
 	
@@ -463,7 +464,7 @@ $(document).ready(function(){
 		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >控件类型名称：</label></td>				         
 				           	<td>
 				           	<input id="type_name" name="type_name"/>		                  			                
-		      					<em style="color:red">*</em>
+		      					<em style="color:red">*</em>		      				
 				           </td>
 		      			</tr>
 		      			<tr>
@@ -472,8 +473,15 @@ $(document).ready(function(){
       							<input id="type_remark" name="type_remark"/>		                 
 		      					<em style="color:red">*</em>
 		      				</td>
-		      			</tr>		    				
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">上传图片：</label></td>
+		      				<td>
+      							<input type="file" name="xxx" id="iconfile" />
+		      				</td>
+		      			</tr>	
 				   </table>
+				   <span id="type_icon_path" name="type_icon_path"></span>  
 				   <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 				        <button type="submit" class="btn btn-primary"  >保存</button>

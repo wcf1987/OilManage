@@ -550,6 +550,14 @@
 		<!-- GUI end -->
 		
 			<!-- GUI point type Config start  -->
+		<action name="uploadTypeIcon" class="cn.edu.cup.manage.action.UploadTypeIconAction"
+			method="uploadTypeIcon">
+			<param name="savePath">/editor/icons</param>
+			<result name="SUCCESS" type="json">
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+		
 		<action name="listPointType" class="cn.edu.cup.manage.action.GUIPointTypeAction"
 			method="listPointType">
 			<result name="SUCCESS" type="json">
@@ -565,6 +573,7 @@
 			<result name="SUCCESS" type="json">
 			</result>
 		</action>
+		
 		<!-- GUI point type Config end  -->
 		
 		
