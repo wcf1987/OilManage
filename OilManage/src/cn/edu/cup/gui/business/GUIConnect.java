@@ -5,7 +5,7 @@ public class GUIConnect {
 	String left;
 	String right;
 	public GUIConnect(String left2, String right2) {
-		// TODO Auto-generated constructor stub
+
 		this.left=left2;
 		this.right=right2;
 	}
