@@ -550,6 +550,7 @@
 		<!-- GUI end -->
 		
 			<!-- GUI point type Config start  -->
+
 		<action name="listPointType" class="cn.edu.cup.manage.action.GUIPointTypeAction"
 			method="listPointType">
 			<result name="SUCCESS" type="json">
