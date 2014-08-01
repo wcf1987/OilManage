@@ -470,8 +470,7 @@ $(document).ready(function(){
 		      			<tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">备注：</label></td>
 		      				<td>
-      							<input id="type_remark" name="type_remark"/>		                 
-		      					<em style="color:red">*</em>
+      							<input id="type_remark" name="type_remark"/>		                 		      
 		      				</td>
 		      			</tr>
 		      			<tr>
