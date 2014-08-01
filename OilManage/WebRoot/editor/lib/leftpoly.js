@@ -148,22 +148,32 @@ function() {
 	}
 		
 	this.init = function() {
-		
+		var urllist=[];
         $.ajax({ 
             type: "POST", 
             url: "listPointType.action",
+            async: false, //改成同步的，也就是Ajax请求完毕，将urllist填充完了再执行下面的程序。
             success: function(data){ 
             		pointTypeList=data.pointTypeList;
-            		$.each(pointTypeList, function( index, pointType ) {             		           		
-            			leftpoly.imgLoad(pointType.path,index);     
-            			//alert(index+pointType.path);
+            		$.each(pointTypeList, function( index, pointType ) {         			
+            			//leftpoly.imgLoad(pointType.path,index); //这里用this.imgLoad会提示不存在，改成这样也不行，可能imgLoad里面包含的函数无法调用，但全部改成具体对象.方法 还是不行，浏览器不报错。
+            			url=pointType.path;          				
+            			urllist.push(url);
             	    	 }); 
             } 
           }); 
-         
+  
+  /*      $.each(urllist,function(i,url){//each里面放this.imgLoad跟Ajax方法一样，程序找不到改方法。但for循环可以。
+        	alert(url);
+        	this.imgLoad(url,i);
+        });*/
+        for(var j = 0, l = urllist.length; j < l; j++ ){
+        	this.imgLoad( urllist[j],j);
+        }
 	/*	for(var i=0;i<6;i++){
 			this.imgLoad('editor/icons/type'+i+'.svg',i);
-		}*/	
+		}*/
+
 		for ( var k=0;k<this.polys.length;k++) {
 			
 			this.polyGroups[k] = new Kinetic.Group({

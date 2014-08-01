@@ -31,7 +31,7 @@ public class UploadTypeIconAction  extends ActionSupport{
 	//private Graphi graphi;
 	private String FilePath;
 	private String relativePath;
-	public static String UPLOADPATH="editor\\icons\\";
+	public static String UPLOADPATH="editor/icons/";
 	private static String   WEB_ROOT_PATH;
 
 /*	public Graphi getGraphi() {
