@@ -148,5 +148,8 @@
 	<classpathentry kind="lib" path="libs/hibernate-c3p0-4.2.8.Final.jar"/>
 	<classpathentry kind="lib" path="libs/c3p0-0.9.2.1.jar"/>
 	<classpathentry kind="lib" path="libs/mchange-commons-java-0.2.3.4.jar"/>
+	<classpathentry kind="lib" path="libs/poi-3.10-FINAL-20140208.jar"/>
+	<classpathentry kind="lib" path="libs/poi-ooxml-3.10-FINAL-20140208.jar"/>
+	<classpathentry kind="lib" path="libs/poi-ooxml-schemas-3.10-FINAL-20140208.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

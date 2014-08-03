@@ -36,6 +36,20 @@ public class AlgorithmsCycle {
 	String addDates;
 	Date lastUpdateDate;
 	String lastUpdateDates;
+	int alg_type;
+	String structFile;
+	public int getAlg_type() {
+		return alg_type;
+	}
+	public void setAlg_type(int alg_type) {
+		this.alg_type = alg_type;
+	}
+	public String getStructFile() {
+		return structFile;
+	}
+	public void setStructFile(String structFile) {
+		this.structFile = structFile;
+	}
 	public AlgorithmsCycle(String id2, String iid, String pid, String oid,
 			String aid, String author, String description2, Date addTime,
 			Date lastUpdateTime,String name,String className) {
