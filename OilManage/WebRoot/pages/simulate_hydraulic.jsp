@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %> 
     <base href="<%=basePath%>">
     
-    <title>图形建模</title>
+    <title>系统模拟</title>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=9" />
 	
@@ -25,9 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		href="editor/assets/css/style.css" />
 	<link rel="stylesheet" media="screen" type="text/css"
 		href="editor/assets/css/minimap.css" />
-	
-	
-	
+
 	<script type="text/javascript" src="editor/assets/javascript/json2.js"></script>
 	<script type="text/javascript" src="editor/assets/javascript/jquery-1.11.0.min.js"></script>
 	<script src="js/jquery/jquery-migrate-1.2.1.js"></script>
@@ -48,34 +46,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script defer="defer" type="text/javascript" src="editor/lib/tools.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/kinecttab.js"></script>
 	
+	<script defer="defer" type="text/javascript" src="js/simulate_hydraulic.js"></script>
+	<!-- <script defer="defer" type="text/javascript" src="js/diagram.js"></script> -->
+	
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/colorPicker_new.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="css/tabs.css" />
 	<!-- <link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/processui.css" />  -->
 	<!-- 自定义 -->
-	<link rel="stylesheet" type="text/css" href="css/styles.css"/>
-	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>	  
+	<link rel="stylesheet" type="text/css" href="css/styles.css"/>	
+
+	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>	
+		
+	<link rel="stylesheet" type="text/css" href="css/simulate_hydraulic.css"/>
+	<style type="text/css">
+	/* 	body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", sans-serif;background: linear-gradient(45deg, #020031 0%, #6d3353 100%); }
+	 */
+	</style>
 
   </head>
     
-  <body  style="background-color:#CCCCCC;" id="body"  onload="initLight();"><!-- background-image:url(images/background.jpg); -->
- 
+  
+  <body  style="background-color:#CCCCCC;" id="body"  onload="initLight();">
 
-	  <div id="head">
+	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
-	  </div>  	
-	
-	 
-	
+	</div>  
 		<div class="container marketing condiv" style="width:1200px;margin-top:55px;">
 	    	
 	    	<div class="container-fluid">
 				<div class="row-fluid">
 					<div class="span12">
-					
-					
-						<div id="header">
-							<span> <img src="" /> </span>
-						</div>
+					<div class="page-header">
+						<h1>单相管网水力计算&nbsp;</h1>
+					</div>
 					
 						<div id="actions">
 					
@@ -130,34 +134,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								title="Move (one level) to front"><img
 								src="editor/assets/images/icon_forward.gif" border="0" />
 							</a>
+						<!-- 	<a id="pop" onclick="">输入</a>
+							<input id="pop" style="margin-left: 300px;" type="button" value="输入">
+							 -->
 						</div>
 						
+						<div class="nav_control navbar-collapse collapse">
+							<ul  class="nav navbar-nav">
+								<li class="dropdown-submenu">
+				                    <button tabindex="-1" >输入</button>
+				                    <ul class="dropdown-menu">
+				                        <li><a tabindex="-1" href="javascript:showLiquidPra();">流体参数</a>
+				                        <li><a tabindex="-1" href="javascript:showBasicData();">基础数据</a></li>			                        
+				                    </ul>
+				                </li>
+				                <li>
+				                    <button tabindex="-1" href="javascript:runSimulator();">运行</button>			                 
+				                </li>
+				                <li>
+				                    <button tabindex="-1" href="javascript:showOutput();">输出</button>			                 
+				                </li>
+				             </ul>
+			            </div>  
+			              	
 						<div id="editor" style="background-color:#F6F6F6">
 							<input id="selectedID" style="display: none;"/> 
 							<div id="tab-container" class="tab-container"  style="position: absolute;z-index:100;margin-left:120px;margin-top:2px;">
 							  <ul id="paintingTabs" class='etabs'>
-							    <!--
-							    <li class='tab'><a href="#tabs1-html">HTML Markup</a></li>
-							    <li class='tab'><a href="#tabs1-js">Required JS</a></li>
-							    <li class='tab'><a href="#tabs1-css">Example CSS</a></li>  
-							    -->
-							    
+				
 							  </ul>
 							</div>
 						
 							<div id="container">
 							
-							</div>
-						<!-- 	<div id="output" style="margin-top:-270px;margin-left:115px;border:solid;width:900px;height:250px;">
-
-							</div>  -->
-						<!-- 	<div id="output" style="margin-top:-270px;margin-left:115px;border:solid;width:900px;height:250px;">
-								<textarea cols="108" rows="11" id="outputarea" name="outputarea" disabled="">
-								输出testtesttestetsdtgffgfdgfhgdfjhdgjhjhggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-								</textarea>
-							</div>  -->
-					</div>
-					
+							</div>		
+						</div>
 					<!--The import panel-->
 					<div id="import-dialog"
 						style="background-color: white; display: none; margin-top: auto; margin-bottom: auto;">
@@ -210,11 +221,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div> 
 	    </div><!-- /.container -->		
-		<hr class="featurette-divider">
-      	<div id="footer">
-	        <%@ include file="commons/footer.jsp" %>
 	    </div>
-	    
+		<hr class="featurette-divider">
+		
+	
+	    	  
+	<hr class="featurette-divider">
+     	<div id="footer">
+        <%@ include file="commons/footer.jsp" %>
+    </div>
+	 
+	 
+	 
 		<ul id="contextmenu" style="display:none;z-index:100">	
 			<li><a>解除锁定</a></li>
 			<li><a>顺时针旋转90°</a></li>
@@ -321,50 +339,76 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-				
-		<script type="text/javascript">
-		
-			$('#listGUIPro_modal>.modal-dialog').css({
-			 'margin-top': function () {
-			            return ($(window).height())/2-178;
-			        },
-			 'margin-right':function () {
-			            return ($(window).width())/2-50;
-			        },
-			});
+		<!-- 输入流体参数弹出框 -->
+		<div id="popdiv_liquidpra" class="popdiv" style="display:none">
+		<a id="close_liquidpra" class="close">x</a>
 			
-			$('#load_modal>.modal-dialog').css({
-			 'margin-top': function () {
-			            return ($(window).height())/2-123;
-			        },
-			 'margin-right':function () {
-			            return ($(window).width())/2-300;
-			        },
-			});
-			$(function(){
-				$('#tab-container').easytabs();			
-			});
-			function loadFill(check) {
-				if (check.checked === true) {
-					if ($('#colorpickerHolder3').css('display') === 'none') {
-						$('#colorSelector3').click();
-					}
-				} else {
-					if ($('#colorpickerHolder3').css('display') === 'block') {
-						$('#colorSelector3').click();
-					}
-				}
-			}
-			function closePraList(){
-				$("#pointPra").hide();
-	
-			}
-	 	
-	 	
-		</script>
+			
+			<div class="span6" >
+				<table id="wellParTable" class="table table-bordered">							
+					<caption>流体参数</caption>
+					<thead>
+						<tr class="warning">
+							<th>气体编号</th>
+							<th>CH4</th>
+							<th>C2H6</th>
+							<th>C3H8</th>
+							<th>xx</th>
+							<th>xx</th>
+							<th>xx</th>
+							<th>xx</th>
+							<th>xx</th>
+							<th>xx</th>
+							<th>xx</th>
+							<th>xx</th>
+							<th>xx</th>
+							<th>xx</th>
+							<th>xx</th>
+							<th>xx</th>
+							<th>xx</th>							
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="info">
+						<td>Fluid0001</td><td>1</td><td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						<td><input style="width:50px" /></td>
+						
+						</tr>																	
+					</tbody>
+				</table>
+				<table style="margin-bottom:10px;margin-left:10px;">
+					<tr><td>温度环境</td><td><input/></td><td>k</td></tr>
+					<tr><td>气体动力粘度</td><td><input/></td><td>Pa.s</td></tr>
+				</table>											
+			</div>
+							
+		
+		</div>
+		
+		<!-- 输入基础数据弹出框 -->
+		<div id="popdiv_basicdata" class="popdiv" style="display:none">
+		<a id="close_basicdata" class="close">关闭</a>
+		
+			
+		</div>
+		
+
+		   
   </body>
   
 </html>
 
-
-
+	

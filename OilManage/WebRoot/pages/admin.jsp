@@ -69,18 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    ================================================== -->
 	    <!-- Wrap the rest of the page in another container to center all the content. -->
 	    
-		<div class="container marketing content condiv" style="width:1200px;">
-	    	
-	    <!-- 	<div class="container-fluid">
-				<div class="row-fluid">
-					<div class="span12">
-						
-				
-										
-					</div>
-				</div>
-			</div> -->
-			
+		<div class="container marketing content condiv" style="width:1200px;">		
 			<div class="row">
 			  <div class="col-md-3 secondary-nav collapse navbar-collapse">
 			    <div class="list-group docs-nav">
