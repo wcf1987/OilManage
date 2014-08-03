@@ -40,7 +40,7 @@ public class AlgorithmsCycleDao {
 	}
 	
 	public AlgorithmsCycle getAlgorithmDetail(int ID){
-		SQLQuery q=session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime,t1.Name,t1.ClassName from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID and t1.ID=?");
+		SQLQuery q=session.createSQLQuery("select t1.ID,t1.InputID,t1.PlanID,t1.OutputID,t1.AuthorID,t2.Username,t1.Description,t1.AddTime,t1.LastUpdateTime,t1.Name,t1.ClassName,t1.alg_type,t1.structFile from t_algorithmscycle t1,t_user t2 where t1.AuthorID=t2.ID and t1.ID=?");
 		q.setParameter(0, ID);
 		try{
 		Object[] row=(Object[]) q.uniqueResult();
@@ -56,8 +56,12 @@ public class AlgorithmsCycleDao {
 		Date lastUpdateTime=(Date)row[8];
 		String Name=(String)row[9];
 		String className=(String)row[10];
+		int algtype=(Integer)row[11];
+		String structFile=(String)row[12];
 		AlgorithmsCycle p=new AlgorithmsCycle(id, iid, pid, oid, aid,author,description,addTime,lastUpdateTime,Name,className);
 //		p.setName(Name);
+		p.setAlg_type(algtype);
+		p.setStructFile(structFile);
 		return p;
 		}catch(Exception e){
 			return null;
