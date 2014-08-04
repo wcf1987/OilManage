@@ -1,4 +1,3 @@
-
 /*
  * 浮动div的可拖动设置
  */
@@ -74,4 +73,32 @@ function showOutput(){
 	
 }
 
-
+/*
+ * 多选框
+ */
+$(document).ready(function(){
+    // 把选择项追加给对方
+    $('#add').click(function(){
+    var options=$('#select1 option:selected');
+    var remove=options.remove();
+    remove.appendTo("#select2");
+    });
+    // 把所有项追加给对方
+    $('#addAll').click(function(){
+    var options=$('#select1 option');
+    var remove=options.remove();
+    remove.appendTo("#select2");
+    });
+    // 把选择项退回给对方
+    $('#remove').click(function(){
+    var options=$('#select2 option:selected');
+    var remove=options.remove();
+    remove.appendTo("#select1");
+    });
+    // 把全部项退回给对方
+    $('#removeAll').click(function(){
+    var options=$('#select2 option');
+    var remove=options.remove();
+    remove.appendTo("#select1");
+    });
+});

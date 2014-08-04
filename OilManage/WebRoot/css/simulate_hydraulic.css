@@ -5,13 +5,19 @@
     position:absolute;
     width:auto;
     height:auto;
-    border:1px solid #333333;
+   /*  border:1px solid #333333; */
     background-color:white;
     text-align:center;
     line-height:400%;
     font-size:13px;
     left:40%;
     top:10%;
+    
+    border: 5px solid #dedede;
+    -moz-border-radius: 15px;      /* Gecko browsers */
+    -webkit-border-radius: 15px;   /* Webkit browsers */
+    border-radius:15px;            /* W3C syntax */
+    
 }
 .close{
 	font-size:18px;

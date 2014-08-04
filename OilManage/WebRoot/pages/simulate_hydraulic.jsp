@@ -339,64 +339,85 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-		<!-- 输入流体参数弹出框 -->
-		<div id="popdiv_liquidpra" class="popdiv" style="display:none">
-		<a id="close_liquidpra" class="close">x</a>
-			
-			
-			<div class="span6" >
-				<table id="wellParTable" class="table table-bordered">							
-					<caption>流体参数</caption>
-					<thead>
-						<tr class="warning">
-							<th>气体编号</th>
-							<th>CH4</th>
-							<th>C2H6</th>
-							<th>C3H8</th>
-							<th>xx</th>
-							<th>xx</th>
-							<th>xx</th>
-							<th>xx</th>
-							<th>xx</th>
-							<th>xx</th>
-							<th>xx</th>
-							<th>xx</th>
-							<th>xx</th>
-							<th>xx</th>
-							<th>xx</th>
-							<th>xx</th>
-							<th>xx</th>							
-						</tr>
-					</thead>
-					<tbody>
-						<tr class="info">
-						<td>Fluid0001</td><td>1</td><td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						<td><input style="width:50px" /></td>
-						
-						</tr>																	
-					</tbody>
-				</table>
-				<table style="margin-bottom:10px;margin-left:10px;">
-					<tr><td>温度环境</td><td><input/></td><td>k</td></tr>
-					<tr><td>气体动力粘度</td><td><input/></td><td>Pa.s</td></tr>
-				</table>											
-			</div>
-							
 		
+		
+		
+		<!-- 输入流体参数弹出框 -->
+		<div id="popdiv_liquidpra" class="popdiv" style="display:none;padding:10px 20px 20px;">
+		<a id="close_liquidpra" class="close">x</a>
+		
+		
+		
+		<div>
+			<div class="row-fluid">
+				<div class="span12">
+					<form id="form1" runat="server">
+					<div class="row-fluid">
+						<div class="span6" style="float:left">
+							 <div id="left">
+						        <select multiple="multiple" id="select1" style="width:100px;height:160px">
+							        <option>CH4</option>
+							        <option>C2H6</option>
+							        <option>C3H8</option>
+							        <option>i-C4H10</option>
+							        <option>n-C4H10</option>
+							        <option>i-C5H12</option>
+							        <option>n-C5H12</option>
+							        <option>n-C6H14</option>
+							        <option>n-C7H16</option>
+							        <option>n-C8H18</option>
+							        <option>n-C9H20</option>
+							        <option>n-C10H22</option>
+							        <option>C11</option>
+							        <option>C12</option>
+							        <option>C13</option>
+							        <option>C14</option>
+							        <option>C15</option>
+							        <option>C2H4</option>
+							        <option>C3H6</option>
+							        <option>H2S</option>
+							        <option>SO2</option>
+							        <option>N2</option>
+							        <option>CO2</option>
+							        <option>Kr</option>
+							        <option>Xe</option>
+						        </select>
+						    </div>
+						</div>
+						<div  style="float:left;margin-top:40px;padding-left:5px;padding-right:5px;">
+					   		<button id="add" type="button" class="btn btn-small">添加</button><br />
+					   		<button style="margin-top:5px;" id="remove" type="button" class="btn btn-small">删除</button>
+					   	</div>
+						<div class="span6" style="float:left">
+							 <div id="right">
+						        <select multiple="multiple" id="select2" style="width:100px;height:160px"></select>
+						    </div>
+						</div>
+						<div style="float:left;margin-top:100px;padding-left:5px;">	
+							<span>Total:</span><span>1</span>							
+							<button type="button" type="button" class="btn btn-small">保存</button>
+						</div>
+					</div>		
+				</form>
+					
+					
+				<div class="row-fluid">
+					<div class="span8" style="float:left;margin-top:20px;">
+						<table>
+							<tr><td>气体动力粘度</td><td><input/></td><td>Pa.s</td></tr>
+							<tr><td>环境温度</td><td><input/></td><td>k</td></tr>
+						</table>
+					</div>
+					<div class="span4" style="float:left;margin-top:30px;padding-left:5px;">
+						<button  type="button" type="button" class="btn btn-small">保存</button>
+					</div>
+				</div> 
+					
+				</div>
+			</div>
+			
 		</div>
+		
 		
 		<!-- 输入基础数据弹出框 -->
 		<div id="popdiv_basicdata" class="popdiv" style="display:none">
