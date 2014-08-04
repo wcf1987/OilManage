@@ -81,11 +81,13 @@ public class AlgorithmProDao {
 	public int addAlgorithmPro(String description, int authorID,String name) {
 		Date addDate=new Date();
 		HibernateSessionManager.getThreadLocalTransaction();
-		Query q = session.createSQLQuery("insert into t_projects (description,authorID,addtime,name) values (?,?,?,?)");
+		Query q = session.createSQLQuery("insert into t_projects (description,authorID,addtime,name,Type,profile) values (?,?,?,?,?,?)");
 		q.setParameter(0, description);
 		q.setParameter(1, authorID);
 		q.setParameter(2, addDate);
 		q.setParameter(3, name);
+		q.setParameter(4, 0);
+		q.setParameter(5, "");
 		int result=q.executeUpdate();
 		
 	
@@ -134,6 +136,14 @@ public class AlgorithmProDao {
 	}
 	public String getAlgorithmFile(int pro_id) {
 		String sql="select t2.FilePath from t_projects t,t_algorithmscycle t2 where  t.id=? and t2.ID=t.Algorithm_id";
+		SQLQuery q2 = session.createSQLQuery(sql);
+		q2.setParameter(0, pro_id);
+		String alg=((String)q2.uniqueResult());
+		
+		return alg;
+	}
+	public String getProFile(int pro_id) {
+		String sql="select t.profile from t_projects t where  t.id=? and t.type=1";
 		SQLQuery q2 = session.createSQLQuery(sql);
 		q2.setParameter(0, pro_id);
 		String alg=((String)q2.uniqueResult());
