@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %> 
     <base href="<%=basePath%>">
     
-    <title>图形建模</title>
+    <title>系统模拟</title>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=9" />
 	
@@ -25,9 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		href="editor/assets/css/style.css" />
 	<link rel="stylesheet" media="screen" type="text/css"
 		href="editor/assets/css/minimap.css" />
-	
-	
-	
+
 	<script type="text/javascript" src="editor/assets/javascript/json2.js"></script>
 	<script type="text/javascript" src="editor/assets/javascript/jquery-1.11.0.min.js"></script>
 	<script src="js/jquery/jquery-migrate-1.2.1.js"></script>
@@ -41,6 +39,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="js/easytabs/jquery.easytabs.js" type="text/javascript"></script>
 	<script src="js/jqueryPlug/jquery.mousewheel.min.js" type="text/javascript"></script>
 	
+
+		
+		
 	<script defer="defer" type="text/javascript" src="editor/lib/init2.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/platform.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/leftpoly.js"></script>
@@ -48,34 +49,50 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script defer="defer" type="text/javascript" src="editor/lib/tools.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/kinecttab.js"></script>
 	
+	
+		
+		<script src="js/easytabs/jquery.hashchange.min.js" type="text/javascript"></script>
+	<script src="js/easytabs/jquery.ba-hashchange.js" type="text/javascript"></script>
+	<script src="js/easytabs/jquery.easing.1.3.js" type="text/javascript"></script>
+	<script src="js/easytabs/jquery.easytabs.js" type="text/javascript"></script>
+	<script src="js/easytabs/jquery.raptorize.1.0.js" type="text/javascript"></script>
+		
+		
+		
+	<script defer="defer" type="text/javascript" src="js/simulate_hydraulic.js"></script>
+	<!-- <script defer="defer" type="text/javascript" src="js/diagram.js"></script> -->
+	
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/colorPicker_new.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="css/tabs.css" />
 	<!-- <link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/processui.css" />  -->
 	<!-- 自定义 -->
-	<link rel="stylesheet" type="text/css" href="css/styles.css"/>
-	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>	  
+	<link rel="stylesheet" type="text/css" href="css/styles.css"/>	
+
+	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>	
+		
+	<link rel="stylesheet" type="text/css" href="css/simulate_hydraulic.css"/>
+	<style type="text/css">
+	/* 	body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", sans-serif;background: linear-gradient(45deg, #020031 0%, #6d3353 100%); }
+	 */
+	</style>
 
   </head>
     
-  <body  style="background-color:#CCCCCC;" id="body"  onload="initLight();"><!-- background-image:url(images/background.jpg); -->
- 
+  
+  <body  id="body"  onload="initLight();">
 
-	  <div id="head">
+	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
-	  </div>  	
-	
-	 
-	
+	</div>  
 		<div class="container marketing condiv" style="width:1200px;margin-top:55px;">
 	    	
 	    	<div class="container-fluid">
 				<div class="row-fluid">
 					<div class="span12">
-					
-					
-						<div id="header">
-							<span> <img src="" /> </span>
-						</div>
+					<div class="page-header">
+						<h1>单相管网水力计算&nbsp;</h1>
+					</div>
 					
 						<div id="actions">
 					
@@ -130,34 +147,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								title="Move (one level) to front"><img
 								src="editor/assets/images/icon_forward.gif" border="0" />
 							</a>
+						<!-- 	<a id="pop" onclick="">输入</a>
+							<input id="pop" style="margin-left: 300px;" type="button" value="输入">
+							 -->
 						</div>
 						
+						<div class="nav_control navbar-collapse collapse">
+							<ul  class="nav navbar-nav">
+								<li class="dropdown-submenu">
+				                    <button tabindex="-1" >输入</button>
+				                    <ul class="dropdown-menu">
+				                        <li><a tabindex="-1" href="javascript:showLiquidPra();">流体参数</a>
+				                        <li><a tabindex="-1" href="javascript:showBasicData();">基础数据</a></li>			                        
+				                    </ul>
+				                </li>
+				                <li>
+				                    <button tabindex="-1" href="javascript:runSimulator();">运行</button>			                 
+				                </li>
+				                <li>
+				                    <button tabindex="-1" href="javascript:showOutput();">输出</button>			                 
+				                </li>
+				             </ul>
+			            </div>  
+			              	
 						<div id="editor" style="background-color:#F6F6F6">
 							<input id="selectedID" style="display: none;"/> 
 							<div id="tab-container" class="tab-container"  style="position: absolute;z-index:100;margin-left:120px;margin-top:2px;">
 							  <ul id="paintingTabs" class='etabs'>
-							    <!--
-							    <li class='tab'><a href="#tabs1-html">HTML Markup</a></li>
-							    <li class='tab'><a href="#tabs1-js">Required JS</a></li>
-							    <li class='tab'><a href="#tabs1-css">Example CSS</a></li>  
-							    -->
-							    
+				
 							  </ul>
 							</div>
 						
 							<div id="container">
 							
-							</div>
-						<!-- 	<div id="output" style="margin-top:-270px;margin-left:115px;border:solid;width:900px;height:250px;">
-
-							</div>  -->
-						<!-- 	<div id="output" style="margin-top:-270px;margin-left:115px;border:solid;width:900px;height:250px;">
-								<textarea cols="108" rows="11" id="outputarea" name="outputarea" disabled="">
-								输出testtesttestetsdtgffgfdgfhgdfjhdgjhjhggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-								</textarea>
-							</div>  -->
-					</div>
-					
+							</div>		
+						</div>
 					<!--The import panel-->
 					<div id="import-dialog"
 						style="background-color: white; display: none; margin-top: auto; margin-bottom: auto;">
@@ -210,11 +234,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div> 
 	    </div><!-- /.container -->		
-		<hr class="featurette-divider">
-      	<div id="footer">
-	        <%@ include file="commons/footer.jsp" %>
 	    </div>
-	    
+		<hr class="featurette-divider">
+		
+	
+	    	  
+	<hr class="featurette-divider">
+     	<div id="footer">
+        <%@ include file="commons/footer.jsp" %>
+    </div>
+	 
+	 
+	 
 		<ul id="contextmenu" style="display:none;z-index:100">	
 			<li><a>解除锁定</a></li>
 			<li><a>顺时针旋转90°</a></li>
@@ -321,50 +352,363 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-				
-		<script type="text/javascript">
 		
-			$('#listGUIPro_modal>.modal-dialog').css({
-			 'margin-top': function () {
-			            return ($(window).height())/2-178;
-			        },
-			 'margin-right':function () {
-			            return ($(window).width())/2-50;
-			        },
-			});
+		
+		
+		
+		<!-- 输入流体参数弹出框 -->
+		<div id="popdiv_liquidpra" class="popdiv" style="display:none;padding:10px 20px 20px;">
+			<a id="close_liquidpra" class="close">x</a>
+		
 			
-			$('#load_modal>.modal-dialog').css({
-			 'margin-top': function () {
-			            return ($(window).height())/2-123;
-			        },
-			 'margin-right':function () {
-			            return ($(window).width())/2-300;
-			        },
-			});
-			$(function(){
-				$('#tab-container').easytabs();			
-			});
-			function loadFill(check) {
-				if (check.checked === true) {
-					if ($('#colorpickerHolder3').css('display') === 'none') {
-						$('#colorSelector3').click();
-					}
-				} else {
-					if ($('#colorpickerHolder3').css('display') === 'block') {
-						$('#colorSelector3').click();
-					}
-				}
-			}
-			function closePraList(){
-				$("#pointPra").hide();
+			<div class="row-fluid">
+				<div class="span12">
+					<form id="form1" runat="server">
+					<div class="row-fluid">
+						<div class="span6" style="float:left">
+							 <div id="left">
+						        <select multiple="multiple" id="select1" style="width:100px;height:160px">
+							        <option>CH4</option>
+							        <option>C2H6</option>
+							        <option>C3H8</option>
+							        <option>i-C4H10</option>
+							        <option>n-C4H10</option>
+							        <option>i-C5H12</option>
+							        <option>n-C5H12</option>
+							        <option>n-C6H14</option>
+							        <option>n-C7H16</option>
+							        <option>n-C8H18</option>
+							        <option>n-C9H20</option>
+							        <option>n-C10H22</option>
+							        <option>C11</option>
+							        <option>C12</option>
+							        <option>C13</option>
+							        <option>C14</option>
+							        <option>C15</option>
+							        <option>C2H4</option>
+							        <option>C3H6</option>
+							        <option>H2S</option>
+							        <option>SO2</option>
+							        <option>N2</option>
+							        <option>CO2</option>
+							        <option>Kr</option>
+							        <option>Xe</option>
+						        </select>
+						    </div>
+						</div>
+						<div  style="float:left;margin-top:40px;padding-left:5px;padding-right:5px;">
+					   		<button id="add" type="button" class="btn btn-small">添加</button><br />
+					   		<button style="margin-top:5px;" id="remove" type="button" class="btn btn-small">删除</button>
+					   	</div>
+						<div class="span6" style="float:left">
+							 <div id="right">
+						        <select multiple="multiple" id="select2" style="width:100px;height:160px"></select>
+						    </div>
+						</div>
+						<div style="float:left;margin-top:100px;padding-left:5px;">	
+							<span>Total:</span><span>1</span>							
+							<button type="button" type="button" class="btn btn-small">保存</button>
+						</div>
+					</div>		
+				</form>
+					
+					
+				<div class="row-fluid">
+					<div class="span8" style="float:left;margin-top:20px;">
+						<table>
+							<tr><td>气体动力粘度</td><td><input/></td><td>Pa.s</td></tr>
+							<tr><td>环境温度</td><td><input/></td><td>k</td></tr>
+						</table>
+					</div>
+					<div class="span4" style="float:left;margin-top:30px;padding-left:5px;">
+						<button  type="button" type="button" class="btn btn-small">保存</button>
+					</div>
+				</div> 
+					
+				</div>
+			</div>
+			
+			
+		</div>
+		
+		<!-- 输入基础数据弹出框 -->
+		<div id="popdiv_basicdata" class="popdiv" style="display:none">
+			<a id="close_basicdata" class="close">关闭</a>
+			
+			<div id="basedata_tab" class="tab-container">
+			  <ul class='etabs'>
+			    <li class='tab'><a href="#basedata_tabs1">节点数据</a></li>
+			    <li class='tab'><a href="#basedata_tabs2">管段数据</a></li>
+			    <li class='tab'><a href="#basedata_tabs3">离心压缩机</a></li>
+			    <li class='tab'><a href="#basedata_tabs4">往复式压缩机</a></li>
+			  </ul>
+			  <div id="basedata_tabs1"><!-- 节点数据 -->
+			    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table class="table  table-striped">
+								<thead>
+									<tr>
+										<th>序号</th><th>节点名称</th><th>坐标x(m)</th><th>坐标y(m)</th>
+										<th>坐标z(m)</th><th>节点压力(MPa)</th><th>节点流量(Mm3/d)</th><th>控制模式</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="success">
+										<td>1</td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="error">
+										<td>1</td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="warning">
+										<td>1</td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="info">
+										<td>1</td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td>
+									</tr>
+								</tbody>
+							</table> <button class="btn" type="button">按钮</button>
+						</div>
+					</div>
+				</div>
+			    
+			    
+			    <!-- content -->
+			  </div>
+			  
+			  <div id="basedata_tabs2"><!-- 管段数据 -->
+			    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table class="table  table-striped">
+								<thead>
+									<tr>
+										<th>序号</th><th>管段名称</th><th>类型</th><th>上游节点</th>
+										<th>下游节点</th><th>管长(km)</th><th>管内径(m)</th><th>绝对粗糙度(m)</th>
+										<th>摩阻系数公式</th><th>压缩机名称</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td><td></td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="success">
+										<td>1</td><td></td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="error">
+										<td>1</td><td></td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="warning">
+										<td>1</td><td></td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td><td></td>										
+									</tr>
+									<tr class="info">
+										<td>1</td><td></td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td><td></td>										
+									</tr>
+								</tbody>
+							</table> <button class="btn" type="button">按钮</button>
+						</div>
+					</div>
+				</div>
+
+			    <!-- content -->
+			  </div>
+			  
+			  <div id="basedata_tabs3"><!-- 离心压缩机 -->
+			    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table class="table  table-striped">
+								<thead>
+									<tr>
+										<th>
+											序号
+										</th>
+										<th>
+											名称
+										</th>
+										<th>
+											a
+										</th>
+										<th>
+											b
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr class="success">
+										<td>1</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr class="error">
+										<td>1</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr class="warning">
+										<td>1</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr class="info">
+										<td>1</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table> <button class="btn" type="button">按钮</button>
+						</div>
+					</div>
+				</div>
+			    
+			    <!-- content -->
+			  </div>
+			  <div id="basedata_tabs4">
+			    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table class="table  table-striped">
+								<thead>
+									<tr>
+										<th>
+											编号
+										</th>
+										<th>
+											产品
+										</th>
+										<th>
+											交付时间
+										</th>
+										<th>
+											状态
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											1
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											01/04/2012
+										</td>
+										<td>
+											Default
+										</td>
+									</tr>
+									<tr class="success">
+										<td>
+											1
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											01/04/2012
+										</td>
+										<td>
+											Approved
+										</td>
+									</tr>
+									<tr class="error">
+										<td>
+											2
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											02/04/2012
+										</td>
+										<td>
+											Declined
+										</td>
+									</tr>
+									<tr class="warning">
+										<td>
+											3
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											03/04/2012
+										</td>
+										<td>
+											Pending
+										</td>
+									</tr>
+									<tr class="info">
+										<td>
+											4
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											04/04/2012
+										</td>
+										<td>
+											Call in to confirm
+										</td>
+									</tr>
+								</tbody>
+							</table> <button class="btn" type="button">按钮</button>
+						</div>
+					</div>
+				</div>
+			    
+			    <!-- content -->
+			  </div>
+			  
+			</div>
+			
+		</div>
+		
 	
-			}
-	 	
-	 	
+		
+		<script type="text/javascript">
+		$().ready(function(){
+			$('#basedata_tab').easytabs();
+			}	
+		);
+			 
+		
+		
 		</script>
+		   
   </body>
   
 </html>
 
-
-
+	
