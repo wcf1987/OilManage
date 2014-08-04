@@ -39,6 +39,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="js/easytabs/jquery.easytabs.js" type="text/javascript"></script>
 	<script src="js/jqueryPlug/jquery.mousewheel.min.js" type="text/javascript"></script>
 	
+
+		
+		
 	<script defer="defer" type="text/javascript" src="editor/lib/init2.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/platform.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/leftpoly.js"></script>
@@ -46,6 +49,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script defer="defer" type="text/javascript" src="editor/lib/tools.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/kinecttab.js"></script>
 	
+	
+		
+		<script src="js/easytabs/jquery.hashchange.min.js" type="text/javascript"></script>
+	<script src="js/easytabs/jquery.ba-hashchange.js" type="text/javascript"></script>
+	<script src="js/easytabs/jquery.easing.1.3.js" type="text/javascript"></script>
+	<script src="js/easytabs/jquery.easytabs.js" type="text/javascript"></script>
+	<script src="js/easytabs/jquery.raptorize.1.0.js" type="text/javascript"></script>
+		
+		
+		
 	<script defer="defer" type="text/javascript" src="js/simulate_hydraulic.js"></script>
 	<!-- <script defer="defer" type="text/javascript" src="js/diagram.js"></script> -->
 	
@@ -67,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
     
   
-  <body  style="background-color:#CCCCCC;" id="body"  onload="initLight();">
+  <body  id="body"  onload="initLight();">
 
 	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
@@ -342,13 +355,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		
 		
+		
 		<!-- 输入流体参数弹出框 -->
 		<div id="popdiv_liquidpra" class="popdiv" style="display:none;padding:10px 20px 20px;">
-		<a id="close_liquidpra" class="close">x</a>
+			<a id="close_liquidpra" class="close">x</a>
 		
-		
-		
-		<div>
+			
 			<div class="row-fluid">
 				<div class="span12">
 					<form id="form1" runat="server">
@@ -416,17 +428,284 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 			
-		</div>
-		
-		
-		<!-- 输入基础数据弹出框 -->
-		<div id="popdiv_basicdata" class="popdiv" style="display:none">
-		<a id="close_basicdata" class="close">关闭</a>
-		
 			
 		</div>
 		
+		<!-- 输入基础数据弹出框 -->
+		<div id="popdiv_basicdata" class="popdiv" style="display:none">
+			<a id="close_basicdata" class="close">关闭</a>
+			
+			<div id="basedata_tab" class="tab-container">
+			  <ul class='etabs'>
+			    <li class='tab'><a href="#basedata_tabs1">节点数据</a></li>
+			    <li class='tab'><a href="#basedata_tabs2">管段数据</a></li>
+			    <li class='tab'><a href="#basedata_tabs3">离心压缩机</a></li>
+			    <li class='tab'><a href="#basedata_tabs4">往复式压缩机</a></li>
+			  </ul>
+			  <div id="basedata_tabs1"><!-- 节点数据 -->
+			    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table class="table  table-striped">
+								<thead>
+									<tr>
+										<th>序号</th><th>节点名称</th><th>坐标x(m)</th><th>坐标y(m)</th>
+										<th>坐标z(m)</th><th>节点压力(MPa)</th><th>节点流量(Mm3/d)</th><th>控制模式</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="success">
+										<td>1</td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="error">
+										<td>1</td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="warning">
+										<td>1</td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="info">
+										<td>1</td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td>
+									</tr>
+								</tbody>
+							</table> <button class="btn" type="button">按钮</button>
+						</div>
+					</div>
+				</div>
+			    
+			    
+			    <!-- content -->
+			  </div>
+			  
+			  <div id="basedata_tabs2"><!-- 管段数据 -->
+			    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table class="table  table-striped">
+								<thead>
+									<tr>
+										<th>序号</th><th>管段名称</th><th>类型</th><th>上游节点</th>
+										<th>下游节点</th><th>管长(km)</th><th>管内径(m)</th><th>绝对粗糙度(m)</th>
+										<th>摩阻系数公式</th><th>压缩机名称</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td><td></td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="success">
+										<td>1</td><td></td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="error">
+										<td>1</td><td></td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td><td></td>
+									</tr>
+									<tr class="warning">
+										<td>1</td><td></td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td><td></td>										
+									</tr>
+									<tr class="info">
+										<td>1</td><td></td><td></td><td></td><td></td>
+										<td></td><td></td><td></td><td></td><td></td>										
+									</tr>
+								</tbody>
+							</table> <button class="btn" type="button">按钮</button>
+						</div>
+					</div>
+				</div>
 
+			    <!-- content -->
+			  </div>
+			  
+			  <div id="basedata_tabs3"><!-- 离心压缩机 -->
+			    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table class="table  table-striped">
+								<thead>
+									<tr>
+										<th>
+											序号
+										</th>
+										<th>
+											名称
+										</th>
+										<th>
+											a
+										</th>
+										<th>
+											b
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr class="success">
+										<td>1</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr class="error">
+										<td>1</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr class="warning">
+										<td>1</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr class="info">
+										<td>1</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table> <button class="btn" type="button">按钮</button>
+						</div>
+					</div>
+				</div>
+			    
+			    <!-- content -->
+			  </div>
+			  <div id="basedata_tabs4">
+			    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table class="table  table-striped">
+								<thead>
+									<tr>
+										<th>
+											编号
+										</th>
+										<th>
+											产品
+										</th>
+										<th>
+											交付时间
+										</th>
+										<th>
+											状态
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											1
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											01/04/2012
+										</td>
+										<td>
+											Default
+										</td>
+									</tr>
+									<tr class="success">
+										<td>
+											1
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											01/04/2012
+										</td>
+										<td>
+											Approved
+										</td>
+									</tr>
+									<tr class="error">
+										<td>
+											2
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											02/04/2012
+										</td>
+										<td>
+											Declined
+										</td>
+									</tr>
+									<tr class="warning">
+										<td>
+											3
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											03/04/2012
+										</td>
+										<td>
+											Pending
+										</td>
+									</tr>
+									<tr class="info">
+										<td>
+											4
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											04/04/2012
+										</td>
+										<td>
+											Call in to confirm
+										</td>
+									</tr>
+								</tbody>
+							</table> <button class="btn" type="button">按钮</button>
+						</div>
+					</div>
+				</div>
+			    
+			    <!-- content -->
+			  </div>
+			  
+			</div>
+			
+		</div>
+		
+	
+		
+		<script type="text/javascript">
+		$().ready(function(){
+			$('#basedata_tab').easytabs();
+			}	
+		);
+			 
+		
+		
+		</script>
 		   
   </body>
   

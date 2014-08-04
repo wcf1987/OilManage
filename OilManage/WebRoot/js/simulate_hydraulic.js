@@ -101,4 +101,6 @@ $(document).ready(function(){
     var remove=options.remove();
     remove.appendTo("#select1");
     });
+   
 });
+
