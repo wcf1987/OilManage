@@ -1,9 +1,10 @@
 .page-header{margin-top:-30px;color:white}
-.wellImage{float:left;width:220px;height:490px;text-align: center;}
+#maindiv{background-color:white;border-radius:25px;border:2px solid;padding:20px;}
+.wellImage{float:left;width:220px;height:490px;text-align: center;border-radius:25px;border:2px solid;}
 #wellParTable{width:100%;}
 #fluidParTable{width:100%;}
-.span4{background-color:white;}
-.span6{background-color:white;margin-right:10px;border-radius:25px;border:2px solid;}
+.span4{background-color:white;margin-top:10px;}
+.span6{background-color:white;margin-left:20px;border-radius:25px;border:2px solid;}
 .sim_result{margin-left:20px;}
 .control-group{margin-top:10px;}
 .img-polaroid{width:80%;height:80%;}

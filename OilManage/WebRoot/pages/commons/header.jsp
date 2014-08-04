@@ -32,10 +32,10 @@ User userlogin=(User)(session.getAttribute("user"));
 		                    <a tabindex="-1" href="javascript:;">管网模拟</a>
 		                    <ul class="dropdown-menu">
 		                        <li><a tabindex="-1" href="pages/simulate_hydraulic.jsp">单相管网水力计算</a></li>
-		                        <li><a tabindex="-1" href="javascript:;">单相管网热力计算</a></li>
-		                        <li><a tabindex="-1" href="javascript:;">气固两相管网计算</a></li>
-		                        <li><a tabindex="-1" href="javascript:;">气液两相管网计算</a></li>
-		                        <li><a tabindex="-1" href="javascript:;">自动计算</a></li>
+		                        <li><a tabindex="-1" href="pages/simulate_thermal.jsp">单相管网热力计算</a></li>
+		                        <li><a tabindex="-1" href="pages/simulate_gas_solid.jsp">气固两相管网计算</a></li>
+		                        <li><a tabindex="-1" href="pages/simulate_gas_liquid.jsp">气液两相管网计算</a></li>
+		                        <li><a tabindex="-1" href="pages/simulate_auto.jsp">自动计算</a></li>
 		                        <li class="divider"></li>
 		                        <li class="dropdown-submenu">
 		                            <a href="javascript:;">二级菜单</a>
@@ -109,13 +109,16 @@ User userlogin=(User)(session.getAttribute("user"));
    			case "/OilManage/pages/simulate_hydraulic.jsp":
 				$("#simulate").parent().addClass("active");
 				break;
-   			case "/OilManage/pages/simulate_thermodynamic.jsp":
+   			case "/OilManage/pages/simulate_thermal.jsp":
 				$("#simulate").parent().addClass("active");
 				break;
    			case "/OilManage/pages/simulate_gas_solid.jsp":
 				$("#simulate").parent().addClass("active");
 				break;
    			case "/OilManage/pages/simulate_gas_liquid.jsp":
+				$("#simulate").parent().addClass("active");
+				break;
+   			case "/OilManage/pages/simulate_auto.jsp":
 				$("#simulate").parent().addClass("active");
 				break;
    			case "/OilManage/pages/optimize.jsp":

@@ -10,7 +10,7 @@
     text-align:center;
     line-height:400%;
     font-size:13px;
-    left:40%;
+    left:20%;
     top:10%;
     
     border: 5px solid #dedede;
@@ -38,4 +38,7 @@
 	font-size:15px;
 }
 
-
+#basedata_tabs1{margin-top:-10px;margin-bottom:20px;}
+#basedata_tabs2{margin-top:-10px;margin-bottom:20px;}
+#basedata_tabs3{margin-top:-10px;margin-bottom:20px;}
+#basedata_tabs4{margin-top:-10px;margin-bottom:20px;}

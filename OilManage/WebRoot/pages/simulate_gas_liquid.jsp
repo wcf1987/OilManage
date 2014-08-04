@@ -39,16 +39,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="js/easytabs/jquery.easytabs.js" type="text/javascript"></script>
 	<script src="js/jqueryPlug/jquery.mousewheel.min.js" type="text/javascript"></script>
 	
+
+		
+		
 	<script defer="defer" type="text/javascript" src="editor/lib/init2.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/platform.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/leftpoly.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/Paintings.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/tools.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/kinecttab.js"></script>
-
-		
+	
 	<script defer="defer" type="text/javascript" src="js/simulate_hydraulic.js"></script>
-	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
+	<script defer="defer" type="text/javascript" src="js/diagram.js"></script> 
 	
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/colorPicker_new.css" />
@@ -79,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row-fluid">
 					<div class="span12">
 					<div class="page-header">
-						<h1>单相管网水力计算&nbsp;</h1>
+						<h1>气液两相管网计算&nbsp;</h1>
 					</div>
 					
 						<div id="actions">
@@ -434,7 +436,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    
 			    <div class="container-fluid">
 					<div class="row-fluid">
-					<button class="btn" type="button" style="float:left">导入Excel</button>
 						<div class="span12">
 							<table class="table  table-striped">
 								<thead>
@@ -465,11 +466,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<td></td><td></td><td></td><td></td>
 									</tr>
 								</tbody>
-							</table> 
-							
-						</div>
-						<div style="margin-bottom:20px;">
-						<button class="btn" type="button">保存</button>
+							</table> <button class="btn" type="button">按钮</button>
 						</div>
 					</div>
 				</div>
@@ -482,7 +479,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    
 			    <div class="container-fluid">
 					<div class="row-fluid">
-					<button class="btn" type="button" style="float:left">导入Excel</button>
 						<div class="span12">
 							<table class="table  table-striped">
 								<thead>
@@ -514,7 +510,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<td></td><td></td><td></td><td></td><td></td>										
 									</tr>
 								</tbody>
-							</table> <button class="btn" type="button">保存</button>
+							</table> <button class="btn" type="button">按钮</button>
 						</div>
 					</div>
 				</div>
@@ -526,7 +522,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    
 			    <div class="container-fluid">
 					<div class="row-fluid">
-					<button class="btn" type="button" style="float:left">导入Excel</button>
 						<div class="span12">
 							<table class="table  table-striped">
 								<thead>
@@ -577,7 +572,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<td></td>
 									</tr>
 								</tbody>
-							</table> <button class="btn" type="button">保存</button>
+							</table> <button class="btn" type="button">按钮</button>
 						</div>
 					</div>
 				</div>
@@ -588,7 +583,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    
 			    <div class="container-fluid">
 					<div class="row-fluid">
-					<button class="btn" type="button" style="float:left">导入Excel</button>
 						<div class="span12">
 							<table class="table  table-striped">
 								<thead>
@@ -679,7 +673,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										</td>
 									</tr>
 								</tbody>
-							</table> <button class="btn" type="button">保存</button>
+							</table> <button class="btn" type="button">按钮</button>
 						</div>
 					</div>
 				</div>
