@@ -3,7 +3,11 @@ package cn.edu.cup.file;
 public class ColModel {
 	String name;
 	String index;
-	String width="80";
+	boolean hidden;
+	public boolean isHidden() {
+		return hidden;
+	}
+
 	String align="center";
 	public void setName(String name) {
 		this.name = name;
@@ -12,13 +16,18 @@ public class ColModel {
 		super();
 		this.name = name;
 		this.index=name;
+		this.hidden=false;
+	}
+	public ColModel(String name,boolean hidden) {
+		super();
+		this.name = name;
+		this.index=name;
+		this.hidden=hidden;
 	}
 	public void setIndex(String index) {
 		this.index = index;
 	}
-	public void setWidth(String width) {
-		this.width = width;
-	}
+
 	public void setAlign(String align) {
 		this.align = align;
 	}
@@ -28,9 +37,7 @@ public class ColModel {
 	public String getIndex() {
 		return index;
 	}
-	public String getWidth() {
-		return width;
-	}
+
 	public String getAlign() {
 		return align;
 	}

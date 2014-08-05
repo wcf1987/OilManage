@@ -336,7 +336,20 @@
 
 			</result>
 		</action>
-		
+				<action name="listSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcleAction"
+			method="listSheetContent">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+				<action name="delSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcleAction"
+			method="delSheetContent">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		
 		
 		

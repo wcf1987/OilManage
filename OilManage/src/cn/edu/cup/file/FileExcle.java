@@ -61,12 +61,17 @@ public class FileExcle {
 	  
 	}
 	public static void main(String args[]) {
-		new FileExcle().readExcle("E:\\profit\\oil项目\\Input-General.xls");
+		new FileExcle().readExcle(1,"E:\\profit\\oil项目\\Input-General.xls");
+	}
+	public int getProID() {
+		return proID;
 	}
 	public SheetContent getSheetByID(int id){
 		return excleContent.get(id);
 	}
-	public int readExcle(String fileName) {
+	int proID;
+	public int readExcle(int proID,String fileName) {
+		this.proID=proID;
 		InputStream inputStream;
 		try {
 			inputStream = new FileInputStream(new File(fileName));
@@ -87,7 +92,7 @@ public class FileExcle {
 				Sheet sheet = wb.getSheetAt(i);// 第i个工作表
 				SheetContent temp=new SheetContent(sheet); 
 				excleContent.add(temp);
-				System.out.println(sheet.getSheetName());
+				//System.out.println(sheet.getSheetName());
 				
 				}
 			
