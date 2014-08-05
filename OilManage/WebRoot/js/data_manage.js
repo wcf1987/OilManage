@@ -4,10 +4,6 @@ $(
 	function() {
 
 	$('#iconfile').uploadify({
-		'formData': {
-			'type':$("#type_name").val(),
-			'remark':$("#type_remark").val(),	
-		},
 		'swf' : 'js/upload/uploadify.swf',
 		'script'      : 'js/upload/uploadify.php',
 		'cancelImg'   : 'js/upload/cancel.png',
@@ -22,6 +18,15 @@ $(
 		'method' : 'post',
 		'fileTypeDesc' : 'Image Files',
 	    'fileTypeExts' : '*.gif; *.jpg; *.png;*.svg;',
+	    'onUploadStart': function (file) { 
+	    	var type=$("type_name").val();
+	    	var remark=$("#type_remark").val();
+	    	if(type=null){
+	    		alert("类型名称不能为空！");
+	    		//$("#type_name").val(file.name);
+	    	}
+	    	$("#iconfile").uploadify("settings", "formData", { 'type':$("#type_name").val(),'remark':$("#type_remark").val() });  
+	    }
 //        'onUploadFile': function(file) {
 //        	alert('The file ' + file.name + ' is being uploaded.');
 //        	alert(1);
@@ -640,7 +645,8 @@ $(
 				title:'添加',
 				caption:"添加",
 				id:"add_PointTypeList",
-				onClickButton : function addModal(){										
+				onClickButton : function addModal(){
+					
 					$("#addPointTypeForm").validate({
 						debug:true,
 						onsubmit:true,
@@ -662,6 +668,7 @@ $(
 					});
 					// 配置对话框
 					$('#add_PointType_modal').modal();
+				
 				},
 				position:"first"
 			}).jqGrid('navButtonAdd',"#GuiPointTypePager",{
@@ -983,9 +990,9 @@ function add_parameter() {
 
 
 function add_PointType() {
-	$('#iconfile').uploadify('upload');
-	
-/*	$.ajax({
+	//$('#iconfile').uploadify('upload');
+	$('#iconfile').uploadify('upload');//保存名字和备注等基本信息的操作在上传方法里。
+	/*	$.ajax({
 		type : 'POST',
 		url : 'addPointType.action',
 		data : {
@@ -1136,16 +1143,16 @@ function loadPointProperOptions(){
 	}
 
 function uploadComplete(file, data, response) {
-	// event,事件对象
-	// id:上传进度队列id
-	// fileObj={"name":"文件名","filePath":"上传后的服务器文件路径","size":"文件的大小","creationDate":"文件创建时间","modificationDate":"文件最后修改时间","type":"扩展名"}
-	// response:文件上传后返回的文本，其实也可以在这里返回文件路径比较简单
-	// data={"fileCount":"上传队列中还剩下的文件数","speed":"上传的平均速度"}
-	//var tempJson = jQuery.parseJSON(data);
-	//viewMap(tempJson);
-	
 	var tempJson = jQuery.parseJSON(data);
+	if(tempJson['exist']==true){
+		alert("名字"+tempJson['type']+"已存在！");
+	}else{
+		alert("上传成功！");
+		$('#add_PointType_modal').modal('hide');
+		$("#GuiPointTypeList").trigger("reloadGrid");
+	}
+	//var tempJson = jQuery.parseJSON(data);
 	//$("#type_icon_path").html(tempJson['relativePath']);
-	alert("上传成功！");
+	
 
 };

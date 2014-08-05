@@ -76,7 +76,13 @@ public class GUIPointTypeDao {
 		return count;
 
 	}
-	
+	public int countType(String type){
+		tx = HibernateSessionManager.getThreadLocalTransaction();
+		Query q = session.createSQLQuery("select count(*) from t_guipointtype t where t.type=?");
+		q.setParameter(0, type);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
+	}
 	public int addType(String type,String remark, String path) {
 		tx = HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into t_guipointtype (type,remark,path) values (?,?,?)");

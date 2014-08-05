@@ -37,7 +37,7 @@ public class UploadTypeIconAction  extends ActionSupport{
 	private String relativePath;
 	public static String UPLOADPATH="editor/icons/";
 	private static String   WEB_ROOT_PATH;
-
+	private Boolean exist;
 /*	public Graphi getGraphi() {
 		return graphi;
 	}*/
@@ -70,6 +70,13 @@ public class UploadTypeIconAction  extends ActionSupport{
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+	
+	public Boolean getExist() {
+		return exist;
+	}
+	public void setExist(Boolean exist) {
+		this.exist = exist;
+	}
 	public String getWebFileRoot(){
 		 ActionContext ac = ActionContext.getContext();     
 	     ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);     
@@ -80,23 +87,25 @@ public class UploadTypeIconAction  extends ActionSupport{
 		//graphi=new Graphi();
 		//System.out.println(mapfileFileName);		 
 	     BufferedReader reader = null;
-	        try {
-	           
-	            reader = new BufferedReader(new FileReader(iconfile));
-	           
+	        try {	                 
+	        	GUIPointTypeDao dao=new GUIPointTypeDao();	
+	        	int cou=dao.countType(type);
+	        	if(cou>0){
+	        		exist=true;
+	        	}else{
+	        		exist=false;
+	        	    reader = new BufferedReader(new FileReader(iconfile)); 	           
 	            	String path=getWebFileRoot()+this.UPLOADPATH;
-	            	relativePath=this.UPLOADPATH+String.valueOf(System.currentTimeMillis())+".svg";	        
-	                path=path+String.valueOf(System.currentTimeMillis())+".svg";
-	                
-	                FilePath=path;
-	                
-	                copyFile(iconfile,new File(FilePath));
-	       
-	            reader.close();
-	            
-	        	GUIPointTypeDao dao=new GUIPointTypeDao();		
-	    		ID=dao.addType(this.type,this.remark,this.relativePath);
-	    		dao.close();	    	
+	            	//relativePath=this.UPLOADPATH+String.valueOf(System.currentTimeMillis())+".svg";	        
+	            	//path=path+String.valueOf(System.currentTimeMillis())+".svg";                
+	            	relativePath=this.UPLOADPATH+type+".svg";	        		              
+	            	path=path+type+".svg";                
+	                FilePath=path;	                
+	                copyFile(iconfile,new File(FilePath));	       
+		            reader.close();
+	        		ID=dao.addType(this.type,this.remark,this.relativePath);
+	        	}
+	        	dao.close();    	
 	    		
 	        } catch (IOException e) {
 	            e.printStackTrace();

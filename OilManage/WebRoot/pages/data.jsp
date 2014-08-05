@@ -475,10 +475,10 @@ $(document).ready(function(){
 		      			</tr>
 		      			<tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">上传图片：</label></td>
-		      				<td>
+		      				<td  style="padding-top:5px;">
       							<input type="file" name="iconfile" id="iconfile" />
       							<div id="file_uploadQueue" class="uploadifyQueue"></div>
-      							<a href="javascript:$('#iconfile').uploadify('upload');" >upload</a>
+      							<!-- <a href="javascript:$('#iconfile').uploadify('upload');" >upload</a> -->
 		      				</td>
 		      			</tr>	
 				   </table>
