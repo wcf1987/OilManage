@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %> 
     <base href="<%=basePath%>">
     
-    <title>系统模拟</title>
+    <title>系统优化</title>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=9" />
 	
@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script defer="defer" type="text/javascript" src="editor/lib/kinecttab.js"></script>
 
 		
-	<script defer="defer" type="text/javascript" src="js/simulate_hydraulic.js"></script>
+	<script defer="defer" type="text/javascript" src="js/optimize_global.js"></script>
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
 	
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>	
 		
-	<link rel="stylesheet" type="text/css" href="css/simulate_hydraulic.css"/>
+	<link rel="stylesheet" type="text/css" href="css/optimize_global.css"/>
 	<style type="text/css">
 	/* 	body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", sans-serif;background: linear-gradient(45deg, #020031 0%, #6d3353 100%); }
 	 */
@@ -79,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row-fluid">
 					<div class="span12">
 					<div class="page-header">
-						<h1>单相管网热力计算&nbsp;<small>管网模拟</small></h1>
+						<h1 >整体设计&nbsp; <small>整装区块设计</small></h1>
 					</div>
 					
 						<div id="actions">
@@ -145,8 +145,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<li class="dropdown-submenu">
 				                    <button tabindex="-1" >输入</button>
 				                    <ul class="dropdown-menu">
-				                        <li><a tabindex="-1" href="javascript:showLiquidPra();">流体参数</a>
-				                        <li><a tabindex="-1" href="javascript:showBasicData();">基础数据</a></li>			                        
+				                    	<li><a tabindex="-1" href="javascript:showBasicData();">基础数据</a></li>		
+				                        <li><a tabindex="-1" href="javascript:showFuncSelect();">问题描述</a>
+				                        <li><a tabindex="-1" href="javascript:showCondition();">约束设置</a>	                        
 				                    </ul>
 				                </li>
 				                <li>
@@ -345,8 +346,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		
 		<!-- 输入流体参数弹出框 -->
-		<div id="popdiv_liquidpra" class="popdiv" style="display:none;padding:10px 20px 20px;">
-			<a id="close_liquidpra" class="close">x</a>
+		<div id="popdiv_funcselect" class="popdiv" style="display:none;padding:10px 20px 20px;">
+			<a id="close_funcselect" class="close">x</a>
 		
 			
 			<div class="row-fluid">
@@ -419,16 +420,91 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 		</div>
 		
+		<div id="popdiv_condition" class="popdiv" style="display:none">
+			<a id="close_condition" class="close">x</a>
+			
+			<div id="condition_tab" class="tab-container">
+			  <ul class='etabs'>
+			    <li class='tab'><a href="#condition_tabs1">气井基础数据</a></li>
+			    <li class='tab'><a href="#condition_tabs2">管道数据</a></li>
+			    <li class='tab'><a href="#condition_tabs3">费用数据</a></li>
+			    <li class='tab'><a href="#condition_tabs4">区域障碍</a></li>
+			  </ul>
+			  <div id="condition_tabs1"><!-- 节点数据 -->    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+					<button class="btn" type="button" style="float:left">导入Excel</button>
+						<div class="span12">
+							<table class="table  table-striped">
+							</table> 				
+						</div>
+						<div style="margin-bottom:20px;">
+						<button class="btn" type="button">保存</button>
+						</div>
+					</div>
+				</div>
+			    <!-- content -->
+			  </div>
+			  <div id="condition_tabs2"><!-- 节点数据 -->		    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+					<button class="btn" type="button" style="float:left">导入Excel</button>
+						<div class="span12">
+							<table class="table  table-striped">
+							</table> 				
+						</div>
+						<div style="margin-bottom:20px;">
+						<button class="btn" type="button">保存</button>
+						</div>
+					</div>
+				</div>
+			    <!-- content -->
+			  </div>			
+			  <div id="condition_tabs3"><!-- 节点数据 -->		    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+					<button class="btn" type="button" style="float:left">导入Excel</button>
+						<div class="span12">
+							<table class="table  table-striped">
+							</table> 				
+						</div>
+						<div style="margin-bottom:20px;">
+						<button class="btn" type="button">保存</button>
+						</div>
+					</div>
+				</div>
+			    <!-- content -->
+			  </div>	
+			  <div id="condition_tabs4"><!-- 节点数据 -->		    
+			    <div class="container-fluid">
+					<div class="row-fluid">
+					<button class="btn" type="button" style="float:left">导入Excel</button>
+						<div class="span12">
+							<table class="table  table-striped">
+							</table> 				
+						</div>
+						<div style="margin-bottom:20px;">
+						<button class="btn" type="button">保存</button>
+						</div>
+					</div>
+				</div>
+			    <!-- content -->
+			  </div>	
+			</div>
+			
+		</div>	
+			  	
+			  				
 		<!-- 输入基础数据弹出框 -->
 		<div id="popdiv_basicdata" class="popdiv" style="display:none">
-			<a id="close_basicdata" class="close">关闭</a>
+			<a id="close_basicdata" class="close">x</a>
 			
 			<div id="basedata_tab" class="tab-container">
 			  <ul class='etabs'>
-			    <li class='tab'><a href="#basedata_tabs1">节点数据</a></li>
-			    <li class='tab'><a href="#basedata_tabs2">管段数据</a></li>
-			    <li class='tab'><a href="#basedata_tabs3">离心压缩机</a></li>
-			    <li class='tab'><a href="#basedata_tabs4">往复式压缩机</a></li>
+			    <li class='tab'><a href="#basedata_tabs1">气井基础数据</a></li>
+			    <li class='tab'><a href="#basedata_tabs2">管道数据</a></li>
+			    <li class='tab'><a href="#basedata_tabs3">费用数据</a></li>
+			    <li class='tab'><a href="#basedata_tabs4">区域障碍</a></li>
 			  </ul>
 			  <div id="basedata_tabs1"><!-- 节点数据 -->
 			    
@@ -695,9 +771,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		<script type="text/javascript">
 		$().ready(function(){
-			$('#basedata_tab').easytabs();
-			}	
-		);
+			$('#basedata_tab').easytabs();			
+			$('#condition_tab').easytabs();
+		});
 			 
 		
 		
