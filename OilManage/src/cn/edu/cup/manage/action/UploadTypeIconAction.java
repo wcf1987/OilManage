@@ -86,7 +86,9 @@ public class UploadTypeIconAction  extends ActionSupport{
 	           
 	            	String path=getWebFileRoot()+this.UPLOADPATH;
 	            	relativePath=this.UPLOADPATH+String.valueOf(System.currentTimeMillis())+".svg";	        
-	                path=path+String.valueOf(System.currentTimeMillis())+".svg";
+	            	path=path+String.valueOf(System.currentTimeMillis())+".svg";                
+	            	//relativePath=this.UPLOADPATH+fileName+".svg";	        		              
+	            	//path=path+fileName+".svg";
 	                
 	                FilePath=path;
 	                
