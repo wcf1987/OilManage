@@ -1,25 +1,18 @@
 package cn.edu.cup.file;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -70,8 +63,10 @@ public class FileExcle {
 		return excleContent.get(id);
 	}
 	int proID;
+	String fileName;
 	public int readExcle(int proID,String fileName) {
 		this.proID=proID;
+		this.fileName=fileName;
 		InputStream inputStream;
 		try {
 			inputStream = new FileInputStream(new File(fileName));
@@ -110,8 +105,60 @@ public class FileExcle {
 		}
 		return 1;
 	}
+	public int insertCell(Row row1,int i,int j,String value){
+		if(j==0){
+			return 1;
+		}
+		Cell cell1_1 = row1.createCell(j-1);  
+		cell1_1.setCellValue(value);
+		return 1;
+	}
+	public int insertRow(Sheet sheet,int i,List<String> values){
+		Row row = sheet.createRow(i);  
+		for(int j=0;j<values.size();j++){
+			insertCell(row,i,j,values.get(j));
+		}
 
+		return 1;
+	}
+	public int saveExcle(){
+		//生成Workbook
+		HSSFWorkbook wb = new HSSFWorkbook();
+
+		//添加Worksheet（不添加sheet时生成的xls文件打开时会报错）
+		//@SuppressWarnings("unused")
+		List<Sheet> sheets=new ArrayList<Sheet>();
+		for(int i=0;i<this.excleContent.size();i++){
+			sheets.add(wb.createSheet(excleContent.get(i).getName()));
+			SheetContent temp=excleContent.get(i);
+			for(int k=0;k<temp.sheetContent.size();k++){
+				insertRow(sheets.get(i),k,temp.sheetContent.get(k));
+			}
+		}
+
+		
+		//保存为Excel文件
+		FileOutputStream out = null;
+
+		try {
+		    out = new FileOutputStream(this.fileName);
+		    wb.write(out);		
+		} catch (IOException e) {
+		
+		    System.out.println(e.toString());
+			return -1;
+		} finally {
+		    try {
+		        out.close();
+		    } catch (IOException e) {
+		        System.out.println(e.toString());
+		    }
+		}	
+ 
+		return 1;
+	}
 	public String writeExcle(String fileName) {
+		
 		return "Success";
 
 	}

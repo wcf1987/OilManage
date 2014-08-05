@@ -68,6 +68,14 @@ public class AlgorithmExcleAction {
     		return excle;
     		
 	}
+	public String saveExcle(){
+		FileExcle excle=getFileExcle(this.proID);
+		int re=excle.saveExcle();
+		if(re==-1){
+			msg="保存失败，请检查数据结构";
+		}
+		return "SUCCESS";
+	}
 	public FileExcle putFileExcle(FileExcle e){
 		ActionContext actionContext = ActionContext.getContext();
         Map session = actionContext.getSession();
@@ -119,6 +127,7 @@ public class AlgorithmExcleAction {
 		FileExcle excle=getFileExcle(this.proID);
 		SheetContent sheet=excle.getSheetByID(sheetID);
 		sheet.editCell(Index_ID,col_ID,newValue);
+		
 		return "SUCCESS";
 	}
 	Map<String,String> postMap;
@@ -143,6 +152,9 @@ public class AlgorithmExcleAction {
 		excle.getSheetByID(sheetID).updateSheet();
 		putFileExcle(excle);
 		return "SUCCESS";
+	}
+	public static void main(String args[]){
+		new AlgorithmExcleAction().saveExcle();
 	}
 	public String listSheetContent(){
 		FileExcle excle=getFileExcle(this.proID);

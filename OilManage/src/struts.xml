@@ -364,7 +364,13 @@
 
 			</result>
 		</action>
-	
+		<action name="saveExcle" class="cn.edu.cup.manage.action.AlgorithmExcleAction"
+			method="saveExcle">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		
 		
 		<!-- 算法图形输出配置-->
