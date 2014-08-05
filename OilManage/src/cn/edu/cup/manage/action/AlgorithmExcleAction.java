@@ -158,7 +158,9 @@ public class AlgorithmExcleAction {
 	}
 	public String listSheetContent(){
 		FileExcle excle=getFileExcle(this.proID);
-		
+		if(excle==null){
+			return "SUCCESS";
+		}
 		sheetContent=excle.getSheetByID(sheetID);
 		records=sheetContent.getSize();
 		sheetContent.buildContent(page, rows);
