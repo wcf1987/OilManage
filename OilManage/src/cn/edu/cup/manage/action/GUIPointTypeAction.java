@@ -120,7 +120,7 @@ public class GUIPointTypeAction {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	public String addPointType(){		
+	public String addPointType(){	//暂时不用，在uploadTypeIconAction里面已经实现了	
 		GUIPointTypeDao dao=new GUIPointTypeDao();		
 		ID=dao.addType(this.type,this.remark,this.path);
 		dao.close();

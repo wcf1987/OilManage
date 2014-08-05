@@ -14,6 +14,7 @@ import javax.servlet.ServletContext;
 
 import org.apache.struts2.ServletActionContext;
 
+import cn.edu.cup.manage.dao.GUIPointTypeDao;
 import cn.edu.cup.map.business.Graphi;
 import cn.edu.cup.map.business.Line;
 import cn.edu.cup.map.business.Point;
@@ -23,6 +24,9 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class UploadTypeIconAction  extends ActionSupport{
 	private static final long serialVersionUID = 837481714629791752L;
+	private int ID;
+	private String type;
+	private String remark;
 	private File iconfile;
 	private String fileName;
 //	private File mapfile;
@@ -42,6 +46,24 @@ public class UploadTypeIconAction  extends ActionSupport{
 	
 	public String re;
 
+	public int getID() {
+		return ID;
+	}
+	public void setID(int iD) {
+		ID = iD;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 	public String getFileName() {
 		return fileName;
 	}
@@ -71,6 +93,11 @@ public class UploadTypeIconAction  extends ActionSupport{
 	                copyFile(iconfile,new File(FilePath));
 	       
 	            reader.close();
+	            
+	        	GUIPointTypeDao dao=new GUIPointTypeDao();		
+	    		ID=dao.addType(this.type,this.remark,this.relativePath);
+	    		dao.close();	    	
+	    		
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        } finally {

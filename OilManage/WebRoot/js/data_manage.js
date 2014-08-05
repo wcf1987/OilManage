@@ -4,14 +4,18 @@ $(
 	function() {
 
 	$('#iconfile').uploadify({
+		'formData': {
+			'type':$("#type_name").val(),
+			'remark':$("#type_remark").val(),	
+		},
 		'swf' : 'js/upload/uploadify.swf',
 		'script'      : 'js/upload/uploadify.php',
 		'cancelImg'   : 'js/upload/cancel.png',
 		'uploader' : 'uploadTypeIcon.action',
 		'queueID' : 'fileQueue',
-		'auto' : true,
+		'auto' : false,
 		'multi' : false,
-		'buttonText' : '上传图标',
+		'buttonText' : '选择图片',
 		'fileSizeLimit' : '5MB',
 		'fileObjName' : 'iconfile',
 		'onUploadSuccess' : uploadComplete,
@@ -979,8 +983,9 @@ function add_parameter() {
 
 
 function add_PointType() {
-
-	$.ajax({
+	$('#iconfile').uploadify('upload');
+	
+/*	$.ajax({
 		type : 'POST',
 		url : 'addPointType.action',
 		data : {
@@ -1003,7 +1008,8 @@ function add_PointType() {
 			$('#add_PointType_modal').modal('hide');
 			$("#GuiPointTypeList").trigger("reloadGrid");
 		}
-	});
+	});*/
+	
 	}
 
 function add_PointProper() {
@@ -1139,7 +1145,7 @@ function uploadComplete(file, data, response) {
 	//viewMap(tempJson);
 	
 	var tempJson = jQuery.parseJSON(data);
-	$("#type_icon_path").html(tempJson['relativePath']);
+	//$("#type_icon_path").html(tempJson['relativePath']);
 	alert("上传成功！");
 
 };
