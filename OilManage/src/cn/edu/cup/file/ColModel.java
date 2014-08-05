@@ -3,6 +3,12 @@ package cn.edu.cup.file;
 public class ColModel {
 	String name;
 	String index;
+	boolean editable=true;
+	
+	public boolean isEditable() {
+		return editable;
+	}
+
 	boolean hidden;
 	public boolean isHidden() {
 		return hidden;

@@ -19,10 +19,15 @@ public class SheetContent {
 	public List<ColModel> getColModel() {
 		return colModel;
 	}
+	public int editCell(int index_ID, int col_ID, String newValue) {
+		// TODO Auto-generated method stub
+		List<String> temp=sheetContent.get(index_ID);
+		updateValueByIndex(temp,col_ID,newValue);
+		return 1;
+	}
 	public int removeRow(int index){
 		if(sheetContent.get(index).get(0).equals(String.valueOf(index))){
-			sheetContent.add(index,null);
-			sheetContent.remove(index+1);
+			sheetContent.set(index,null);
 			
 		}
 		
@@ -42,8 +47,7 @@ public class SheetContent {
 		return 1;
 	}
 	public List<String> updateValueByIndex(List<String> list,int index,String valueNew){
-		list.add(index,valueNew);
-		list.remove(index+1);
+		list.set(index,valueNew);
 		return list;
 	}
 	public int buildContent(int page, int rows){
@@ -58,7 +62,11 @@ public class SheetContent {
 			 for(Iterator<String> iter=sheetTitle.keySet().iterator();iter.hasNext();){
 				 titleS=iter.next();
 				 index=sheetTitle.get(titleS);
+				 if(index>=sheetContent.get(i).size()){
+					 value="";
+				 }else{
 				 value=sheetContent.get(i).get(index);
+				 }
 				 temp.put(titleS, value);
 			 }
 			 content.add(temp);
@@ -83,8 +91,9 @@ public class SheetContent {
 			list.add(0, String.valueOf(i));
 		}
 	}
-	public SheetContent(Sheet sheet) {
-
+	int sheetID;
+	public SheetContent(Sheet sheet,int sheetID) {
+		this.sheetID=sheetID;
 		int firstRowIndex = sheet.getFirstRowNum();
 		int lastRowIndex = sheet.getLastRowNum();
 		List<String> valueTemp;
@@ -106,9 +115,17 @@ public class SheetContent {
 					String value = "";
 					if (cell != null) {
 						value = cell.toString();
-						valueTemp.add(value);
+						if(rIndex==0&&value.equals(""))
+						{
+						
+						}else{
+							valueTemp.add(value);
+						}
 						//System.out.print(value + "\t");
-						if(rIndex==0){
+						if(rIndex==0&&!value.equals("")){
+							if(this.sheetID==1){
+							//	System.out.println("catch");
+							}
 							this.sheetTitle.put(value, cIndex+1);
 							
 							colModel.add(new ColModel(value));
@@ -117,7 +134,7 @@ public class SheetContent {
 					
 				}
 				sheetContent.add(valueTemp);
-				System.out.println();
+				//System.out.println();
 			}
 		}
 		insertIndexID();
@@ -143,4 +160,33 @@ public class SheetContent {
 		
 		return sheetContent.size();
 	}
+	public int addRow(Map<String, String> postMap) {
+		List<String> row=new ArrayList<String>();
+		String value;
+		String titleS;
+		for(int i=0;i<sheetTitle.size();i++){
+			titleS=getKeyFromValue(sheetTitle,i);
+			value=postMap.get(titleS);
+			
+			row.add(value);
+		 }
+		sheetContent.add(row);
+		updateSheet();
+		return 1;
+		
+	}
+	public String getKeyFromValue(Map<String,Integer> map,int value){
+		String t;
+		for(Iterator<String> iter=sheetTitle.keySet().iterator();iter.hasNext();){
+			 t=iter.next();
+			 int index=sheetTitle.get(t);
+			 if(index==value){
+				 return t;
+			 }
+			
+			 
+		 }
+		return null;
+	}
+
 }

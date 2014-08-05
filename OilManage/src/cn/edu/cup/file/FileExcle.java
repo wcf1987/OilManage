@@ -90,7 +90,7 @@ public class FileExcle {
 			excleContent=new ArrayList<SheetContent>();
 			for (int i = 0; i < sheetNum; i++) {
 				Sheet sheet = wb.getSheetAt(i);// 第i个工作表
-				SheetContent temp=new SheetContent(sheet); 
+				SheetContent temp=new SheetContent(sheet,i); 
 				excleContent.add(temp);
 				//System.out.println(sheet.getSheetName());
 				

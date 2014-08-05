@@ -4,7 +4,7 @@ $(
 
 	
 	function() {
-var sid = 0;
+var sid = 1;
 var proid = 10;
 var algid = 25;
 
@@ -70,6 +70,22 @@ function SheetGrid() {
 			// colNames : [ 'id', '项目名称', '上传时间', '地图查看', '编辑', '删除',
 			colNames : temp.colNames,// 表格的列名
 			colModel : temp.colModel,
+			cellEdit:true,
+			cellsubmit : 'remote',
+			cellurl : 'editSheetContent.action',
+			beforeSubmitCell : function(rowid,celname,value,iRow,iCol) { 
+				var index_ID=temp.sheetgridpro.jqGrid("getRowData", iRow).Index_ID 
+				var z={
+						proID:temp.proid,
+						sheetID:temp.sid,
+						Index_ID:index_ID,					
+						col_ID:iCol-1,
+						newValue:value					
+					};
+				return  z;
+				
+				} ,
+		
 			autowidth : true,
 			multiselect : true, // 可多选，出现多选框
 			multiselectWidth : 35, // 设置多选列宽度
@@ -92,32 +108,100 @@ function SheetGrid() {
 		});
 
 		this.sheetgridpro.jqGrid('navGrid', '#pager1', {
+			
+			add : true,
 			edit : false,
-			add : false,
 			del : false
+		},{},{
+			addCaption: "添加记录",
+			url:'addSheetContent.action',
+			width:500,
+			left:200,
+			top:20,
+			editCaption: "Edit Record",
+			bSubmit: "提交",
+			bCancel: "取消",
+			bClose: "Close",
+			saveData: "Data has been changed! Save changes?",
+			bYes : "Yes",
+			bNo : "No",
+			closeAfterAdd:true,
+			closeOnEscape:true,
+			bExit : "Cancel",
+			onclickSubmit : function(params, posdata) { 
+				
+				data={
+					'postMap':posdata	
+				}
+				return {postMap:JSON.stringify(posdata),proID:temp.proid,
+					sheetID:temp.sid,Index_ID:-1}; 
+				},
+				afterSubmit : function(response, postdata) 
+				{ 
+		
+					//alert(/xs/);
+					return [true,"",""] 
+				}
 		});
+		
+
 		this.sheetgridpro.jqGrid('navButtonAdd', "#pager1", {
 			title : '删除',
 			caption : "删除",
 			id : "delete_sheet",
-			onClickButton : deleteSheet,
 			position : "first"
 		});
+		/*
 		this.sheetgridpro.jqGrid('navButtonAdd', "#pager1", {
 			title : "添加新数据",
 			caption : "添加新数据",
-			onClickButton : addSheet,
 			id : 'add_sheet',
 			position : "first"
 		});
 		
+		this.sheetgridpro.jqGrid('editGridRow', "new", {
+			addCaption: "添加记录",
+			url:'addSheetContent.action',
+			width:500,
+			left:200,
+			top:20,
+			editCaption: "Edit Record",
+			bSubmit: "提交",
+			bCancel: "取消",
+			bClose: "Close",
+			saveData: "Data has been changed! Save changes?",
+			bYes : "Yes",
+			bNo : "No",
+			closeAfterAdd:true,
+			bExit : "Cancel",
+			onclickSubmit : function(params, posdata) { 
+				
+				data={
+					'postMap':posdata	
+				}
+				return {postMap:JSON.stringify(posdata),proID:temp.proid,
+					sheetID:temp.sid,Index_ID:-1}; 
+				}
+			
+		} );*/
+		/*$("#add_sheet").bind("click",arr,function(){
+			
+			
+		});*/
+		var temp=this;
+		var arr=new Array();
+		arr[0]=temp;
+		$("#delete_sheet").bind("click",arr,deleteSheet);
+	
+		
 	}
 
-	deleteSheet=function() {
+	deleteSheet=function(data) {
 		var maptemp={};
-		maptemp["proID"]=sheetgrid1.proid;
-		maptemp["sheetID"]=sheetgrid1.sid;
-		 var sels = sheetgrid1.sheetgridpro.jqGrid('getGridParam','selarrrow'); 
+		var grid=data.data[0];
+		maptemp["proID"]=grid.proid;
+		maptemp["sheetID"]=grid.sid;
+		 var sels = grid.sheetgridpro.jqGrid('getGridParam','selarrrow'); 
 		    if(sels==""){ 
 		       //$().message("请选择要删除的项！"); 
 		       alert("请选择要删除的项!");
@@ -125,7 +209,7 @@ function SheetGrid() {
 		 
 		    	for(var i=0;i<sels.length;i++){
 		    		if(sels[i]!=""){ 
-			        	  var rowData = sheetgrid1.sheetgridpro.jqGrid("getRowData", sels[i]);
+			        	  var rowData = grid.sheetgridpro.jqGrid("getRowData", sels[i]);
 			        	  maptemp["ids[" + i + "]"]=rowData.Index_ID;
 			        	 // alert(rowData.Index_ID);
 //			        	  alert(rowData.ID);
@@ -147,7 +231,7 @@ function SheetGrid() {
 		          
 		          success: function(msg){ 
 		        	alert("删除成功！");
-		        	sheetgrid1.sheetgridpro.trigger("reloadGrid");
+		        	grid.sheetgridpro.trigger("reloadGrid");
 		              
 		          } 
 		        }); 
@@ -155,14 +239,15 @@ function SheetGrid() {
 		    } 
 	}
 
-	addSheet=function() {
-		var temp=this;
+	addSheet=function(data) {
+		alert(/xss/);
+		var grid=data.data[0];
 		$.ajax({
 			type : 'POST',
-			url : 'addMap.action',
+			url : 'addSheetContent.action',
 			async:false,
 			data : {
-				proid : sheetgrid1.proid
+				proid : grid.proid
 			},
 			success : function(data) {
 				alert('新地图文件上传成功');

@@ -1,9 +1,11 @@
 package cn.edu.cup.manage.action;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
 import cn.edu.cup.file.ColModel;
 import cn.edu.cup.file.FileExcle;
 import cn.edu.cup.file.SheetContent;
@@ -88,6 +90,47 @@ public class AlgorithmExcleAction {
 		return ids;
 	}
 	String sheetName;
+	int 	Index_ID;				
+	int col_ID;
+	String newValue;
+	String status="success";
+	public String getStatus() {
+		return status;
+	}
+	public void setIndex_ID(int index_ID) {
+		Index_ID = index_ID;
+	}
+	public void setIndex_ID(String index_ID) {
+		Index_ID = 0;
+	}
+	public void setCol_ID(int col_ID) {
+		this.col_ID = col_ID;
+	}
+	public void setNewValue(String newValue) {
+		this.newValue = newValue;
+	}
+	public String addSheetContent(){
+		FileExcle excle=getFileExcle(this.proID);
+		SheetContent sheet=excle.getSheetByID(sheetID);
+		sheet.addRow(this.postMap);
+		return "SUCCESS";
+	}
+	public String editSheetContent(){
+		FileExcle excle=getFileExcle(this.proID);
+		SheetContent sheet=excle.getSheetByID(sheetID);
+		sheet.editCell(Index_ID,col_ID,newValue);
+		return "SUCCESS";
+	}
+	Map<String,String> postMap;
+	public void setPostMap(String postMap) {
+		JSONObject jsonObject2 =JSONObject.fromObject(postMap);
+		this.postMap=new HashMap<String, String>();
+		for(Iterator<String> iter = jsonObject2.keySet().iterator();iter.hasNext();)
+		{ 
+			String key=iter.next();
+		this.postMap.put(key, jsonObject2.getString(key));
+		}
+	}
 	public String delSheetContent(){
 		FileExcle excle=getFileExcle(this.proID);
 		if (!ids.isEmpty()) {
