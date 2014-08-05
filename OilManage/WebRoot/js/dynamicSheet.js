@@ -1,19 +1,15 @@
 
-$(
-	
-
-	
-	function() {
-var sid = 1;
-var proid = 10;
-var algid = 25;
-
+/*var sid = 1;
+var proid = 11;
+var algid = 27;
+var sheetDiv="#sheet1"
+var pageDiv="#pager1"
 var sheetgrid1 = new SheetGrid();
 
 sheetgrid1.GetDynamicCols(sid, algid);
-sheetgrid1.creategrid(proid);
+sheetgrid1.creategrid(proid,sheetDiv,pageDiv);
 //sheetgrid1.loadTableData();
-
+*/
 function SheetGrid() {
 
 	this.GetDynamicCols = function(sid, algid) {
@@ -55,10 +51,10 @@ function SheetGrid() {
 			}
 		}).trigger("reloadGrid");
 	}
-	this.creategrid = function(proid) {
+	this.creategrid = function(proid,sheetDiv,pageDiv) {
 		var temp = this;
 		this.proid = proid;
-		this.sheetgridpro = jQuery("#sheetTest").jqGrid({
+		this.sheetgridpro = jQuery(sheetDiv).jqGrid({
 			url : "listSheetContent.action",// 后端的数据交互程序，改为你的
 			datatype : "json",// 前后交互的格式是json数据
 			mtype : 'POST',// 交互的方式是发送httpget请求
@@ -78,6 +74,7 @@ function SheetGrid() {
 				var z={
 						proID:temp.proid,
 						sheetID:temp.sid,
+						algID : temp.algid,
 						Index_ID:index_ID,					
 						col_ID:iCol-1,
 						newValue:value					
@@ -93,7 +90,7 @@ function SheetGrid() {
 			height : 'auto',
 			width : 1230,
 			rowList : [ 10, 20, 30 ],
-			pager : '#pager1',			
+			pager : pageDiv,			
 			viewrecords : true,
 			jsonReader : {// 读取后端json数据的格式
 				root : "content",// 保存详细记录的名称
@@ -107,7 +104,7 @@ function SheetGrid() {
 
 		});
 
-		this.sheetgridpro.jqGrid('navGrid', '#pager1', {
+		this.sheetgridpro.jqGrid('navGrid', pageDiv, {
 			
 			add : true,
 			edit : false,
@@ -134,7 +131,7 @@ function SheetGrid() {
 					'postMap':posdata	
 				}
 				return {postMap:JSON.stringify(posdata),proID:temp.proid,
-					sheetID:temp.sid,Index_ID:-1}; 
+					sheetID:temp.sid,Index_ID:-1,algID : temp.algid}; 
 				},
 				afterSubmit : function(response, postdata) 
 				{ 
@@ -145,7 +142,7 @@ function SheetGrid() {
 		});
 		
 
-		this.sheetgridpro.jqGrid('navButtonAdd', "#pager1", {
+		this.sheetgridpro.jqGrid('navButtonAdd', pageDiv, {
 			title : '删除',
 			caption : "删除",
 			id : "delete_sheet",
@@ -201,6 +198,7 @@ function SheetGrid() {
 		var grid=data.data[0];
 		maptemp["proID"]=grid.proid;
 		maptemp["sheetID"]=grid.sid;
+		maptemp["algID"]=grid.algid;
 		 var sels = grid.sheetgridpro.jqGrid('getGridParam','selarrrow'); 
 		    if(sels==""){ 
 		       //$().message("请选择要删除的项！"); 
@@ -239,22 +237,4 @@ function SheetGrid() {
 		    } 
 	}
 
-	addSheet=function(data) {
-		alert(/xss/);
-		var grid=data.data[0];
-		$.ajax({
-			type : 'POST',
-			url : 'addSheetContent.action',
-			async:false,
-			data : {
-				proid : grid.proid
-			},
-			success : function(data) {
-				alert('新地图文件上传成功');
-				//temp.sheetgridpro.trigger("reloadGrid");
-			}
-
-		});
-	}
 }
-});

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,6 +22,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.opensymphony.xwork2.ActionContext;
 
 public class FileExcle {
+	private static String ExcleAlgBaseDir="ExcleFrame";
+	private static String ExcleProBaseDir="ExcleProject";
+	
 	public String getMsg() {
 		return msg;
 	}
@@ -69,7 +74,10 @@ public class FileExcle {
 		this.fileName=fileName;
 		InputStream inputStream;
 		try {
-			inputStream = new FileInputStream(new File(fileName));
+			String path=this.getClass().getClassLoader().getResource("").getPath();
+			path=path.substring(0, path.lastIndexOf("/WEB-INF"));
+			path=path+File.separator+fileName;
+			inputStream = new FileInputStream(new File(path));
 
 			Workbook wb = null;
 			// 解析xls格式

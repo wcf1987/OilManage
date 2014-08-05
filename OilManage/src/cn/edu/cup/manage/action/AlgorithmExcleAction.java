@@ -12,10 +12,13 @@ import cn.edu.cup.file.SheetContent;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
+import cn.edu.cup.tools.Tools;
 
 import com.opensymphony.xwork2.ActionContext;
 
 public class AlgorithmExcleAction {
+	private static String ExcleAlgBaseDir="ExcleFrame\\";
+	private static String ExcleProBaseDir="ExcleProject\\";
 	int algID;
 	int sheetID;
 	int proID;
@@ -33,18 +36,19 @@ public class AlgorithmExcleAction {
 	public void setProID(int proID) {
 		this.proID = proID;
 	}
-	public FileExcle getFileExcle(int proid){
+	
+	public FileExcle getFileExcle(int proid,int algid){
 		ActionContext actionContext = ActionContext.getContext();
         Map session = actionContext.getSession();
-        Map<Integer,FileExcle> cacheList=(Map<Integer,FileExcle>)session.get("ExcleCacheList");
+        Map<String,FileExcle> cacheList=(Map<String,FileExcle>)session.get("ExcleCacheList");
        
         if(cacheList==null){
-        	cacheList=new HashMap<Integer,FileExcle>();
+        	cacheList=new HashMap<String,FileExcle>();
         	//session.put("ExcleCacheList", cacheList);
         	
         }
-      
-        FileExcle excle=cacheList.get(proid);
+      String key=Tools.createKeyFromProAndALg(proid,algid);
+        FileExcle excle=cacheList.get(key);
         if(excle!=null){
         		return excle;
         	}
@@ -52,24 +56,24 @@ public class AlgorithmExcleAction {
 			
     		AlgorithmProDao dao=new AlgorithmProDao();
     		
-    		String  filepath=dao.getProFile(this.proID);
+    		String  filepath=dao.getProFile(this.proID,algid);
     		dao.close();
     		if (filepath==null ||filepath.equals("")){
     			return null;
     		}
     		excle=new FileExcle();
-    		int status=excle.readExcle(this.proID,filepath);
+    		int status=excle.readExcle(this.proID,ExcleProBaseDir+filepath);
     		if(status==-1){
     			msg=excle.getMsg();
     			return null;
     		}
-    		cacheList.put(proid,excle);
+    		cacheList.put(key,excle);
     		session.put("ExcleCacheList",cacheList);
     		return excle;
     		
 	}
 	public String saveExcle(){
-		FileExcle excle=getFileExcle(this.proID);
+		FileExcle excle=getFileExcle(this.proID,this.algID);
 		int re=excle.saveExcle();
 		if(re==-1){
 			msg="保存失败，请检查数据结构";
@@ -118,13 +122,13 @@ public class AlgorithmExcleAction {
 		this.newValue = newValue;
 	}
 	public String addSheetContent(){
-		FileExcle excle=getFileExcle(this.proID);
+		FileExcle excle=getFileExcle(this.proID,this.algID);
 		SheetContent sheet=excle.getSheetByID(sheetID);
 		sheet.addRow(this.postMap);
 		return "SUCCESS";
 	}
 	public String editSheetContent(){
-		FileExcle excle=getFileExcle(this.proID);
+		FileExcle excle=getFileExcle(this.proID,this.algID);
 		SheetContent sheet=excle.getSheetByID(sheetID);
 		sheet.editCell(Index_ID,col_ID,newValue);
 		
@@ -141,7 +145,7 @@ public class AlgorithmExcleAction {
 		}
 	}
 	public String delSheetContent(){
-		FileExcle excle=getFileExcle(this.proID);
+		FileExcle excle=getFileExcle(this.proID,this.algID);
 		if (!ids.isEmpty()) {
 
 			for (int id : ids) {
@@ -157,7 +161,7 @@ public class AlgorithmExcleAction {
 		new AlgorithmExcleAction().saveExcle();
 	}
 	public String listSheetContent(){
-		FileExcle excle=getFileExcle(this.proID);
+		FileExcle excle=getFileExcle(this.proID,this.algID);
 		if(excle==null){
 			return "SUCCESS";
 		}
@@ -206,7 +210,7 @@ public class AlgorithmExcleAction {
 		
 		AlgorithmsCycle p=dao.getAlgorithmDetail(this.algID);
 		FileExcle excle=new FileExcle();
-		int status=excle.readExcle(this.proID,p.getStructFile());
+		int status=excle.readExcle(this.proID,ExcleAlgBaseDir+p.getStructFile());
 		if(status==-1){
 			msg=excle.getMsg();
 			return "SUCCESS";

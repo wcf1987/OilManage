@@ -142,10 +142,11 @@ public class AlgorithmProDao {
 		
 		return alg;
 	}
-	public String getProFile(int pro_id) {
-		String sql="select t.profile from t_projects t where  t.id=? and t.type=1";
+	public String getProFile(int pro_id,int algid) {
+		String sql="select t2.profile from t_projectdetail t2 where  t2.proID=?  and t2.algID=?";
 		SQLQuery q2 = session.createSQLQuery(sql);
 		q2.setParameter(0, pro_id);
+		q2.setParameter(1, algid);
 		String alg=((String)q2.uniqueResult());
 		
 		return alg;

@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 	<script defer="defer" type="text/javascript" src="js/simulate_hydraulic.js"></script>
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
-	
+	<script defer="defer" type="text/javascript" src="js/dynamicSheet.js"></script>
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/colorPicker_new.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="css/tabs.css" />
@@ -436,36 +436,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="row-fluid">
 					<button class="btn" type="button" style="float:left">导入Excel</button>
 						<div class="span12">
-							<table class="table  table-striped">
-								<thead>
-									<tr>
-										<th>序号</th><th>节点名称</th><th>坐标x(m)</th><th>坐标y(m)</th>
-										<th>坐标z(m)</th><th>节点压力(MPa)</th><th>节点流量(Mm3/d)</th><th>控制模式</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>1</td><td></td><td></td><td></td>
-										<td></td><td></td><td></td><td></td>
-									</tr>
-									<tr class="success">
-										<td>1</td><td></td><td></td><td></td>
-										<td></td><td></td><td></td><td></td>
-									</tr>
-									<tr class="error">
-										<td>1</td><td></td><td></td><td></td>
-										<td></td><td></td><td></td><td></td>
-									</tr>
-									<tr class="warning">
-										<td>1</td><td></td><td></td><td></td>
-										<td></td><td></td><td></td><td></td>
-									</tr>
-									<tr class="info">
-										<td>1</td><td></td><td></td><td></td>
-										<td></td><td></td><td></td><td></td>
-									</tr>
-								</tbody>
-							</table> 
+							<div class="row featurette " style="margin-top:50px;margin-left:10px;margin-right:auto;">
+	      		<!-- 表格 -->
+	      		<table id="sheetTest" class="table table-striped table-bordered table-hover datatable " ></table>
+	      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
+	      			<div id="pager1" ></div>
+	      		</div>
+	      	</div>
 							
 						</div>
 						<div style="margin-bottom:20px;">
