@@ -49,19 +49,19 @@ User userlogin=(User)(session.getAttribute("user"));
 		        </li>
 		        
 		         <li class="dropdown">
-		            <a id="dLabel" role="button" data-toggle="dropdown"  data-target="#"
+		            <a id="optimize" role="button" data-toggle="dropdown"  data-target="#"
 		               href="javascript:;">
 		                系统优化<span class="caret"></span>
 		            </a>
 		            <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">              
-		                <li><a href="javascript:;">系统扩建设计</a></li>
+		                <li><a href="pages/optimize_sysexpand.jsp">系统扩建设计</a></li>
 		                <li class="divider"></li>
 		                <li class="dropdown-submenu">
 		                    <a tabindex="-1" href="javascript:;">整装区块设计</a>
 		                    <ul class="dropdown-menu">
-		                        <li><a tabindex="-1" href="javascript:;">整体设计</a></li>
-		                        <li><a tabindex="-1" href="javascript:;">布局设计</a></li>
-		                        <li><a tabindex="-1" href="javascript:;">参数设计</a></li>
+		                        <li><a tabindex="-1" href="pages/optimize_global.jsp">整体设计</a></li>
+		                        <li><a tabindex="-1" href="pages/optimizez_layout.jsp">布局设计</a></li>
+		                        <li><a tabindex="-1" href="pages/optimize_parameter.jsp">参数设计</a></li>
 		                        <li class="divider"></li>
 		                        <li class="dropdown-submenu">
 		                            <a href="javascript:;">二级菜单</a>
@@ -121,7 +121,16 @@ User userlogin=(User)(session.getAttribute("user"));
    			case "/OilManage/pages/simulate_auto.jsp":
 				$("#simulate").parent().addClass("active");
 				break;
-   			case "/OilManage/pages/optimize.jsp":
+   			case "/OilManage/pages/optimize_global.jsp":
+				$("#optimize").parent().addClass("active");
+				break;
+   			case "/OilManage/pages/optimize_layout.jsp":
+				$("#optimize").parent().addClass("active");
+				break;
+   			case "/OilManage/pages/optimize_parameter.jsp":
+   				$("#optimize").parent().addClass("active");
+   				break;
+   			case "/OilManage/pages/optimize_sysexpand.jsp":
    				$("#optimize").parent().addClass("active");
    				break;
    			case "/OilManage/pages/diagram.jsp":
