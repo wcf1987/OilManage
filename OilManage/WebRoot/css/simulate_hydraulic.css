@@ -17,6 +17,7 @@
     -moz-border-radius: 15px;      /* Gecko browsers */
     -webkit-border-radius: 15px;   /* Webkit browsers */
     border-radius:15px;            /* W3C syntax */
+    z-index:101
     
 }
 .close{
