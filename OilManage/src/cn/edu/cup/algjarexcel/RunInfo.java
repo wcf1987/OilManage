@@ -1,4 +1,4 @@
-package cn.edu.cup.algjarexcle;
+package cn.edu.cup.algjarexcel;
 
 
 public abstract class RunInfo {

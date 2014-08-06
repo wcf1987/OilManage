@@ -7,7 +7,7 @@ import java.util.Map;
 
 import net.sf.json.JSONObject;
 import cn.edu.cup.file.ColModel;
-import cn.edu.cup.file.FileExcle;
+import cn.edu.cup.file.FileExcel;
 import cn.edu.cup.file.SheetContent;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
@@ -16,9 +16,9 @@ import cn.edu.cup.tools.Tools;
 
 import com.opensymphony.xwork2.ActionContext;
 
-public class AlgorithmExcleAction {
-	private static String ExcleAlgBaseDir="ExcleFrame\\";
-	private static String ExcleProBaseDir="ExcleProject\\";
+public class AlgorithmExcelAction {
+	private static String ExcelAlgBaseDir="ExcelFrame\\";
+	private static String ExcelProBaseDir="ExcelProject\\";
 	int algID;
 	int sheetID;
 	int proID;
@@ -37,20 +37,20 @@ public class AlgorithmExcleAction {
 		this.proID = proID;
 	}
 	
-	public FileExcle getFileExcle(int proid,int algid){
+	public FileExcel getFileExcel(int proid,int algid){
 		ActionContext actionContext = ActionContext.getContext();
         Map session = actionContext.getSession();
-        Map<String,FileExcle> cacheList=(Map<String,FileExcle>)session.get("ExcleCacheList");
+        Map<String,FileExcel> cacheList=(Map<String,FileExcel>)session.get("ExcelCacheList");
        
         if(cacheList==null){
-        	cacheList=new HashMap<String,FileExcle>();
-        	//session.put("ExcleCacheList", cacheList);
+        	cacheList=new HashMap<String,FileExcel>();
+        	//session.put("ExcelCacheList", cacheList);
         	
         }
       String key=Tools.createKeyFromProAndALg(proid,algid);
-        FileExcle excle=cacheList.get(key);
-        if(excle!=null){
-        		return excle;
+        FileExcel excel=cacheList.get(key);
+        if(excel!=null){
+        		return excel;
         	}
               
 			
@@ -61,31 +61,31 @@ public class AlgorithmExcleAction {
     		if (filepath==null ||filepath.equals("")){
     			return null;
     		}
-    		excle=new FileExcle();
-    		int status=excle.readExcle(this.proID,ExcleProBaseDir+filepath);
+    		excel=new FileExcel();
+    		int status=excel.readExcel(this.proID,ExcelProBaseDir+filepath);
     		if(status==-1){
-    			msg=excle.getMsg();
+    			msg=excel.getMsg();
     			return null;
     		}
-    		cacheList.put(key,excle);
-    		session.put("ExcleCacheList",cacheList);
-    		return excle;
+    		cacheList.put(key,excel);
+    		session.put("ExcelCacheList",cacheList);
+    		return excel;
     		
 	}
-	public String saveExcle(){
-		FileExcle excle=getFileExcle(this.proID,this.algID);
-		int re=excle.saveExcle();
+	public String saveExcel(){
+		FileExcel excel=getFileExcel(this.proID,this.algID);
+		int re=excel.saveExcel();
 		if(re==-1){
 			msg="保存失败，请检查数据结构";
 		}
 		return "SUCCESS";
 	}
-	public FileExcle putFileExcle(FileExcle e){
+	public FileExcel putFileExcel(FileExcel e){
 		ActionContext actionContext = ActionContext.getContext();
         Map session = actionContext.getSession();
-        Map<Integer,FileExcle> cacheList=(Map<Integer,FileExcle>)session.get("ExcleCacheList");
+        Map<Integer,FileExcel> cacheList=(Map<Integer,FileExcel>)session.get("ExcelCacheList");
         cacheList.put(e.getProID(),e);
-        session.put("ExcleCacheList",cacheList);
+        session.put("ExcelCacheList",cacheList);
         return e;
 	}
 	String msg;
@@ -122,14 +122,14 @@ public class AlgorithmExcleAction {
 		this.newValue = newValue;
 	}
 	public String addSheetContent(){
-		FileExcle excle=getFileExcle(this.proID,this.algID);
-		SheetContent sheet=excle.getSheetByID(sheetID);
+		FileExcel excel=getFileExcel(this.proID,this.algID);
+		SheetContent sheet=excel.getSheetByID(sheetID);
 		sheet.addRow(this.postMap);
 		return "SUCCESS";
 	}
 	public String editSheetContent(){
-		FileExcle excle=getFileExcle(this.proID,this.algID);
-		SheetContent sheet=excle.getSheetByID(sheetID);
+		FileExcel excel=getFileExcel(this.proID,this.algID);
+		SheetContent sheet=excel.getSheetByID(sheetID);
 		sheet.editCell(Index_ID,col_ID,newValue);
 		
 		return "SUCCESS";
@@ -145,27 +145,27 @@ public class AlgorithmExcleAction {
 		}
 	}
 	public String delSheetContent(){
-		FileExcle excle=getFileExcle(this.proID,this.algID);
+		FileExcel excel=getFileExcel(this.proID,this.algID);
 		if (!ids.isEmpty()) {
 
 			for (int id : ids) {
 				
-				excle.getSheetByID(sheetID).removeRow(id);
+				excel.getSheetByID(sheetID).removeRow(id);
 			}
 		}
-		excle.getSheetByID(sheetID).updateSheet();
-		putFileExcle(excle);
+		excel.getSheetByID(sheetID).updateSheet();
+		putFileExcel(excel);
 		return "SUCCESS";
 	}
 	public static void main(String args[]){
-		new AlgorithmExcleAction().saveExcle();
+		new AlgorithmExcelAction().saveExcel();
 	}
 	public String listSheetContent(){
-		FileExcle excle=getFileExcle(this.proID,this.algID);
-		if(excle==null){
+		FileExcel excel=getFileExcel(this.proID,this.algID);
+		if(excel==null){
 			return "SUCCESS";
 		}
-		sheetContent=excle.getSheetByID(sheetID);
+		sheetContent=excel.getSheetByID(sheetID);
 		records=sheetContent.getSize();
 		sheetContent.buildContent(page, rows);
 		content=sheetContent.getContent();
@@ -174,7 +174,7 @@ public class AlgorithmExcleAction {
 		if (records % rows != 0) {
 			total++;
 		}
-		putFileExcle(excle);
+		putFileExcel(excel);
 		return "SUCCESS";
 	}
 	public int getRecords() {
@@ -209,15 +209,15 @@ public class AlgorithmExcleAction {
 		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
 		
 		AlgorithmsCycle p=dao.getAlgorithmDetail(this.algID);
-		FileExcle excle=new FileExcle();
-		int status=excle.readExcle(this.proID,ExcleAlgBaseDir+p.getStructFile());
+		FileExcel excel=new FileExcel();
+		int status=excel.readExcel(this.proID,ExcelAlgBaseDir+p.getStructFile());
 		if(status==-1){
-			msg=excle.getMsg();
+			msg=excel.getMsg();
 			return "SUCCESS";
 		}
-		sheetTile=excle.getSheetByID(sheetID).getTitle();
-		sheetName=excle.getSheetByID(sheetID).getName();
-		colModel=excle.getSheetByID(sheetID).getColModel();
+		sheetTile=excel.getSheetByID(sheetID).getTitle();
+		sheetName=excel.getSheetByID(sheetID).getName();
+		colModel=excel.getSheetByID(sheetID).getColModel();
 		dao.close();
 		return "SUCCESS";
 	}

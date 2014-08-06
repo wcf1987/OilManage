@@ -21,9 +21,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.opensymphony.xwork2.ActionContext;
 
-public class FileExcle {
-	private static String ExcleAlgBaseDir="ExcleFrame";
-	private static String ExcleProBaseDir="ExcleProject";
+public class FileExcel {
+	private static String ExcelAlgBaseDir="ExcelFrame";
+	private static String ExcelProBaseDir="ExcelProject";
 	
 	public String getMsg() {
 		return msg;
@@ -31,7 +31,7 @@ public class FileExcle {
 	public int getSheetNum() {
 		return sheetNum;
 	}
-	public List<SheetContent> getExcleContent() {
+	public List<SheetContent> getExcelContent() {
 		return excleContent;
 	}
 
@@ -39,7 +39,7 @@ public class FileExcle {
 	int sheetNum = 0;
 	List<SheetContent> excleContent;
 
-	public String saveExcle(String fileName){
+	public String saveExcel(String fileName){
 		return "success";
 	}
 	private void saveInSession(){
@@ -47,7 +47,7 @@ public class FileExcle {
 		  
 	       Map session = actionContext.getSession();   
 	  
-	       session.put("operatingExcle", excleContent);   
+	       session.put("operatingExcel", excleContent);   
 	  
 	}
 	private void getInSession(){
@@ -55,11 +55,11 @@ public class FileExcle {
 		  
 	       Map session = actionContext.getSession();   
 	  
-	       excleContent=(List<SheetContent>)session.get("operatingExcle");   
+	       excleContent=(List<SheetContent>)session.get("operatingExcel");   
 	  
 	}
 	public static void main(String args[]) {
-		new FileExcle().readExcle(1,"E:\\profit\\oil项目\\Input-General.xls");
+		new FileExcel().readExcel(1,"E:\\profit\\oil项目\\Input-General.xls");
 	}
 	public int getProID() {
 		return proID;
@@ -69,7 +69,7 @@ public class FileExcle {
 	}
 	int proID;
 	String fileName;
-	public int readExcle(int proID,String fileName) {
+	public int readExcel(int proID,String fileName) {
 		this.proID=proID;
 		this.fileName=fileName;
 		InputStream inputStream;
@@ -105,12 +105,12 @@ public class FileExcle {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			msg = "Excle文件未找到";
+			msg = "Excel文件未找到";
 			return -1;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			msg = "Excle文件格式不正确";
+			msg = "Excel文件格式不正确";
 			return -1;
 		}
 		return 1;
@@ -131,7 +131,7 @@ public class FileExcle {
 
 		return 1;
 	}
-	public int saveExcle(){
+	public int saveExcel(){
 		//生成Workbook
 		HSSFWorkbook wb = new HSSFWorkbook();
 
@@ -167,7 +167,7 @@ public class FileExcle {
  
 		return 1;
 	}
-	public String writeExcle(String fileName) {
+	public String writeExcel(String fileName) {
 		
 		return "Success";
 

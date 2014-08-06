@@ -328,44 +328,44 @@
 			</result>
 		</action>
 		
-		<!-- excle配置-->
-				<action name="listSheetTitle" class="cn.edu.cup.manage.action.AlgorithmExcleAction"
+		<!-- excel配置-->
+				<action name="listSheetTitle" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
 			method="listSheetTitle">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-				<action name="listSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcleAction"
+				<action name="listSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
 			method="listSheetContent">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-				<action name="delSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcleAction"
+				<action name="delSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
 			method="delSheetContent">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-			<action name="editSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcleAction"
+			<action name="editSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
 			method="editSheetContent">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-			<action name="addSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcleAction"
+			<action name="addSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
 			method="addSheetContent">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-		<action name="saveExcle" class="cn.edu.cup.manage.action.AlgorithmExcleAction"
-			method="saveExcle">
+		<action name="saveExcel" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="saveExcel">
 
 			<result name="SUCCESS" type="json">
 

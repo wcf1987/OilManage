@@ -1,4 +1,4 @@
-package cn.edu.cup.algjarexcle;
+package cn.edu.cup.algjarexcel;
 
 
 
@@ -14,18 +14,18 @@ public abstract class AlgorithmPlugTools {
 	
 
 	/**
-	 * 返回输入的工程文件excle路径
+	 * 返回输入的工程文件excel路径
 	 * @return
 	 */
-	public String getExcleInputPath(){
+	public String getExcelInputPath(){
 		return this.info.getInputFile();
 	}
 	
 	/**
-	 * 返回输出的工程文件excle路径
+	 * 返回输出的工程文件excel路径
 	 * @return
 	 */
-	public String getExcleOutputPath(){
+	public String getExcelOutputPath(){
 		return this.info.getOutputFile();
 	}
 	/**
