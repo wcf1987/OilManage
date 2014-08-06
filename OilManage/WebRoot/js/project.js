@@ -32,7 +32,17 @@ $(
 			});
 		});
 		
+		list_project();
 		
+
+	
+}//function结束
+);//$()结束
+
+/*
+ * 打开工程列表
+ */
+function list_project(){
 	/*
 	 * 工程管理列表
 	 */
@@ -42,7 +52,7 @@ $(
 				url : "listAlgPro.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','历史运行次数','输入参数设置','算法选择','运行','输出结果','查看运行历史','打开'],// 表格的列名
+				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','运行状态','输入文件导出','输出文件导出','打开'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -88,15 +98,15 @@ $(
 							sortable:true
 						},
 						{
-							name:'calcHisNum',
-							index:'CalcHisNum',
+							name:'statusS',
+							index:'statusS',
 							width:100,
 							align:'center',
 							sortable:true
 						},
 						{				
-							name : 'input',
-							index : 'input',
+							name : 'ProfileIn',
+							index : 'ProfileIn',
 							width : 100,
 							align : "center",					
 							formatter : function(value, grid, rows,
@@ -107,32 +117,8 @@ $(
 							}
 						},
 						{				
-							name : 'select_algorithm',
-							index : 'select_algorithm',
-							width : 100,
-							align : "center",
-							formatter : function(value, grid, rows,
-									state) {
-//								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"selectAlgorithm('"
-										+ rows.ID + "')\">算法选择</a>"
-							}
-						},
-						{				
-							name : 'execute',
-							index : 'execute',
-							width : 100,
-							align : "center",
-							formatter : function(value, grid, rows,
-									state) {
-//								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"runAlg('"
-										+ rows.ID + "')\">运行</a>"
-							}
-						},
-						{				
-							name : 'output',
-							index : 'output',
+							name : 'ProfileOut',
+							index : 'ProfileOut',
 							width : 100,
 							align : "center",
 							formatter : function(value, grid, rows,
@@ -140,18 +126,6 @@ $(
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewOutput('"
 										+ rows.ID + "')\">输出结果</a>"
-							}
-						},
-						{				
-							name : 'calcHistory',
-							index : 'calcHistory',
-							width : 100,
-							align : "center",
-							formatter : function(value, grid, rows,
-									state) {
-//								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewCalcHistory('"
-										+ rows.ID + "')\">查看运行历史</a>"
 							}
 						},
 						{				
@@ -199,36 +173,7 @@ $(
 				caption:"添加",
 				id:"add_ProjectList",
 				onClickButton : function addModal(){
-						// 配置对话框
-						loadAuthorOptions();//加载作者选项		
-						$('#add_project_modal').modal();
-						$("#addProjectForm").validate({
-							debug:true,
-							onsubmit:true,
-							onfocusout:false,
-							onkeyup:true,
-							rules:{
-								name:{
-									required:true
-								},
-								authorID:{
-									required:true
-								}
-							},
-							messages:{
-								name:{
-									required:"名称不能为空！"
-								},
-								authorID:{
-									required:"请选择作者！"
-								}
-							},
-							submitHandler:function(){
-								add_project();
-							}
-						});
-					
-						
+						createNewProject();	
 				},
 				position:"first"
 			
@@ -240,10 +185,7 @@ $(
 				onClickButton:deleteProject,
 				position:"first"
 			});
-	
-}//function结束
-);//$()结束
-
+}
 /*
  * 添加项目
  */
@@ -420,6 +362,9 @@ function viewHisInputOutput(obj){
 	$("#view_input_output_modal").css("z-index","9999");
 	$("#view_calchistory_modal").css("z-index","9998");
 }
+/*
+ * 查看输出
+ */
 function viewOutput(proID){
 	$("#outputID").text("");
 	$("#outputName").text("");
@@ -444,6 +389,9 @@ function viewOutput(proID){
 	});
 	$("#view_output_modal").modal();
 }
+/*
+ * 执行算法
+ */
 function runAlg(proID){
 	$.ajax({
 		url:'runAlgPro.action',
@@ -672,27 +620,27 @@ function loadParameterOptions(){
 	}
 
 
-//function loadInputOptions(proId){
-//	$.ajax({
-//		url:'listProInputs.action',
-//		type:'post',
-//		dataType:'json',
-//		data : {
-//			pro_id:proId,
-//			sidx: 'id',
-//			sord: "desc"
-//		},
-//		success:function(data){
-//			var items="";
-//			$.each(data.dataList,function(i,proInput){
-//				items+= "<option value=\"" + proInput.ID + "\">" + proInput.display+" &nbsp;&nbsp"+proInput.mess + "</option>"; 
-////				$("#measureSymbol").html(parameter.measureSymbol);
-//			});
-//			$("#modifyInputID").html(items);
-//			showValue($("#modifyInputID").val());
-//		}
-//	});
-//	}
+/*function loadInputOptions(proId){
+	$.ajax({
+		url:'listProInputs.action',
+		type:'post',
+		dataType:'json',
+		data : {
+			pro_id:proId,
+			sidx: 'id',
+			sord: "desc"
+		},
+		success:function(data){
+			var items="";
+			$.each(data.dataList,function(i,proInput){
+				items+= "<option value=\"" + proInput.ID + "\">" + proInput.display+" &nbsp;&nbsp"+proInput.mess + "</option>"; 
+//				$("#measureSymbol").html(parameter.measureSymbol);
+			});
+			$("#modifyInputID").html(items);
+			showValue($("#modifyInputID").val());
+		}
+	});
+	}*/
 /*
  * 加载已有的项目输入列表
  */
@@ -833,7 +781,35 @@ function loadAuthorOptions(){
 	});
 	}
 
-
+function createNewProject(){
+	loadAuthorOptions();//加载作者选项		
+	$('#add_project_modal').modal();
+	$("#addProjectForm").validate({
+		debug:true,
+		onsubmit:true,
+		onfocusout:false,
+		onkeyup:true,
+		rules:{
+			name:{
+				required:true
+			},
+			authorID:{
+				required:true
+			}
+		},
+		messages:{
+			name:{
+				required:"名称不能为空！"
+			},
+			authorID:{
+				required:"请选择作者！"
+			}
+		},
+		submitHandler:function(){
+			add_project();
+		}
+		});
+}
 
 function editProject(projectID,projectName){
 	window.location.href="pages/project_edit.jsp?projectID="+projectID+"&projectName="+projectName+"&backurl="+window.location.href; 

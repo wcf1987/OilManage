@@ -1,8 +1,7 @@
 $(document).ready(function(){
 
 	backtop();
-
-
+	
 });
 
 function logout(){

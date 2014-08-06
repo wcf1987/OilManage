@@ -19,12 +19,12 @@ function initLight() {
 	initMouseWheel();
 
 
-/*
+
 	$('#load_modal').modal({
 		     backdrop:'static',
 		     keyboard:false,
 		     show:true
-		 });*/
+		 });
 		  
 
 

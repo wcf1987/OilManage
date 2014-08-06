@@ -1,6 +1,6 @@
 
 $(function(){
-	$('#listGUIPro_modal>.modal-dialog').css({
+		$('#listGUIPro_modal>.modal-dialog').css({
 		 'margin-top': function () {
 		            return ($(window).height())/2-178;
 		        },
@@ -17,7 +17,7 @@ $(function(){
 		            return ($(window).width())/2-300;
 		        },
 		});
-	$('#tab-container').easytabs();			
+	//$('#tab-container').easytabs();			
 });
 function loadFill(check) {
 	if (check.checked === true) {
