@@ -119,8 +119,10 @@ public class AlgorithmProDao {
 		
 		
 		int result = q.executeUpdate();
-
-		return result;
+		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()");
+		int ret_id = ((BigInteger) q2.uniqueResult()).intValue();
+		return ret_id;
+	
 	}
 
 	public int deletePro(int id) {
