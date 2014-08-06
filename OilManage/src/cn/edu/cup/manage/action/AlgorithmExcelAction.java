@@ -1,9 +1,20 @@
 package cn.edu.cup.manage.action;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
+
+import org.apache.struts2.ServletActionContext;
 
 import net.sf.json.JSONObject;
 import cn.edu.cup.file.ColModel;
@@ -37,6 +48,28 @@ public class AlgorithmExcelAction {
 		this.proID = proID;
 	}
 	
+	private File excelImport;
+	private String excelImportFile;
+	private String excelImportFileName;
+	public void setExcelImport(File excelImport) {
+		this.excelImport = excelImport;
+	}
+	public void setExcelImportFile(String excelImportFile) {
+		this.excelImportFile = excelImportFile;
+	}
+	public void setExcelImportFileName(String excelImportFileName) {
+		this.excelImportFileName = excelImportFileName;
+	}
+	public String uploadExcel(){
+		FileExcel excel=getFileExcel(this.proID,this.algID,this.InOrOut);
+
+		FileExcel importExcle=new FileExcel();
+		int status=importExcle.readExcel(this.proID,this.algID,this.InOrOut,excelImport.getAbsolutePath());
+		excel.coverFromImport(importExcle);
+		putFileExcel(excel);
+		saveExcel();
+		return "SUCCESS";
+	}
 	public FileExcel getFileExcel(int proid,int algid,String InOrOut){
 		ActionContext actionContext = ActionContext.getContext();
         Map session = actionContext.getSession();
@@ -260,4 +293,30 @@ public class AlgorithmExcelAction {
 	public void setSheetID(int sheetID) {
 		this.sheetID = sheetID;
 	}
+	
+	
+	
+	
+
+
+
+	
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

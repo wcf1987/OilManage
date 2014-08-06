@@ -371,7 +371,14 @@
 
 			</result>
 		</action>
-		
+		<action name="uploadExcel" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="uploadExcel">
+			<param name="savePath">/uploadTemp</param>
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
 		
 		<!-- 算法图形输出配置-->
 		

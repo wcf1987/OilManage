@@ -188,6 +188,16 @@ public class FileExcel {
 	public String getTitle() {
 		return "";
 	}
+	public void coverFromImport(FileExcel importExcle) {
+		List<SheetContent> list=importExcle.getExcelContent();
+		for(int i=0;i<list.size();i++){
+			SheetContent temp=this.excleContent.get(i);
+			if(temp.getName().equals(list.get(i).getName())){
+				this.excleContent.get(i).coveredByImport(list.get(i));
+			}
+			}
+		
+	}
 
 
 }

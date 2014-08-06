@@ -188,5 +188,18 @@ public class SheetContent {
 		 }
 		return null;
 	}
+	public void coveredByImport(SheetContent sheetContent2) {
+		this.clearSheet();
+		for(int i=1;i<sheetContent2.sheetContent.size();i++){
+			this.sheetContent.add(sheetContent2.sheetContent.get(i));
+		}
+		this.updateSheet();
+	}
+	public void clearSheet(){
+		List<String> titile=this.sheetContent.get(0);
+		this.sheetContent.clear();
+		this.sheetContent.add(titile);
+		
+	}
 
 }
