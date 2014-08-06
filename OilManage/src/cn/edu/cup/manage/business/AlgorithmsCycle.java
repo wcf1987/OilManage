@@ -37,18 +37,27 @@ public class AlgorithmsCycle {
 	Date lastUpdateDate;
 	String lastUpdateDates;
 	int alg_type;
-	String structFile;
+	String structFileIn;
+
+	String structFileOut;
 	public int getAlg_type() {
 		return alg_type;
 	}
 	public void setAlg_type(int alg_type) {
 		this.alg_type = alg_type;
 	}
-	public String getStructFile() {
-		return structFile;
+
+	public String getStructFileIn() {
+		return structFileIn;
 	}
-	public void setStructFile(String structFile) {
-		this.structFile = structFile;
+	public void setStructFileIn(String structFileIn) {
+		this.structFileIn = structFileIn;
+	}
+	public String getStructFileOut() {
+		return structFileOut;
+	}
+	public void setStructFileOut(String structFileOut) {
+		this.structFileOut = structFileOut;
 	}
 	public AlgorithmsCycle(String id2, String iid, String pid, String oid,
 			String aid, String author, String description2, Date addTime,

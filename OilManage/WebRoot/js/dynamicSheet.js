@@ -12,8 +12,8 @@ sheetgrid1.creategrid(proid,sheetDiv,pageDiv);
 */
 function SheetGrid() {
 
-	this.GetDynamicCols = function(sid, algid) {//动态获取列
-
+	this.GetDynamicCols = function(sid, algid,inOrOut) {//动态获取列
+		this.inOrOut=inOrOut;
 		this.sid = sid;
 		this.algid = algid;
 		var temp = this;
@@ -23,7 +23,8 @@ function SheetGrid() {
 			dataType : 'json',
 			data : {
 				sheetID : sid,
-				algID : algid
+				algID : algid,
+				InOrOut:inOrOut
 			},
 			async:false,
 			success : function(data) {
@@ -32,6 +33,7 @@ function SheetGrid() {
 					temp.colNames = data.sheetTile;// 表格的列名
 					temp.colModel = data.colModel;
 					temp.sheetName = data.sheetName;
+					
 				} else {
 					alert(data.msg);
 				}
@@ -47,11 +49,12 @@ function SheetGrid() {
 			postData : {
 				sheetID : temp.sid,
 				algID : temp.algid,
+				InOrOut:temp.inOrOut,
 				proID : temp.proid
 			}
 		}).trigger("reloadGrid");
 	}
-	this.creategrid = function(proid,sheetDiv,pageDiv) {
+	this.creategrid = function(proid,sheetDiv,pageDiv,delID) {
 		var temp = this;
 		this.proid = proid;
 		this.sheetgridpro = jQuery(sheetDiv).jqGrid({
@@ -61,6 +64,7 @@ function SheetGrid() {
 			postData : {
 				sheetID : temp.sid,
 				algID : temp.algid,
+				InOrOut:temp.inOrOut,
 				proID : temp.proid
 			},
 			// colNames : [ 'id', '项目名称', '上传时间', '地图查看', '编辑', '删除',
@@ -75,6 +79,7 @@ function SheetGrid() {
 						proID:temp.proid,
 						sheetID:temp.sid,
 						algID : temp.algid,
+						InOrOut:temp.inOrOut,
 						Index_ID:index_ID,					
 						col_ID:iCol-1,
 						newValue:value					
@@ -131,7 +136,7 @@ function SheetGrid() {
 					'postMap':posdata	
 				}
 				return {postMap:JSON.stringify(posdata),proID:temp.proid,
-					sheetID:temp.sid,Index_ID:-1,algID : temp.algid}; 
+					sheetID:temp.sid,Index_ID:-1,algID : temp.algid,InOrOut:temp.inOrOut}; 
 				},
 				afterSubmit : function(response, postdata) 
 				{ 
@@ -145,7 +150,7 @@ function SheetGrid() {
 		this.sheetgridpro.jqGrid('navButtonAdd', pageDiv, {
 			title : '删除',
 			caption : "删除",
-			id : "delete_sheet",
+			id : delID,
 			position : "first"
 		});
 		/*
@@ -188,7 +193,7 @@ function SheetGrid() {
 		var temp=this;
 		var arr=new Array();
 		arr[0]=temp;
-		$("#delete_sheet").bind("click",arr,deleteSheet);
+		$("#"+delID+"").bind("click",arr,deleteSheet);
 	
 		
 	}
@@ -199,6 +204,7 @@ function SheetGrid() {
 		maptemp["proID"]=grid.proid;
 		maptemp["sheetID"]=grid.sid;
 		maptemp["algID"]=grid.algid;
+		maptemp["InOrOut"]=grid.inOrOut;
 		 var sels = grid.sheetgridpro.jqGrid('getGridParam','selarrrow'); 
 		    if(sels==""){ 
 		       //$().message("请选择要删除的项！"); 

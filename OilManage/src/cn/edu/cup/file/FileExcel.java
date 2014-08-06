@@ -59,7 +59,7 @@ public class FileExcel {
 	  
 	}
 	public static void main(String args[]) {
-		new FileExcel().readExcel(1,"E:\\profit\\oil项目\\Input-General.xls");
+		//new FileExcel().readExcel(1,"E:\\profit\\oil项目\\Input-General.xls");
 	}
 	public int getProID() {
 		return proID;
@@ -68,10 +68,18 @@ public class FileExcel {
 		return excleContent.get(id);
 	}
 	int proID;
+	int algID;
+	String InOrOut;
+	public String getInOrOut() {
+		return InOrOut;
+	}
+
 	String fileName;
-	public int readExcel(int proID,String fileName) {
+	public int readExcel(int proID,int algid,String InOrOut,String fileName) {
 		this.proID=proID;
+		this.algID=algid;
 		this.fileName=fileName;
+		this.InOrOut=InOrOut;
 		InputStream inputStream;
 		try {
 			String path=this.getClass().getClassLoader().getResource("").getPath();
@@ -114,6 +122,9 @@ public class FileExcel {
 			return -1;
 		}
 		return 1;
+	}
+	public int getAlgID() {
+		return algID;
 	}
 	public int insertCell(Row row1,int i,int j,String value){
 		if(j==0){

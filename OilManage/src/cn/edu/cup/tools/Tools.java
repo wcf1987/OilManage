@@ -12,7 +12,7 @@ public class Tools {
 	        //去掉“-”符号
 	        return s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24);
 	    }
-	    public static String createKeyFromProAndALg(int proid,int algid){
-	    	return String.valueOf(proid)+"_"+String.valueOf(algid);
+	    public static String createKeyFromProAndALg(int proid,int algid,String InOrOut){
+	    	return String.valueOf(proid)+"_"+String.valueOf(algid)+"_"+InOrOut;
 	    }
 }

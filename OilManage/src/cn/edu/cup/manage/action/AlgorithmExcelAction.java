@@ -37,7 +37,7 @@ public class AlgorithmExcelAction {
 		this.proID = proID;
 	}
 	
-	public FileExcel getFileExcel(int proid,int algid){
+	public FileExcel getFileExcel(int proid,int algid,String InOrOut){
 		ActionContext actionContext = ActionContext.getContext();
         Map session = actionContext.getSession();
         Map<String,FileExcel> cacheList=(Map<String,FileExcel>)session.get("ExcelCacheList");
@@ -47,7 +47,7 @@ public class AlgorithmExcelAction {
         	//session.put("ExcelCacheList", cacheList);
         	
         }
-      String key=Tools.createKeyFromProAndALg(proid,algid);
+      String key=Tools.createKeyFromProAndALg(proid,algid,InOrOut);
         FileExcel excel=cacheList.get(key);
         if(excel!=null){
         		return excel;
@@ -56,13 +56,14 @@ public class AlgorithmExcelAction {
 			
     		AlgorithmProDao dao=new AlgorithmProDao();
     		
-    		String  filepath=dao.getProFile(this.proID,algid);
+    		String  filepath=dao.getProFile(this.proID,algid,InOrOut);
     		dao.close();
     		if (filepath==null ||filepath.equals("")){
+    			msg="Excel文件未找到";
     			return null;
     		}
     		excel=new FileExcel();
-    		int status=excel.readExcel(this.proID,ExcelProBaseDir+filepath);
+    		int status=excel.readExcel(this.proID,algid,InOrOut,ExcelProBaseDir+filepath);
     		if(status==-1){
     			msg=excel.getMsg();
     			return null;
@@ -73,17 +74,20 @@ public class AlgorithmExcelAction {
     		
 	}
 	public String saveExcel(){
-		FileExcel excel=getFileExcel(this.proID,this.algID);
+		FileExcel excel=getFileExcel(this.proID,this.algID,this.InOrOut);
 		int re=excel.saveExcel();
 		if(re==-1){
 			msg="保存失败，请检查数据结构";
 		}
 		return "SUCCESS";
 	}
+	
 	public FileExcel putFileExcel(FileExcel e){
 		ActionContext actionContext = ActionContext.getContext();
         Map session = actionContext.getSession();
         Map<Integer,FileExcel> cacheList=(Map<Integer,FileExcel>)session.get("ExcelCacheList");
+        
+        String key=Tools.createKeyFromProAndALg(e.getProID(),e.getAlgID(),e.getInOrOut());
         cacheList.put(e.getProID(),e);
         session.put("ExcelCacheList",cacheList);
         return e;
@@ -102,19 +106,24 @@ public class AlgorithmExcelAction {
 		return ids;
 	}
 	String sheetName;
-	int 	Index_ID;				
+	int 	Index_ID;	
 	int col_ID;
 	String newValue;
 	String status="success";
+	String InOrOut="";
+	public String getInOrOut() {
+		return InOrOut;
+	}
+	public void setInOrOut(String inOrOut) {
+		InOrOut = inOrOut;
+	}
 	public String getStatus() {
 		return status;
 	}
 	public void setIndex_ID(int index_ID) {
 		Index_ID = index_ID;
 	}
-	public void setIndex_ID(String index_ID) {
-		Index_ID = 0;
-	}
+
 	public void setCol_ID(int col_ID) {
 		this.col_ID = col_ID;
 	}
@@ -122,16 +131,17 @@ public class AlgorithmExcelAction {
 		this.newValue = newValue;
 	}
 	public String addSheetContent(){
-		FileExcel excel=getFileExcel(this.proID,this.algID);
+		FileExcel excel=getFileExcel(this.proID,this.algID,this.InOrOut);
 		SheetContent sheet=excel.getSheetByID(sheetID);
 		sheet.addRow(this.postMap);
+		putFileExcel(excel);
 		return "SUCCESS";
 	}
 	public String editSheetContent(){
-		FileExcel excel=getFileExcel(this.proID,this.algID);
+		FileExcel excel=getFileExcel(this.proID,this.algID,this.InOrOut);
 		SheetContent sheet=excel.getSheetByID(sheetID);
 		sheet.editCell(Index_ID,col_ID,newValue);
-		
+		putFileExcel(excel);
 		return "SUCCESS";
 	}
 	Map<String,String> postMap;
@@ -145,7 +155,7 @@ public class AlgorithmExcelAction {
 		}
 	}
 	public String delSheetContent(){
-		FileExcel excel=getFileExcel(this.proID,this.algID);
+		FileExcel excel=getFileExcel(this.proID,this.algID,this.InOrOut);
 		if (!ids.isEmpty()) {
 
 			for (int id : ids) {
@@ -158,11 +168,15 @@ public class AlgorithmExcelAction {
 		return "SUCCESS";
 	}
 	public static void main(String args[]){
-		new AlgorithmExcelAction().saveExcel();
+	//	new AlgorithmExcelAction().saveExcel();
 	}
 	public String listSheetContent(){
-		FileExcel excel=getFileExcel(this.proID,this.algID);
+		FileExcel excel=getFileExcel(this.proID,this.algID,this.InOrOut);
 		if(excel==null){
+			return "SUCCESS";
+		}
+		if(sheetID>=excel.getSheetNum()){
+			msg="请求的参数页面超出范围";
 			return "SUCCESS";
 		}
 		sheetContent=excel.getSheetByID(sheetID);
@@ -177,6 +191,7 @@ public class AlgorithmExcelAction {
 		putFileExcel(excel);
 		return "SUCCESS";
 	}
+
 	public int getRecords() {
 		return records;
 	}
@@ -210,7 +225,13 @@ public class AlgorithmExcelAction {
 		
 		AlgorithmsCycle p=dao.getAlgorithmDetail(this.algID);
 		FileExcel excel=new FileExcel();
-		int status=excel.readExcel(this.proID,ExcelAlgBaseDir+p.getStructFile());
+		String path="";
+		if(this.InOrOut.equals("In")){
+			path=p.getStructFileIn();
+		}else{
+			path=p.getStructFileOut();
+		}
+		int status=excel.readExcel(this.proID,this.algID,this.InOrOut,ExcelAlgBaseDir+path);
 		if(status==-1){
 			msg=excel.getMsg();
 			return "SUCCESS";

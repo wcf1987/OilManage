@@ -3,7 +3,7 @@ package cn.edu.cup.algjarexcel;
 
 
 public abstract class AlgorithmPlugTools {
-	public abstract String startCalc();
+	public abstract String startCalc(int algID);
 	RunInfo info;
 	public void injectInfo(RunInfo info){
 		this.info=info;

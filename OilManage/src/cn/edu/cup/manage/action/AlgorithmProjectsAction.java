@@ -154,14 +154,13 @@ public class AlgorithmProjectsAction {
 	public String getSord() {
 		return sord;
 	}
-
 	public String list() {
 
 		AlgorithmProDao dao = new AlgorithmProDao();
 
-		dataList = dao.getAlgorithmProsList(page, rows, sidx, sord);
+		dataList = dao.getAlgorithmProsList(algID,page, rows, sidx, sord);
 
-		records = dao.getCountAlgorithms();
+		records = dao.getCountAlgorithms(algID);
 
 		total = records / rows;
 		if (records % rows != 0) {

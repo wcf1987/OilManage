@@ -8,14 +8,17 @@ function() {
 	 */
 	var sid = 1;
 	var proid = 11;
-	var algid = 27;
-	var sheetDiv = "#sheet"
-	var pageDiv = "#pager"
-	for(var i=0;i<8;i++){
+	var algid = 26;
+	var inOrOut="In";
+	//var inOrOut="Out";
+	var sheetDiv = "#sheet";
+	var pageDiv = "#pager";
+	var delID="delsheet";
+	for(var i=0;i<5;i++){
 		var sheetgrid = new SheetGrid();
 
-		sheetgrid.GetDynamicCols(i, algid);
-		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i);
+		sheetgrid.GetDynamicCols(i, algid,inOrOut);
+		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);
 		
 	}	
 
