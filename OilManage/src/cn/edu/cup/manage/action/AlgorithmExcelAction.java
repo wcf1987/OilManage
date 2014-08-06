@@ -17,8 +17,8 @@ import cn.edu.cup.tools.Tools;
 import com.opensymphony.xwork2.ActionContext;
 
 public class AlgorithmExcelAction {
-	private static String ExcelAlgBaseDir="ExcelFrame\\";
-	private static String ExcelProBaseDir="ExcelProject\\";
+	public static String ExcelAlgBaseDir="ExcelFrame\\";
+	public static String ExcelProBaseDir="ExcelProject\\";
 	int algID;
 	int sheetID;
 	int proID;

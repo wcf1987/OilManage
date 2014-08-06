@@ -175,7 +175,7 @@ public class AlgorithmProjectsAction {
 		AlgorithmProDao dao = new AlgorithmProDao();
 
 		int result = dao.addAlgorithmPro(this.Description, this.authorID,
-				this.name);
+				this.name,this.algID);
 		dao.close();
 		return "SUCCESS";
 	}

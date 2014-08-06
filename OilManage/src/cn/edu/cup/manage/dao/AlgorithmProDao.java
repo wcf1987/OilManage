@@ -10,8 +10,12 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 import cn.edu.cup.algjar.CalcInfo;
+import cn.edu.cup.file.FileExcel;
+import cn.edu.cup.manage.action.AlgorithmExcelAction;
 import cn.edu.cup.manage.business.AlgorithmPro;
+import cn.edu.cup.manage.business.AlgorithmsCycle;
 import cn.edu.cup.tools.HibernateSessionManager;
+import cn.edu.cup.tools.Tools;
 
 public class AlgorithmProDao {
 
@@ -86,17 +90,34 @@ public class AlgorithmProDao {
 
 	}
 
-	public int addAlgorithmPro(String description, int authorID, String name) {
+	public int addAlgorithmPro(String description, int authorID, String name,int algID) {
 		Date addDate = new Date();
 		HibernateSessionManager.getThreadLocalTransaction();
+		
+		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
+		AlgorithmsCycle p=dao.getAlgorithmDetail(algID);
+		FileExcel excel=new FileExcel();
+		
+		String pathIn=AlgorithmExcelAction.ExcelAlgBaseDir+p.getStructFileIn();
+		String pathOut=AlgorithmExcelAction.ExcelAlgBaseDir+p.getStructFileOut();
+
+		String proIn=Tools.getUUID()+".xls";
+		String proOut=Tools.getUUID()+".xls";
+		Tools.copyFile(proIn, AlgorithmExcelAction.ExcelProBaseDir+proIn, true);
+		Tools.copyFile(pathOut,AlgorithmExcelAction.ExcelProBaseDir+proOut, true);
+		
 		Query q = session
-				.createSQLQuery("insert into t_projects (description,authorID,addtime,name,Type,profile) values (?,?,?,?,?,?)");
+				.createSQLQuery("insert into t_projects (description,authorID,addtime,name,Type,profileIn,profileout,status) values (?,?,?,?,?,?,?,?)");
 		q.setParameter(0, description);
 		q.setParameter(1, authorID);
 		q.setParameter(2, addDate);
 		q.setParameter(3, name);
-		q.setParameter(4, 0);
-		q.setParameter(5, "");
+		q.setParameter(4, 1);
+		q.setParameter(5, proIn);
+		q.setParameter(6, proOut);
+		q.setParameter(7, 0);
+		
+		
 		int result = q.executeUpdate();
 
 		return result;
