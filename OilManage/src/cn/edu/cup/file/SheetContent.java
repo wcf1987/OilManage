@@ -21,11 +21,11 @@ public class SheetContent {
 	}
 	public int editCell(int index_ID, int col_ID, String newValue) {
 		// TODO Auto-generated method stub
-		List<String> temp=sheetContent.get(index_ID);
-		updateValueByIndex(temp,col_ID,newValue);
+		List<String> temp=sheetContent.get(index_ID);//获取第几行
+		updateValueByIndex(temp,col_ID,newValue);//修改该行的第col_ID的值
 		return 1;
 	}
-	public int removeRow(int index){
+	public int removeRow(int index){//删除行
 		if(sheetContent.get(index).get(0).equals(String.valueOf(index))){
 			sheetContent.set(index,null);
 			
@@ -33,7 +33,7 @@ public class SheetContent {
 		
 		return 1;
 	}
-	public int updateSheet(){
+	public int updateSheet(){//修改excel的行的序号，去掉空行
 		List<List<String>> copy=new ArrayList<List<String>>();
 		for(int i=0,k=0;i<sheetContent.size();i++){
 			List temp=sheetContent.get(i);
@@ -149,7 +149,7 @@ public class SheetContent {
 		return type;
 	}
 	
-	List<List<String>> sheetContent;
+	List<List<String>> sheetContent;//二维数组，第一行是list是title的数组
 	Map<String,Integer>  sheetTitle;
 	int type;
 	String Name;

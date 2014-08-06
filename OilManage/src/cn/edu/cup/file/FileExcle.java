@@ -75,6 +75,8 @@ public class FileExcle {
 		InputStream inputStream;
 		try {
 			String path=this.getClass().getClassLoader().getResource("").getPath();
+			//path.replaceAll("%20", " ");
+			path = java.net.URLDecoder.decode(path,"utf-8"); 
 			path=path.substring(0, path.lastIndexOf("/WEB-INF"));
 			path=path+File.separator+fileName;
 			inputStream = new FileInputStream(new File(path));

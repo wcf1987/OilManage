@@ -1,6 +1,11 @@
 $(
 
 function() {
+	/*
+	 * sid第几个sheet
+	 * proid项目ID
+	 * algid算法ID
+	 */
 	var sid = 1;
 	var proid = 11;
 	var algid = 27;

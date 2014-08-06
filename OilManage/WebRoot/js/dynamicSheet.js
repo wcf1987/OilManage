@@ -12,7 +12,7 @@ sheetgrid1.creategrid(proid,sheetDiv,pageDiv);
 */
 function SheetGrid() {
 
-	this.GetDynamicCols = function(sid, algid) {
+	this.GetDynamicCols = function(sid, algid) {//动态获取列
 
 		this.sid = sid;
 		this.algid = algid;
@@ -41,7 +41,7 @@ function SheetGrid() {
 
 		});
 	}
-	this.loadTableData = function() {
+	this.loadTableData = function() {//加载表格数据
 		var temp = this;
 		this.sheetgridpro.jqGrid("setGridParam", {
 			postData : {
