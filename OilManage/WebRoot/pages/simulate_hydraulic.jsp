@@ -48,23 +48,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<script defer="defer" type="text/javascript" src="js/global.js"></script>
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
-	<script defer="defer" type="text/javascript" src="js/project.js"></script>	
+	
 	<script defer="defer" type="text/javascript" src="js/simulate_hydraulic.js"></script>
 	<script defer="defer" type="text/javascript" src="js/dynamicSheet.js"></script>
+	<script defer="defer" type="text/javascript" src="js/project.js"></script>	
+	
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/colorPicker_new.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="css/tabs.css" />
 	<!-- <link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/processui.css" />  -->
 	<!-- 自定义 -->
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>	
-
-	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>	
-		
+	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>		
 	<link rel="stylesheet" type="text/css" href="css/simulate_hydraulic.css"/>
-	<style type="text/css">
-	/* 	body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", sans-serif;background: linear-gradient(45deg, #020031 0%, #6d3353 100%); }
-	 */
-	</style>
+	<link rel="stylesheet" type="text/css" href="css/dynamicSheet.css" />
+	
 
   </head>
     
@@ -81,6 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="span12">
 					<div class="page-header">
 						<h1>单相管网水力计算&nbsp;<small>管网模拟</small></h1>
+						<input id="curAlgID" style="display:none" value="26"/>
 					</div>
 					
 					
