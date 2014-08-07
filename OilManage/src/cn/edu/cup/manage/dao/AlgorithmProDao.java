@@ -305,6 +305,8 @@ public class AlgorithmProDao {
 		int algid=searchProAlg(pro_id2);
 		String filein=getProFile(pro_id2,algid,"In");
 		String fileout=getProFile(pro_id2,algid,"Out");
+		filein=Tools.getWebRoot()+AlgorithmExcelAction.ExcelProBaseDir+filein;
+		fileout=Tools.getWebRoot()+AlgorithmExcelAction.ExcelProBaseDir+fileout;
 		info.setAlgorthm(algid);
 		info.setFileInputPath(filein);
 		info.setFileOutputPath(fileout);
@@ -342,6 +344,23 @@ public class AlgorithmProDao {
 		q.setParameter(0, proid);
 		int re = q.executeUpdate();
 		
+	}
+
+	public List<Integer> getRunPro() {
+		SQLQuery q3 = session
+				.createSQLQuery("select t.id from t_projects t where  t.status=1");
+		
+		List l = q3.list();
+		List<Integer> temp = new ArrayList<Integer>();
+		for (int i = 0; i < l.size(); i++) {
+			// TestDb user = (TestDb)l.get(i);
+			// System.out.println(user.getUsername());
+
+			Integer value = (Integer) l.get(i);
+			temp.add(value);
+
+		}
+		return temp;
 	}
 
 }

@@ -17,6 +17,7 @@ import javax.servlet.ServletContext;
 import org.apache.struts2.ServletActionContext;
 
 import net.sf.json.JSONObject;
+import cn.edu.cup.algjarexcel.ProCalcManage;
 import cn.edu.cup.file.ColModel;
 import cn.edu.cup.file.FileExcel;
 import cn.edu.cup.file.SheetContent;
@@ -205,6 +206,7 @@ public class AlgorithmExcelAction {
 	//	new AlgorithmExcelAction().saveExcel();
 	}
 	public String listSheetContent(){
+
 		FileExcel excel=getFileExcel(this.proID,this.algID,this.InOrOut);
 		if(excel==null){
 			return "SUCCESS";

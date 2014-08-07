@@ -37,6 +37,7 @@ public class ProjectInfo{
 		alg_ID=dao.searchProAlg(pro_id2);
 		this.proid=pro_id2;
 		alg=loadAlgPro(proid);
+		dao.close();
 	}
 
 	public int getStatus() {
@@ -47,7 +48,7 @@ public class ProjectInfo{
 		ProjectCalcHisDao dao=new ProjectCalcHisDao();
 		dao.addCalcHis(proid,start);
 		//int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
-		
+		dao.close();
 	}
 	public void save(){
 		ProjectOutputDao dao=new ProjectOutputDao();
@@ -73,6 +74,8 @@ public class ProjectInfo{
 		dao1.setProCalcEnd(hisID,status,info2);
 		ProCalcManage calcM=ProCalcManage.getInstance();
 		calcM.clearThread(proid);
+		dao.close();
+		dao1.close();
 	}
     public void markStatus(int status,String info){
     	AlgorithmProDao dao = new AlgorithmProDao();
@@ -86,13 +89,14 @@ public class ProjectInfo{
 		String algFile = dao.getAlgorithmFile(proid);
 		String clsName = dao.getAlgorithmClass(proid);
 		AlgorithmPlugTools alg = JarTools.getPlug(algFile, clsName);
+		dao.close();
 		return alg;
     }
     public void createHisID(Date start){
 		ProjectCalcHisDao dao=new ProjectCalcHisDao();
 		hisID=dao.addCalcHis(proid,start);
 		//int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
-		
+		dao.close();
 	}
     int hisID;
 }

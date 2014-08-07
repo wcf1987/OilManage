@@ -156,7 +156,8 @@ public class AlgorithmProjectsAction {
 		return sord;
 	}
 	public String list() {
-
+		ProCalcManage pcm=ProCalcManage.getInstance();
+		pcm.checkRunStatus();
 		AlgorithmProDao dao = new AlgorithmProDao();
 
 		dataList = dao.getAlgorithmProsList(algID,page, rows, sidx, sord);
@@ -300,13 +301,15 @@ public class AlgorithmProjectsAction {
 
 	int status;
 	public String runAlg() {
+		ProCalcManage pcm=ProCalcManage.getInstance();
+		pcm.checkRunStatus();
 		ProjectInfo proinfo=new ProjectInfo(this.ID);
 		if(proinfo.getStatus()==1){
 			msg="工程正在运行中，请稍后或强项终止工程运行";
 			status=1;
 			return "SUCCESS";
 		}
-		ProCalcManage pcm=ProCalcManage.getInstance();
+		
 		pcm.run(this.ID);
 		
 		return "SUCCESS";

@@ -159,8 +159,8 @@ public class ProjectCalcHisDao {
 		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session
 				.createSQLQuery("INSERT into t_calchis (ID,Pro_ID,Algorith_ID,Calc_StartTime) select null,t2.id,t2.algorithm_id,now() from t_projects t2 where t2.id=?");
-		q.setParameter(0, start);
-		q.setParameter(1, pro_id);
+		//q.setParameter(0, start);
+		q.setParameter(0, pro_id);
 
 		int result = q.executeUpdate();
 
@@ -258,7 +258,7 @@ public class ProjectCalcHisDao {
 
 		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session
-				.createSQLQuery("INSERT into t_calchis_log (ID,Pro_ID,Algorith_ID,calchis_id,outputtime,output) select null,t2.id,t2.algorithm_id,?,now(),? from t_projects t2 where t2.id=?");
+				.createSQLQuery("INSERT into t_calchis_log (ID,Pro_ID,calchis_id,outputtime,output) select null,t2.id,?,now(),? from t_projects t2 where t2.id=?");
 		q.setParameter(0, hisID);
 		q.setParameter(1, info2);
 
