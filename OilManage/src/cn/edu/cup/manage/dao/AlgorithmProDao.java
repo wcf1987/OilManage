@@ -179,7 +179,7 @@ public class AlgorithmProDao {
 		SQLQuery q2 = session.createSQLQuery(sql);
 		q2.setParameter(0, pro_id);
 		String alg = ((String) q2.uniqueResult());
-
+		alg=Tools.getWebRoot()+AlgorithmExcelAction.AlgBaseDir+alg;
 		return alg;
 	}
 

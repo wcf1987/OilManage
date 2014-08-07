@@ -30,6 +30,7 @@ import com.opensymphony.xwork2.ActionContext;
 public class AlgorithmExcelAction {
 	public static String ExcelAlgBaseDir="ExcelFrame\\";
 	public static String ExcelProBaseDir="ExcelProject\\";
+	public static String AlgBaseDir="uploadAlgorithm\\";
 	int algID;
 	int sheetID;
 	int proID;
