@@ -311,6 +311,13 @@ public class AlgorithmProjectsAction {
 		
 		return "SUCCESS";
 	}
+	public static void main(String args[]){
+		AlgorithmProjectsAction test=new AlgorithmProjectsAction();
+		test.setID(19);
+		test.runAlg();
+	
+	
+	}
 	public String stopAlg() {
 		
 		ProCalcManage pcm=ProCalcManage.getInstance();
