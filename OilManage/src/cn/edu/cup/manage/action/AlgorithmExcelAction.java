@@ -265,7 +265,7 @@ public class AlgorithmExcelAction {
 		}else{
 			path=p.getStructFileOut();
 		}
-		int status=excel.readExcel(this.proID,this.algID,this.InOrOut,ExcelAlgBaseDir+path);
+		int status=excel.readExcel(this.proID,this.algID,this.InOrOut,Tools.getWebRoot()+ExcelAlgBaseDir+path);
 		if(status==-1){
 			msg=excel.getMsg();
 			return "SUCCESS";
