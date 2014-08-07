@@ -1,23 +1,14 @@
 package cn.edu.cup.manage.action;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.ServletContext;
-
-import org.apache.struts2.ServletActionContext;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.sf.json.JSONObject;
-import cn.edu.cup.algjarexcel.ProCalcManage;
 import cn.edu.cup.file.ColModel;
 import cn.edu.cup.file.FileExcel;
 import cn.edu.cup.file.SheetContent;
@@ -25,8 +16,6 @@ import cn.edu.cup.manage.business.AlgorithmsCycle;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
 import cn.edu.cup.tools.Tools;
-
-import com.opensymphony.xwork2.ActionContext;
 
 public class AlgorithmExcelAction {
 	public static String ExcelAlgBaseDir = "ExcelFrame\\";
@@ -93,7 +82,7 @@ public class AlgorithmExcelAction {
 		saveExcel();// 保存到文件
 		return "SUCCESS";
 	}
-	public  static final Map<String, FileExcel> cacheList= new HashMap<String, FileExcel>();
+	public  static final Map<String, FileExcel> cacheList= new ConcurrentHashMap <String, FileExcel>();
 	public FileExcel getFileExcel(int proid, int algid, String InOrOut) {
 		/*ActionContext actionContext = ActionContext.getContext();
 		Map session = actionContext.getSession();
