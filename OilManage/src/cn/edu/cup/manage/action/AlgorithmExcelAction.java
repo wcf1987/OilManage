@@ -270,7 +270,7 @@ public class AlgorithmExcelAction {
 			return "SUCCESS";
 		}
 		sheetContent = excel.getSheetByID(sheetID);
-		records = sheetContent.getSize();
+		records = sheetContent.getSize()-1;
 		sheetContent.buildContent(page, rows);
 		content = sheetContent.getContent();
 
