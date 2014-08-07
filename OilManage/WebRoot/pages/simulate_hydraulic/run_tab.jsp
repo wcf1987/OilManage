@@ -107,3 +107,25 @@
 </div>	
 	<!--Insert Image hidden iframe-->
 <iframe id="upload_target" name="upload_target" style="width:0;height:0;border:0px;"></iframe>
+
+
+<ul id="contextmenu" style="display:none;z-index:100">	
+	<li><a>解除锁定</a></li>
+	<li><a>顺时针旋转90°</a></li>
+	<li><a>逆时针旋转90°</a></li>	
+	<!--<li><a>更改颜色</a></li>
+	<li><a>放大</a></li>
+	<li><a>缩小</a></li>	-->		
+	<li><a>删除该节点</a></li>
+	<li><a>属性</a></li>
+	<li><a>进入站点</a></li>
+   </ul>
+   <!-- 属性框 -->
+<div id="pointPra"  style=" display: none;z-index:100;position:absolute">
+	<div id="pointPraClose" ><span style="font-size:25px;float:right;width:20px;align:center;margin-top:-30px;" onclick="closePraList()">x</span></div>
+	<table id="PointPraList" class="table table-striped table-bordered table-hover datatable " >
+	</table>
+  		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:700" >
+		<div id="PointPraPager" ></div>
+	</div>		
+</div>

@@ -845,7 +845,7 @@ function openProject(proid){
 	 */
 	var sid = 1;
 	//var proid = 11;
-	var algid = 26;
+	var algid = $("#curAlgID").val();
 	var inOrOut="In";
 	//var inOrOut="Out";
 	var sheetDiv = "#sheet";
