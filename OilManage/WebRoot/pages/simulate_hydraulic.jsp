@@ -229,9 +229,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				'method' : 'post',
 				'fileTypeDesc' : '请选择xls xlsx文件',
 			    'fileTypeExts' : '*.xls; *.xlsx;',
-			    'onUploadStart': function (file) { 		  
+			    'onUploadStart': function (file) { 		
+			   		// alert($("#curAlgID").val());  
 			    	$("#importExcel").uploadify("settings", "formData",
-			    			{ 'proID':$("#proID").val(),'algID':$("#algID").val(),'InOrOut':"in" });  
+			    			{ 'proID':$("#proID").val(),'algID':$("#curAlgID").val(),'InOrOut':"In" });  
 			    }
 	//	        'onUploadFile': function(file) {
 	//	        	alert('The file ' + file.name + ' is being uploaded.');

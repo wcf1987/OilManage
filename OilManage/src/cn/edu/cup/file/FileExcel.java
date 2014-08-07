@@ -39,10 +39,8 @@ public class FileExcel {
 	int sheetNum = 0;
 	List<SheetContent> excleContent;
 
-	public String saveExcel(String fileName){
-		return "success";
-	}
-	private void saveInSession(){
+
+/*	private void saveInSession(){
 		  ActionContext actionContext = ActionContext.getContext();   
 		  
 	       Map session = actionContext.getSession();   
@@ -57,7 +55,7 @@ public class FileExcel {
 	  
 	       excleContent=(List<SheetContent>)session.get("operatingExcel");   
 	  
-	}
+	}*/
 	public static void main(String args[]) {
 		//new FileExcel().readExcel(1,"E:\\profit\\oil项目\\Input-General.xls");
 	}
@@ -158,7 +156,7 @@ public class FileExcel {
 		FileOutputStream out = null;
 
 		try {
-		    out = new FileOutputStream(this.fileName);
+		    out = new FileOutputStream(Tools.getWebRoot()+this.fileName);
 		    wb.write(out);		
 		} catch (IOException e) {
 		
