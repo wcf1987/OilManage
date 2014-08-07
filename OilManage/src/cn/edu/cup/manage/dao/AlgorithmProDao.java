@@ -10,6 +10,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 import cn.edu.cup.algjar.CalcInfo;
+import cn.edu.cup.algjarexcel.RunInfoDetail;
 import cn.edu.cup.file.FileExcel;
 import cn.edu.cup.manage.action.AlgorithmExcelAction;
 import cn.edu.cup.manage.business.AlgorithmPro;
@@ -293,6 +294,52 @@ public class AlgorithmProDao {
 		q.setParameter(2, id);
 		int re = q.executeUpdate();
 
+	}
+
+	public RunInfoDetail getProAlgInfo(int pro_id2) {
+		
+		RunInfoDetail info=new RunInfoDetail();
+		
+		int algid=searchProAlg(pro_id2);
+		String filein=getProFile(pro_id2,algid,"In");
+		String fileout=getProFile(pro_id2,algid,"Out");
+		info.setAlgorthm(algid);
+		info.setFileInputPath(filein);
+		info.setFileOutputPath(fileout);
+		return info;
+	}
+
+	public int getStatus(int pro_id) {
+		String sql = "select t.status from t_projects t where  t.id=? ";
+		SQLQuery q2 = session.createSQLQuery(sql);
+		q2.setParameter(0, pro_id);
+		Integer status = ((Integer) q2.uniqueResult());
+
+		return status;
+	}
+
+	public void setProCalcStatus(int proid,int status,String info) {
+		HibernateSessionManager.getThreadLocalTransaction();
+		Date modifyTime = new Date();
+		SQLQuery q = session
+				.createSQLQuery("update t_projects t set t.status=?,info=?  where t.ID=?");
+		q.setParameter(0, status);
+
+		q.setParameter(1, info);
+		q.setParameter(2, proid);
+		int re = q.executeUpdate();
+		
+	}
+
+	public void setProCalcEnd(int proid) {
+		HibernateSessionManager.getThreadLocalTransaction();
+		Date modifyTime = new Date();
+		SQLQuery q = session
+				.createSQLQuery("update t_projects t set t.LastCalcEndTime=now()  where t.ID=?");
+
+		q.setParameter(0, proid);
+		int re = q.executeUpdate();
+		
 	}
 
 }

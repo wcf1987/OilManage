@@ -158,7 +158,7 @@ public class ProjectCalcHisDao {
 
 		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session
-				.createSQLQuery("INSERT into t_calchis (ID,Pro_ID,Algorith_ID,Calc_StartTime,Calc_EndTime,Calc_re) select null,t2.id,t2.algorithm_id,?,now(),t2.CalcRes from t_projects t2 where t2.id=?");
+				.createSQLQuery("INSERT into t_calchis (ID,Pro_ID,Algorith_ID,Calc_StartTime) select null,t2.id,t2.algorithm_id,now() from t_projects t2 where t2.id=?");
 		q.setParameter(0, start);
 		q.setParameter(1, pro_id);
 
@@ -167,34 +167,6 @@ public class ProjectCalcHisDao {
 		int ret_id = 0;
 		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()");
 		ret_id = ((BigInteger) q2.uniqueResult()).intValue();
-
-		Query q3 = session
-				.createSQLQuery("INSERT into t_calcinput_his  (ID,Pro_ID,par_id,par_display,par_value,par_name,par_messID,par_ISOValue,Calc_ID) select NULL,t1.Pro_ID,t1.par_id,t1.par_display,t1.par_value,t1.par_name,t1.par_messID,t1.par_ISOValue,? from t_projectinputs t1 where t1.pro_id=?");
-		q3.setParameter(0, ret_id);
-		q3.setParameter(1, pro_id);
-
-		result = q3.executeUpdate();
-
-		Query q4 = session
-				.createSQLQuery("INSERT into t_calcoutput_his  (ID,Pro_ID,par_id,par_display,par_value,par_name,par_messID,par_ISOValue,Calc_ID) select NULL,t1.Pro_ID,t1.par_id,t1.par_display,t1.par_value,t1.par_name,t1.par_messID,t1.par_ISOValue,? from t_projectoutputs t1 where t1.pro_id=?");
-		q4.setParameter(0, ret_id);
-		q4.setParameter(1, pro_id);
-
-		result = q4.executeUpdate();
-		
-		Query q5 = session
-				.createSQLQuery("INSERT into t_calcinputlist_his  (ID,UUID,pro_id,par_id,list_index,list_value,list_ISOValue,Calc_ID) select NULL,t1.UUID,t1.pro_id,t1.par_id,t1.list_index,t1.list_value,t1.list_ISOValue,? from t_projectinputlist t1 where t1.pro_id=?");
-		q5.setParameter(0, ret_id);
-		q5.setParameter(1, pro_id);
-
-		result = q5.executeUpdate();
-		
-		Query q6 = session
-				.createSQLQuery("INSERT into t_calcoutputlist_his  (ID,UUID,pro_id,par_id,list_index,list_value,list_ISOValue,Calc_ID) select NULL,t1.UUID,t1.pro_id,t1.par_id,t1.list_index,t1.list_value,t1.list_ISOValue,? from t_projectoutputlist t1 where t1.pro_id=?");
-		q6.setParameter(0, ret_id);
-		q6.setParameter(1, pro_id);
-
-		result = q6.executeUpdate();
 
 		return ret_id;
 
@@ -280,6 +252,32 @@ public class ProjectCalcHisDao {
 		}
 
 		return re;
+	}
+
+	public void addCalcLog(int hisID, String info2,int proid) {
+
+		HibernateSessionManager.getThreadLocalTransaction();
+		Query q = session
+				.createSQLQuery("INSERT into t_calchis_log (ID,Pro_ID,Algorith_ID,calchis_id,outputtime,output) select null,t2.id,t2.algorithm_id,?,now(),? from t_projects t2 where t2.id=?");
+		q.setParameter(0, hisID);
+		q.setParameter(1, info2);
+
+		q.setParameter(2, proid);
+		int result = q.executeUpdate();
+		
+	}
+
+	public void setProCalcEnd(int hisID, int status,String info) {
+		HibernateSessionManager.getThreadLocalTransaction();
+		Date modifyTime = new Date();
+		SQLQuery q = session
+				.createSQLQuery("update t_calchis t set t.Calc_EndTime=now() ,status=?,info=? where t.ID=?");
+
+		q.setParameter(0, status);
+		q.setParameter(1, info);
+		q.setParameter(2, hisID);
+		int re = q.executeUpdate();
+		
 	}
 
 }

@@ -3,8 +3,9 @@ package cn.edu.cup.manage.action;
 import java.util.Date;
 import java.util.List;
 
-import cn.edu.cup.algjar.AlgorithmPlug;
-import cn.edu.cup.manage.business.AlgorithmPlugHelp;
+import cn.edu.cup.algjarexcel.AlgorithmPlugTools;
+import cn.edu.cup.algjarexcel.ProCalcManage;
+import cn.edu.cup.algjarexcel.ProjectInfo;
 import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.tools.JarTools;
@@ -263,7 +264,7 @@ public class AlgorithmProjectsAction {
 		this.className = className;
 	}
 
-	public String runAlg() {
+/*	public String runAlg() {
 		AlgorithmProDao dao = new AlgorithmProDao();
 		String algFile = dao.getAlgorithmFile(this.ID);
 		String clsName = dao.getAlgorithmClass(this.ID);
@@ -285,6 +286,29 @@ public class AlgorithmProjectsAction {
 
 		}
 		dao.close();
+		return "SUCCESS";
+	}*/
+	
+	String msg;
+	public String getMsg() {
+		return msg;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	int status;
+	public String runAlg() {
+		ProjectInfo proinfo=new ProjectInfo(this.ID);
+		if(proinfo.getStatus()==1){
+			msg="工程正在运行中，请稍后或强项终止工程运行";
+			status=1;
+			return "SUCCESS";
+		}
+		ProCalcManage pcm=ProCalcManage.getInstance();
+		pcm.run(this.ID);
+		
 		return "SUCCESS";
 	}
 }

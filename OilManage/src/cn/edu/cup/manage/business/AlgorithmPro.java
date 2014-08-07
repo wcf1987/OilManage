@@ -55,9 +55,12 @@ public class AlgorithmPro {
 			return "未运行";
 		}
 		if(statusi==1){
+			return "正在运行";
+		}
+		if(statusi==2){
 			return "运行成功";
 		}
-		if(statusi==0){
+		if(statusi==3){
 			return "运行失败";
 		}
 		return "运行失败";

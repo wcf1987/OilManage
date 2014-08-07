@@ -5,11 +5,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 
-import cn.edu.cup.algjar.AlgorithmPlug;
+import cn.edu.cup.algjarexcel.AlgorithmPlugTools;
 import cn.edu.cup.manage.business.MyClassLoader;
 
 public class JarTools {
-	public static AlgorithmPlug getPlug(String filename,String ClassName,int pro_id){
+	public static AlgorithmPlugTools getPlug(String filename,String ClassName){
 		String class_path = ClassName;//Jar中的所需要加载的类的类名
 
 	    String jar_path = "file:/"+filename;//jar所在的文件的URL
@@ -28,7 +28,7 @@ public class JarTools {
            
             Constructor c1=cla.getDeclaredConstructor(new Class[]{});   
             c1.setAccessible(true);   
-            AlgorithmPlug a1=(AlgorithmPlug)c1.newInstance(new Object[]{});   
+            AlgorithmPlugTools a1=(AlgorithmPlugTools)c1.newInstance(new Object[]{});   
 	        
             return a1;
 	        //System.out.println(a1.startCalc());//调用Jar中的类方法
