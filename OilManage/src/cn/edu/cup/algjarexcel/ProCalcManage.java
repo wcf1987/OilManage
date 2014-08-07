@@ -2,7 +2,10 @@ package cn.edu.cup.algjarexcel;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import cn.edu.cup.manage.dao.AlgorithmProDao;
 
 public class ProCalcManage {
 	private ProCalcManage() {
@@ -24,6 +27,17 @@ public class ProCalcManage {
 	    	  
 				
 	      }
+	     public int getStatus(int proid){
+	    	 CalcThread thread=threadMap.get(proid);
+	    	 if(thread==null){
+	    		 return 2;
+	    	 }
+	    	 if(thread.isAlive()==false){
+	    		 return 2;
+	    	 }else{
+	    		 return 1;
+	    	 }
+	     }
 		public CalcThread clearThread(int proid){
 			CalcThread thread=threadMap.get(proid);
 			threadMap.remove(proid);
@@ -45,6 +59,22 @@ public class ProCalcManage {
 			proinfo.markStatus(1, "开始运算");		
 			proinfo.createHisID(new Date());
 			startThread(proinfo);
+		}
+
+
+
+		public void checkRunStatus() {
+			// TODO Auto-generated method stub
+			AlgorithmProDao dao=new AlgorithmProDao();
+			List<Integer> list=dao.getRunPro();
+			for(int i=0;i<list.size();i++){
+				int pro_id=list.get(i);
+				int status=getStatus(pro_id);
+				if(status!=1){
+					dao.setProCalcStatus(pro_id, status, "运行完毕");
+				}
+			}
+			dao.close();
 		}
 
 }
