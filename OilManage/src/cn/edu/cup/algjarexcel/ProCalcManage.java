@@ -20,7 +20,8 @@ public class ProCalcManage {
 
 	      public void stopThread(int proid){
 	    	  CalcThread a=clearThread(proid);
-	    	  a.stop();
+	    	  a.stopByForce();
+	    	  
 				
 	      }
 		public CalcThread clearThread(int proid){

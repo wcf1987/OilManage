@@ -8,7 +8,10 @@ public class CalcThread extends Thread {
 		this.proinfo=proinfo;
 		this.alg=this.proinfo.getAlg();
 	}
-
+	public void stopByForce(){
+		this.proinfo.end(3, "外部强制终止");
+		this.stop();
+	}
 	public void setAlg(AlgorithmPlugTools alg) {
 		// TODO Auto-generated method stub
 		this.alg=alg;

@@ -38,19 +38,20 @@ public class RunInfoDetail extends RunInfo{
 	@Override
 	public String output(String info) {
 		// TODO Auto-generated method stub
-		return null;
+		proinfo.logInfo(info);
+		return info;
 	}
 
 	@Override
 	public String endsWithError(String error) {
-		proinfo.end(1,error);
+		proinfo.end(3,error);
 		return null;
 	}
 
 	@Override
 	public String endsWithSuccess(String info) {
 		// TODO Auto-generated method stub
-		proinfo.end(0,info);
+		proinfo.end(2,info);
 		return null;
 	}
 

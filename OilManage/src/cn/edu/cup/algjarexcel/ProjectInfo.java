@@ -67,18 +67,17 @@ public class ProjectInfo{
 	}
 	public void end(int i, String info2) {
 		markStatus(i, info2);
-		
+		AlgorithmProDao dao = new AlgorithmProDao();
+		dao.setProCalcEnd(proid);
+		ProjectCalcHisDao dao1 = new ProjectCalcHisDao();
+		dao1.setProCalcEnd(hisID,status,info2);
 		ProCalcManage calcM=ProCalcManage.getInstance();
 		calcM.clearThread(proid);
 	}
     public void markStatus(int status,String info){
     	AlgorithmProDao dao = new AlgorithmProDao();
     	dao.setProCalcStatus(proid,status,info);
-    	if(status==2||status==3){
-    		dao.setProCalcEnd(proid);
-    		ProjectCalcHisDao dao1 = new ProjectCalcHisDao();
-    		dao1.setProCalcEnd(hisID,status,info);
-    	}
+    
     	dao.close();
     }
     public AlgorithmPlugTools loadAlgPro(int proid){

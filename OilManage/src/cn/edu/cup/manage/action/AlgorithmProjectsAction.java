@@ -311,4 +311,11 @@ public class AlgorithmProjectsAction {
 		
 		return "SUCCESS";
 	}
+	public String stopAlg() {
+		
+		ProCalcManage pcm=ProCalcManage.getInstance();
+		pcm.stopThread(this.ID);
+		
+		return "SUCCESS";
+	}
 }
