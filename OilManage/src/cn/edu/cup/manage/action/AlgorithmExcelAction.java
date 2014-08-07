@@ -62,13 +62,13 @@ public class AlgorithmExcelAction {
 		this.excelImportFileName = excelImportFileName;
 	}
 	public String uploadExcel(){
-		FileExcel excel=getFileExcel(this.proID,this.algID,this.InOrOut);
+		FileExcel excel=getFileExcel(this.proID,this.algID,this.InOrOut);//从缓存或者文件里面读取excel内容
 
-		FileExcel importExcle=new FileExcel();
+		FileExcel importExcle=new FileExcel();		
 		int status=importExcle.readExcel(this.proID,this.algID,this.InOrOut,excelImport.getAbsolutePath());
 		excel.coverFromImport(importExcle);
-		putFileExcel(excel);
-		saveExcel();
+		putFileExcel(excel);//excel放到缓存里
+		saveExcel();//保存到文件
 		return "SUCCESS";
 	}
 	public FileExcel getFileExcel(int proid,int algid,String InOrOut){
@@ -83,14 +83,14 @@ public class AlgorithmExcelAction {
         }
       String key=Tools.createKeyFromProAndALg(proid,algid,InOrOut);
         FileExcel excel=cacheList.get(key);
-        if(excel!=null){
+        if(excel!=null){//先从缓存读取excel
         		return excel;
         	}
               
 			
     		AlgorithmProDao dao=new AlgorithmProDao();
     		
-    		String  filepath=dao.getProFile(this.proID,algid,InOrOut);
+    		String  filepath=dao.getProFile(this.proID,algid,InOrOut);//缓存没有，则从项目路径寻找excel文件
     		dao.close();
     		if (filepath==null ||filepath.equals("")){
     			msg="Excel文件未找到";
@@ -116,7 +116,7 @@ public class AlgorithmExcelAction {
 		return "SUCCESS";
 	}
 	
-	public FileExcel putFileExcel(FileExcel e){
+	public FileExcel putFileExcel(FileExcel e){//将excel内容放入缓存
 		ActionContext actionContext = ActionContext.getContext();
         Map session = actionContext.getSession();
         Map<Integer,FileExcel> cacheList=(Map<Integer,FileExcel>)session.get("ExcelCacheList");

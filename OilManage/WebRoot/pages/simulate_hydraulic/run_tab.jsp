@@ -129,3 +129,73 @@
 		<div id="PointPraPager" ></div>
 	</div>		
 </div>
+
+
+<!-- 新建图形项目的模态框 -->
+		<!--    	
+		<div class="modal fade" id="add_GUI_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" id="add_GUI_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">新建项目</h4>
+		      </div>
+		      <div class="modal-body">
+		     	 <form id="addGUIForm" action="addGUIPro.action" method="post"> 
+		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">		      		
+		      			<tr>
+		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >名称:</label></td>
+				            <td><input id="proname" type="text" class="input2" name="proname"/><em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >描述：</label></td>
+		      				<td><input id="description" type="text" class="input2" name="description" /></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >类型：</label></td>
+		      				<td><input id="type" type="text" class="input2" name="type" /></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">作者：</label></td>
+			        		<td><select id="authorID" name="authorID"></select><em style="color:red">*</em></td>   						
+		      			</tr>
+		      				    				
+				   </table>
+				   <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary"  >保存</button>
+				   </div>
+				 </form> 
+		      </div>
+		     
+		    </div>/.modal-content
+		  </div>/.modal-dialog
+		</div>/.modal -->
+		
+					
+    		<!-- 查看图形项目列表的模态框 -->   	
+		<!-- <div class="modal fade" id="listGUIPro_modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content" style="width:1070">
+		      <div class="modal-header">
+		        <button type="button" id="listGUIPro_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输入</h4>
+		      </div>
+		      <div class="modal-body">  
+		      	<div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table id="GUIProList" class="table table-striped table-bordered table-hover datatable " ></table>
+				      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1000" >
+				      			<div id="GUIProPager" ></div>
+				      		</div>	      		
+						</div>
+					</div>
+				</div>  
+		      </div>
+		     
+		    </div>/.modal-content
+		  </div>/.modal-dialog
+		</div>/.modal -->
+
+		

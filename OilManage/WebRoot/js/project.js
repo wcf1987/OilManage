@@ -843,6 +843,7 @@ function openProject(proid){
 	 * proid项目ID
 	 * algid功能ID
 	 */
+	$("#proID").val(proid);
 	var sid = 1;
 	//var proid = 11;
 	var algid = $("#curAlgID").val();

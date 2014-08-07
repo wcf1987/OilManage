@@ -29,7 +29,7 @@ function SheetGrid() {
 			async:false,
 			success : function(data) {
 				
-				if (data.msg == null || msg == '') {
+				if (data.msg == null || data.msg == '') {
 					temp.colNames = data.sheetTile;// 表格的列名
 					temp.colModel = data.colModel;
 					temp.sheetName = data.sheetName;

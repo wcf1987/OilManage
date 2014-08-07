@@ -34,6 +34,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="js/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="bootstrap/js/holder.min.js"></script>
+	
+	<script type="text/javascript" src="js/upload/jquery.uploadify.min.js"></script>
+	
 	<script type="text/javascript" src="js/jquery-validation-1.11.1/dist/jquery.validate.js"></script>
 	<script src="js/easytabs/jquery.hashchange.min.js" type="text/javascript"></script>
 	<script src="js/easytabs/jquery.easytabs.js" type="text/javascript"></script>
@@ -80,6 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="page-header">
 						<h1>单相管网水力计算&nbsp;<small>管网模拟</small></h1>
 						<input id="curAlgID" style="display:none" value="1"/>
+						<input id="proID" style="display:none" value=""/>
 						<!-- 
 						if (id = 0)，井底流压计算；if (id = 1)，单气相管网水力计算；if (id = 2)，单气相管网热力计算；if (id = 3)，气固两相管网水力计算；if (id = 4)，气液两相管网水力计算
 						 -->
@@ -94,8 +98,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    </ul>  
 						<div id="input_tab"><!-- 节点数据 -->
 							<div style="background-color:#fff;padding:5px;border:2px solid">
-							<button>导入Excel</button>
-							<button>保存</button>
+							<input type="file" name="importExcel" id="importExcel" />
+      						<div id="file_uploadQueue" class="uploadifyQueue"></div>
+							<button onclick="saveExcel()">保存</button>
 							</div>
 							<%@ include file="simulate_hydraulic/input_tab.jsp" %>
 			    		</div>
@@ -121,73 +126,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 
 	 
 		
-		<!-- 新建图形项目的模态框 -->
-		<!--    	
-		<div class="modal fade" id="add_GUI_modal">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" id="add_GUI_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">新建项目</h4>
-		      </div>
-		      <div class="modal-body">
-		     	 <form id="addGUIForm" action="addGUIPro.action" method="post"> 
-		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">		      		
-		      			<tr>
-		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >名称:</label></td>
-				            <td><input id="proname" type="text" class="input2" name="proname"/><em style="color:red">*</em></td>
-		      			</tr>
-		      			<tr>
-		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >描述：</label></td>
-		      				<td><input id="description" type="text" class="input2" name="description" /></td>
-		      			</tr>
-		      			<tr>
-		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >类型：</label></td>
-		      				<td><input id="type" type="text" class="input2" name="type" /></td>
-		      			</tr>
-		      			<tr>
-		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">作者：</label></td>
-			        		<td><select id="authorID" name="authorID"></select><em style="color:red">*</em></td>   						
-		      			</tr>
-		      				    				
-				   </table>
-				   <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				        <button type="submit" class="btn btn-primary"  >保存</button>
-				   </div>
-				 </form> 
-		      </div>
-		     
-		    </div>/.modal-content
-		  </div>/.modal-dialog
-		</div>/.modal -->
-		
-					
-    		<!-- 查看图形项目列表的模态框 -->   	
-		<!-- <div class="modal fade" id="listGUIPro_modal">
-		  <div class="modal-dialog">
-		    <div class="modal-content" style="width:1070">
-		      <div class="modal-header">
-		        <button type="button" id="listGUIPro_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">查看输入</h4>
-		      </div>
-		      <div class="modal-body">  
-		      	<div class="container-fluid">
-					<div class="row-fluid">
-						<div class="span12">
-							<table id="GUIProList" class="table table-striped table-bordered table-hover datatable " ></table>
-				      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1000" >
-				      			<div id="GUIProPager" ></div>
-				      		</div>	      		
-						</div>
-					</div>
-				</div>  
-		      </div>
-		     
-		    </div>/.modal-content
-		  </div>/.modal-dialog
-		</div>/.modal -->
-
 		
 		
 		
@@ -277,8 +215,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<script type="text/javascript">
 		$().ready(function(){
 			$('#hydraulic_tab').easytabs();	
-			}	
+			$('#importExcel').uploadify({
+				'swf' : 'js/upload/uploadify.swf',				
+				'cancelImg'   : 'js/upload/cancel.png',
+				'uploader' : 'uploadExcel.action',
+				'queueID' : 'fileQueue',
+				'auto' : true,
+				'multi' : false,
+				'buttonText' : '导入Excel',
+				'fileSizeLimit' : '5MB',
+				'fileObjName' : 'excelImport',
+				'onUploadSuccess' : uploadComplete,
+				'method' : 'post',
+				'fileTypeDesc' : '请选择xls xlsx文件',
+			    'fileTypeExts' : '*.xls; *.xlsx;',
+			    'onUploadStart': function (file) { 		  
+			    	$("#importExcel").uploadify("settings", "formData",
+			    			{ 'proID':$("#proID").val(),'algID':$("#algID").val(),'InOrOut':"in" });  
+			    }
+	//	        'onUploadFile': function(file) {
+	//	        	alert('The file ' + file.name + ' is being uploaded.');
+	//	        	alert(1);
+	//	            $("#iconfile").uploadify("settings", 'formData', {'fileName': iconfile.name});
+	//	        	}
+		   
+				
+			});
+			
+			}		
 		); 
+		function uploadComplete(file, data, response) {
+			var tempJson = jQuery.parseJSON(data);
+			if(tempJson['msg']==null||tempJson['msg']==''){
+				alert("上传成功！");
+			}else{
+				alert(tempJson['msg']);
+				openProject($("#proID"));
+			}
+			//var tempJson = jQuery.parseJSON(data);
+			//$("#type_icon_path").html(tempJson['relativePath']);
+			
+
+		};
 		function openProjectModal(){
 			$('#add_project_modal').modal();
 			$('#load_modal').modal('hide');
@@ -298,8 +276,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$('#list_project_modal').modal();
 			$('#load_modal').modal('hide');
 		}	
-		function importExcel(){
-			
+
+		function saveExcel(){
+		 	
 		}
 	
 		</script>
