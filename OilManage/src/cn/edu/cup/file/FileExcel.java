@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import cn.edu.cup.tools.Tools;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -82,11 +82,7 @@ public class FileExcel {
 		this.InOrOut=InOrOut;
 		InputStream inputStream;
 		try {
-			String path=this.getClass().getClassLoader().getResource("").getPath();
-			//path.replaceAll("%20", " ");
-			path = java.net.URLDecoder.decode(path,"utf-8"); 
-			path=path.substring(0, path.lastIndexOf("/WEB-INF"));
-			path=path+File.separator+fileName;
+			String path=Tools.getWebRoot()+fileName;
 			inputStream = new FileInputStream(new File(path));
 
 			Workbook wb = null;

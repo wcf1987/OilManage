@@ -7,9 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.UUID;
-
-import javax.swing.JOptionPane;
 
 public class Tools {
 	 /**
@@ -86,5 +85,21 @@ public class Tools {
 	                e.printStackTrace();  
 	            }  
 	        }  
-	    }  
+	    } 
+	    public static String getWebRoot(){
+	    	return new Tools().getWebRoots();
+	    }
+	    private String getWebRoots(){
+			String path=this.getClass().getClassLoader().getResource("").getPath();
+			//path.replaceAll("%20", " ");
+			try {
+				path = java.net.URLDecoder.decode(path,"utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			path=path.substring(0, path.lastIndexOf("/WEB-INF"));
+			path=path+File.separator;
+			return path;
+	    }
 }

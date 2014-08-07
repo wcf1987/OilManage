@@ -54,7 +54,7 @@ public class AlgorithmProDao {
 			// System.out.println(user.getUsername());
 
 			Object[] row = (Object[]) l.get(i);
-			;
+			
 			Integer id = ((Integer) row[0]);
 			String proname = ((String) row[1]);
 			String description = (String) row[2];
@@ -100,16 +100,16 @@ public class AlgorithmProDao {
 		AlgorithmsCycle p=dao.getAlgorithmDetail(algID);
 		FileExcel excel=new FileExcel();
 		
-		String pathIn=AlgorithmExcelAction.ExcelAlgBaseDir+p.getStructFileIn();
-		String pathOut=AlgorithmExcelAction.ExcelAlgBaseDir+p.getStructFileOut();
+		String pathIn=Tools.getWebRoot()+AlgorithmExcelAction.ExcelAlgBaseDir+p.getStructFileIn();
+		String pathOut=Tools.getWebRoot()+AlgorithmExcelAction.ExcelAlgBaseDir+p.getStructFileOut();
 
 		String proIn=Tools.getUUID()+".xls";
 		String proOut=Tools.getUUID()+".xls";
-		Tools.copyFile(proIn, AlgorithmExcelAction.ExcelProBaseDir+proIn, true);
-		Tools.copyFile(pathOut,AlgorithmExcelAction.ExcelProBaseDir+proOut, true);
+		Tools.copyFile(pathIn, Tools.getWebRoot()+AlgorithmExcelAction.ExcelProBaseDir+proIn, true);
+		Tools.copyFile(pathOut,Tools.getWebRoot()+AlgorithmExcelAction.ExcelProBaseDir+proOut, true);
 		
 		Query q = session
-				.createSQLQuery("insert into t_projects (description,authorID,addtime,name,Type,profileIn,profileout,status) values (?,?,?,?,?,?,?,?)");
+				.createSQLQuery("insert into t_projects (description,authorID,addtime,name,Type,profileIn,profileout,status,Algorithm_ID,info,runtime) values (?,?,?,?,?,?,?,?,?,?,0)");
 		q.setParameter(0, description);
 		q.setParameter(1, authorID);
 		q.setParameter(2, addDate);
@@ -118,7 +118,8 @@ public class AlgorithmProDao {
 		q.setParameter(5, proIn);
 		q.setParameter(6, proOut);
 		q.setParameter(7, 0);
-		
+		q.setParameter(8, algID);
+		q.setParameter(9, "未运行");
 		
 		int result = q.executeUpdate();
 		Query q2 = session.createSQLQuery("select LAST_INSERT_ID()");
