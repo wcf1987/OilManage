@@ -68,8 +68,9 @@ public class AlgorithmProDao {
 			String ProfileIn = (String) row[8];
 			String ProfileOut = (String) row[9];
 			int status = ((Integer) row[10]);
-			int runtime = ((Integer) row[11]);
-			Date LastCalcEndTime = (Date) row[12];
+			Date LastCalcEndTime = (Date) row[11];
+			int runtime = ((Integer) row[12]);
+			
 
 			AlgorithmPro p = new AlgorithmPro(id, proname, aid, author,
 					description, addTime, lastCalcTime, CalcHisNum,ProfileIn,

@@ -4,7 +4,7 @@ public class ColModel {
 	String name;
 	String index;
 	boolean editable=true;
-	
+	int width;
 	public boolean isEditable() {
 		return editable;
 	}
@@ -47,4 +47,11 @@ public class ColModel {
 	public String getAlign() {
 		return align;
 	}
+	public int getWidth() {
+		return width;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
+	
 }

@@ -52,9 +52,6 @@ function list_project(){
 				url : "listAlgPro.action",// 后端的数据交互程序，改为你的
 				datatype : "json",// 前后交互的格式是json数据
 				mtype : 'POST',// 交互的方式是发送httpget请求						
-				postData : {
-					algID :$("#curAlgID").val()				
-				},
 				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','运行状态','输入文件导出','输出文件导出','打开'],// 表格的列名
 				colModel : [
 						{
@@ -139,8 +136,8 @@ function list_project(){
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"openProject('"
-										+ rows.ID + "')\">打开</a>"
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"editProject('"
+										+ rows.ID +"','"+rows.name+ "')\">打开</a>"
 							}
 						}
 						],
@@ -198,40 +195,21 @@ function add_project() {
 		type : 'POST',
 		url : 'addAlgPro.action',
 		data : {
-			algID:$("#curAlgID").val(),
 			name:$("#name").val(),
 			Description : $("#Description").val(),
 			authorID:$("#authorID").val()
 		},
 		success : function(data) {
 			alert('工程添加成功！');
-			
-			var sid = 1;
-			var proid =data.ID;
-			var algid = $("#curAlgID").val();
-			var inOrOut="In";
-			//var inOrOut="Out";
-			var sheetDiv = "#sheet";
-			var pageDiv = "#pager";
-			var delID="delsheet";
-			for(var i=0;i<5;i++){
-				var sheetgrid = new SheetGrid();
-				sheetgrid.GetDynamicCols(i, algid,inOrOut);
-				sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);	
-			}
-			
 			$('#add_project_modal').modal('hide');
 			$("#ProjectList").trigger("reloadGrid");			
 		},
 		error:function(msg){
-			alert(msg);
+			alter(msg);
 			$('#add_project_modal').modal('hide');
 			$("#ProjectList").trigger("reloadGrid");
 		}
 	});
-
-
-	
 	}
 /*
  * 删除项目
@@ -833,30 +811,7 @@ function createNewProject(){
 		});
 }
 
-/*function editProject(projectID,projectName){
+function editProject(projectID,projectName){
 	window.location.href="pages/project_edit.jsp?projectID="+projectID+"&projectName="+projectName+"&backurl="+window.location.href; 
-}*/
-
-function openProject(proid){
-	/*
-	 * sid第几个sheet
-	 * proid项目ID
-	 * algid功能ID
-	 */
-	var sid = 1;
-	//var proid = 11;
-	var algid = 26;
-	var inOrOut="In";
-	//var inOrOut="Out";
-	var sheetDiv = "#sheet";
-	var pageDiv = "#pager";
-	var delID="delsheet";
-	for(var i=0;i<5;i++){
-		var sheetgrid = new SheetGrid();
-
-		sheetgrid.GetDynamicCols(i, algid,inOrOut);
-		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);
-		
-	}
-	$(".modal").modal('hide');
 }
+
