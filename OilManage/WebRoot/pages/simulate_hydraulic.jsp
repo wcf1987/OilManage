@@ -79,7 +79,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="span12">
 					<div class="page-header">
 						<h1>单相管网水力计算&nbsp;<small>管网模拟</small></h1>
-						<input id="curAlgID" style="display:none" value="26"/>
+						<input id="curAlgID" style="display:none" value="1"/>
+						<!-- 
+						if (id = 0)，井底流压计算；if (id = 1)，单气相管网水力计算；if (id = 2)，单气相管网热力计算；if (id = 3)，气固两相管网水力计算；if (id = 4)，气液两相管网水力计算
+						 -->
 					</div>
 					
 					

@@ -88,12 +88,12 @@ function SheetGrid() {
 				
 				} ,
 		
-			autowidth : true,
+			//autowidth : true,
 			multiselect : true, // 可多选，出现多选框
 			multiselectWidth : 35, // 设置多选列宽度
 			rowNum : 10,// 每一页的行数
 			height : 'auto',
-			width : 1230,
+			width : 1040,
 			rowList : [ 10, 20, 30 ],
 			pager : pageDiv,			
 			viewrecords : true,

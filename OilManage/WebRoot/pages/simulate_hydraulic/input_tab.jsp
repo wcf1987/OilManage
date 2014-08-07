@@ -10,8 +10,7 @@
   </div>
   
   <div id="bottom-tab1">
-   	<table id="sheet1"
-		class="table table-striped table-bordered table-hover datatable " style="width:1230px"></table>
+   	<table id="sheet1" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
 	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
 		<div id="pager1"></div>
 	</div>
