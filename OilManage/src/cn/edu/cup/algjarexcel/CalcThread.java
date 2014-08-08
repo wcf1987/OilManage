@@ -10,7 +10,7 @@ public class CalcThread extends Thread {
 	}
 	public void stopByForce(){
 		this.proinfo.end(3, "外部强制终止");
-		this.stop();
+		this.destroy();
 	}
 	public void setAlg(AlgorithmPlugTools alg) {
 		// TODO Auto-generated method stub

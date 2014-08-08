@@ -15,6 +15,7 @@ import cn.edu.cup.file.FileExcel;
 import cn.edu.cup.manage.action.AlgorithmExcelAction;
 import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
+import cn.edu.cup.manage.business.LogInfo;
 import cn.edu.cup.tools.HibernateSessionManager;
 import cn.edu.cup.tools.Tools;
 
@@ -358,6 +359,35 @@ public class AlgorithmProDao {
 
 			Integer value = (Integer) l.get(i);
 			temp.add(value);
+
+		}
+		return temp;
+	}
+
+	public int getcalcLastest(int pro_id) {
+		String sql = "select max(t.id) from t_calchis t where  t.pro_id=? ";
+		SQLQuery q2 = session.createSQLQuery(sql);
+		q2.setParameter(0, pro_id);
+		Integer calcHis = ((Integer) q2.uniqueResult());
+
+		return calcHis;
+	}
+
+	public List<LogInfo> getLogList(int calcHisID) {
+		SQLQuery q3 = session
+				.createSQLQuery("select t.logtime,t.info from t_calchis t where  t.calchis_id=? order by id desc");
+		q3.setParameter(0, calcHisID);
+
+		List l = q3.list();
+		List<LogInfo> temp = new ArrayList<LogInfo>();
+		for (int i = 0; i < l.size(); i++) {
+			// TestDb user = (TestDb)l.get(i);
+			// System.out.println(user.getUsername());
+			Object[] row = (Object[]) l.get(i);
+			Date time = (Date) row[0];
+			String infos=(String)row[1];
+			LogInfo info=new LogInfo(time,infos);
+			temp.add(info);
 
 		}
 		return temp;

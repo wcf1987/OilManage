@@ -258,7 +258,7 @@ public class ProjectCalcHisDao {
 
 		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session
-				.createSQLQuery("INSERT into t_calchis_log (ID,Pro_ID,calchis_id,outputtime,output) select null,t2.id,?,now(),? from t_projects t2 where t2.id=?");
+				.createSQLQuery("INSERT into t_calchis_log (ID,Pro_ID,calchis_id,logtime,info) select null,t2.id,?,now(),? from t_projects t2 where t2.id=?");
 		q.setParameter(0, hisID);
 		q.setParameter(1, info2);
 
