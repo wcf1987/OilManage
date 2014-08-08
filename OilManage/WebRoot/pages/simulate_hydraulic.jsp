@@ -100,7 +100,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div id="input_tab"><!-- 节点数据 -->
 							<div style="background-color:#fff;padding:5px;border:2px solid;height:60px;">
 							<div style="float:left;margin-top:5px;"><input type="file" name="importExcel" id="importExcel"/></div>
-							<div style="float:right;"><button style="height:30px;margin-right:10px;margin-top:5px;" onclick="saveExcel()">保存</button></div>
+							<div style="float:left"><button style="height:30px;margin-right:10px;margin-left:10px;margin-top:5px;" onclick="saveExcel()">保存</button></div>
+							<div style="float:left"><button style="height:30px;margin-right:10px;margin-top:5px;" onclick="runAlg()">运行</button></div>
 							</div>
 							<%@ include file="simulate_hydraulic/input_tab.jsp" %>
 			    		</div>
@@ -274,28 +275,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					alert(msg);
 				}
 			});
-			function openProjectModal(){
-				$('#add_project_modal').modal();
-				$('#load_modal').modal('hide');
-				createNewProject();
-			}
-
-			function listProjectModal(){
-				$('#list_project_modal>.modal-dialog').css({
-					 'margin-top': function () {
-					            return ($(window).height())/2-this.height/2;
-					        },
-					 'margin-right':function () {
-					            return 800;
-					            //(($(window).width())/2-this.width/2);
-					        }
-					});
-				$('#list_project_modal').modal();
-				$('#load_modal').modal('hide');
-			}	
-
 		}
-	
+		function runAlg(){
+			$.ajax({
+				type:'post',
+				url:'runAlgPro.action',
+				data:{
+					ID:$("#proID").val()
+				},
+				dataType:'json',
+				success:function(data){
+					location.href = "pages/simulate_hydraulic.jsp#run_tab";
+					if(data.msg==null||data.msg=""){
+						alert("运行结束！")
+					}else{
+						alert(data.msg);
+					}
+					
+				},
+				error:function(msg){
+					alert(msg);
+				}
+			});
+		}
+		function openProjectModal(){
+			$('#add_project_modal').modal();
+			$('#load_modal').modal('hide');
+			createNewProject();
+		}
+
+		function listProjectModal(){
+			$('#list_project_modal>.modal-dialog').css({
+				 'margin-top': function () {
+				            return ($(window).height())/2-this.height/2;
+				        },
+				 'margin-right':function () {
+				            return 800;
+				            //(($(window).width())/2-this.width/2);
+				        }
+				});
+			$('#list_project_modal').modal();
+			$('#load_modal').modal('hide');
+		}
 		</script>
 		   
   </body>

@@ -309,9 +309,7 @@ public class AlgorithmProjectsAction {
 			status=1;
 			return "SUCCESS";
 		}
-		
 		pcm.run(this.ID);
-		
 		return "SUCCESS";
 	}
 	public static void main(String args[]){
