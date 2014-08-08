@@ -18,7 +18,7 @@ public abstract class RunInfo {
 	}
 	public abstract String getInputFile();
 	public abstract String getOutputFile();
-	public abstract String output(String info); 
+	public abstract String log(String info); 
 	public abstract String endsWithError(String error);
 	public abstract String endsWithSuccess(String info);
 	

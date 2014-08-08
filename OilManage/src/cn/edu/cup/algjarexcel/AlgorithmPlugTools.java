@@ -32,8 +32,8 @@ public abstract class AlgorithmPlugTools {
 	 * 输出的运行工程中的信息
 	 * @return
 	 */
-	public void outputInfo(String info){
-		 this.info.output(info);
+	public void log(String info){
+		 this.info.log(info);
 	}
 	/**
 	 * 工程异常结束，将异常信息打印出来

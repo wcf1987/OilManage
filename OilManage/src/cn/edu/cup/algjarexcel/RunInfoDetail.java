@@ -36,7 +36,7 @@ public class RunInfoDetail extends RunInfo{
 	}
 
 	@Override
-	public String output(String info) {
+	public String log(String info) {
 		// TODO Auto-generated method stub
 		proinfo.logInfo(info);
 		return info;
