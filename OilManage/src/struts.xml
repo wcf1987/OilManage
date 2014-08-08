@@ -371,6 +371,13 @@
 
 			</result>
 		</action>
+		<action name="exportFile" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="exportFile">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		<action name="uploadExcel" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
 			method="uploadExcel">
 			<param name="savePath">/uploadTemp</param>

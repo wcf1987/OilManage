@@ -366,5 +366,14 @@ public class AlgorithmExcelAction {
 	public void setSheetID(int sheetID) {
 		this.sheetID = sheetID;
 	}
+	String filePath;
+	public String exportFile(){
+		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		filePath=excel.getFileName();
+		return "SUCCESS";
+	}
 
+	public String getFilePath() {
+		return filePath;
+	}
 }

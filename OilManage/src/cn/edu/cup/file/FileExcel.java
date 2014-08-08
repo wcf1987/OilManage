@@ -73,6 +73,9 @@ public class FileExcel {
 	}
 
 	String fileName;
+	public String getFileName() {
+		return fileName;
+	}
 	public int readExcel(int proID,int algid,String InOrOut,String fileName) {
 		this.proID=proID;
 		this.algID=algid;
