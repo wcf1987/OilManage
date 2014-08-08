@@ -414,7 +414,7 @@ function viewOutput(proID){
 /*
  * 执行算法
  */
-function runAlg(proID){
+/*function runAlg(proID){
 	$.ajax({
 		url:'runAlgPro.action',
 		type:'post',
@@ -423,10 +423,11 @@ function runAlg(proID){
 			ID:proID
 		},
 		beforeSend: function() { 
-              $().message("正在请求..."); 
+              //$().message("正在请求..."); 
          }, 
-        error:function(){ 
-              $().message("请求失败..."); 
+        error:function(msg){
+        	alert(msg);
+              //$().message("请求失败..."); 
          }, 
          
 		success:function(data){
@@ -438,7 +439,7 @@ function runAlg(proID){
 		}
 		
 	});
-}
+}*/
 /*
  * 算法选择
  */
