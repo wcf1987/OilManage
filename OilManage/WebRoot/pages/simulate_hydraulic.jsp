@@ -285,7 +285,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				dataType:'json',
 				success:function(data){
 					location.href = "pages/simulate_hydraulic.jsp#run_tab";
-					if(data.msg==null||data.msg=""){
+					if(data.msg==null||data.msg==""){
 						alert("运行结束！")
 					}else{
 						alert(data.msg);
