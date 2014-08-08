@@ -369,7 +369,6 @@ public class AlgorithmProDao {
 		SQLQuery q2 = session.createSQLQuery(sql);
 		q2.setParameter(0, pro_id);
 		Integer calcHis = ((Integer) q2.uniqueResult());
-
 		return calcHis;
 	}
 

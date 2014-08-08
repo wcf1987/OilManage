@@ -102,6 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<div style="float:left;margin-top:5px;"><input type="file" name="importExcel" id="importExcel"/></div>
 							<div style="float:left"><button style="height:30px;margin-right:10px;margin-left:10px;margin-top:5px;" onclick="saveExcel()">保存</button></div>
 							<div style="float:left"><button style="height:30px;margin-right:10px;margin-top:5px;" onclick="runAlg()">运行</button></div>
+							<div style="float:left"><button style="height:30px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>						
 							</div>
 							<%@ include file="simulate_hydraulic/input_tab.jsp" %>
 			    		</div>
@@ -212,6 +213,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 	
 		<%@ include file="simulate_hydraulic/modal.jsp" %>
+	<div id="isRunning" style="display:none;padding:90px 120px;width:400px;height:100px;border:10px solid;border-radius:10px;background-color:white;">
+		<span>正在计算......</span>
+	</div> 
 		
 		<script type="text/javascript">
 		$().ready(function(){
@@ -234,11 +238,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    	$("#importExcel").uploadify("settings", "formData",
 			    			{ 'proID':$("#proID").val(),'algID':$("#curAlgID").val(),'InOrOut':"In" });  
 			    }
-	//	        'onUploadFile': function(file) {
-	//	        	alert('The file ' + file.name + ' is being uploaded.');
-	//	        	alert(1);
-	//	            $("#iconfile").uploadify("settings", 'formData', {'fileName': iconfile.name});
-	//	        	}	   			
+ 			
 			});
 			}); 
 		function uploadComplete(file, data, response) {
@@ -283,14 +283,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					ID:$("#proID").val()
 				},
 				dataType:'json',
-				success:function(data){
-					location.href = "pages/simulate_hydraulic.jsp#run_tab";
+			    beforeSend:function(XMLHttpRequest){
+			    	location.href = "pages/simulate_hydraulic.jsp#run_tab";
+			    	$("#isRunning").css({display:"block",top:"30%",left:"40%",position:"absolute"});
+                },
+				success:function(data){				
+					$("#isRunning").hide();
 					if(data.msg==null||data.msg==""){
 						alert("运行结束！")
 					}else{
 						alert(data.msg);
 					}
 					
+				},
+				error:function(msg){
+					alert(msg);
+				}
+			});
+		}
+		function exportInputExcel(){
+			$.ajax({
+				type:'post',
+				url:'exportFile.action',
+				data:{
+					proID:$("#proID").val(),
+					algID:$("#curAlgID").val(),
+					InOrOut:"In"
+				},
+				dataType:'json',
+				success:function(data){
+					location.href=data.filePath;
 				},
 				error:function(msg){
 					alert(msg);

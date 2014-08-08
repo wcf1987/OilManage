@@ -1,4 +1,10 @@
-
+<%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
+<div id="running-container" >
+	<div style="padding-left:2px;background-color:#ccc">运行控制台</div>
+	<textarea cols="111" rows="6" id="outputarea" name="outputarea" disabled="">
+	输出testtesttestetsdtgffgfdgfhgdfjhdgjhjhggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+	</textarea>
+</div>
 <div id="actions">					
 	<a href="javascript:createNewModal();"
 		title="新建">
@@ -129,8 +135,9 @@
 		<div id="PointPraPager" ></div>
 	</div>		
 </div>
-
-
+<style>
+#running-container { border:2px solid;width: 100%;height:206px;; padding: 0; clear: both; background-color:white}
+</style>
 <!-- 新建图形项目的模态框 -->
 		<!--    	
 		<div class="modal fade" id="add_GUI_modal">
