@@ -387,6 +387,8 @@
 			</result>
 		</action>
 		
+		
+		
 		<!-- 算法图形输出配置-->
 		
 		
@@ -494,6 +496,14 @@
 
 			</result>
 		</action>
+		<action name="listLog" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="listLog">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
 		
 		<action name="listProOutputs" class="cn.edu.cup.manage.action.ProjectOutputsAction"
 			method="list">

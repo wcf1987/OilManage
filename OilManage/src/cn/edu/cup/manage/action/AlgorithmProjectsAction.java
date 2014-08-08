@@ -7,6 +7,7 @@ import cn.edu.cup.algjarexcel.AlgorithmPlugTools;
 import cn.edu.cup.algjarexcel.ProCalcManage;
 import cn.edu.cup.algjarexcel.ProjectInfo;
 import cn.edu.cup.manage.business.AlgorithmPro;
+import cn.edu.cup.manage.business.LogInfo;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.tools.JarTools;
 
@@ -327,5 +328,23 @@ public class AlgorithmProjectsAction {
 		pcm.stopThread(this.ID);
 		
 		return "SUCCESS";
+	}
+	int calcHisID;
+	List<LogInfo> loginfo;
+	public String listLog() {
+	
+		AlgorithmProDao dao = new AlgorithmProDao();
+		calcHisID = dao.getcalcLastest(this.ID);
+		loginfo=dao.getLogList(calcHisID);
+		dao.close();
+		return "SUCCESS";
+	}
+
+	public int getCalcHisID() {
+		return calcHisID;
+	}
+
+	public List<LogInfo> getLoginfo() {
+		return loginfo;
 	}
 }
