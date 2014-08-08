@@ -240,8 +240,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	//	            $("#iconfile").uploadify("settings", 'formData', {'fileName': iconfile.name});
 	//	        	}	   			
 			});
-			}		
-		); 
+			}); 
 		function uploadComplete(file, data, response) {
 			var tempJson = jQuery.parseJSON(data);
 			if(tempJson['msg']==null||tempJson['msg']==''){
@@ -254,7 +253,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}else{
 				alert(tempJson['msg']);
 			}
-		};
+		}
 
 		function saveExcel(){
 			$.ajax({
