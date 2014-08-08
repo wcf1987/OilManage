@@ -128,7 +128,7 @@ public class AlgorithmExcelAction {
 
 		AlgorithmProDao dao = new AlgorithmProDao();
 
-		String filepath = dao.getProFile(this.proID, algid, InOrOut);// 缓存没有，则从项目路径寻找excel文件
+		String filepath = dao.getProFile(this.proID, algid, InOrOut);
 		dao.close();
 		if (filepath == null || filepath.equals("")) {
 			msg = "Excel文件未找到";
@@ -147,7 +147,7 @@ public class AlgorithmExcelAction {
 
 	}
 
-	public String saveExcel() {
+	public String saveExcel() {//保存到文件
 		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
 		int re = excel.saveExcel();
 		if (re == -1) {

@@ -21,6 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/redmond/jquery.ui.theme.css" />  
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/carousel.css">
+	<link rel="stylesheet" href="js/upload/uploadify.css">
 	<link rel="stylesheet" media="screen" type="text/css"
 		href="editor/assets/css/style.css" />
 	<link rel="stylesheet" media="screen" type="text/css"
@@ -97,10 +98,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						    <li class='tab'><a href="#output_tab">输出</a></li>					    
 					    </ul>  
 						<div id="input_tab"><!-- 节点数据 -->
-							<div style="background-color:#fff;padding:5px;border:2px solid">
-							<input type="file" name="importExcel" id="importExcel" />
-      						<div id="file_uploadQueue" class="uploadifyQueue"></div>
-							<button onclick="saveExcel()">保存</button>
+							<div style="background-color:#fff;padding:5px;border:2px solid;height:60px;">
+							<div style="float:left;margin-top:5px;"><input type="file" name="importExcel" id="importExcel"/></div>
+							<div style="float:right;"><button style="height:30px;margin-right:10px;margin-top:5px;" onclick="saveExcel()">保存</button></div>
 							</div>
 							<%@ include file="simulate_hydraulic/input_tab.jsp" %>
 			    		</div>
@@ -230,7 +230,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				'fileTypeDesc' : '请选择xls xlsx文件',
 			    'fileTypeExts' : '*.xls; *.xlsx;',
 			    'onUploadStart': function (file) { 		
-			   		// alert($("#curAlgID").val());  
 			    	$("#importExcel").uploadify("settings", "formData",
 			    			{ 'proID':$("#proID").val(),'algID':$("#curAlgID").val(),'InOrOut':"In" });  
 			    }
@@ -238,48 +237,63 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	//	        	alert('The file ' + file.name + ' is being uploaded.');
 	//	        	alert(1);
 	//	            $("#iconfile").uploadify("settings", 'formData', {'fileName': iconfile.name});
-	//	        	}
-		   
-				
+	//	        	}	   			
 			});
-			
 			}		
 		); 
 		function uploadComplete(file, data, response) {
 			var tempJson = jQuery.parseJSON(data);
 			if(tempJson['msg']==null||tempJson['msg']==''){
 				alert("上传成功！");
+				//openProject($("#proID").val());
+				var sheetDiv = "#sheet";
+				for(var i=0;i<5;i++){//刷新5个表格
+			    	$(sheetDiv+i).trigger("reloadGrid");
+			    }
 			}else{
 				alert(tempJson['msg']);
-				openProject($("#proID"));
 			}
-			//var tempJson = jQuery.parseJSON(data);
-			//$("#type_icon_path").html(tempJson['relativePath']);
-			
-
 		};
-		function openProjectModal(){
-			$('#add_project_modal').modal();
-			$('#load_modal').modal('hide');
-			createNewProject();
-		}
-
-		function listProjectModal(){
-			$('#list_project_modal>.modal-dialog').css({
-				 'margin-top': function () {
-				            return ($(window).height())/2-this.height/2;
-				        },
-				 'margin-right':function () {
-				            return 800;
-				            //(($(window).width())/2-this.width/2);
-				        }
-				});
-			$('#list_project_modal').modal();
-			$('#load_modal').modal('hide');
-		}	
 
 		function saveExcel(){
-		 	
+			$.ajax({
+				type:'post',
+				url:'saveExcel.action',
+				data:{
+					proID:$("#proID").val(),
+					algID:$("#curAlgID").val(),
+					InOrOut:"In"
+				},
+				dataType:'json',
+				success:function(data){
+					alert("保存成功！");
+					var sheetGrid=new SheetGrid();
+					sheetGrid.reloadGrid();
+				},
+				error:function(msg){
+					alert(msg);
+				}
+			});
+			function openProjectModal(){
+				$('#add_project_modal').modal();
+				$('#load_modal').modal('hide');
+				createNewProject();
+			}
+
+			function listProjectModal(){
+				$('#list_project_modal>.modal-dialog').css({
+					 'margin-top': function () {
+					            return ($(window).height())/2-this.height/2;
+					        },
+					 'margin-right':function () {
+					            return 800;
+					            //(($(window).width())/2-this.width/2);
+					        }
+					});
+				$('#list_project_modal').modal();
+				$('#load_modal').modal('hide');
+			}	
+
 		}
 	
 		</script>

@@ -197,6 +197,12 @@ function SheetGrid() {
 	
 		
 	}
+	this.reloadGrid=function(){
+		var sheetDiv = "#sheet";
+		for(var i=0;i<5;i++){//刷新5个表格
+	    	$(sheetDiv+i).trigger("reloadGrid");
+	    }
+	}
 
 	deleteSheet=function(data) {
 		var maptemp={};
