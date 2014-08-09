@@ -369,13 +369,12 @@ public class AlgorithmProDao {
 		SQLQuery q2 = session.createSQLQuery(sql);
 		q2.setParameter(0, pro_id);
 		Integer calcHis = ((Integer) q2.uniqueResult());
-
 		return calcHis;
 	}
 
 	public List<LogInfo> getLogList(int calcHisID) {
 		SQLQuery q3 = session
-				.createSQLQuery("select t.logtime,t.info from t_calchis t where  t.calchis_id=? order by id desc");
+				.createSQLQuery("select t.logtime,t.info from t_calchis_log t where  t.calchis_id=? order by id desc");
 		q3.setParameter(0, calcHisID);
 
 		List l = q3.list();

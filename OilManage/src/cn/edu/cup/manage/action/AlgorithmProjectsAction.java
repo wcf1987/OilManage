@@ -61,12 +61,12 @@ public class AlgorithmProjectsAction {
 		return ids;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
-	}
 
 	public int getID() {
 		return ID;
+	}
+	public void setID(int iD) {
+		ID = iD;
 	}
 
 	public void setDescription(String description) {
@@ -237,7 +237,7 @@ public class AlgorithmProjectsAction {
 
 	public String update() {
 		AlgorithmProDao dao = new AlgorithmProDao();
-		int re = dao.updatePro(ID, this.name, this.Description);
+		int re = dao.updatePro(this.ID, this.name, this.Description);
 		dao.close();
 		return "SUCCESS";
 	}

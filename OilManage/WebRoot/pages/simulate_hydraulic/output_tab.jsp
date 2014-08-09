@@ -1,22 +1,46 @@
+<%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
 <div id="output-container">
  <div class="panel-container">
-  <div id="bottom-tab1">
-   <h2>Heading 1</h2>
-   <p>This is the content of the first tab.</p>
+  
+  <div id="output-tab0">
+  	<table id="output_sheet0" class="table table-striped table-bordered table-hover datatable" style="width:1230px" ></table>
+	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px" >
+		<div id="output_pager0" ></div>
+	</div>
   </div>
-  <div id="bottom-tab2">
-   <h2>Configuration</h2>
-   <p>This example displays the second tab by default. Also, the tab-switching animation is slowed down to 4 seconds (2sec fade-out and 2sec fade-in).</p>
+  
+  <div id="output-tab1">
+   	<table id="output_sheet1" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
+	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
+		<div id="output_pager1"></div>
+	</div>
   </div>
-  <div id="bottom-tab3">
-   <h2>Heading 3</h2>
-   <p>More stuff from the last tab.</p>
+  
+  <div id="output-tab2">
+   	<!-- 表格 -->
+	<table id="output_sheet2"
+		class="table table-striped table-bordered table-hover datatable " style="width:1230px"></table>
+	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230">
+		<div id="output_pager2"></div>
+	</div> 
   </div>
+  
+  <div id="output-tab3">
+	<!-- 表格 -->
+	<table id="output_sheet3"
+		class="table table-striped table-bordered table-hover datatable " style="width:1230px"></table>
+	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230">
+		<div id="output_pager3"></div>
+	</div> 
+  </div>
+    
  </div>
+ 
  <ul>
-  <li><a href="#bottom-tab1">Tab 1</a></li>
-  <li id="the-second-tab"><a href="#bottom-tab2">The Second Tab</a></li>
-  <li><a href="#bottom-tab3">Tab C</a></li>
+	<li><a href="#output-tab0">节点参数</a></li>
+	<li><a href="#output-tab1">管段参数</a></li>
+	<li><a href="#output-tab2">离心压缩机参数</a></li>
+	<li><a href="#output-tab3">往复式压缩机参数</a></li>
  </ul>
 </div>
 

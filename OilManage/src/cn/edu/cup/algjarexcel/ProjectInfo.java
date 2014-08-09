@@ -67,15 +67,16 @@ public class ProjectInfo{
 		dao.close();
 	}
 	public void end(int i, String info2) {
-		markStatus(i, info2);
+		markStatus(i, info2);//更新project表的status和info字段
 		AlgorithmProDao dao = new AlgorithmProDao();
-		dao.setProCalcEnd(proid);
+		dao.setProCalcEnd(proid);//更新计算结束时间
 		ProjectCalcHisDao dao1 = new ProjectCalcHisDao();
-		dao1.setProCalcEnd(hisID,status,info2);
+		dao1.setProCalcEnd(hisID,status,info2);//更新计算历史
 		ProCalcManage calcM=ProCalcManage.getInstance();
-		calcM.clearThread(proid);
+		calcM.clearThread(proid);//从map里面剔除该项目计算进程。
 		dao.close();
 		dao1.close();
+		
 	}
     public void markStatus(int status,String info){
     	AlgorithmProDao dao = new AlgorithmProDao();
@@ -92,7 +93,7 @@ public class ProjectInfo{
 		dao.close();
 		return alg;
     }
-    public void createHisID(Date start){
+    public void createHisID(Date start){//插入计算历史信息
 		ProjectCalcHisDao dao=new ProjectCalcHisDao();
 		hisID=dao.addCalcHis(proid,start);
 		//int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);

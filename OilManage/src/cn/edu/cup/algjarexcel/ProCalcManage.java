@@ -7,7 +7,7 @@ import java.util.Map;
 
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 
-public class ProCalcManage {
+public class ProCalcManage {//工程计算进程管理类，控制计算进程calcThread
 	private ProCalcManage() {
 		threadMap=new HashMap<Integer, CalcThread>();
 		
@@ -22,8 +22,8 @@ public class ProCalcManage {
 	     }
 
 	      public void stopThread(int proid){
-	    	  CalcThread a=clearThread(proid);
-	    	  a.stopByForce();
+	    	  CalcThread a=clearThread(proid);//根据proid从threadMap中将该进程剔除
+	    	  a.stopByForce();//杀掉进程
 	    	  
 				
 	      }
@@ -38,7 +38,7 @@ public class ProCalcManage {
 	    		 return 1;
 	    	 }
 	     }
-		public CalcThread clearThread(int proid){
+		public CalcThread clearThread(int proid){//根据proid从threadMap中将该进程剔除
 			CalcThread thread=threadMap.get(proid);
 			threadMap.remove(proid);
 			return thread;
@@ -53,7 +53,7 @@ public class ProCalcManage {
 			//proinfo.save();
 			
 		}
-		Map<Integer,CalcThread> threadMap;
+		Map<Integer,CalcThread> threadMap;//prodi:calcThread
 		public void run(int proid) {
 			ProjectInfo proinfo=new ProjectInfo(proid);
 			proinfo.markStatus(1, "开始运算");		
@@ -66,10 +66,10 @@ public class ProCalcManage {
 		public void checkRunStatus() {
 			// TODO Auto-generated method stub
 			AlgorithmProDao dao=new AlgorithmProDao();
-			List<Integer> list=dao.getRunPro();
+			List<Integer> list=dao.getRunPro();//获取正在运行的项目ID
 			for(int i=0;i<list.size();i++){
 				int pro_id=list.get(i);
-				int status=getStatus(pro_id);
+				int status=getStatus(pro_id);//根据进程是否活着返回状态信息1：正在运行；2：运行完毕
 				if(status!=1){
 					dao.setProCalcStatus(pro_id, status, "运行完毕");
 				}
