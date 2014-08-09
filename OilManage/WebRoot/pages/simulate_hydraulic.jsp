@@ -276,6 +276,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			});
 		}
 		function runAlg(){
+			var intervalID;
 			$.ajax({
 				type:'post',
 				url:'runAlgPro.action',
@@ -284,20 +285,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				},
 				dataType:'json',
 			    beforeSend:function(XMLHttpRequest){
+			    	intervalID=setInterval ("listLog()", 100);//每隔一段时间去请求日志信息
 			    	location.href = "pages/simulate_hydraulic.jsp#run_tab";
 			    	$("#isRunning").css({display:"block",top:"30%",left:"40%",position:"absolute"});
-                },
+			    },
 				success:function(data){				
-					$("#isRunning").hide();
+					$("#isRunning").hide();		
 					if(data.msg==null||data.msg==""){
 						alert("运行结束！")
 					}else{
 						alert(data.msg);
-					}
-					
+					}	
+					window.clearInterval(intervalID);
 				},
-				error:function(msg){
+				error:function(msg){	
 					alert(msg);
+					window.clearInterval(intervalID);
 				}
 			});
 		}
@@ -318,6 +321,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					alert(msg);
 				}
 			});
+		}
+		
+		function listLog()
+		{
+			$.ajax({
+				type:'post',
+				url:'listLog.action',
+				data:{
+					proID:$("#proID").val()
+				},
+				dataType:'json',
+				success:function(data){
+					//alert(data.loginfo);
+					$("#outputarea").text(data.loginfo.logTime+data.loginfo.info);
+				},
+				error:function(msg){
+					$("#outputarea").text("通信失败！");
+					//alert(msg);
+				}
+			});
+
 		}
 		function openProjectModal(){
 			$('#add_project_modal').modal();

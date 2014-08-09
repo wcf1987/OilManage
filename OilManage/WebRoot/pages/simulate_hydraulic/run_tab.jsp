@@ -1,10 +1,11 @@
 <%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
 <div id="running-container" >
-	<div style="padding-left:2px;background-color:#ccc">运行控制台</div>
-	<textarea cols="111" rows="6" id="outputarea" name="outputarea" disabled="">
-	输出testtesttestetsdtgffgfdgfhgdfjhdgjhjhggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+	<div><span>运行输出台</span></div>
+	<textarea  id="outputarea" name="outputarea" disabled="">
 	</textarea>
 </div>
+
+
 <div id="actions">					
 	<a href="javascript:createNewModal();"
 		title="新建">
@@ -135,8 +136,23 @@
 		<div id="PointPraPager" ></div>
 	</div>		
 </div>
+
 <style>
-#running-container { border:2px solid;width: 100%;height:206px;; padding: 0; clear: both; background-color:white}
+	#running-container { border:2px solid;width: 100%;height:206px;; padding: 0; clear: both; background-color:white}
+	#running-container>div{
+		padding:5px 5px;background-color:#fff;font-size:12px;font-weight:bold
+	}
+	#running-container>div>span{
+		background-color:#fff;
+		border-radius:3px;
+		border:2px solid;
+		padding:2px;
+	}
+	textarea{
+		width:100%;
+		font-size:14px;
+		height:85%;
+	}
 </style>
 <!-- 新建图形项目的模态框 -->
 		<!--    	
