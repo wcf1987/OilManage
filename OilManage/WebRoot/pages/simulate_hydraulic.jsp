@@ -110,6 +110,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<%@ include file="simulate_hydraulic/run_tab.jsp" %>
 			    		</div>
 			    		<div id="output_tab"><!-- 节点数据 -->
+			    			<div style="background-color:#fff;padding:5px;border:2px solid;height:40px;">
+			    			<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportOutputExcel()">导出计算结果</button></div>						
+							</div>
 							<%@ include file="simulate_hydraulic/output_tab.jsp" %>
 			    		</div>
 					</div>	            			
@@ -299,6 +302,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					window.clearInterval(intervalID);
 				},
 				error:function(msg){	
+					$("#isRunning").hide();	
 					alert(msg);
 					window.clearInterval(intervalID);
 				}
@@ -329,12 +333,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				type:'post',
 				url:'listLog.action',
 				data:{
-					proID:$("#proID").val()
+					ID:$("#proID").val()
 				},
 				dataType:'json',
 				success:function(data){
 					//alert(data.loginfo);
-					$("#outputarea").text(data.loginfo.logTime+data.loginfo.info);
+					var logStr="";
+					$.each(data.loginfo,function(index,log){
+					/* 	if(log!=null&&log!=""){
+							logStr+=log.logTime.replace("T","")+log.info+"\n\r";
+						}	 */		
+						logStr+=log.logTime+log.info+"\n\r";
+					});
+					$("#outputarea").text(logStr);
 				},
 				error:function(msg){
 					$("#outputarea").text("通信失败！");
@@ -342,6 +353,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			});
 
+		}
+		function loadOutput(){
+			location.href="pages/simulate_hydraulic.jsp#output_tab";
+			var proid=$("#proID").val();
+			var sid = 1;
+			var algid = $("#curAlgID").val();
+			//var inOrOut="In";
+			var inOrOut="Out";
+			var sheetDiv = "#output_sheet";
+			var pageDiv = "#output_pager";
+			var delID="delsheet";
+			for(var i=0;i<3;i++){
+				var sheetgrid = new SheetGrid();
+				sheetgrid.GetDynamicCols(i, algid,inOrOut);
+				sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);				
+			}
+		}
+		function exportOutputExcel(){
+			$.ajax({
+				type:'post',
+				url:'exportFile.action',
+				data:{
+					proID:$("#proID").val(),
+					algID:$("#curAlgID").val(),
+					InOrOut:"Out"
+				},
+				dataType:'json',
+				success:function(data){
+					location.href=data.filePath;
+				},
+				error:function(msg){
+					alert(msg);
+				}
+			});
 		}
 		function openProjectModal(){
 			$('#add_project_modal').modal();

@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
 <div id="running-container" >
-	<div><span>运行输出台</span></div>
+	<div><span>运行输出台</span><button onclick="loadOutput()">查看输出</button></div>
 	<textarea  id="outputarea" name="outputarea" disabled="">
 	</textarea>
 </div>
@@ -147,6 +147,7 @@
 		border-radius:3px;
 		border:2px solid;
 		padding:2px;
+		margin-right:5px;
 	}
 	textarea{
 		width:100%;

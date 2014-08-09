@@ -12,7 +12,7 @@ import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.tools.JarTools;
 
 public class AlgorithmProjectsAction {
-	int proID;
+	int ID;
 	int inputID;
 	int planID;
 	int outputID;
@@ -61,14 +61,12 @@ public class AlgorithmProjectsAction {
 		return ids;
 	}
 
-	
 
-	public int getProID() {
-		return proID;
+	public int getID() {
+		return ID;
 	}
-
-	public void setProID(int proID) {
-		this.proID = proID;
+	public void setID(int iD) {
+		ID = iD;
 	}
 
 	public void setDescription(String description) {
@@ -179,7 +177,7 @@ public class AlgorithmProjectsAction {
 
 		AlgorithmProDao dao = new AlgorithmProDao();
 
-		this.proID = dao.addAlgorithmPro(this.Description, this.authorID,
+		this.ID = dao.addAlgorithmPro(this.Description, this.authorID,
 				this.name,this.algID);
 		dao.close();
 		return "SUCCESS";
@@ -239,21 +237,21 @@ public class AlgorithmProjectsAction {
 
 	public String update() {
 		AlgorithmProDao dao = new AlgorithmProDao();
-		int re = dao.updatePro(this.proID, this.name, this.Description);
+		int re = dao.updatePro(this.ID, this.name, this.Description);
 		dao.close();
 		return "SUCCESS";
 	}
 
 	public String searchProAlg() {
 		AlgorithmProDao dao = new AlgorithmProDao();
-		this.algID = dao.searchProAlg(this.proID);
+		this.algID = dao.searchProAlg(this.ID);
 		dao.close();
 		return "SUCCESS";
 	}
 
 	public String selectAlg() {
 		AlgorithmProDao dao = new AlgorithmProDao();
-		int re = dao.addAlgorithm(this.proID, this.algID);
+		int re = dao.addAlgorithm(this.ID, this.algID);
 		dao.close();
 		return "SUCCESS";
 	}
@@ -306,18 +304,18 @@ public class AlgorithmProjectsAction {
 	public String runAlg() {
 		ProCalcManage pcm=ProCalcManage.getInstance();
 		pcm.checkRunStatus();
-		ProjectInfo proinfo=new ProjectInfo(this.proID);
+		ProjectInfo proinfo=new ProjectInfo(this.ID);
 		if(proinfo.getStatus()==1){
 			msg="工程正在运行中，请稍后或强项终止工程运行";
 			status=1;
 			return "SUCCESS";
 		}
-		pcm.run(this.proID);
+		pcm.run(this.ID);
 		return "SUCCESS";
 	}
 	public static void main(String args[]){
 		AlgorithmProjectsAction test=new AlgorithmProjectsAction();
-		test.setProID(19);
+		test.setID(19);
 		test.runAlg();
 	
 	
@@ -325,7 +323,7 @@ public class AlgorithmProjectsAction {
 	public String stopAlg() {
 		
 		ProCalcManage pcm=ProCalcManage.getInstance();
-		pcm.stopThread(this.proID);
+		pcm.stopThread(this.ID);
 		
 		return "SUCCESS";
 	}
@@ -334,7 +332,7 @@ public class AlgorithmProjectsAction {
 	public String listLog() {
 	
 		AlgorithmProDao dao = new AlgorithmProDao();
-		calcHisID = dao.getcalcLastest(this.proID);
+		calcHisID = dao.getcalcLastest(this.ID);
 		loginfo=dao.getLogList(calcHisID);
 		dao.close();
 		return "SUCCESS";
