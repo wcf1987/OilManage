@@ -3,11 +3,13 @@ package cn.edu.cup.algjarexcel;
 
 
 public abstract class AlgorithmPlugTools {
-	public abstract String startCalc(int algID);
-	RunInfo info=null;
 	public void injectInfo(RunInfo info){
 		this.info=info;
 	}
+	
+	public abstract String startCalc(int algID);
+	RunInfo info=null;
+
 	public RunInfo getInfo(){
 		return this.info;
 	}
