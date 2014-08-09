@@ -6,13 +6,14 @@ public abstract class AlgorithmPlugTools {
 	public void injectInfo(RunInfo info){
 		this.info=info;
 	}
-	
-	public abstract String startCalc(int algID);
-	RunInfo info=null;
 
 	public RunInfo getInfo(){
 		return this.info;
 	}
+	
+	public abstract String startCalc(int algID);
+	RunInfo info=null;
+
 	
 
 	/**
