@@ -2,7 +2,7 @@ package cn.edu.cup.algjarexcel;
 
 
 
-public abstract class AlgorithmPlugTools {
+public abstract class AlgorithmPlugTools{
 	public void injectInfo(RunInfo info){
 		this.info=info;
 	}
@@ -16,7 +16,7 @@ public abstract class AlgorithmPlugTools {
 	 * @param algID 子功能ID
 	 * @return
 	 */
-	public abstract String startCalc(int algID);
+	public abstract String startCalc(int algID) throws Exception;
 	RunInfo info=null;
 
 	
