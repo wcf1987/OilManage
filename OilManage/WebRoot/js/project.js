@@ -208,6 +208,7 @@ function add_project() {
 			
 			var sid = 1;
 			var proid =data.ID;
+			$("#proID").val(proid);
 			var algid = $("#curAlgID").val();
 			var inOrOut="In";
 			//var inOrOut="Out";
