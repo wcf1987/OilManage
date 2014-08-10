@@ -44,6 +44,7 @@ public class RunInfoDetail extends RunInfo{
 
 	@Override
 	public String endsWithError(String error) {
+		proinfo.logInfo(error);
 		proinfo.end(3,error);
 		return null;
 	}
@@ -51,6 +52,7 @@ public class RunInfoDetail extends RunInfo{
 	@Override
 	public String endsWithSuccess(String info) {
 		// TODO Auto-generated method stub
+		proinfo.logInfo(info);
 		proinfo.end(2,info);
 		return null;
 	}
