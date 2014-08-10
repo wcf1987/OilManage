@@ -11,6 +11,11 @@ public abstract class AlgorithmPlugTools {
 		return this.info;
 	}
 	
+	/**
+	 * 子类必须覆盖的方法，用来启动算法
+	 * @param algID 子功能ID
+	 * @return
+	 */
 	public abstract String startCalc(int algID);
 	RunInfo info=null;
 
