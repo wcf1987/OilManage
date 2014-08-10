@@ -76,13 +76,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
 	</div>  
-		<div class="container marketing condiv" style="width:1200px;margin-top:55px;">
+		<div class="container marketing condiv" style="width:1200px;margin-top:5px;">
 	    	
 	    	<div class="container-fluid">
 				<div class="row-fluid">
 					<div class="span12">
 					<div class="page-header">
-						<h1>单相管网水力计算&nbsp;<small>管网模拟</small></h1>
+						<h2>单相管网水力计算&nbsp;<small>管网模拟</small></h2>
 						<input id="curAlgID" style="display:none" value="1"/>
 						<input id="proID" style="display:none" value=""/>
 						<!-- 
@@ -97,22 +97,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						    <li class='tab'><a href="#run_tab">运行</a></li>
 						    <li class='tab'><a href="#output_tab">输出</a></li>					    
 					    </ul>  
-						<div id="input_tab"><!-- 节点数据 -->
-							<div style="background-color:#fff;padding:5px;border:2px solid;height:60px;">
-							<div style="float:left;margin-top:5px;"><input type="file" name="importExcel" id="importExcel"/></div>
-							<div style="float:left"><button style="height:30px;margin-right:10px;margin-left:10px;margin-top:5px;" onclick="saveExcel()">保存</button></div>
-							<div style="float:left"><button style="height:30px;margin-right:10px;margin-top:5px;" onclick="runAlg()">运行</button></div>
-							<div style="float:left"><button style="height:30px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>						
-							</div>
+						<div id="input_tab"><!-- 节点数据 -->					
 							<%@ include file="simulate_hydraulic/input_tab.jsp" %>
 			    		</div>
 			    		<div id="run_tab"><!-- 节点数据 -->
 							<%@ include file="simulate_hydraulic/run_tab.jsp" %>
 			    		</div>
-			    		<div id="output_tab"><!-- 节点数据 -->
-			    			<div style="background-color:#fff;padding:5px;border:2px solid;height:40px;">
-			    			<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportOutputExcel()">导出计算结果</button></div>						
-							</div>
+			    		<div id="output_tab"><!-- 节点数据 -->	
 							<%@ include file="simulate_hydraulic/output_tab.jsp" %>
 			    		</div>
 					</div>	            			
@@ -123,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    </div><!-- /.container -->		
 	    </div>
   
-	<hr class="featurette-divider"> 
+	<hr> 
     <div id="footer">
         <%@ include file="commons/footer.jsp" %>
     </div>
@@ -222,7 +213,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		<script type="text/javascript">
 		$().ready(function(){
-			$('#hydraulic_tab').easytabs();	
+			$('#hydraulic_tab').easytabs({
+				animate: false
+			});	
 			$('#importExcel').uploadify({
 				'swf' : 'js/upload/uploadify.swf',				
 				'cancelImg'   : 'js/upload/cancel.png',

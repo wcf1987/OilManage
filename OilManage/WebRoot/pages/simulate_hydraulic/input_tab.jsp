@@ -1,7 +1,12 @@
 <%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
+<div style="background-color:#fff;padding:5px;border:2px solid;height:40px;">
+	<div style="float:left;height:30px;width:120px;margin-right:10px;"><input type="file" name="importExcel" id="importExcel"/></div> 
+	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="saveExcel()">保存数据</button></div>						
+	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="runAlg()">运行</button></div>						
+	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>						
+</div>
 <div id="input-container">
  <div class="panel-container">
-  
   <div id="bottom-tab0">
   	<table id="sheet0" class="table table-striped table-bordered table-hover datatable" style="width:1230px" ></table>
 	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px" >
@@ -56,6 +61,7 @@
 
 <script type="text/javascript">
 $('#input-container').easytabs({
+	animate: false
   //animationSpeed: 2000,
   //defaultTab: "li#the-second-tab"
 });
