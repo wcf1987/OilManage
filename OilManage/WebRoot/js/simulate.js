@@ -69,7 +69,7 @@
 				dataType:'json',
 			    beforeSend:function(XMLHttpRequest){
 			    	$("#outputarea").text("");
-			    	intervalID=setInterval ("listLog()", 200);//每隔一段时间去请求日志信息
+			    	intervalID=setInterval ("listLog()", 5000);//每隔一段时间去请求日志信息
 			    	location.href=window.location.pathname+"#run_tab";
 			    	//location.href = "pages/simulate_hydraulic.jsp#run_tab";
 			    	$("#isRunning").css({display:"block",top:"20%",left:"40%",position:"absolute"});
@@ -122,7 +122,7 @@
 					}			
 					$.each(data.loginfo,function(index,log){
 						if(log!=null&&log!=""){
-							$("#outputarea").append(log.logTime.replace("T"," ")+" "+log.info+"\n\r");
+							$("#outputarea").text(log.logTime.replace("T"," ")+" "+log.info+"\n\r");
 						}	 	
 					});
 					
