@@ -58,8 +58,8 @@
 				}
 			});
 		}
+		var intervalID;
 		function runAlg(){
-			var intervalID;
 			$.ajax({
 				type:'post',
 				url:'runAlgPro.action',
@@ -68,24 +68,22 @@
 				},
 				dataType:'json',
 			    beforeSend:function(XMLHttpRequest){
+			    	$("#outputarea").text("");
 			    	intervalID=setInterval ("listLog()", 200);//每隔一段时间去请求日志信息
 			    	location.href=window.location.pathname+"#run_tab";
 			    	//location.href = "pages/simulate_hydraulic.jsp#run_tab";
-			    	$("#isRunning").css({display:"block",top:"30%",left:"40%",position:"absolute"});
+			    	$("#isRunning").css({display:"block",top:"20%",left:"40%",position:"absolute"});
 			    },
 				success:function(data){				
-					$("#isRunning").hide();		
+					//$("#isRunning").hide();		
 					if(data.msg==null||data.msg==""){
-						alert("运行结束！")
+						//alert("运行结束！")
 					}else{
 						alert(data.msg);
-					}	
-					window.clearInterval(intervalID);
+					}					
 				},
-				error:function(msg){	
-					$("#isRunning").hide();	
-					alert(msg);
-					window.clearInterval(intervalID);
+				error:function(msg){						
+					alert(msg);	
 				}
 			});
 		}
@@ -118,19 +116,21 @@
 				},
 				dataType:'json',
 				success:function(data){
-					//alert(data.loginfo);
-					var logStr="";
+					if(data.status!=1){//如果算法运行结束，则停止日志刷新程序
+						window.clearInterval(intervalID);
+						$("#isRunning").hide();	
+					}			
 					$.each(data.loginfo,function(index,log){
-					/* 	if(log!=null&&log!=""){
-							logStr+=log.logTime.replace("T","")+log.info+"\n\r";
-						}	 */		
-						logStr+=log.logTime+log.info+"\n\r";
+						if(log!=null&&log!=""){
+							$("#outputarea").append(log.logTime.replace("T"," ")+" "+log.info+"\n\r");
+						}	 	
 					});
-					$("#outputarea").text(logStr);
+					
+				
 				},
 				error:function(msg){
-					$("#outputarea").text("通信失败！");
-					//alert(msg);
+					$("#outputarea").append("通信失败！\n\r");
+					
 				}
 			});
 
