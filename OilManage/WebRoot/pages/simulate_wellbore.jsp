@@ -52,10 +52,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<script defer="defer" type="text/javascript" src="js/global.js"></script>
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
-	
-	<script defer="defer" type="text/javascript" src="js/simulate_wellbore.js"></script>
 	<script defer="defer" type="text/javascript" src="js/dynamicSheet.js"></script>
 	<script defer="defer" type="text/javascript" src="js/project.js"></script>	
+	<script defer="defer" type="text/javascript" src="js/simulate.js"></script>
 	
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/colorPicker_new.css" />
@@ -82,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row-fluid">
 					<div class="span12">
 					<div class="page-header">
-						<h2>井筒模拟&nbsp;<small>管网模拟</small></h2>
+						<h2>井筒模拟&nbsp;</h2>
 						<input id="curAlgID" style="display:none" value="0"/>
 						<input id="proID" style="display:none" value=""/>
 						<input id="inputSheetNum" style="display:none" value="2"/>

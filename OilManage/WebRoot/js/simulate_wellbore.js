@@ -68,7 +68,7 @@
 				dataType:'json',
 			    beforeSend:function(XMLHttpRequest){
 			    	intervalID=setInterval ("listLog()", 100);//每隔一段时间去请求日志信息
-			    	location.href = "pages/simulate_hydraulic.jsp#run_tab";
+			    	location.href = "pages/simulate_wellbore.jsp#run_tab";
 			    	$("#isRunning").css({display:"block",top:"30%",left:"40%",position:"absolute"});
 			    },
 				success:function(data){				
@@ -134,7 +134,7 @@
 
 		}
 		function loadOutput(){
-			location.href="pages/simulate_hydraulic.jsp#output_tab";
+			location.href="pages/simulate_wellbore.jsp#output_tab";
 			var proid=$("#proID").val();
 			var sid = 1;
 			var algid = $("#curAlgID").val();

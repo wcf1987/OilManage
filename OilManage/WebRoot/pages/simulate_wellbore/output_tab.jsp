@@ -30,10 +30,10 @@
 /* Styles for Tabs on Bottom */
 #output-container { width: 100%; padding: 0; clear: both; }
 #output-container ul { list-style: none; margin: 0; padding: 0; width: 100%; }
-#output-container ul li { border:1px solid;background-color:#ccc;float: left; width:25%; margin: 0; padding: 0; text-align: center; border-top: solid 1px; }
+#output-container ul li { border:1px solid;background-color:#ccc;float: left; width:100%; margin: 0; padding: 0; text-align: center; border-top: solid 1px; }
 #output-container ul li a { color:#000;display: block; padding: 8px 0; outline: none; }
 #output-container ul li a:hover { text-decoration: underline; }
-#output-container ul li.active { width: 25%; background: #fff; border: solid 1px; border-top: none; }
+#output-container ul li.active { width: 100%; background: #fff; border: solid 1px; border-top: none; }
 #output-container ul li a.active { font-weight: bold; text-decoration: none; }
 #output-container .panel-container { background: #fff; border: solid 1px; border-bottom: none; padding: 10px; margin-bottom: 0; }
 </style>
