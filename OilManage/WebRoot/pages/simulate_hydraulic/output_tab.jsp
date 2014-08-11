@@ -36,7 +36,26 @@
 		<div id="output_pager3"></div>
 	</div> 
   </div>
+  
     
+  <div id="output-table-tab4">
+	<!-- 表格 -->
+	<table id="output_sheet4"
+		class="table table-striped table-bordered table-hover datatable " style="width:1230px"></table>
+	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230">
+		<div id="output_pager4"></div>
+	</div> 
+  </div>
+  
+    
+  <div id="output-table-tab5">
+	<!-- 表格 -->
+	<table id="output_sheet5"
+		class="table table-striped table-bordered table-hover datatable " style="width:1230px"></table>
+	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230">
+		<div id="output_pager5"></div>
+	</div> 
+  </div>  
  </div>
  
  <ul>
@@ -44,6 +63,8 @@
 	<li><a href="#output-table-tab1">管段参数</a></li>
 	<li><a href="#output-table-tab2">离心压缩机参数</a></li>
 	<li><a href="#output-table-tab3">往复式压缩机参数</a></li>
+	<li><a href="#output-table-tab4">阀门参数</a></li>
+	<li><a href="#output-table-tab5">过滤器参数</a></li>
  </ul>
 </div>
 
