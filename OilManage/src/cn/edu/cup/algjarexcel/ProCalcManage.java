@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 
 public class ProCalcManage {//工程计算进程管理类，控制计算进程calcThread
@@ -58,8 +59,8 @@ public class ProCalcManage {//工程计算进程管理类，控制计算进程ca
 			ProjectInfo proinfo=new ProjectInfo(proid);
 				
 			proinfo.createHisID(new Date());
-			proinfo.markStatus(1, "开始运算");	
-			proinfo.logInfo("计算开始");
+			proinfo.markStatus(1, AlgorithmPro.getStatus(1));	
+			proinfo.logInfo(AlgorithmPro.getStatus(1));
 			startThread(proinfo);
 		}
 
@@ -73,7 +74,7 @@ public class ProCalcManage {//工程计算进程管理类，控制计算进程ca
 				int pro_id=list.get(i);
 				int status=getStatus(pro_id);//根据进程是否活着返回状态信息1：正在运行；2：运行完毕
 				if(status!=1){
-					dao.setProCalcStatus(pro_id, status, "运行完毕");
+					dao.setProCalcStatus(pro_id, status, AlgorithmPro.getStatus(2));
 				}
 			}
 			dao.close();
