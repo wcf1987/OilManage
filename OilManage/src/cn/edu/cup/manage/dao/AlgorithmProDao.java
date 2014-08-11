@@ -368,7 +368,15 @@ public class AlgorithmProDao {
 		String sql = "select max(t.id) from t_calchis t where  t.pro_id=? ";
 		SQLQuery q2 = session.createSQLQuery(sql);
 		q2.setParameter(0, pro_id);
-		Integer calcHis = ((Integer) q2.uniqueResult());
+		Object temp=q2.uniqueResult();
+		Integer calcHis ;
+		if(temp!=null){
+		 calcHis = ((Integer) temp);
+		
+		}
+		else{
+			calcHis=-1;
+		}
 		return calcHis;
 	}
 
