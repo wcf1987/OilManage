@@ -836,12 +836,13 @@ function openProject(proid){
 	var sid = 1;
 	//var proid = 11;
 	var algid = $("#curAlgID").val();
+	var inputSheetNum=$("#inputSheetNum").val();
 	var inOrOut="In";
 	//var inOrOut="Out";
 	var sheetDiv = "#sheet";
 	var pageDiv = "#pager";
 	var delID="delsheet";
-	for(var i=0;i<5;i++){
+	for(var i=0;i<inputSheetNum;i++){
 		var sheetgrid = new SheetGrid();
 
 		sheetgrid.GetDynamicCols(i, algid,inOrOut);
