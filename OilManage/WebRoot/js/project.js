@@ -204,22 +204,8 @@ function add_project() {
 			authorID:$("#authorID").val()
 		},
 		success : function(data) {
-			alert('工程添加成功！');
-			
-			var sid = 1;
-			var proid =data.ID;
-			var algid = $("#curAlgID").val();
-			var inOrOut="In";
-			//var inOrOut="Out";
-			var sheetDiv = "#sheet";
-			var pageDiv = "#pager";
-			var delID="delsheet";
-			for(var i=0;i<5;i++){
-				var sheetgrid = new SheetGrid();
-				sheetgrid.GetDynamicCols(i, algid,inOrOut);
-				sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);	
-			}
-			
+			alert('工程添加成功！');			
+			openProject(data.ID);			
 			$('#add_project_modal').modal('hide');
 			$("#ProjectList").trigger("reloadGrid");			
 		},

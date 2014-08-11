@@ -88,7 +88,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<div class="span8">
 									<div class="row-fluid">
 									<div class="span4 " style="float:left;margin-right:10px;">
-										<img  class="wellImage" src="images/jingtong.png" />
+										<img  class="wellImage" src="images/test_well.jpg" />
 									</div>
 										<div class="span6" style="float:left">
 											<table class="table table-condensed table-bordered">
@@ -113,52 +113,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 														<td></td>
 														<td>m</td>														
 													</tr>
-													<tr>
+													<tr class="success">
 														<td>2</td>
 														<td>井口套压</td>
-														<td></td>
+														<td>01/04/2012</td>
 														<td>MPa</td>
 													</tr>
-													<tr>
+													<tr class="error">
 														<td>3</td>
 														<td>井口温度</td>
-														<td></td>
+														<td>02/04/2012</td>
 														<td>K</td>
 													</tr>
-													<tr>
+													<tr class="warning">
 														<td>4</td>
 														<td>油管外径</td>
-														<td></td>
+														<td>03/04/2012</td>
 														<td>m</td>
 													</tr>
-													<tr>
+													<tr class="info">
 														<td>5</td>
 														<td>套管内径</td>
-														<td></td>
+														<td>04/04/2012</td>
 														<td>m</td>
 													</tr>
-													<tr>
+													<tr class="info">
 														<td>6</td>
 														<td>绝对粗糙度</td>
-														<td></td>
+														<td>04/04/2012</td>
 														<td>m</td>
 													</tr>
-													<tr>
+													<tr class="info">
 														<td>7</td>
 														<td>日产气量</td>
-														<td></td>
+														<td>04/04/2012</td>
 														<td>Nm3/d</td>
 													</tr>
-													<tr>
+													<tr class="info">
 														<td>8</td>
 														<td>井下温度梯度</td>
-														<td></td>
+														<td>04/04/2012</td>
 														<td>K/m</td>
 													</tr>
-													<tr>
+													<tr class="info">
 														<td>9</td>
 														<td>气柱高度</td>
-														<td></td>
+														<td>04/04/2012</td>
 														<td>m</td>
 													</tr>
 												</tbody>
@@ -194,13 +194,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 															气体动力粘度
 														</td>
 														<td>
-															
+															01/04/2012
 														</td>
 														<td>
 															Pa.s
 														</td>
 													</tr>
-													<tr>
+													<tr class="success">
 														<td>
 															2
 														</td>
@@ -208,13 +208,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 															气体相对密度
 														</td>
 														<td>
-															
+															01/04/2012
 														</td>
 														<td>
 													
 														</td>
 													</tr>
-													<tr>
+													<tr class="error">
 														<td>
 															3
 														</td>
@@ -222,7 +222,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 															液体密度
 														</td>
 														<td>
-															
+															02/04/2012
 														</td>
 														<td>
 															kg/m3
@@ -235,7 +235,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 												<button class="btn" type="button" style="float:right;margin:15px;">保存</button>
 											</div>							
 										</div>
-										<div class="span6" style="float:left;margin-top:20px;width:350px;">
+										<div class="span6" style="float:left;margin-top:20px;">
 											<form class="form-horizontal" style="padding:10px;">
 												<div class="control-group">
 													<label class="control-label" for="inputEmail">计算结果</label>

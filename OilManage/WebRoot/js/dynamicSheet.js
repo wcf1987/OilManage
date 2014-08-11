@@ -66,7 +66,7 @@ function SheetGrid() {
 				algID : temp.algid,
 				InOrOut:temp.inOrOut,
 				proID : temp.proid
-			},
+			}, 
 			// colNames : [ 'id', '项目名称', '上传时间', '地图查看', '编辑', '删除',
 			colNames : temp.colNames,// 表格的列名
 			colModel : temp.colModel,

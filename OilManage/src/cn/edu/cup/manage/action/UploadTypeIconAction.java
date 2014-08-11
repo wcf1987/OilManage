@@ -27,6 +27,7 @@ public class UploadTypeIconAction  extends ActionSupport{
 	private int ID;
 	private String type;
 	private String remark;
+	private String suffix;
 	private File iconfile;
 	private String fileName;
 //	private File mapfile;
@@ -64,6 +65,13 @@ public class UploadTypeIconAction  extends ActionSupport{
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	
+	public String getSuffix() {
+		return suffix;
+	}
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
+	}
 	public String getFileName() {
 		return fileName;
 	}
@@ -97,9 +105,10 @@ public class UploadTypeIconAction  extends ActionSupport{
 	        	    reader = new BufferedReader(new FileReader(iconfile)); 	           
 	            	String path=getWebFileRoot()+this.UPLOADPATH;
 	            	//relativePath=this.UPLOADPATH+String.valueOf(System.currentTimeMillis())+".svg";	        
-	            	//path=path+String.valueOf(System.currentTimeMillis())+".svg";                
-	            	relativePath=this.UPLOADPATH+type+".svg";	        		              
-	            	path=path+type+".svg";                
+	            	//path=path+String.valueOf(System.currentTimeMillis())+".svg";    
+	          
+	            	relativePath=this.UPLOADPATH+type+suffix;	        		              
+	            	path=path+type+suffix;                
 	                FilePath=path;	                
 	                copyFile(iconfile,new File(FilePath));	       
 		            reader.close();

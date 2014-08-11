@@ -213,7 +213,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		<script type="text/javascript">
 		$().ready(function(){
-			$('#hydraulic_tab').easytabs({
+			$('#hydraulic_tab,#input-container,#output-container').easytabs({
 				animate: false
 			});	
 			$('#importExcel').uploadify({

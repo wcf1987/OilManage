@@ -21,11 +21,12 @@ $(
 	    'onUploadStart': function (file) { 
 	    	var type=$("type_name").val();
 	    	var remark=$("#type_remark").val();
+	    	var suffix=file.type;
 	    	if(type=null){
 	    		alert("类型名称不能为空！");
 	    		//$("#type_name").val(file.name);
 	    	}
-	    	$("#iconfile").uploadify("settings", "formData", { 'type':$("#type_name").val(),'remark':$("#type_remark").val() });  
+	    	$("#iconfile").uploadify("settings", "formData", {'suffix':suffix,'type':$("#type_name").val(),'remark':$("#type_remark").val() });  
 	    }
 //        'onUploadFile': function(file) {
 //        	alert('The file ' + file.name + ' is being uploaded.');

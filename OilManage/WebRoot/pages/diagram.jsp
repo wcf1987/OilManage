@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   </head>
     
-  <body  style="background-color:#CCCCCC;" id="body"  onload="initLight();"><!-- background-image:url(images/background.jpg); -->
+  <body  id="body"  onload="initLight();"><!-- background-image:url(images/background.jpg); -->
  
 
 	  <div id="head">
@@ -66,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	 
 	
-		<div class="container marketing condiv" style="width:1200px;margin-top:55px;">
+		<div class="container marketing condiv" style="width:1200px;margin-top:-25px;">
 	    	
 	    	<div class="container-fluid">
 				<div class="row-fluid">
