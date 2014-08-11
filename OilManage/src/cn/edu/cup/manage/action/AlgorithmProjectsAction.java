@@ -329,9 +329,11 @@ public class AlgorithmProjectsAction {
 	}
 	int calcHisID;
 	List<LogInfo> loginfo;
+	
 	public String listLog() {
 	
 		AlgorithmProDao dao = new AlgorithmProDao();
+		status=dao.getStatus(this.ID);
 		calcHisID = dao.getcalcLastest(this.ID);
 		loginfo=dao.getLogList(calcHisID);
 		dao.close();

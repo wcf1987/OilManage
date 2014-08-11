@@ -128,7 +128,7 @@ public class AlgorithmExcelAction {
 
 		AlgorithmProDao dao = new AlgorithmProDao();
 
-		String filepath = dao.getProFile(this.proID, algid, InOrOut);
+		String filepath = dao.getProFile(proid, algid, InOrOut);
 		dao.close();
 		if (filepath == null || filepath.equals("")) {
 			msg = "Excel文件未找到";

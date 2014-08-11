@@ -1,5 +1,7 @@
 package cn.edu.cup.algjarexcel;
 
+import cn.edu.cup.manage.action.AlgorithmExcelAction;
+
 public class CalcThread extends Thread {
 	ProjectInfo proinfo;
 	AlgorithmPlugTools alg;
@@ -22,9 +24,11 @@ public class CalcThread extends Thread {
 		alg.injectInfo(proinfo.getInfo());
 		try{
 		alg.startCalc(proinfo.getAlgID());
+		
 		}catch(Exception e){
 			proinfo.getInfo().endsWithError(e.getMessage());
 		}
+		new AlgorithmExcelAction().reloadFileExcel(proinfo.getProid(), proinfo.getAlgID(), "Out");
 	}
 
 }
