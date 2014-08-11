@@ -107,7 +107,8 @@
 		}
 		
 		function listLog()
-		{
+		{	
+			$("#outputarea").text("");
 			$.ajax({
 				type:'post',
 				url:'listLog.action',
@@ -122,15 +123,13 @@
 					}			
 					$.each(data.loginfo,function(index,log){
 						if(log!=null&&log!=""){
-							$("#outputarea").text(log.logTime.replace("T"," ")+" "+log.info+"\n\r");
+							$("#outputarea").append(log.logTime.replace("T"," ")+" "+log.info+"\n\r");
 						}	 	
-					});
-					
-				
+					});			
 				},
 				error:function(msg){
 					$("#outputarea").append("通信失败！\n\r");
-					
+					window.clearInterval(intervalID);
 				}
 			});
 
