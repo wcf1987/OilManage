@@ -143,7 +143,7 @@
 			var inOrOut="Out";
 			var sheetDiv = "#output_sheet";
 			var pageDiv = "#output_pager";
-			var delID="delsheet";
+			var delID="output_delsheet";
 			for(var i=0;i<outputSheetNum;i++){
 				var sheetgrid = new SheetGrid();
 				sheetgrid.GetDynamicCols(i, algid,inOrOut);

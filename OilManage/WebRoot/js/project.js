@@ -841,7 +841,7 @@ function openProject(proid){
 	//var inOrOut="Out";
 	var sheetDiv = "#sheet";
 	var pageDiv = "#pager";
-	var delID="delsheet";
+	var delID="input_delsheet";
 	for(var i=0;i<inputSheetNum;i++){
 		var sheetgrid = new SheetGrid();
 
