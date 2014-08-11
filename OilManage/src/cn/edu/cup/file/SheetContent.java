@@ -110,10 +110,15 @@ public class SheetContent {
 			boolean flag=false;
 			for (int tIdex = row.getFirstCellNum(); tIdex < row.getLastCellNum(); tIdex++) {
 				if(rIndex==10&&this.Name.equals("节点参数")){
-					System.out.println("sus");
+					//System.out.println("sus");
 				}
 				Cell temp = row.getCell(tIdex);
-				String str=temp.toString();
+				String str=null;
+				if(temp==null){
+					
+				}else{
+					str=temp.toString();
+				}
 				if(str!=null&&!str.equals("")){
 					flag=true;
 				}
