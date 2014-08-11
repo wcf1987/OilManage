@@ -56,8 +56,10 @@ public class ProCalcManage {//工程计算进程管理类，控制计算进程ca
 		Map<Integer,CalcThread> threadMap;//prodi:calcThread
 		public void run(int proid) {
 			ProjectInfo proinfo=new ProjectInfo(proid);
-			proinfo.markStatus(1, "开始运算");		
+				
 			proinfo.createHisID(new Date());
+			proinfo.markStatus(1, "开始运算");	
+			proinfo.logInfo("计算开始");
 			startThread(proinfo);
 		}
 
