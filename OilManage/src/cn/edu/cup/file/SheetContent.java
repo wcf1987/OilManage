@@ -106,10 +106,25 @@ public class SheetContent {
 		sheetContent=new ArrayList<List<String>>();
 		for (int rIndex = firstRowIndex; rIndex <= lastRowIndex; rIndex++) {
 			Row row = sheet.getRow(rIndex);
-			if (row != null) {
+			
+			boolean flag=false;
+			for (int tIdex = row.getFirstCellNum(); tIdex < row.getLastCellNum(); tIdex++) {
+				if(rIndex==10&&this.Name.equals("节点参数")){
+					System.out.println("sus");
+				}
+				Cell temp = row.getCell(tIdex);
+				String str=temp.toString();
+				if(str!=null&&!str.equals("")){
+					flag=true;
+				}
+				
+			}
+			if (row != null&&flag) {
 				int firstCellIndex = sheet.getRow(firstRowIndex).getFirstCellNum();
 				int lastCellIndex = sheet.getRow(firstRowIndex).getLastCellNum();
 				valueTemp=new ArrayList<String>();
+				
+				
 				
 				for (int cIndex = firstCellIndex; cIndex < lastCellIndex; cIndex++) {
 					Cell cell = row.getCell(cIndex);
