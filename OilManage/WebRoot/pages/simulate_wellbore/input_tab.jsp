@@ -38,10 +38,10 @@
 /* Styles for Tabs on Bottom */
 #input-container { width: 100%; padding: 0; clear: both; }
 #input-container ul { list-style: none; margin: 0; padding: 0; width: 100%; }
-#input-container ul li { border:1px solid;background-color:#ccc;float: left; width:20%; margin: 0; padding: 0; text-align: center; border-top: solid 1px; }
+#input-container ul li { border:1px solid;background-color:#ccc;float: left; width:50%; margin: 0; padding: 0; text-align: center; border-top: solid 1px; }
 #input-container ul li a { color:#000;display: block; padding: 8px 0; outline: none; }
 #input-container ul li a:hover { text-decoration: underline; }
-#input-container ul li.active { width: 20%; background: #fff; border: solid 1px; border-top: none; }
+#input-container ul li.active { width: 50%; background: #fff; border: solid 1px; border-top: none; }
 #input-container ul li a.active { font-weight: bold; text-decoration: none; }
 #input-container .panel-container { background: #fff; border: solid 1px; border-bottom: none; padding: 10px; margin-bottom: 0; }
 </style>
