@@ -107,8 +107,8 @@ public class SheetContent {
 		for (int rIndex = firstRowIndex; rIndex <= lastRowIndex; rIndex++) {
 			Row row = sheet.getRow(rIndex);
 			if (row != null) {
-				int firstCellIndex = row.getFirstCellNum();
-				int lastCellIndex = row.getLastCellNum();
+				int firstCellIndex = sheet.getRow(firstRowIndex).getFirstCellNum();
+				int lastCellIndex = sheet.getRow(firstRowIndex).getLastCellNum();
 				valueTemp=new ArrayList<String>();
 				
 				for (int cIndex = firstCellIndex; cIndex < lastCellIndex; cIndex++) {
@@ -131,6 +131,14 @@ public class SheetContent {
 							
 							colModel.add(new ColModel(value));
 						}
+					}else{
+						value = "";
+						if(rIndex>0)
+						{
+						
+							valueTemp.add(value);
+						}
+						
 					}
 					
 				}
