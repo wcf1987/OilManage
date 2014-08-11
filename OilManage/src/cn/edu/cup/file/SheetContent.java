@@ -108,7 +108,8 @@ public class SheetContent {
 			Row row = sheet.getRow(rIndex);
 			
 			boolean flag=false;
-			for (int tIdex = row.getFirstCellNum(); tIdex < row.getLastCellNum(); tIdex++) {
+			if(row!=null){
+			for (int tIdex = row.getFirstCellNum();tIdex < row.getLastCellNum(); tIdex++) {
 				if(rIndex==10&&this.Name.equals("节点参数")){
 					//System.out.println("sus");
 				}
@@ -123,6 +124,7 @@ public class SheetContent {
 					flag=true;
 				}
 				
+			}
 			}
 			if (row != null&&flag) {
 				int firstCellIndex = sheet.getRow(firstRowIndex).getFirstCellNum();
