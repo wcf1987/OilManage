@@ -204,8 +204,10 @@ function add_project() {
 			authorID:$("#authorID").val()
 		},
 		success : function(data) {
+
 			alert('工程添加成功！');			
 			openProject(data.ID);			
+
 			$('#add_project_modal').modal('hide');
 			$("#ProjectList").trigger("reloadGrid");			
 		},

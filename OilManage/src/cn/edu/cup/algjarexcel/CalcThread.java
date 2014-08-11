@@ -20,7 +20,11 @@ public class CalcThread extends Thread {
 	public void run() {
 		// TODO Auto-generated method stub
 		alg.injectInfo(proinfo.getInfo());
+		try{
 		alg.startCalc(proinfo.getAlgID());
+		}catch(Exception e){
+			proinfo.getInfo().endsWithError(e.getMessage());
+		}
 	}
 
 }
