@@ -37,7 +37,7 @@ myactive{
 
 .condiv{
 	width:1200px;
-	margin-top:120px;
+	margin-top:10px;
 }
 
 .dropdown-submenu {
@@ -91,5 +91,5 @@ myactive{
 .tab a.active { font-weight: bold; }
 .tab-container .panel-container { background: #fff; border: solid #666 1px; padding: 10px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
 
-.container-fluid{width:1100px;margin-top:55px;font-size:20px;}
+.container-fluid{width:1100px;margin-top:10px;font-size:20px;}
 

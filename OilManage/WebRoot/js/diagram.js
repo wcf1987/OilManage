@@ -11,7 +11,7 @@ $(function(){
 
 		$('#load_modal>.modal-dialog').css({
 		 'margin-top': function () {
-		            return ($(window).height())/2-123;
+		            return ($(window).height())/2-323;
 		        },
 		 'margin-right':function () {
 		            return ($(window).width())/2-300;

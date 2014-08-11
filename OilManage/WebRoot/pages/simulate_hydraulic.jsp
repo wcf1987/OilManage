@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
 	</div>  
-		<div class="container marketing condiv" style="width:1200px;margin-top:5px;">
+		<div class="container marketing condiv" style="width:1200px;margin-top:30px;">
 	    	
 	    	<div class="container-fluid">
 				<div class="row-fluid">
@@ -85,6 +85,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<h2>单相管网水力计算&nbsp;<small>管网模拟</small></h2>
 						<input id="curAlgID" style="display:none" value="1"/>
 						<input id="proID" style="display:none" value=""/>
+						<input id="inputSheetNum" style="display:none" value="5"/>
+						<input id="outputSheetNum" style="display:none" value="4"/>
+						
 						<!-- 
 						if (id = 0)，井底流压计算；if (id = 1)，单气相管网水力计算；if (id = 2)，单气相管网热力计算；if (id = 3)，气固两相管网水力计算；if (id = 4)，气液两相管网水力计算
 						 -->
@@ -119,94 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <%@ include file="commons/footer.jsp" %>
     </div>
 	 
-	 
-	 
-		
-		
-		
-		
-		
-		<!-- 输入流体参数弹出框 -->
-		<div id="popdiv_liquidpra" class="popdiv" style="display:none;padding:10px 20px 20px;">
-			<a id="close_liquidpra" class="close">x</a>
-		
-			
-			<div class="row-fluid">
-				<div class="span12">
-					<form id="form1" runat="server">
-					<div class="row-fluid">
-						<div class="span6" style="float:left">
-							 <div id="left">
-						        <select multiple="multiple" id="select1" style="width:100px;height:160px">
-							        <option>CH4</option>
-							        <option>C2H6</option>
-							        <option>C3H8</option>
-							        <option>i-C4H10</option>
-							        <option>n-C4H10</option>
-							        <option>i-C5H12</option>
-							        <option>n-C5H12</option>
-							        <option>n-C6H14</option>
-							        <option>n-C7H16</option>
-							        <option>n-C8H18</option>
-							        <option>n-C9H20</option>
-							        <option>n-C10H22</option>
-							        <option>C11</option>
-							        <option>C12</option>
-							        <option>C13</option>
-							        <option>C14</option>
-							        <option>C15</option>
-							        <option>C2H4</option>
-							        <option>C3H6</option>
-							        <option>H2S</option>
-							        <option>SO2</option>
-							        <option>N2</option>
-							        <option>CO2</option>
-							        <option>Kr</option>
-							        <option>Xe</option>
-						        </select>
-						    </div>
-						</div>
-						<div  style="float:left;margin-top:40px;padding-left:5px;padding-right:5px;">
-					   		<button id="add" type="button" class="btn btn-small">添加</button><br />
-					   		<button style="margin-top:5px;" id="remove" type="button" class="btn btn-small">删除</button>
-					   	</div>
-						<div class="span6" style="float:left">
-							 <div id="right">
-						        <select multiple="multiple" id="select2" style="width:100px;height:160px"></select>
-						    </div>
-						</div>
-						<div style="float:left;margin-top:100px;padding-left:5px;">	
-							<span>Total:</span><span>1</span>							
-							<button type="button" type="button" class="btn btn-small">保存</button>
-						</div>
-					</div>		
-				</form>
-					
-					
-				<div class="row-fluid">
-					<div class="span8" style="float:left;margin-top:20px;">
-						<table>
-							<tr><td>气体动力粘度</td><td><input/></td><td>Pa.s</td></tr>
-							<tr><td>环境温度</td><td><input/></td><td>k</td></tr>
-						</table>
-					</div>
-					<div class="span4" style="float:left;margin-top:30px;padding-left:5px;">
-						<button  type="button" type="button" class="btn btn-small">保存</button>
-					</div>
-				</div> 
-					
-				</div>
-			</div>
-			
-			
-		</div>
-		
-		
-			    
-		
-		
-	
-		<%@ include file="simulate_hydraulic/modal.jsp" %>
+	<%@ include file="simulate_hydraulic/modal.jsp" %>
 	<div id="isRunning" style="display:none;padding:90px 120px;width:400px;height:100px;border:10px solid;border-radius:10px;background-color:white;">
 		<span>正在计算......</span>
 	</div> 

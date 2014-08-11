@@ -138,7 +138,7 @@
 			var proid=$("#proID").val();
 			var sid = 1;
 			var algid = $("#curAlgID").val();
-			var outputSheetNum=$("#outputSheetNum").val();
+			var outputSheetNum= $("#outputSheetNum").val();
 			//var inOrOut="In";
 			var inOrOut="Out";
 			var sheetDiv = "#output_sheet";
