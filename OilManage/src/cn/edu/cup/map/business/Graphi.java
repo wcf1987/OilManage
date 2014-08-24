@@ -1,21 +1,21 @@
 package cn.edu.cup.map.business;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.edu.cup.map.business.Point.Type;
 
 public class Graphi {
 	Map<String,Point> points;
 	List<Line> lines;
-	public List getJSON(){
+	/*public List getJSON(){
 		List temp=new ArrayList();
 		temp.addAll(points.values());
 		temp.addAll(lines);
 		return temp;
-	}
+	}*/
 	public void setPoints(Map<String, Point> points) {
 		this.points = points;
 	}
@@ -41,16 +41,7 @@ public class Graphi {
 		return false;
 	}
 	public Boolean addLine(String start,String end){
-		if(points.containsKey(start)&&points.containsKey(end)){
-			Point temp=points.get(start);
-			if(temp.type==Type.jingkou){
-				lines.add(new Line(start,end,1));
-			}else{
-				lines.add(new Line(start,end,2));
-			}
-			return true;
-		}
-		return false;
+		return true;
 	}
 
 }

@@ -386,9 +386,28 @@
 				<param name="excludeProperties">id</param>
 			</result>
 		</action>
+		<action name="viewExcelMap" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="viewExcelMap">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		
-		
-		
+		<action name="viewObstacle" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="viewObstacle">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addObstacle" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="addObstacle">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		<!-- 算法图形输出配置-->
 		
 		

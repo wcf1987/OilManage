@@ -2,6 +2,7 @@ package cn.edu.cup.manage.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,8 @@ import cn.edu.cup.file.SheetContent;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
+import cn.edu.cup.map.business.Graphi;
+import cn.edu.cup.map.business.Point;
 import cn.edu.cup.tools.Tools;
 
 public class AlgorithmExcelAction {
@@ -165,6 +168,67 @@ public class AlgorithmExcelAction {
 		//cacheList.put(key, e);
 		//session.put("ExcelCacheList", cacheList);
 		return e;
+	}
+	private Graphi graphi;
+	public Graphi getGraphi() {
+		return graphi;
+	}
+
+	public String viewExcelMap(){
+		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		
+		graphi=excel.getGraphi();
+	
+		return "SUCCESS";
+	}
+	Map<String,List<Point>> obs;
+	public String viewObstacle(){
+		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		
+		graphi=excel.getObstacleGraphi();
+		obs=excel.getObstacleMap();
+		return "SUCCESS";
+	}
+	List<Map<String,String>> poly;
+	String obsName;
+	public void setObsName(String obsName) {
+		this.obsName = obsName;
+	}
+
+	public void setPoly(String poly) {
+		poly=poly.replace("[", "");
+		poly=poly.replace("]", "");
+		String[] polys=poly.split(",");
+		this.poly=new ArrayList<>();
+		Map<String,String> p;
+		for(int i=0;i<polys.length;i=i+2){
+			 p=new HashMap<>();
+			 JSONObject jsonObject2 =JSONObject.fromObject(polys[i]+","+polys[i+1]);
+			 String lng=jsonObject2.getString("lng");
+			 String lat=jsonObject2.getString("lat");
+			 Point temp=new Point();
+			 temp.setLatitude(Double.valueOf(lat));
+			 temp.setLongitude(Double.valueOf(lng));
+			 temp.getGeoFromLatLon();
+			 p.put("X坐标 (m)",String.valueOf(temp.getGeodeticCoordinatesX()) );
+			 p.put("Y坐标 (m)",String.valueOf(temp.getGeodeticCoordinatesY()) );
+			
+			//this.poly = null;
+			this.poly.add(p); 
+		}
+		
+		 
+		
+	}
+
+	public String addObstacle(){
+		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		excel.getObstacleSheet().addObstacle(this.poly,this.obsName);
+		saveExcel();
+		return "SUCCESS";
+	}
+	public Map<String, List<Point>> getObs() {
+		return obs;
 	}
 
 	String msg;
