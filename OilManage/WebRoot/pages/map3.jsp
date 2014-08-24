@@ -101,8 +101,7 @@
 	<!-- Wrap the rest of the page in another container to center all the content. -->
 
 	<div class="container marketing condiv" style="width:1200px;">
-		<a href="javascript:showObstacle(44,0,'In')">更新地图</a> <a
-			href="javascript:showMap(44,0,'Out')">输出文件地图</a>
+		<a href="javascript:showObstacle(44,0,'In')">更新障碍区地图</a> 
 		<hr class="featurette-divider"
 			style="margin-top:10px;margin-bottom:10px;">
 
