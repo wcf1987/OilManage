@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 
 	 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	 <link rel="stylesheet" type="text/css" href="bootstrap/css/carousel.css">
-	 <link rel="stylesheet" href="css/docs-5892f62386325d472ddefdaec9d29018.css"> 
+	<!--  <link rel="stylesheet" href="css/docs-5892f62386325d472ddefdaec9d29018.css">  -->
 	 <link rel="stylesheet" type="text/css" media="screen" href="css/tabs.css" />
 	<!-- 自定义 -->
 	
@@ -86,10 +86,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
- 
-	 	<div id="head">
-		   <%@ include file="commons/header.jsp" %>
-		</div>  
+  		<div id="head">
+		    <%@ include file="commons/header.jsp" %>
+	</div>  
     	 <!-- Marketing messaging and featurettes
 	    ================================================== -->
 	    <!-- Wrap the rest of the page in another container to center all the content. -->
@@ -103,15 +102,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div class="tabbable" id="tabs-360872">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<a href="#panel-1" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">工程管理</a>
+									<a href="#panel-1" data-toggle="tab" class="tab-a">工程管理</a>
 								</li>							
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="panel-1">		
 									<table id="ProjectList" class="table table-striped table-bordered table-hover datatable " ></table>
-						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-						      			<div id="ProjectPager" ></div>
-						      		</div>	      		
+						      		<div id="ProjectPager" ></div>      		
 								</div>	
 						</div>
 						

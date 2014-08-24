@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="js/graphiDetail.js"></script>
   </head>
   
-  <body style="background-color:#CCCCCC;">
+  <body>
  
  	   <div id="head">
 		    <%@ include file="commons/header_admin.jsp" %>
@@ -83,37 +83,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div class="tabbable" id="tabs-360872">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<a href="#panel-1" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">算法管理</a>
+									<a href="#panel-1" data-toggle="tab"  class="tab-a">算法管理</a>
 								</li>
-								<!-- 
-								<li>
-									<a href="#panel-2" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">物理单位管理</a>
-								</li>
-								<li>
-									<a href="#panel-3" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">参数管理</a>
-								</li> -->
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="panel-1">		
 									<table id="AlgorithmList" class="table table-striped table-bordered table-hover datatable " ></table>
-						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-						      			<div id="AlgorithmPager" ></div>
-						      		</div>	      		
+						      		<div id="AlgorithmPager" ></div>      		
 								</div>
-								<!--  
-								<div class="tab-pane" id="panel-2">							
-						      		<table id="MeasureList" class="table table-striped table-bordered table-hover datatable " ></table>
-						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-						      			<div id="MeasurePager" ></div>
-						      		</div>	      		
-								</div>
-								<div class="tab-pane" id="panel-3">							
-									<table id="ParameterList" class="table table-striped table-bordered table-hover datatable " ></table>
-						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-						      			<div id="ParameterPager" ></div>
-						      		</div>
-								</div>
-								-->
 							</div>
 						</div>
 										

@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   </head>
   
-  <body style="background-color:#CCCCCC;">
+  <body>
 		<div id="head">
 		    <%@ include file="commons/header_admin.jsp" %>
 	  	</div>  

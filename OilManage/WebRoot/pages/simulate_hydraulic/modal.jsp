@@ -69,9 +69,7 @@
       </div>
       <div class="modal-body">
      		<table id="ProjectList" class="table table-striped table-bordered table-hover datatable " ></table>
-      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-      			<div id="ProjectPager" ></div>
-      		</div>	
+      		<div id="ProjectPager" ></div>
       </div>
      
     </div><!-- /.modal-content -->

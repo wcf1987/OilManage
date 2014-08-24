@@ -66,10 +66,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	 
 	
-		<div class="container marketing condiv" style="width:1200px;margin-top:-25px;">
+		<div class="container marketing condiv" style="width:1200px;margin-top:10px;">
 	    	
 	    	<div class="container-fluid">
-				<div class="row-fluid">
+				<div class="row-fluid row-fluid2">
 					<div class="span12">
 					
 					
