@@ -28,8 +28,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 
 	
 	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqGrid/css/ui.jqgrid.css" />
-	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/overcast/jquery.ui.theme.css" />  
-	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/redmond/jquery.ui.theme.css" />
+	 <!-- <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/vder/jquery.ui.theme.css" />   -->
+	 <!-- <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/redmond/jquery.ui.theme.css" /> -->
 	 
 	 
 	 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
@@ -171,11 +171,11 @@ $(document).ready(function(){
 
 
   </head>
-  
+     
   <body>
  
  	
-	   <div id="head">
+		<div>
 		    <%@ include file="commons/header_admin.jsp" %>
 	  	</div> 	
 	  
@@ -191,53 +191,45 @@ $(document).ready(function(){
 						<div class="tabbable" id="tabs-360872">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<a href="#panel-1" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">物理量管理</a>
+									<a href="#panel-1" data-toggle="tab" class="tab-a">物理量管理</a>
 								</li>
 								<li>
-									<a href="#panel-2" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">物理单位管理</a>
+									<a href="#panel-2" data-toggle="tab" class="tab-a">物理单位管理</a>
 								</li>
 								<li>
-									<a href="#panel-3" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">参数管理</a>
+									<a href="#panel-3" data-toggle="tab" class="tab-a">参数管理</a>
 								</li>
 								<li>
-									<a href="#panel-4" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">控件图标管理</a>
+									<a href="#panel-4" data-toggle="tab" class="tab-a">控件图标管理</a>
 								</li>
 								<li>
-									<a href="#panel-5" data-toggle="tab" style="font-size:12px;font-weight:bold;font-family:黑体">控件参数管理</a>
+									<a href="#panel-5" data-toggle="tab" class="tab-a">控件参数管理</a>
 								</li>
 								
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="panel-1">		
 									<table id="PhysicalList" class="table table-striped table-bordered table-hover datatable " ></table>
-						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
+						      		<div>
 						      			<div id="PhysicalPager" ></div>
 						      		</div>	      		
 								</div>
 								<div class="tab-pane" id="panel-2">							
 									<!-- 表格 -->
 						      		<table id="MeasureList" class="table table-striped table-bordered table-hover datatable " ></table>
-						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-						      			<div id="MeasurePager" ></div>
-						      		</div>	      		
+						      		<div id="MeasurePager" ></div>      		
 								</div>
 								<div class="tab-pane" id="panel-3">							
 									<table id="ParameterList" class="table table-striped table-bordered table-hover datatable " ></table>
-						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-						      			<div id="ParameterPager" ></div>
-						      		</div>
+						      		<div id="ParameterPager" ></div>
 								</div>
 								<div class="tab-pane" id="panel-4">							
 									<table id="GuiPointTypeList" class="table table-striped table-bordered table-hover datatable " ></table>
-						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-						      			<div id="GuiPointTypePager" ></div>
-						      		</div>
+						      		<div id="GuiPointTypePager" ></div>
 								</div>
 								<div class="tab-pane" id="panel-5">							
 									<table id="GuiPointProperList" class="table table-striped table-bordered table-hover datatable " ></table>
-						      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-						      			<div id="GuiPointProperPager" ></div>
-						      		</div>
+						      		<div id="GuiPointProperPager" ></div>
 								</div>
 							</div>
 						</div>
@@ -246,7 +238,7 @@ $(document).ready(function(){
 			</div>
 	
 	    </div><!-- /.container -->
-	    <hr class="featurette-divider">
+	   <!--  <hr class="featurette-divider"> -->
       	<div id="footer">
 	        <%@ include file="commons/footer.jsp" %>
 	    </div>

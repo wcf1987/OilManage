@@ -159,7 +159,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		     
 		   	   <ul style="font-family:微软雅黑;font-size:40px;margin-left:130px;margin-top:100px;">
 		      		<!-- <img style="width:40%;margin-left:-100px;" alt="BotWall 管理系统" src="images/eagleeye-dark.png"> -->
-		      	 	<h4 style="color:#eee">煤层气集输系统</h4>
+		      	 	<h4 style="color:#205E74">煤层气集输系统</h4>
 		      	</ul> 
 		        <div  style="margin-rigtht:10px;margin-top:-100px;">
 		       	 <div class="login-icon" style="width:auto;margin-top:90px;margin-right:10px;float:right;">		            

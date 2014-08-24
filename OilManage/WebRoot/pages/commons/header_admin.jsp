@@ -11,9 +11,9 @@ else{
 %>
 
  <div class="navbar-wrapper">
-    <div class="container">
+    <!-- <div class="container"> -->
       <div class="navbar navbar-inverse navbar-static-top" role="navigation">
-        <div class="container">
+       <div class="container"> 
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
@@ -21,7 +21,7 @@ else{
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="pages/home.jsp"><div style="color:#16A085;font-weight:bold;font-family:Georgia, serif;">煤层气集输系统后台管理</div></a>
+            <a class="navbar-brand" href="pages/home.jsp"><div style="color:#A9DBAF;font-weight:bold;font-family:微软雅黑;">煤层气集输系统&nbsp;<span style="color:#D7E3E6;font-size:16px;">后台管理</span></div></a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">              
@@ -32,17 +32,16 @@ else{
 		      <li><a id="home" href="pages/home.jsp">返回首页</a></li>	     
             </ul>
                        
-	      <div class="text-center" style="margin-top:8px;margin-right:25px;" id="userId">
-	      	<div style="margin-left:5px;margin-top:5px;"><a  style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">注销</a></div>
-	        <div style="color:#428BCA;float:right;margin-top:5px;">您好,<a href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>	
-	      </div>
-    
-          </div>
-        </div>
-      </div>
+			<div class="text-center" style="margin-top:8px;margin-right:25px;" id="userId">
+				<div style="margin-left:5px;margin-top:5px;"><a class="logout" style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">注销</a></div>
+			  <div style="color:#E8F6E2;float:right;margin-top:5px;">您好,<a class="logout" href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>	
+			</div>
+		 </div>
+	</div> 
+   </div>
+</div>
+<!-- </div> -->
 
-    </div>
-  </div>
  <script>
  		var $pathname=window.location.pathname;
  		switch($pathname){

@@ -102,9 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      	<div class="row featurette " style="margin-top:-50px;margin-left:-10px;margin-right:auto;">
 	      		<!-- 表格 -->
 	      		<table id="list2" class="table table-striped table-bordered table-hover datatable " ></table>
-	      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-	      			<div id="pager2" ></div>
-	      		</div>
+	      		<div id="pager2" ></div>
 	      	</div>
 	
 	    </div><!-- /.container -->

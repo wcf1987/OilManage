@@ -351,9 +351,7 @@ body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", san
 					<div class="row-fluid">
 						<div class="span12">
 							<table id="GUIProList" class="table table-striped table-bordered table-hover datatable " ></table>
-				      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230" >
-				      			<div id="GUIProPager" ></div>
-				      		</div>	      		
+				      		<div id="GUIProPager" ></div>      		
 						</div>
 					</div>
 				</div>  

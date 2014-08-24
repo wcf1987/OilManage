@@ -55,28 +55,28 @@ $(
 								{
 									name : 'CName',
 									index : 'CName',
-									width : 150,
+									width : 100,
 									align : "center",
 									sortable:true
 								},
 								{
 									name : 'EName',
 									index : 'EName',
-									width : 200,
+									width : 50,
 									align : "center",
 									sortable:true
 								},
 								{
 									name : 'description',
 									index : 'Description',
-									width : 200,
+									width : 50,
 									align : "center",
 									sortable:true
 								},
 								{
 									name:'ISOBasicUnit',
 									index:'ISOBasicUnit',
-									width:200,
+									width: 100,
 									align:'center',
 									sortable:true
 								}
@@ -84,9 +84,9 @@ $(
 								],
 //						autowidth:true,
 						editurl:"editData.action",
-						rowNum:10,//每一页的行数
-						height: 'auto',
-						width:1230,
+						rowNum:20,//每一页的行数
+						height:'auto',
+						width:1070,
 						rowList:[10,20,30],
 						pager: '#PhysicalPager',
 						sortname: 'id',
@@ -273,7 +273,7 @@ $(
 //				autowidth:true,
 				rowNum:10,//每一页的行数
 				height: 'auto',
-				width:1230,
+				width:1070,
 				rowList:[10,20,30],
 				pager: '#MeasurePager',
 				sortname: 'mid',
@@ -409,21 +409,21 @@ $(
 						{
 							name : 'name',
 							index : 'name',
-							width : 200,
+							width : 100,
 							align : "center",
 							sortable:true
 						},
 						{
 							name : 'measureSymbol',
 							index : 'measureSymbol',
-							width : 250,
+							width : 100,
 							align : "center",
 							sortable:true
 						},
 						{
 							name : 'typeS',
 							index : 'typeS',
-							width : 100,
+							width : 50,
 							align : "center",
 							sortable:true
 						}
@@ -431,7 +431,7 @@ $(
 //				autowidth:true,
 				rowNum:10,//每一页的行数
 				height: 'auto',
-				width:1230,
+				width:1070,
 				rowList:[10,20,30],
 				pager: '#ParameterPager',
 				sortname: 'ID',
@@ -592,21 +592,21 @@ $(
 						{
 							name : 'type',
 							index : 'type',
-							width : 150,
+							width : 100,
 							align : "center",
 							sortable:true
 						},
 						{
 							name : 'remark',
 							index : 'remark',
-							width : 200,
+							width : 500,
 							align : "center",
 							sortable:true
 						},
 						{
 							name:'path',
 							index:'path',
-							width:200,
+							width:0,
 							align:"center",
 							sortable:true,
 							hidden:true
@@ -615,7 +615,7 @@ $(
 //				autowidth:true,
 				rowNum:10,//每一页的行数
 				height: 'auto',
-				width:1230,
+				width:1070,
 				rowList:[10,20,30],
 				pager: '#GuiPointTypePager',
 				sortname: 'ID',
@@ -750,35 +750,35 @@ $(
 						{
 							name : 'par_display',
 							index : 'par_display',
-							width : 150,
+							width : 100,
 							align : "center",
 							sortable:true
 						},
 						{
 							name : 'par_name',
 							index : 'par_name',
-							width : 200,
+							width : 100,
 							align : "center",
 							sortable:true
 						},
 						{
 							name:'measure_CName',
 							index:'measure_CName',
-							width:200,
+							width:100,
 							align:"center",
 							sortable:true
 						},
 						{
 							name : 'measure_Symbol',
 							index : 'measure_Symbol',
-							width : 200,
+							width : 100,
 							align : "center",
 							sortable:true
 						},
 						{
 							name : 'point_type',
 							index : 'point_type',
-							width : 200,
+							width : 100,
 							align : "center",
 							sortable:true
 						}
@@ -786,7 +786,7 @@ $(
 //				autowidth:true,
 				rowNum:10,//每一页的行数
 				height: 'auto',
-				width:1230,
+				width:1070,
 				rowList:[10,20,30],
 				pager: '#GuiPointProperPager',
 				sortname: 'ID',

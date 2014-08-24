@@ -68,14 +68,14 @@ function list_project(){
 						{
 							name : 'name',
 							index : 'name',
-							width : 100,
+							width : 150,
 							align : "center",
 							sortable:true
 						},
 						{
 							name : 'description',
 							index : 'Description',
-							width : 100,
+							width : 50,
 							align : "center",
 							sortable:true
 						},
@@ -89,14 +89,14 @@ function list_project(){
 						{
 							name : 'addTimes',
 							index : 'AddTimes',
-							width : 100,
+							width : 150,
 							align : "center",
 							sortable:true
 						},
 						{
 							name:'lastCalcTimes',
 							index:'LastCalcTimes',
-							width:100,
+							width:150,
 							align:'center',
 							sortable:true
 						},
@@ -122,7 +122,7 @@ function list_project(){
 						{				
 							name : 'ProfileOut',
 							index : 'ProfileOut',
-							width : 100,
+							width :100,
 							align : "center",
 							formatter : function(value, grid, rows,
 									state) {
@@ -147,7 +147,7 @@ function list_project(){
 //				autowidth:true,
 				rowNum:10,//每一页的行数
 				height: 'auto',
-				width:1254,
+				width:1070,
 				rowList:[10,20,30],
 				pager: '#ProjectPager',
 				sortname: 'ID',

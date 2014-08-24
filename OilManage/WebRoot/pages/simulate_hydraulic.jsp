@@ -79,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="container marketing condiv" style="width:1200px;margin-top:30px;">
 	    	
 	    	<div class="container-fluid">
-				<div class="row-fluid">
+				<div class="row-fluid row-fluid2">
 					<div class="span12">
 					<div class="page-header">
 						<h2>单相管网水力计算&nbsp;<small>管网模拟</small></h2>
