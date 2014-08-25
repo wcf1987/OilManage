@@ -18,10 +18,10 @@ import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
 import cn.edu.cup.tools.Tools;
 
 public class AlgorithmExcelAction {
-	public static String ExcelAlgBaseDir = "ExcelFrame\\";
-	public static String ExcelProBaseDir = "ExcelProject\\";
-	public static String AlgBaseDir = "uploadAlgorithm\\";
-	public static String uploadTemp = "uploadTemp\\";
+	public static String ExcelAlgBaseDir = "ExcelFrame/";
+	public static String ExcelProBaseDir = "ExcelProject/";
+	public static String AlgBaseDir = "uploadAlgorithm/";
+	public static String uploadTemp = "uploadTemp/";
 	int algID;
 	int sheetID;
 	int proID;

@@ -22,10 +22,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/carousel.css">
 	<link rel="stylesheet" href="js/upload/uploadify.css">
-	<link rel="stylesheet" media="screen" type="text/css"
-		href="editor/assets/css/style.css" />
-	<link rel="stylesheet" media="screen" type="text/css"
-		href="editor/assets/css/minimap.css" />
+	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/style.css" />
+	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/minimap.css" />
 
 	<script type="text/javascript" src="editor/assets/javascript/json2.js"></script>
 	<script type="text/javascript" src="editor/assets/javascript/jquery-1.11.0.min.js"></script>
@@ -52,10 +50,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<script defer="defer" type="text/javascript" src="js/global.js"></script>
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
-	
-	<script defer="defer" type="text/javascript" src="js/simulate.js"></script>
 	<script defer="defer" type="text/javascript" src="js/dynamicSheet.js"></script>
 	<script defer="defer" type="text/javascript" src="js/project.js"></script>	
+	<script defer="defer" type="text/javascript" src="js/simulate.js"></script>
 	
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/colorPicker_new.css" />
@@ -64,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 自定义 -->
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>	
 	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>		
-	<link rel="stylesheet" type="text/css" href="css/simulate_thermal.css"/>
+	<link rel="stylesheet" type="text/css" href="css/simulate_hydraulic.css"/>
 	<link rel="stylesheet" type="text/css" href="css/dynamicSheet.css" />
 	
 
@@ -82,11 +79,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row-fluid row-fluid2">
 					<div class="span12">
 					<div class="page-header">
-						<h2>单相管网热力计算&nbsp;<small>管网模拟</small></h2>
-						<input id="curAlgID" style="display:none" value="2"/>
+						<h2>系统扩建设计&nbsp;</h2>
+						<input id="curAlgID" style="display:none" value="5"/>
 						<input id="proID" style="display:none" value=""/>
-						<input id="inputSheetNum" style="display:none" value="5"/>
-						<input id="outputSheetNum" style="display:none" value="4"/>
+						<input id="inputSheetNum" style="display:none" value="4"/>
+						<input id="outputSheetNum" style="display:none" value="3"/>
 						
 						<!-- 
 						if (id = 0)，井底流压计算；if (id = 1)，单气相管网水力计算；if (id = 2)，单气相管网热力计算；if (id = 3)，气固两相管网水力计算；if (id = 4)，气液两相管网水力计算
@@ -101,13 +98,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						    <li class='tab'><a href="#output_tab">输出</a></li>					    
 					    </ul>  
 						<div id="input_tab"><!-- 节点数据 -->					
-							<%@ include file="simulate_thermal/input_tab.jsp" %>
+							<%@ include file="optimize_sysexpand/input_tab.jsp" %>
 			    		</div>
 			    		<div id="run_tab"><!-- 节点数据 -->
-							<%@ include file="simulate_thermal/run_tab.jsp" %>
+							<%@ include file="optimize_sysexpand/run_tab.jsp" %>
 			    		</div>
 			    		<div id="output_tab"><!-- 节点数据 -->	
-							<%@ include file="simulate_thermal/output_tab.jsp" %>
+							<%@ include file="optimize_sysexpand/output_tab.jsp" %>
 			    		</div>
 					</div>	            			
 										
@@ -122,54 +119,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <%@ include file="commons/footer.jsp" %>
     </div>
 	 
-	<%@ include file="simulate_thermal/modal.jsp" %>
+		<%@ include file="optimize_sysexpand/modal.jsp" %>
 	<div id="isRunning" style="display:none;padding:90px 120px;width:400px;height:100px;border:10px solid;border-radius:10px;background-color:white;">
 		<span>正在计算......</span>
 	</div> 
-		
-		<script type="text/javascript">
-/* 
-		$().ready(function(){
-			$('#hydraulic_tab,#input-container,#output-container').easytabs({
-				animate: false
-			});	
-			$('#importExcel').uploadify({
-				'swf' : 'js/upload/uploadify.swf',				
-				'cancelImg'   : 'js/upload/cancel.png',
-				'uploader' : 'uploadExcel.action',
-				'queueID' : 'fileQueue',
-				'auto' : true,
-				'multi' : false,
-				'buttonText' : '导入Excel',
-				'fileSizeLimit' : '5MB',
-				'fileObjName' : 'excelImport',
-				'onUploadSuccess' : uploadComplete,
-				'method' : 'post',
-				'fileTypeDesc' : '请选择xls xlsx文件',
-			    'fileTypeExts' : '*.xls; *.xlsx;',
-			    'onUploadStart': function (file) { 		
-			    	$("#importExcel").uploadify("settings", "formData",
-			    			{ 'proID':$("#proID").val(),'algID':$("#curAlgID").val(),'InOrOut':"In" });  
-			    }
- 			
-			});
-			}); 
-		function uploadComplete(file, data, response) {
-			var tempJson = jQuery.parseJSON(data);
-			if(tempJson['msg']==null||tempJson['msg']==''){
-				alert("上传成功！");
-				//openProject($("#proID").val());
-				var sheetDiv = "#sheet";
-				for(var i=0;i<5;i++){//刷新5个表格
-			    	$(sheetDiv+i).trigger("reloadGrid");
-			    }
-			}else{
-				alert(tempJson['msg']);
-			}
-		}
- */
 
-		</script>
 		   
   </body>
   

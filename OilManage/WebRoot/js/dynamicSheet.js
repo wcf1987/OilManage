@@ -199,7 +199,8 @@ function SheetGrid() {
 	}
 	this.reloadGrid=function(){
 		var sheetDiv = "#sheet";
-		for(var i=0;i<5;i++){//刷新5个表格
+		var inputSheetNum=$("#inputSheetNum").val();
+		for(var i=0;i<inputSheetNum;i++){//刷新5个表格
 	    	$(sheetDiv+i).trigger("reloadGrid");
 	    }
 	}

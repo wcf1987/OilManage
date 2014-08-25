@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %> 
     <base href="<%=basePath%>">
     
-    <title>系统模拟</title>
+    <title>系统优化</title>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=9" />
 	
@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 自定义 -->
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>	
 	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>		
-	<link rel="stylesheet" type="text/css" href="css/simulate_thermal.css"/>
+	<link rel="stylesheet" type="text/css" href="css/simulate_hydraulic.css"/>
 	<link rel="stylesheet" type="text/css" href="css/dynamicSheet.css" />
 	
 
@@ -82,11 +82,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row-fluid row-fluid2">
 					<div class="span12">
 					<div class="page-header">
-						<h2>单相管网热力计算&nbsp;<small>管网模拟</small></h2>
-						<input id="curAlgID" style="display:none" value="2"/>
+						<h2>参数设计&nbsp;<small>整装区块设计</small></h2>
+						<input id="curAlgID" style="display:none" value="8"/>
 						<input id="proID" style="display:none" value=""/>
-						<input id="inputSheetNum" style="display:none" value="5"/>
-						<input id="outputSheetNum" style="display:none" value="4"/>
+						<input id="inputSheetNum" style="display:none" value="16"/>
+						<input id="outputSheetNum" style="display:none" value="9"/>
 						
 						<!-- 
 						if (id = 0)，井底流压计算；if (id = 1)，单气相管网水力计算；if (id = 2)，单气相管网热力计算；if (id = 3)，气固两相管网水力计算；if (id = 4)，气液两相管网水力计算
@@ -101,13 +101,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						    <li class='tab'><a href="#output_tab">输出</a></li>					    
 					    </ul>  
 						<div id="input_tab"><!-- 节点数据 -->					
-							<%@ include file="simulate_thermal/input_tab.jsp" %>
+							<%@ include file="optimize_parameter/input_tab.jsp" %>
 			    		</div>
 			    		<div id="run_tab"><!-- 节点数据 -->
-							<%@ include file="simulate_thermal/run_tab.jsp" %>
+							<%@ include file="optimize_parameter/run_tab.jsp" %>
 			    		</div>
 			    		<div id="output_tab"><!-- 节点数据 -->	
-							<%@ include file="simulate_thermal/output_tab.jsp" %>
+							<%@ include file="optimize_parameter/output_tab.jsp" %>
 			    		</div>
 					</div>	            			
 										
@@ -122,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <%@ include file="commons/footer.jsp" %>
     </div>
 	 
-	<%@ include file="simulate_thermal/modal.jsp" %>
+	<%@ include file="optimize_parameter/modal.jsp" %>
 	<div id="isRunning" style="display:none;padding:90px 120px;width:400px;height:100px;border:10px solid;border-radius:10px;background-color:white;">
 		<span>正在计算......</span>
 	</div> 

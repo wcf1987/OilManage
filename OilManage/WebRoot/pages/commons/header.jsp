@@ -64,7 +64,7 @@ User userlogin=(User)(session.getAttribute("user"));
 		                    <a tabindex="-1" href="javascript:;">整装区块设计</a>
 		                    <ul class="dropdown-menu">
 		                        <li><a tabindex="-1" href="pages/optimize_global.jsp">整体设计</a></li>
-		                        <li><a tabindex="-1" href="pages/optimizez_layout.jsp">布局设计</a></li>
+		                        <li><a tabindex="-1" href="pages/optimize_layout.jsp">布局设计</a></li>
 		                        <li><a tabindex="-1" href="pages/optimize_parameter.jsp">参数设计</a></li>
 		                        <li class="divider"></li>
 		                        <li class="dropdown-submenu">

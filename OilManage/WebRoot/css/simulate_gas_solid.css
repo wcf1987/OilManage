@@ -1,0 +1,45 @@
+.page-header{margin-top:-70px;color:#000}
+
+.popdiv
+{
+    position:absolute;
+    width:auto;
+    height:auto;
+   /*  border:1px solid #333333; */
+    background-color:white;
+    text-align:center;
+    line-height:400%;
+    font-size:13px;
+    left:20%;
+    top:10%;
+    
+    border: 5px solid #dedede;
+    -moz-border-radius: 15px;      /* Gecko browsers */
+    -webkit-border-radius: 15px;   /* Webkit browsers */
+    border-radius:15px;            /* W3C syntax */
+    z-index:101
+    
+}
+.close{
+	font-size:18px;
+	margin-top:2px;
+	margin-right:5px;
+}
+
+.nav_control{
+	background-color:#E5E5E5;
+	border:1px solid;
+}
+.nav_control ul{
+	margin-top:1px;
+	margin-bottom:1px;
+}
+.nav_control ul li{
+	margin-right:5px;
+	font-size:15px;
+}
+
+#basedata_tabs1{margin-top:-10px;margin-bottom:20px;}
+#basedata_tabs2{margin-top:-10px;margin-bottom:20px;}
+#basedata_tabs3{margin-top:-10px;margin-bottom:20px;}
+#basedata_tabs4{margin-top:-10px;margin-bottom:20px;}
