@@ -316,7 +316,7 @@ public class SheetContent {
 			}
 			
 		}
-		if(getName().indexOf("管道")!=-1){			 
+		/*if(getName().indexOf("管道")!=-1){			 
 			for(int i=1;i<this.sheetContent.size();i++){
 				Line e=new Line();
 				List<String> lineStr=this.sheetContent.get(i);
@@ -329,7 +329,7 @@ public class SheetContent {
 				temp.add(e);
 			}
 			
-		}
+		}*/
 		if(getName().indexOf("管段")!=-1){			 
 			for(int i=1;i<this.sheetContent.size();i++){
 				Line e=new Line();
