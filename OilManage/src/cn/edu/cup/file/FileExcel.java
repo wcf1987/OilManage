@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +18,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import cn.edu.cup.map.business.Graphi;
+import cn.edu.cup.map.business.Line;
+import cn.edu.cup.map.business.Point;
 import cn.edu.cup.tools.Tools;
-
-import com.opensymphony.xwork2.ActionContext;
 
 public class FileExcel {
 	private static String ExcelAlgBaseDir="ExcelFrame";
@@ -195,6 +197,77 @@ public class FileExcel {
 			}
 		
 	}
+	public Graphi getGraphi() {
+		Graphi a=new Graphi();
+		a.setLines(getLines());
+		a.setPoints(getPoints());
+		return a;
+	}
+	private Map<String, Point> getPoints() {
+		Map<String,Point> Points=new HashMap<String,Point>();
+		for(int i=0;i<this.excleContent.size();i++){
+			
+			SheetContent temp=this.excleContent.get(i);
+			
+			Points.putAll(temp.getPoints());
+			
+		}	
+		return Points;
+	}
+	private List<Line> getLines() {
+		List<Line> lines=new ArrayList<Line>();
+		for(int i=0;i<this.excleContent.size();i++){
+			
+			SheetContent temp=this.excleContent.get(i);
+			
+			lines.addAll(temp.getLines());
+			
+		}	
+		
+		
+		return lines;
+	}
+	public Graphi getObstacleGraphi() {
+		Graphi a=null;
+		for(int i=0;i<this.excleContent.size();i++){
+			
+			SheetContent temp=this.excleContent.get(i);
+			
+			if(temp.getName().equals("障碍区")){
+				a=temp.getObstacle();
+			}
+			
+		}
+		
+		return a;
+	}
+	public Map<String, List<Point>> getObstacleMap() {
+		 Map<String, List<Point>> a=new HashMap<String, List<Point>>();
+		for(int i=0;i<this.excleContent.size();i++){
+			
+			SheetContent temp=this.excleContent.get(i);
+			
+			if(temp.getName().equals("障碍区")){
+				a=temp.getObstacleMap();
+			}
+			
+		}
+		 return a;
+	}
+	public SheetContent getObstacleSheet() {
+		for(int i=0;i<this.excleContent.size();i++){
+			
+			SheetContent temp=this.excleContent.get(i);
+			
+			if(temp.getName().equals("障碍区")){
+				return temp;
+			}
+			
+		}
+		return null;
+	}
+
+
 
 
 }

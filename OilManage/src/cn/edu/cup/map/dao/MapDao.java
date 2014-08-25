@@ -105,12 +105,12 @@ public class MapDao {
 			Point p=iter.next();
 			Query q = session.createSQLQuery("insert into T_MapPoint values (?,?,?,?,?,?,?)");
 			q.setParameter(0, proid);
-			q.setParameter(1, p.getName());
+			/*q.setParameter(1, p.getName());
 			q.setParameter(2, p.getType().toString());
 			q.setParameter(3, p.getGeodeticCoordinatesX());
 			q.setParameter(4, p.getGeodeticCoordinatesY());
 			q.setParameter(5, p.getLatitude());
-			q.setParameter(6, p.getLongitude());
+			q.setParameter(6, p.getLongitude());*/
 			q.executeUpdate();
 		
 		}
@@ -176,7 +176,7 @@ public class MapDao {
 			  Object[] row = (Object[])l.get(i);;
 			  temp.setStart((String)row[0]);
 			  temp.setEnd((String)row[1]);
-			  temp.setType((Integer)row[2]);
+			  temp.setType(String.valueOf((Integer)row[2]));
 			  lines.add(temp);
 		}
 		
@@ -197,12 +197,12 @@ public class MapDao {
 			  temp=new Point();
 			  Object[] row = (Object[])l.get(i);;
 			  String proName=(String)row[0];
-			  temp.setName(proName);
-			  temp.setType(Point.getType((String)row[1]));
-			  temp.setGeodeticCoordinatesX((Double)row[2]);
-			  temp.setGeodeticCoordinatesY((Double)row[3]);
-			  temp.setLatitude((Double)row[4]);
-			  temp.setLongitude((Double)row[5]);
+			  //temp.setName(proName);
+			  //temp.setType(Point.getType((String)row[1]));
+			 // temp.setGeodeticCoordinatesX((Double)row[2]);
+			 // temp.setGeodeticCoordinatesY((Double)row[3]);
+			  //temp.setLatitude((Double)row[4]);
+			  //temp.setLongitude((Double)row[5]);
 
 			  points.put(proName, temp);
 		}

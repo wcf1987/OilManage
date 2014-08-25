@@ -1,5 +1,7 @@
 package cn.edu.cup.map.business;
 
+import java.util.Map;
+
 public class Line{
 	public Line(){
 		
@@ -13,22 +15,37 @@ public class Line{
 	public String getEnd() {
 		return end;
 	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public void setLength(String length) {
+		this.length = length;
+	}
+	public void setAttribute(Map<String, String> attribute) {
+		this.attribute = attribute;
+	}
 	public void setEnd(String end) {
 		this.end = end;
 	}
-	public int getType() {
-		return type;
-	}
-	public void setType(int type) {
-		this.type = type;
-	}
-	public Line(String start2, String end2, int i) {
+
+	public Line(String start2, String end2, String i) {
 		// TODO Auto-generated constructor stub
 		this.start=start2;
 		this.end=end2;
 		this.type=i;
 	}
+	public String getType() {
+		return type;
+	}
+	public String getLength() {
+		return length;
+	}
+	public Map<String, String> getAttribute() {
+		return attribute;
+	}
 	String start;
 	String end;
-	int type;
+	String type;
+	String length;
+	Map<String,String> attribute;
 }

@@ -1,14 +1,22 @@
 package cn.edu.cup.file;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.naming.ldap.StartTlsResponse;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+
+import cn.edu.cup.map.business.Graphi;
+import cn.edu.cup.map.business.Line;
+import cn.edu.cup.map.business.Point;
+import cn.edu.cup.tools.Tools;
 
 public class SheetContent {
 	public List<String> getTitle(){
@@ -232,5 +240,234 @@ public class SheetContent {
 		this.sheetContent.add(titile);
 		
 	}
+	public Map<String,Point> getPoints() {
+		Map<String,Point> points=new HashMap<String, Point>();
+		if(getName().indexOf("数据")!=-1||getName().indexOf("位置")!=-1){
+			for(int i=1;i<this.sheetContent.size();i++){
+				Point e=new Point();
+				List<String> lineStr=this.sheetContent.get(i);
+				if(this.sheetTitle.get("名称")==null){
+					return points;
+				}
+				e.setName(lineStr.get(this.sheetTitle.get("名称")));
+				e.setType(this.Name);
+				e.setAttribute(getAttribute(lineStr));
+				if(getAttrLike(lineStr,"X")==null){
+					return points;
+				}
+				e.setGeodeticCoordinatesX(getAttrLike(lineStr,"X"));
+				e.setGeodeticCoordinatesY(getAttrLike(lineStr,"Y"));
+				e.getLatLonFromGeo();
+				points.put(e.getName(),e);
+			}
+		}
+		return points;
+	}
+	private Double getAttrLike(List<String> lineStr, String search) {
+		String titleS;
+		String value;
+		int index;
+		Map<String,String> t=new HashMap<String,String>();
+		 for(Iterator<String> iter=sheetTitle.keySet().iterator();iter.hasNext();){
+			 titleS=iter.next();
+			 index=sheetTitle.get(titleS);
+			 if(titleS.indexOf(search)!=-1){
+				return  Double.valueOf(lineStr.get(index));
+			 }
+			
+			
+		 }
+		 return null;
+	
+	}
+	public Map<String,String> getAttribute(List<String> lineStr){
+	
+		String titleS;
+		String value;
+		int index;
+		Map<String,String> t=new HashMap<String,String>();
+		 for(Iterator<String> iter=sheetTitle.keySet().iterator();iter.hasNext();){
+			 titleS=iter.next();
+			 index=sheetTitle.get(titleS);
+			 if(index==0){
+				 continue;
+			 }
+			 if(index>=lineStr.size()){
+				 value="";
+			 }else{
+			 value=lineStr.get(index);
+			 }
+			 t.put(titleS, value);
+		 }
+		return t;
+	}
+	public List<Line> getLines() {
+		List<Line> temp=new ArrayList<Line>();
+		if(getName().indexOf("连接")!=-1){			 
+			for(int i=1;i<this.sheetContent.size();i++){
+				Line e=new Line();
+				List<String> lineStr=this.sheetContent.get(i);
+				e.setStart(lineStr.get(this.sheetTitle.get("管段顶点1")));
+				e.setEnd(lineStr.get(this.sheetTitle.get("管段顶点2")));
+				e.setLength(lineStr.get(this.sheetTitle.get("管段长度（km）")));
+				e.setType(this.Name);
+				e.setAttribute(getAttribute(lineStr));
+				temp.add(e);
+			}
+			
+		}
+		if(getName().indexOf("管道")!=-1){			 
+			for(int i=1;i<this.sheetContent.size();i++){
+				Line e=new Line();
+				List<String> lineStr=this.sheetContent.get(i);
+				
+				e.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
+				e.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));
+				e.setLength(lineStr.get(this.sheetTitle.get("管长（km）")));
+				e.setType(this.Name);
+				e.setAttribute(getAttribute(lineStr));
+				temp.add(e);
+			}
+			
+		}
+		if(getName().indexOf("管段")!=-1){			 
+			for(int i=1;i<this.sheetContent.size();i++){
+				Line e=new Line();
+				List<String> lineStr=this.sheetContent.get(i);
+				String type=lineStr.get(this.sheetTitle.get("类型"));
+				if(!type.equalsIgnoreCase("pipe")){
+					continue;
+				}
+				e.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
+				e.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));
+				e.setLength(lineStr.get(this.sheetTitle.get("管长（km）")));
+				e.setType(this.Name);
+				e.setAttribute(getAttribute(lineStr));
+				temp.add(e);
+			}
+			
+		}
+		return temp;
+	}
+	public Graphi getObstacle() {
+		Graphi a=new Graphi();
+		List<Line> lines=new ArrayList<Line>();
+		Map<String,Point> points=new HashMap<String,Point>();
+		String lastName="";
+		Point lastPoint=null;
+		Point startPoint=null;
+		String name="";
+		for(int i=1;i<this.sheetContent.size();i++){
+			List<String> lineStr=this.sheetContent.get(i);
+			Point e=new Point();
+			Line line=new Line();
+			e.setGeodeticCoordinatesX(getAttrLike(lineStr,"X"));
+			e.setGeodeticCoordinatesY(getAttrLike(lineStr,"Y"));
+			e.getLatLonFromGeo();
+			String name1=lineStr.get(this.sheetTitle.get("名称"));
+	
+			if(name1==null||name1.equals("")){
+				
+			}else{
+				name=name1;
+			}
+			e.setName(Tools.getUUID());
+			e.setType(name);
+			points.put(e.getName(),e);
+			if(startPoint==null){
+				startPoint=e;
+			}
+			if(lastName.equals(name)){
+				
+				line.setStart(lastPoint.getName());
+				line.setEnd(e.getName());
+				lines.add(line);
+			}else{
+				if(startPoint!=e){
+				line.setStart(lastPoint.getName());
+				line.setEnd(startPoint.getName());
+				startPoint=e;
+				lines.add(line);
+				}
+				lastName=name;
+				
+			}
+			lastPoint=e;
+		}
+		Line line=new Line();
+		line.setStart(lastPoint.getName());
+		line.setEnd(startPoint.getName());		
+		lines.add(line);
+		a.setLines(lines);
+		a.setPoints(points);
+		return a;
+	}
+	public Map<String, List<Point>> getObstacleMap() {
+		
+		Map<String, List<Point>> pointsMap=new HashMap<String,List<Point>>();
+		String lastName="";
+		Point lastPoint=null;
+		Point startPoint=null;
+		String name="";
+		List<Point> a=new ArrayList<>();
+		for(int i=1;i<this.sheetContent.size();i++){
+			List<String> lineStr=this.sheetContent.get(i);
+			Point e=new Point();
+			Line line=new Line();
+			e.setGeodeticCoordinatesX(getAttrLike(lineStr,"X"));
+			e.setGeodeticCoordinatesY(getAttrLike(lineStr,"Y"));
+			e.getLatLonFromGeo();
+			String name1=lineStr.get(this.sheetTitle.get("名称"));
+	
+			if(name1==null||name1.equals("")){
+				
+			}else{
+				name=name1;
+			}
+			e.setName(Tools.getUUID());
+			e.setType(name);
+		
+			if(startPoint==null){
+				startPoint=e;
+			}
+			if(lastName.equals(name)){
+				a.add(e);
+				
+			}else{
+				if(startPoint!=e){
+				
+				pointsMap.put(e.getType(), a);
+				a=new ArrayList<Point>();
+				a.add(e);
+				startPoint=e;
+				}
+				lastName=name;
+				
+			}
+			lastPoint=e;
+		}
+		pointsMap.put(lastPoint.getType(), a);
+		return pointsMap;
+	}
 
+	public void addObstacle(List<Map<String, String>> poly, String obsName) {
+		Integer index=Double.valueOf(this.sheetContent.get(this.sheetContent.size()-1).get(1)).intValue();
+		for(int i=0;i<poly.size();i++){
+			index++;
+			Map<String,String> p=poly.get(i);
+			p.put("高程（m）", "0");
+			p.put("序号", String.valueOf(index));
+			
+			if(i==0){
+				p.put("名称", obsName);
+				p.put("顶点数量", String.valueOf(poly.size()));
+			}else{
+				p.put("名称", "");
+				p.put("顶点数量","");
+			}
+			
+			addRow(p);
+		}
+		
+	}
 }

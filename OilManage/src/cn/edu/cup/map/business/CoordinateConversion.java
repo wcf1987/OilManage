@@ -28,7 +28,18 @@ public class CoordinateConversion
     return c.convertLatLonToUTM(latitude, longitude);
 
   }
+  public double latLon2UTMX(double latitude, double longitude)
+  {
+    LatLon2UTM c = new LatLon2UTM();
+    return c.convertLatLonToUTMX(latitude, longitude);
 
+  }
+  public double latLon2UTMY(double latitude, double longitude)
+  {
+    LatLon2UTM c = new LatLon2UTM();
+    return c.convertLatLonToUTMY(latitude, longitude);
+
+  }
   private void validate(double latitude, double longitude)
   {
     if (latitude < -90.0 || latitude > 90.0 || longitude < -180.0
@@ -107,7 +118,50 @@ public class CoordinateConversion
       return UTM;
 
     }
+    public double convertLatLonToUTMX(double latitude, double longitude)
+    {
+      validate(latitude, longitude);
+      String UTM = "";
 
+      setVariables(latitude, longitude);
+
+      String longZone = getLongZone(longitude);
+      LatZones latZones = new LatZones();
+      String latZone = latZones.getLatZone(latitude);
+
+      double _easting = getEasting();
+      double _northing = getNorthing(latitude);
+
+      UTM = longZone + " " + latZone + " " + ((int) _easting) + " "
+          + ((int) _northing);
+      // UTM = longZone + " " + latZone + " " + decimalFormat.format(_easting) +
+      // " "+ decimalFormat.format(_northing);
+
+      return _easting;
+
+    }
+    public double convertLatLonToUTMY(double latitude, double longitude)
+    {
+      validate(latitude, longitude);
+      String UTM = "";
+
+      setVariables(latitude, longitude);
+
+      String longZone = getLongZone(longitude);
+      LatZones latZones = new LatZones();
+      String latZone = latZones.getLatZone(latitude);
+
+      double _easting = getEasting();
+      double _northing = getNorthing(latitude);
+
+      UTM = longZone + " " + latZone + " " + ((int) _easting) + " "
+          + ((int) _northing);
+      // UTM = longZone + " " + latZone + " " + decimalFormat.format(_easting) +
+      // " "+ decimalFormat.format(_northing);
+
+      return _northing;
+
+    }
     protected void setVariables(double latitude, double longitude)
     {
       latitude = degreeToRadian(latitude);
