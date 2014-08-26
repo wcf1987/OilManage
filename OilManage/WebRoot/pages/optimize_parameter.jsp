@@ -50,9 +50,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script defer="defer" type="text/javascript" src="editor/lib/tools.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/kinecttab.js"></script>
 	
+		
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4bfe7b8632739c89a1b8e95529da1d97"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+	<script type="text/javascript" src="js/map_gis.js"></script>
+	
 	<script defer="defer" type="text/javascript" src="js/global.js"></script>
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
-	
 	<script defer="defer" type="text/javascript" src="js/simulate.js"></script>
 	<script defer="defer" type="text/javascript" src="js/dynamicSheet.js"></script>
 	<script defer="defer" type="text/javascript" src="js/project.js"></script>	
@@ -71,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
     
   
-  <body  id="body"  onload="initLight();">
+  <body  id="body" >
 
 	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
@@ -83,7 +88,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="span12">
 					<div class="page-header">
 						<h2>参数设计&nbsp;<small>整装区块设计</small></h2>
-						<input id="curAlgID" style="display:none" value="8"/>
+						<input id="curAlgID" style="display:none" value="9"/>
 						<input id="proID" style="display:none" value=""/>
 						<input id="inputSheetNum" style="display:none" value="16"/>
 						<input id="outputSheetNum" style="display:none" value="9"/>
@@ -126,50 +131,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="isRunning" style="display:none;padding:90px 120px;width:400px;height:100px;border:10px solid;border-radius:10px;background-color:white;">
 		<span>正在计算......</span>
 	</div> 
-		
 		<script type="text/javascript">
-/* 
-		$().ready(function(){
-			$('#hydraulic_tab,#input-container,#output-container').easytabs({
-				animate: false
-			});	
-			$('#importExcel').uploadify({
-				'swf' : 'js/upload/uploadify.swf',				
-				'cancelImg'   : 'js/upload/cancel.png',
-				'uploader' : 'uploadExcel.action',
-				'queueID' : 'fileQueue',
-				'auto' : true,
-				'multi' : false,
-				'buttonText' : '导入Excel',
-				'fileSizeLimit' : '5MB',
-				'fileObjName' : 'excelImport',
-				'onUploadSuccess' : uploadComplete,
-				'method' : 'post',
-				'fileTypeDesc' : '请选择xls xlsx文件',
-			    'fileTypeExts' : '*.xls; *.xlsx;',
-			    'onUploadStart': function (file) { 		
-			    	$("#importExcel").uploadify("settings", "formData",
-			    			{ 'proID':$("#proID").val(),'algID':$("#curAlgID").val(),'InOrOut':"In" });  
-			    }
- 			
-			});
-			}); 
-		function uploadComplete(file, data, response) {
-			var tempJson = jQuery.parseJSON(data);
-			if(tempJson['msg']==null||tempJson['msg']==''){
-				alert("上传成功！");
-				//openProject($("#proID").val());
-				var sheetDiv = "#sheet";
-				for(var i=0;i<5;i++){//刷新5个表格
-			    	$(sheetDiv+i).trigger("reloadGrid");
-			    }
-			}else{
-				alert(tempJson['msg']);
-			}
-		}
- */
-
-		</script>
+	$('#load_modal').modal({
+		     backdrop:'static',
+		     keyboard:false,
+		     show:true
+		 });
+	</script>		
 		   
   </body>
   

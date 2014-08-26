@@ -333,7 +333,7 @@ public class AlgorithmExcelAction {
 			msg = "请求的参数页面超出范围";
 			return "SUCCESS";
 		}
-		sheetContent = excel.getSheetByID(sheetID);
+		sheetContent = excel.getSheetByID(sheetID);//获取第sheetID个sheet
 		records = sheetContent.getSize()-1;
 		sheetContent.buildContent(page, rows);
 		content = sheetContent.getContent();
