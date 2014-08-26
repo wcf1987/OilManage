@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2014-08-26 22:56:10
+Date: 2014-08-26 23:14:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,8 +40,8 @@ CREATE TABLE `t_algorithmscycle` (
 -- ----------------------------
 -- Records of t_algorithmscycle
 -- ----------------------------
-INSERT INTO `t_algorithmscycle` VALUES ('1', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-02 11:10:13', '单气相管网水力计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', '单气相管网水力计算输入表.xls', '单气相管网水力计算结果.xls');
-INSERT INTO `t_algorithmscycle` VALUES ('2', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-02 11:10:13', '单气相管网热力计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', '单气相管网热力计算输入表.xls', '单气相管网热力计算结果.xls');
+INSERT INTO `t_algorithmscycle` VALUES ('1', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-02 11:10:13', '单气相管网水力计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', '单相管网水力计算(不考虑热力)输入表.xls', '单相管网水力计算结果(不考虑热力.xls');
+INSERT INTO `t_algorithmscycle` VALUES ('2', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-02 11:10:13', '单气相管网热力计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', '单相管网水力计算(考虑热力)输入表.xls', '单相管网水力计算结果(考虑热力).xls');
 INSERT INTO `t_algorithmscycle` VALUES ('3', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-02 11:10:13', '气固两相管网水力计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', '气固两相管网水力计算输入表.xls', '气固两相管网水力计算结果.xls');
 INSERT INTO `t_algorithmscycle` VALUES ('4', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-02 11:10:13', '气液两相管网水力计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', '气液两相管网水力计算输入表.xls', '气液两相管网水力计算结果.xls');
 INSERT INTO `t_algorithmscycle` VALUES ('5', '0', '0', '0', '1', '1', '2014-03-28 10:47:45', '2014-08-25 10:47:45', '自动计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', null, null);
