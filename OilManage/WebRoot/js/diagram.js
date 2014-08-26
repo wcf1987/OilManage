@@ -9,14 +9,15 @@ $(function(){
 		        },
 		});
 
-		$('#load_modal>.modal-dialog').css({
+/*		$('#load_modal>.modal-dialog').css({
 		 'margin-top': function () {
 		            return ($(window).height())/2-323;
 		        },
 		 'margin-right':function () {
 		            return ($(window).width())/2-300;
 		        },
-		});
+		});*/
+	
 	//$('#tab-container').easytabs();			
 });
 function loadFill(check) {

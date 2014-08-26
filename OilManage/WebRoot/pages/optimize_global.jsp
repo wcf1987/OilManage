@@ -48,6 +48,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script defer="defer" type="text/javascript" src="editor/lib/tools.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/kinecttab.js"></script>
 	
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4bfe7b8632739c89a1b8e95529da1d97"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+	<script type="text/javascript" src="js/map_gis.js"></script>
+	
 	<script defer="defer" type="text/javascript" src="js/global.js"></script>
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
 	<script defer="defer" type="text/javascript" src="js/dynamicSheet.js"></script>
@@ -68,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
     
   
-  <body  id="body"  onload="initLight();">
+  <body  id="body">
 
 	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
@@ -80,7 +85,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="span12">
 					<div class="page-header">
 						<h2>整体设计&nbsp;<small>整装区块设计</small></h2>
-						<input id="curAlgID" style="display:none" value="6"/>
+						<input id="curAlgID" style="display:none" value="7"/>
 						<input id="proID" style="display:none" value=""/>
 						<input id="inputSheetNum" style="display:none" value="10"/>
 						<input id="outputSheetNum" style="display:none" value="19"/>
@@ -124,7 +129,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<span>正在计算......</span>
 	</div> 
 
-		   
+	<script type="text/javascript">
+	$('#load_modal').modal({
+		     backdrop:'static',
+		     keyboard:false,
+		     show:true
+		 });
+	</script>		   
   </body>
   
 </html>
