@@ -18,6 +18,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
 import cn.edu.cup.map.business.Graphi;
 import cn.edu.cup.map.business.Line;
 import cn.edu.cup.map.business.Point;
@@ -203,8 +204,25 @@ public class FileExcel {
 		a.setPoints(getPoints());
 		return a;
 	}
+	public int getType(int algid){
+		AlgorithmsCycleDao dao=new AlgorithmsCycleDao();
+		return dao.getAlgType(algid);
+		
+	}
 	private Map<String, Point> getPoints() {
+		
+		int type=getType(algID);
 		Map<String,Point> Points=new HashMap<String,Point>();
+		if(type==1){
+			for(int i=0;i<this.excleContent.size();i++){
+				
+				SheetContent temp=this.excleContent.get(i);
+				
+				Points.putAll(temp.getSimulationPoints(this));
+				
+			}
+		}
+		if(type==2){		
 		for(int i=0;i<this.excleContent.size();i++){
 			
 			SheetContent temp=this.excleContent.get(i);
@@ -212,17 +230,34 @@ public class FileExcel {
 			Points.putAll(temp.getPoints());
 			
 		}	
+		}
 		return Points;
 	}
 	private List<Line> getLines() {
+		
+		
+		int type=getType(algID);
 		List<Line> lines=new ArrayList<Line>();
-		for(int i=0;i<this.excleContent.size();i++){
+		if(type==1){
+			for(int i=0;i<this.excleContent.size();i++){
+				
+				SheetContent temp=this.excleContent.get(i);
+				
+				lines.addAll(temp.getLines());
+				
+			}
+		}
+		if(type==2){		
 			
-			SheetContent temp=this.excleContent.get(i);
-			
-			lines.addAll(temp.getLines());
-			
-		}	
+			for(int i=0;i<this.excleContent.size();i++){
+				
+				SheetContent temp=this.excleContent.get(i);
+				
+				lines.addAll(temp.getLines());
+				
+			}	
+		}
+		
 		
 		
 		return lines;
@@ -268,6 +303,18 @@ public class FileExcel {
 	}
 
 
+	public SheetContent getSheetByName(FileExcel excel,String name){
+		for(int i=0;i<excel.excleContent.size();i++){
+			
+			SheetContent temp=this.excleContent.get(i);
+			
+			if(temp.getName().equals(name)){
+				return temp;
+			}
+			
+		}
+		return null;
+	}
 
 
 }

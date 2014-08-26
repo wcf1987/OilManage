@@ -8,8 +8,12 @@ public class Point {
 
 	String type;
 
-
-
+	public void addAttr(String key,String value){
+		this.attribute.put(key, value);
+	}
+	public void addAttr(Map<String,String>  KV){
+		this.attribute.putAll(KV);;
+	}
 	/**
 	 * da di zuo biao 
 	 */

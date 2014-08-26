@@ -24,6 +24,7 @@ public class SheetContent {
 	}
 	List<Map<String,String>> content;
 	List<ColModel> colModel;
+
 	public List<ColModel> getColModel() {
 		return colModel;
 	}
@@ -57,6 +58,9 @@ public class SheetContent {
 	public List<String> updateValueByIndex(List<String> list,int index,String valueNew){
 		list.set(index,valueNew);
 		return list;
+	}
+	public int getTitleByName(String name){
+		return this.sheetTitle.get(name);
 	}
 	public int buildContent(int page, int rows){
 		content=new ArrayList<Map<String,String>>();
@@ -262,6 +266,126 @@ public class SheetContent {
 			}
 		}
 		return points;
+	}
+	public Map<String,Point> getSimulationPoints(FileExcel f) {
+		Map<String,Point> points=new HashMap<String, Point>();
+		if(getName().indexOf("节点数据")!=-1){
+			for(int i=1;i<this.sheetContent.size();i++){
+				Point e=new Point();
+				List<String> lineStr=this.sheetContent.get(i);
+				if(this.sheetTitle.get("名称")==null){
+					return points;
+				}
+				e.setName(lineStr.get(this.sheetTitle.get("名称")));
+				e.setType(lineStr.get(this.sheetTitle.get("隶属关系")));
+				e.setAttribute(getAttribute(lineStr));
+				
+				SheetContent a=f.getSheetByName(f,e.getType()+"数据");
+				int row=getExcelDataIndex(a, a.getTitleByName("名称"), lineStr.get(this.sheetTitle.get("气井、气源或分输点名称")));
+				int col=a.getTitleByName("X坐标(m)");
+				double x=Double.valueOf(getExcelData(a,row,col));
+				col=a.getTitleByName("Y坐标(m)");
+				double y=Double.valueOf(getExcelData(a,row,col));
+				col=a.getTitleByName("高程(m)");
+				String z=getExcelData(a,row,col);
+				e.addAttr("高程(m)", z);
+				e.setGeodeticCoordinatesX(x);
+				e.setGeodeticCoordinatesY(y);
+				e.getLatLonFromGeo();
+				points.put(e.getName(),e);
+			}
+		}
+		if(getName().indexOf("管段连接")!=-1){
+			for(int i=1;i<this.sheetContent.size();i++){
+				Point e=new Point();
+				List<String> lineStr=this.sheetContent.get(i);
+				if(lineStr.get(sheetTitle.get("管段类型")).equalsIgnoreCase("Pipe")){
+					continue;
+				}
+				if(this.sheetTitle.get("名称")==null){
+					return points;
+				}
+				e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
+				String t=lineStr.get(this.sheetTitle.get("管段类型"));
+				if(t.equalsIgnoreCase("CentCompressor")){
+					e.setType("离心压缩机");
+				}
+				if(t.equalsIgnoreCase("ReciCompressor")){
+					e.setType("往复式压缩机");
+				}
+				e.setAttribute(getAttribute(lineStr));
+				
+				SheetContent a=f.getSheetByName(f,e.getType()+"数据");
+				int row=getExcelDataIndex(a, a.getTitleByName("名称"), lineStr.get(this.sheetTitle.get("设备名称")));
+				int col=a.getTitleByName("X坐标(m)");
+				double x=Double.valueOf(getExcelData(a,row,col));
+				col=a.getTitleByName("Y坐标(m)");
+				double y=Double.valueOf(getExcelData(a,row,col));
+				
+				Map attr1=a.getAttribute(a.sheetContent.get(row));
+				e.addAttr(attr1);
+				
+				
+				e.setGeodeticCoordinatesX(x);
+				e.setGeodeticCoordinatesY(y);
+				e.getLatLonFromGeo();
+				points.put(e.getName(),e);
+			}
+		}
+		return points;
+	}
+	public List<Line> getSimulationLines() {
+		List<Line> temp=new ArrayList<Line>();
+		if(getName().indexOf("管段连接")!=-1){			 
+			for(int i=1;i<this.sheetContent.size();i++){
+				
+				List<String> lineStr=this.sheetContent.get(i);
+				if(lineStr.get(sheetTitle.get("管段类型")).equalsIgnoreCase("Pipe")){
+					Line e=new Line();
+					e.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
+					e.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));
+					e.setLength(lineStr.get(this.sheetTitle.get("管长（km）")));
+					e.setType(this.Name);
+					e.setAttribute(getAttribute(lineStr));
+					temp.add(e);
+				}else{
+					Line e1=new Line();
+					Line e2=new Line();
+					String midlle=lineStr.get(this.sheetTitle.get("设备名称"));
+					e1.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
+					e1.setEnd(midlle);
+					e1.setLength(lineStr.get(this.sheetTitle.get("")));
+					e1.setType(this.Name);
+					e2.setStart(midlle);
+					e2.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));
+					e2.setLength(lineStr.get(this.sheetTitle.get("")));
+					e2.setType(this.Name);
+					//e.setAttribute(getAttribute(lineStr));
+					temp.add(e1);
+					temp.add(e2);
+				}
+				
+				
+			}
+			
+		}
+
+		return temp;
+	}
+	private int getExcelDataIndex(SheetContent sheet, int col, String value) {
+		List<List<String>> t1=sheet.sheetContent;
+		for(int i=1;i<t1.size();i++){
+			List<String> t2=t1.get(i);
+			if(t2.get(col).equalsIgnoreCase(value)){
+				return i;
+			}
+		}
+		return -1;
+	}
+	private String getExcelData(SheetContent sheet, int i,int j) {
+		List<List<String>> t1=sheet.sheetContent;
+		return t1.get(i).get(j);
+		
 	}
 	private Double getAttrLike(List<String> lineStr, String search) {
 		String titleS;

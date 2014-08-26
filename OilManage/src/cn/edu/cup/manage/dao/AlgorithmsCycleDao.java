@@ -144,7 +144,13 @@ public class AlgorithmsCycleDao {
 		return re;
 		
 	}
-
+	public int getAlgType(int algID){
+		String sql="select alg_type from t_algorithmscycle t2 where t2.id=?";
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, algID);
+		Integer count=((Integer)q.uniqueResult()).intValue();
+		return count;
+	}
 	public int updateAlgorithm(int id,String description, String authorID,String name,String filePath,String className) {
 		Date updateDate=new Date();
 		HibernateSessionManager.getThreadLocalTransaction();
