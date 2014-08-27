@@ -344,7 +344,7 @@ public class SheetContent {
 					Line e=new Line();
 					e.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
 					e.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));
-					e.setLength(lineStr.get(this.sheetTitle.get("管长（km）")));
+					e.setLength(lineStr.get(this.sheetTitle.get("管长(km)")));
 					e.setType(this.Name);
 					e.setAttribute(getAttribute(lineStr));
 					temp.add(e);

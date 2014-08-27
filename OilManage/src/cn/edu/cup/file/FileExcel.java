@@ -243,7 +243,7 @@ public class FileExcel {
 				
 				SheetContent temp=this.excleContent.get(i);
 				
-				lines.addAll(temp.getLines());
+				lines.addAll(temp.getSimulationLines());
 				
 			}
 		}

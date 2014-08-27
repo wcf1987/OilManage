@@ -52,7 +52,7 @@ function drawPoints(data){
 		if(id==0){
 			map.centerAndZoom(pointMap[i], 15);
 		}
-		
+		myicon = myjingkou;
 		if (p['type'] == '井数据') {
 			myicon = myjingkou;
 		}
@@ -142,10 +142,21 @@ function drawLines(data){
 				strokeWeight : 9,
 				strokeOpacity : 0.5
 			});
+			
+			
 			//map.addOverlay(polyline);
 			addArrow2(polyline, 5, Math.PI / 7)
 		}
-		
+		if (l['type'] == '管段连接') {
+			pointemp[0] = pointMap[l['start']];
+			pointemp[1] = pointMap[l['end']];
+			polyline = new BMap.Polyline(pointemp, {
+				strokeColor : "red",
+				strokeWeight : 3,
+				strokeOpacity : 0.5
+			});
+			addArrow2(polyline, 5, Math.PI / 7)
+		}
 		var s = "";
 		s= "类别:" + p['type']  + "<br>";
 		var attr=p['attribute'];
