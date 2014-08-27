@@ -107,7 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<%@ include file="optimize_sysexpand/input_tab.jsp" %>
 			    		</div>
 			    		<div id="run_tab"><!-- 节点数据 -->
-							<%@ include file="optimize_sysexpand/run_tab.jsp" %>
+							<%@ include file="optimize_common/run_tab.jsp" %>
 			    		</div>
 			    		<div id="output_tab"><!-- 节点数据 -->	
 							<%@ include file="optimize_sysexpand/output_tab.jsp" %>
@@ -125,7 +125,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <%@ include file="commons/footer.jsp" %>
     </div>
 	 
-		<%@ include file="optimize_sysexpand/modal.jsp" %>
+		<%@ include file="optimize_common/modal.jsp" %>
 	<div id="isRunning" style="display:none;padding:90px 120px;width:400px;height:100px;border:10px solid;border-radius:10px;background-color:white;">
 		<span>正在计算......</span>
 	</div> 

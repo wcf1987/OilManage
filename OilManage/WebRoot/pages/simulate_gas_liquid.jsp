@@ -50,9 +50,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script defer="defer" type="text/javascript" src="editor/lib/tools.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/kinecttab.js"></script>
 	
+		
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4bfe7b8632739c89a1b8e95529da1d97"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+	<script type="text/javascript" src="js/map_gis.js"></script>
+	
 	<script defer="defer" type="text/javascript" src="js/global.js"></script>
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
-	
 	<script defer="defer" type="text/javascript" src="js/simulate.js"></script>
 	<script defer="defer" type="text/javascript" src="js/dynamicSheet.js"></script>
 	<script defer="defer" type="text/javascript" src="js/project.js"></script>	
@@ -104,7 +109,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<%@ include file="simulate_gas_liquid/input_tab.jsp" %>
 			    		</div>
 			    		<div id="run_tab"><!-- 节点数据 -->
-							<%@ include file="simulate_gas_liquid/run_tab.jsp" %>
+							<%@ include file="simulate_common/run_tab.jsp" %>
 			    		</div>
 			    		<div id="output_tab"><!-- 节点数据 -->	
 							<%@ include file="simulate_gas_liquid/output_tab.jsp" %>
@@ -122,7 +127,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <%@ include file="commons/footer.jsp" %>
     </div>
 	 
-	<%@ include file="simulate_gas_liquid/modal.jsp" %>
+	<%@ include file="simulate_common/modal.jsp" %>
 	<div id="isRunning" style="display:none;padding:90px 120px;width:400px;height:100px;border:10px solid;border-radius:10px;background-color:white;">
 		<span>正在计算......</span>
 	</div> 
