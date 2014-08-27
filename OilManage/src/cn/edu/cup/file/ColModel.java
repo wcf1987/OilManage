@@ -51,7 +51,14 @@ public class ColModel {
 		}
 		if(this.name.equals("管段类型")){
 			this.edittype="select";
-			String str[] = {"CentCompressor","ReciCompressor","Pipe"};
+			String str[] = {"CentCompressor","ReciCompressor","Pipe","Valve","Filter"};
+			this.editoptions=getValueMap("value", getDoubleKeyMap(str));
+			
+			//this.editoptions="{value:{CentCompressor:'CentCompressor',ReciCompressor:'ReciCompressor',Pipe:'Pipe'}}";	
+		}
+		if(this.name.equals("隶属关系")){
+			this.edittype="select";
+			String str[] = {"气井","气源","分输点","其他"};
 			this.editoptions=getValueMap("value", getDoubleKeyMap(str));
 			
 			//this.editoptions="{value:{CentCompressor:'CentCompressor',ReciCompressor:'ReciCompressor',Pipe:'Pipe'}}";	

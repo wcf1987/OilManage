@@ -121,21 +121,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 
 
-	var map = new BMap.Map("allmap",{mapType: BMAP_HYBRID_MAP});            // 创建Map实例
-	var point = new BMap.Point(116.404, 39.915);    // 创建点坐标
-	map.centerAndZoom(point,8);                     // 初始化地图,设置中心点坐标和地图级别。
-	map.enableScrollWheelZoom();                            //启用滚轮放大缩小
-
-
-map.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_RIGHT}));    //左上角，默认地图控件
-map.setCurrentCity("北京");   //由于有3D图，需要设置城市哦
-map.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT}));  //添加默认缩放平移控件
-
-map.addControl(new BMap.ScaleControl()); 
-var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925));  // 创建标注
-map.addOverlay(marker1);
-var point = new BMap.Point(116.404, 39.915);
-
 
 </script>
 

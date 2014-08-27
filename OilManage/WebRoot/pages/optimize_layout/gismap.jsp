@@ -37,19 +37,7 @@ $(function(){
 		  var algID=$("#curAlgID").val();
 		  showMap(proID,algID,'Out');
 		});
-	var map = new BMap.Map("allmap",{mapType: BMAP_HYBRID_MAP});            // åå»ºMapå®ä¾
-	var point = new BMap.Point(116.404, 39.915);    // åå»ºç¹åæ 
-	map.centerAndZoom(point,8);                     // åå§åå°å¾,è®¾ç½®ä¸­å¿ç¹åæ åå°å¾çº§å«ã
-	map.enableScrollWheelZoom();                            //å¯ç¨æ»è½®æ¾å¤§ç¼©å°
-
-	map.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_RIGHT}));    //å·¦ä¸è§ï¼é»è®¤å°å¾æ§ä»¶
-	map.setCurrentCity("åäº¬");   //ç±äºæ3Då¾ï¼éè¦è®¾ç½®åå¸å¦
-	map.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT}));  //æ·»å é»è®¤ç¼©æ¾å¹³ç§»æ§ä»¶
-
-	map.addControl(new BMap.ScaleControl()); 
-	var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925));  // åå»ºæ æ³¨
-	map.addOverlay(marker1);
-	var point = new BMap.Point(116.404, 39.915);
+initMap();
 });
 
 

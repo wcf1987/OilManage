@@ -25,6 +25,20 @@ function clearMap(){
 }
 var pointMap = {};
 var markers = [];
+var map;
+function initMap(){
+
+	map = new BMap.Map("allmap",{mapType: BMAP_HYBRID_MAP});
+	var point = new BMap.Point(116.404, 39.915);    //
+	map.centerAndZoom(point,8);                     // 
+	map.enableScrollWheelZoom();
+	map.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_RIGHT}));
+	map.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT}));
+	map.addControl(new BMap.ScaleControl());
+	var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925));
+	map.addOverlay(marker1);
+	var point = new BMap.Point(116.404, 39.915);
+	}
 function drawPoints(data){
 	
 	var jsonObject = data;
