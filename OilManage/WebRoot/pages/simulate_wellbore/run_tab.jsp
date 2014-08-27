@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
+
 <div id="running-container" >
 	<div><span>运行输出台</span><button onclick="loadOutput()">查看输出</button></div>
 	<textarea  id="outputarea" name="outputarea" disabled="">
@@ -7,57 +8,47 @@
 
 
 <div id="actions">					
-	<a href="javascript:createNewModal();"
-		title="新建">
-		<img
-		src="editor/icons/sign_add.png" border="0" />
+	<a href="javascript:createNewModal();" title="新建">
+		<img src="editor/icons/sign_add.png" border="0" />
 	</a> 
-	<img class="separator" src="editor/assets/images/toolbar_separator.gif"
-		border="0" width="1" height="16" /> <a
-		href="javascript:listGUIProGrid();"
-		title="打开">
-		<img
-		src="editor/icons/folder.png" border="0" />
-	</a> <img class="separator" src="editor/assets/images/toolbar_separator.gif"
-		border="0" width="1" height="16" /> <a
-		href="javascript:save();"
-		title="保存"><img
-		src="editor/icons/save_labled.png" border="0"
-		alt="Organic" />
-	</a> <img class="separator" src="editor/assets/images/toolbar_separator.gif"
-		border="0" width="1" height="16" /> <a
-		href="javascript:scaleCenter(1.25);"
-		title="放大画布"><img
-		src="editor/icons/arrow_expand.png" border="0" alt="Container" />
+	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
+	<a href="javascript:listGUIProGrid();" title="打开">
+		<img src="editor/icons/folder.png" border="0" />
 	</a> 
-	<img class="separator" src="editor/assets/images/toolbar_separator.gif"
-		border="0" width="1" height="16" /> <a
-		href="javascript:scaleCenter(0.8);"
-		title="缩小画布"><img
-		src="editor/icons/arrow_contract.png" border="0" alt="Container" />
+	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
+	<a href="javascript:save();" title="保存">	
+		<img src="editor/icons/save_labled.png" border="0" alt="Organic" />
 	</a> 
-	<img class="separator" src="editor/assets/images/toolbar_separator.gif"
-		border="0" width="1" height="16" /> <input type="checkbox" checked=true
-		onclick="showGrid();" id="gridCheckbox" title="Show grid" /> <span
-		class="toolbarText">Show grid</span> <img class="separator"
-		src="editor/assets/images/toolbar_separator.gif" border="0" width="1"
-		height="16" /> <input type="checkbox" onclick="snapToGrid();"
-		id="snapCheckbox" title="Snap elements to grid" /> <span
-		class="toolbarText">Snap to grid</span> <img class="separator"
-		src="editor/assets/images/toolbar_separator.gif" border="0" width="1"
-		height="16" /> <a href="javascript:action('front');"
-		title="Move to front"><img src="editor/assets/images/icon_front.gif"
-		border="0" />
-	</a> <img class="separator" src="editor/assets/images/toolbar_separator.gif"
-		border="0" width="1" height="16" /> <a
-		href="javascript:action('back');" title="Move to back"><img
-		src="editor/assets/images/icon_back.gif" border="0" />
-	</a> <img class="separator" src="editor/assets/images/toolbar_separator.gif"
-		border="0" width="1" height="16" /> <a
-		href="javascript:action('moveforward');"
-		title="Move (one level) to front"><img
-		src="editor/assets/images/icon_forward.gif" border="0" />
+	<img class="separator" src="editor/assets/images/toolbar_separator.gif"	border="0" width="1" height="16" /> 
+	<a href="javascript:scaleCenter(1.25);" title="放大画布">
+		<img src="editor/icons/arrow_expand.png" border="0" alt="Container" />
+	</a> 
+	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
+	<a href="javascript:scaleCenter(0.8);" title="缩小画布">
+		<img src="editor/icons/arrow_contract.png" border="0" alt="Container" />
+	</a> 
+	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
+		<input type="checkbox" checked=true onclick="showGrid();" id="gridCheckbox" title="Show grid" />
+		<span class="toolbarText">Show grid</span> 
+	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
+		<input type="checkbox" onclick="snapToGrid();" id="snapCheckbox" title="Snap elements to grid" /> 
+		<span class="toolbarText">Snap to grid</span> 
+	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
+	<a href="javascript:action('front');" title="Move to front">
+		<img src="editor/assets/images/icon_front.gif" border="0" />
+	</a> 
+	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
+	<a href="javascript:action('back');" title="Move to back">
+		<img src="editor/assets/images/icon_back.gif" border="0" />
 	</a>
+	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
+	<a href="javascript:action('moveforward');" title="Move (one level) to front">
+		<img src="editor/assets/images/icon_forward.gif" border="0" />
+	</a>
+	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
+	<a href="javascript:changeGIS();" title="切换画布">
+		<img src="editor/icons/changeGIS.jpg" border="0" alt="Container" />
+	</a> 
 </div>
 <div id="editor" style="background-color:#F6F6F6">
 	<input id="selectedID" style="display: none;"/> 
@@ -70,6 +61,9 @@
 	<div id="container">
 	
 	</div>		
+</div>
+<div id="simulate_gismap" style="display:none">
+<%@ include file="gismap.jsp" %>
 </div>
 		<!--The import panel-->
 <div id="import-dialog"
@@ -136,7 +130,19 @@
 		<div id="PointPraPager" ></div>
 	</div>		
 </div>
-
+<script>
+function changeGIS(){
+	var diagramo_show=$("#editor").css('display');
+	var gis_show=$("#simulate_gismap").css('display');
+	if(diagramo_show=='none'){
+		$("#editor").css({'display':'block'});
+		$("#simulate_gismap").css({'display':'none'});
+	}else if(gis_show=='none'){
+		$("#simulate_gismap").css({'display':'block'});
+		$("#editor").css({'display':'none'});
+	}
+}
+</script>
 <style>
 	#running-container { border:2px solid;width: 100%;height:206px;; padding: 0; clear: both; background-color:white}
 	#running-container>div{
@@ -155,6 +161,7 @@
 		height:85%;
 	}
 </style>
+
 <!-- 新建图形项目的模态框 -->
 		<!--    	
 		<div class="modal fade" id="add_GUI_modal">
