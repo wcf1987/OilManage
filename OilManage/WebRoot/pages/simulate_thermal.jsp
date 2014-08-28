@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 自定义 -->
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>	
 	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>		
-	<link rel="stylesheet" type="text/css" href="css/simulate_thermal.css"/>
+	<link rel="stylesheet" type="text/css" href="css/simulate_optimize.css"/>
 	<link rel="stylesheet" type="text/css" href="css/dynamicSheet.css" />
 	
 

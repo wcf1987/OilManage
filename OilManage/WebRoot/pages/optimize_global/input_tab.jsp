@@ -30,13 +30,15 @@
   </div>  
    
   <div id="input-table-tab3">
-   	<table id="sheet3" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
+   	<!-- <table id="sheet3" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
 	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
 		<div id="pager3"></div>
-	</div>
+	</div> -->
+	<div>
+	<button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">地图</button></div>
   </div> 
   
-    <div id="input-table-tab4">
+  <div id="input-table-tab4">
   	<table id="sheet4" class="table table-striped table-bordered table-hover datatable" style="width:1230px" ></table>
 	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px" >
 		<div id="pager4" ></div>
@@ -93,21 +95,8 @@
  </ul>
 </div>
 
-<script type="text/javascript">
-$(function(){
-	var inputSheetNum=$("#inputSheetNum").val();
-	var tabs="";
-	for(var i=0;i<inputSheetNum;i++){
-		tabs+="<div id='input-table-tab"+i+"'>"+
-		  	"<table id='sheet"+i+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
-			"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
-				"<div id='pager"+i+"' ></div></div></div>";
-	}
-	$("#input-tabs").html(tabs);
-	//$("#output-container ul li").css("width",1/3);
-	//$("#output-container ul li.active").css("width",1/3);
-});
-</script>
+<%@ include file="../optimize_common/dikedmap.jsp" %>
+
 <style>
 /* Styles for Tabs on Bottom */
 #input-container { width: 100%; padding: 0; clear: both; }
@@ -119,3 +108,22 @@ $(function(){
 #input-container ul li a.active { font-weight: bold; text-decoration: none; }
 #input-container .panel-container { background: #fff; border: solid 1px; border-bottom: none; padding: 10px; margin-bottom: 0; }
 </style>
+<script>
+var inputSheetNum=$("#inputSheetNum").val();
+var tabs="";
+for(var i=0;i<inputSheetNum;i++){
+	if(i==3){
+		tabs+="<div id='input-table-tab"+i+"'>"+
+	  	"<table id='sheet"+i+"' class='table table-striped table-bordered table-hover datatable' style='width:600px' ></table>"+
+		"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:600px' >"+
+			"<div id='pager"+i+"' ></div></div>"+
+			"<button style='font-size:12px;height:22px;margin-right:10px;margin-top:5px;' onclick='showDikedAreaMap()'>地图</button></div>";
+	}else{
+		tabs+="<div id='input-table-tab"+i+"'>"+
+		  	"<table id='sheet"+i+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
+			"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
+				"<div id='pager"+i+"' ></div></div></div>";
+	}
+}
+$("#input-tabs").html(tabs);
+</script>

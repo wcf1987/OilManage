@@ -53,6 +53,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
 	<script type="text/javascript" src="js/map_gis.js"></script>
 	
+	<script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />		
+	<script type="text/javascript" src="js/map_diked.js"></script>
+	
 	<script defer="defer" type="text/javascript" src="js/global.js"></script>
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
 	<script defer="defer" type="text/javascript" src="js/dynamicSheet.js"></script>
@@ -66,8 +70,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 自定义 -->
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>	
 	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>		
-	<link rel="stylesheet" type="text/css" href="css/simulate_hydraulic.css"/>
 	<link rel="stylesheet" type="text/css" href="css/dynamicSheet.css" />
+	<link rel="stylesheet" type="text/css" href="css/simulate_optimize.css" />
 	
 
   </head>
@@ -135,7 +139,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		     keyboard:false,
 		     show:true
 		 });
-	</script>		   
+	</script>
+	<script type="text/javascript" src="js/optimize.js"></script>
+			   
   </body>
   
 </html>

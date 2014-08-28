@@ -43,13 +43,18 @@
 	<li><a href="#input-table-tab3">布局约束</a></li>	
  </ul>
 </div>
+<%@ include file="../optimize_common/dikedmap.jsp" %>
 
 <script type="text/javascript">
-/* $('#input-container').easytabs({
-	animate: false
-  //animationSpeed: 2000,
-  //defaultTab: "li#the-second-tab"
-}); */
+var inputSheetNum=$("#inputSheetNum").val();
+var tabs="";
+for(var i=0;i<inputSheetNum;i++){
+	tabs+="<div id='input-table-tab"+i+"'>"+
+	  	"<table id='sheet"+i+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
+		"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
+			"<div id='pager"+i+"' ></div></div></div>";
+}
+$("#input-tabs").html(tabs);
 </script>
 <style>
 /* Styles for Tabs on Bottom */

@@ -76,20 +76,27 @@
 	<li><a href="#input-table-tab7">布局约束</a></li>
  </ul>
 </div>
+<%@ include file="../optimize_common/dikedmap.jsp" %>
 
 <script type="text/javascript">
 $(function(){
 	var inputSheetNum=$("#inputSheetNum").val();
 	var tabs="";
 	for(var i=0;i<inputSheetNum;i++){
-		tabs+="<div id='input-table-tab"+i+"'>"+
-		  	"<table id='sheet"+i+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
-			"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
-				"<div id='pager"+i+"' ></div></div></div>";
+		if(i==3){
+			tabs+="<div id='input-table-tab"+i+"'>"+
+		  	"<table id='sheet"+i+"' class='table table-striped table-bordered table-hover datatable' style='width:600px' ></table>"+
+			"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:600px' >"+
+				"<div id='pager"+i+"' ></div></div>"+
+				"<button style='font-size:12px;height:22px;margin-right:10px;margin-top:5px;' onclick='showDikedAreaMap()'>地图</button></div>";
+		}else{
+			tabs+="<div id='input-table-tab"+i+"'>"+
+			  	"<table id='sheet"+i+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
+				"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
+					"<div id='pager"+i+"' ></div></div></div>";
+		}
 	}
 	$("#input-tabs").html(tabs);
-	//$("#output-container ul li").css("width",1/3);
-	//$("#output-container ul li.active").css("width",1/3);
 });
 </script>
 <style>
