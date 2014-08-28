@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %> 
     <base href="<%=basePath%>">
     
-    <title>系统模拟</title>
+    <title>系统优化</title>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=9" />
 	
@@ -62,7 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
 	<script defer="defer" type="text/javascript" src="js/dynamicSheet.js"></script>
 	<script defer="defer" type="text/javascript" src="js/project.js"></script>	
-	<script defer="defer" type="text/javascript" src="js/simulate.js"></script>
+	<script defer="defer" type="text/javascript" src="js/simulate_optimize.js"></script>
 	
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/colorPicker_new.css" />
