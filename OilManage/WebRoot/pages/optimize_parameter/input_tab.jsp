@@ -5,65 +5,8 @@
 	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="runAlg()">运行</button></div>						
 	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>						
 </div>
-<div id="input-container">
+<!-- <div id="input-container">
  <div id="input-tabs" class="panel-container">
-  
-  <div id="input-table-tab0">
-  	<table id="sheet0" class="table table-striped table-bordered table-hover datatable" style="width:1230px" ></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px" >
-		<div id="pager0" ></div>
-	</div>
-  </div>
-  
-  <div id="input-table-tab1">
-   	<table id="sheet1" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager1"></div>
-	</div>
-  </div>  
-  
-  <div id="input-table-tab2">
-   	<table id="sheet2" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager2"></div>
-	</div>
-  </div>  
-   
-  <div id="input-table-tab3">
-   	<table id="sheet3" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager3"></div>
-	</div>
-  </div> 
-  
-    <div id="input-table-tab4">
-  	<table id="sheet4" class="table table-striped table-bordered table-hover datatable" style="width:1230px" ></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px" >
-		<div id="pager4" ></div>
-	</div>
-  </div>
-  
-  <div id="input-table-tab5">
-   	<table id="sheet5" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager5"></div>
-	</div>
-  </div>  
-  
-  <div id="input-table-tab6">
-   	<table id="sheet6" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager6"></div>
-	</div>
-  </div>  
-   
-  <div id="input-table-tab7">
-   	<table id="sheet7" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager7"></div>
-	</div>
-  </div>  
-
  </div>
  <ul>
 	<li><a href="#input-table-tab0">井数据</a></li>	
@@ -75,38 +18,48 @@
 	<li><a href="#input-table-tab6">预设站点位置</a></li>	
 	<li><a href="#input-table-tab7">布局约束</a></li>
  </ul>
-</div>
-<%@ include file="../optimize_common/dikedmap.jsp" %>
+</div> -->
 
-<script type="text/javascript">
-$(function(){
-	var inputSheetNum=$("#inputSheetNum").val();
-	var tabs="";
-	for(var i=0;i<inputSheetNum;i++){
-		if(i==3){
-			tabs+="<div id='input-table-tab"+i+"'>"+
-		  	"<table id='sheet"+i+"' class='table table-striped table-bordered table-hover datatable' style='width:600px' ></table>"+
-			"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:600px' >"+
-				"<div id='pager"+i+"' ></div></div>"+
-				"<button style='font-size:12px;height:22px;margin-right:10px;margin-top:5px;' onclick='showDikedAreaMap()'>地图</button></div>";
-		}else{
-			tabs+="<div id='input-table-tab"+i+"'>"+
-			  	"<table id='sheet"+i+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
-				"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
-					"<div id='pager"+i+"' ></div></div></div>";
-		}
-	}
-	$("#input-tabs").html(tabs);
-});
-</script>
-<style>
-/* Styles for Tabs on Bottom */
-#input-container { width: 100%; padding: 0; clear: both; }
-#input-container ul { list-style: none; margin: 0; padding: 0; width: 100%; }
-#input-container ul li { border:1px solid;background-color:#ccc;float: left; width:12.5%; margin: 0; padding: 0; text-align: center; border-top: solid 1px; }
-#input-container ul li a { color:#000;display: block; padding: 8px 0; outline: none; }
-#input-container ul li a:hover { text-decoration: underline; }
-#input-container ul li.active { width: 12.5%; background: #fff; border: solid 1px; border-top: none; }
-#input-container ul li a.active { font-weight: bold; text-decoration: none; }
-#input-container .panel-container { background: #fff; border: solid 1px; border-bottom: none; padding: 10px; margin-bottom: 0; }
-</style>
+<div style="background-color:#fff;padding:5px;height:40px;">基础数据</div>
+<div id="input_base_div">
+	<div id="input-base-container" class="tabs-container ">
+	 <div id="input-base-tabs" class="panel-container">
+	 </div>
+	 <ul>
+		<li><a href="#input-base-tab0">井数据</a></li>	
+		<li><a href="#input-base-tab1">阀组数据</a></li>
+		<li><a href="#input-base-tab2">集气站数据</a></li>	
+		<li><a href="#input-base-tab3">中央处理厂数据</a></li>
+		<li><a href="#input-base-tab4">管道数据</a></li>	
+		<li><a href="#input-base-tab5">流体</a></li>	
+		<li><a href="#input-base-tab6">经济参数</a></li>
+		<li><a href="#input-base-tab7">井阀组隶属</a></li>	
+		<li><a href="#input-base-tab8">阀组集气站隶属</a></li>
+		<li><a href="#input-base-tab9">集气站中央处理厂隶属</a></li>
+		<li><a href="#input-base-tab10">井阀组连接</a></li>	
+		<li><a href="#input-base-tab11">阀组集气站连接</a></li>
+		<li><a href="#input-base-tab12">集气站中央处理厂连接</a></li>	
+	 </ul>
+	</div>
+</div>
+
+<div style="background-color:#fff;padding:5px;height:40px;margin-top:40px;">约束条件</div>
+<div id="input-condition-container" class="tabs-container ">
+ <div id="input-condition-tabs" class="panel-container">
+ </div>
+ <ul>
+	<li><a href="#input-condition-tab0">管径优化约束</a></li>	
+	<li><a href="#input-condition-tab1">主动增压约束</a></li>
+ </ul>
+</div>
+
+<div style="background-color:#fff;padding:5px;height:40px;margin-top:40px;">问题描述</div>
+<div id="input-function-container" class="tabs-container ">
+ <div id="input-function-tabs" class="panel-container">
+ </div>
+ <ul>
+	<li><a href="#input-function-tab0"></a></li>	
+ </ul>
+</div>
+
+<%@ include file="../optimize_common/dikedmap.jsp" %>

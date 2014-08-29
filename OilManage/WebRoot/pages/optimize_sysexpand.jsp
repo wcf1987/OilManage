@@ -93,6 +93,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<input id="curAlgID" style="display:none" value="6"/>
 						<input id="proID" style="display:none" value=""/>
 						<input id="inputSheetNum" style="display:none" value="4"/>
+						<input id="input_base_sheetNum" style="display:none" value="3"/>
+						<input id="input_function_sheetNum" style="display:none" value="0"/>
+						<input id="input_condition_sheetNum" style="display:none" value="1"/>
+						
 						<input id="outputSheetNum" style="display:none" value="3"/>
 						
 						<!-- 
@@ -141,7 +145,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		     show:true
 		 });
 	</script>
-		   
+	<script type="text/javascript" src="js/optimize.js"></script>
+			   
   </body>
   
 </html>

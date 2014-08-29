@@ -5,65 +5,8 @@
 	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="runAlg()">运行</button></div>						
 	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>						
 </div>
-<div id="input-container">
+<!-- <div id="input-container">
  <div id="input-tabs" class="panel-container">
-  
-  <div id="input-table-tab0">
-  	<table id="sheet0" class="table table-striped table-bordered table-hover datatable" style="width:1230px" ></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px" >
-		<div id="pager0" ></div>
-	</div>
-  </div>
-  
-  <div id="input-table-tab1">
-   	<table id="sheet1" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager1"></div>
-	</div>
-  </div>  
-  
-  <div id="input-table-tab2">
-   	<table id="sheet2" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager2"></div>
-	</div>
-  </div>  
-   
-  <div id="input-table-tab3">
-   	<table id="sheet3" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager3"></div>
-	</div>
-  </div> 
-  
-    <div id="input-table-tab4">
-  	<table id="sheet4" class="table table-striped table-bordered table-hover datatable" style="width:1230px" ></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px" >
-		<div id="pager4" ></div>
-	</div>
-  </div>
-  
-  <div id="input-table-tab5">
-   	<table id="sheet5" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager5"></div>
-	</div>
-  </div>  
-  
-  <div id="input-table-tab6">
-   	<table id="sheet6" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager6"></div>
-	</div>
-  </div>  
-   
-  <div id="input-table-tab7">
-   	<table id="sheet7" class="table table-striped table-bordered table-hover datatable " style="width:1230px;"></table>
-	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px">
-		<div id="pager7"></div>
-	</div>
-  </div>  
-
  </div>
  <ul>
 	<li><a href="#input-table-tab0">井数据</a></li>	
@@ -75,28 +18,42 @@
 	<li><a href="#input-table-tab6">预设站点位置</a></li>	
 	<li><a href="#input-table-tab7">布局约束</a></li>
  </ul>
+</div> -->
+
+<div style="background-color:#fff;padding:5px;height:40px;">基础数据</div>
+<div id="input-base-container" class="tabs-container ">
+ <div id="input-base-tabs" class="panel-container">
+ </div>
+ <ul>
+	<li><a href="#input-base-tab0">井数据</a></li>	
+	<li><a href="#input-base-tab1">管道数据</a></li>
+	<li><a href="#input-base-tab2">经济数据</a></li>	
+	<li><a href="#input-base-tab3">障碍区</a></li>
+	<li><a href="#input-base-tab4">流体</a></li>	
+ </ul>
 </div>
+
+<div style="background-color:#fff;padding:5px;height:40px;margin-top:40px;">约束条件</div>
+<div id="input-condition-container" class="tabs-container ">
+ <div id="input-condition-tabs" class="panel-container">
+ </div>
+ <ul>
+	<li><a href="#input-condition-tab0">预设站点位置</a></li>	
+	<li><a href="#input-condition-tab1">布局约束</a></li>
+ </ul>
+</div>
+
+<div style="background-color:#fff;padding:5px;height:40px;margin-top:40px;">问题描述</div>
+<div id="input-function-container" class="tabs-container ">
+ <div id="input-function-tabs" class="panel-container">
+ </div>
+ <ul>
+	<li><a href="#input-function-tab0"></a></li>	
+ </ul>
+</div>
+
 <%@ include file="../optimize_common/dikedmap.jsp" %>
 
-<script type="text/javascript">
-var inputSheetNum=$("#inputSheetNum").val();
-var tabs="";
-for(var i=0;i<inputSheetNum;i++){
-	if(i==3){
-		tabs+="<div id='input-table-tab"+i+"'>"+
-	  	"<table id='sheet"+i+"' class='table table-striped table-bordered table-hover datatable' style='width:600px' ></table>"+
-		"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:600px' >"+
-			"<div id='pager"+i+"' ></div></div>"+
-			"<button style='font-size:12px;height:22px;margin-right:10px;margin-top:5px;' onclick='showDikedAreaMap()'>地图</button></div>";
-	}else{
-		tabs+="<div id='input-table-tab"+i+"'>"+
-		  	"<table id='sheet"+i+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
-			"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
-				"<div id='pager"+i+"' ></div></div></div>";
-	}
-}
-$("#input-tabs").html(tabs);
-</script>
 <style>
 /* Styles for Tabs on Bottom */
 #input-container { width: 100%; padding: 0; clear: both; }

@@ -11,7 +11,24 @@ sheetgrid1.creategrid(proid,sheetDiv,pageDiv);
 //sheetgrid1.loadTableData();
 */
 function SheetGrid() {
-
+	this.GetSheetName=function(sid,algid,inOrOut){
+		var sheetName="";
+		$.ajax({
+			url:'listSheetTitle.action',
+			type:'post',
+			dataType:'json',
+			data:{
+				sheetID:sid,
+				algID:algid,
+				InOrOut:inOrOut
+			},
+			async:false,
+			success:function(data){
+				sheetName=data.sheetName;
+			}
+		});
+		return sheetName;
+	};
 	this.GetDynamicCols = function(sid, algid,inOrOut) {//动态获取列
 		this.inOrOut=inOrOut;
 		this.sid = sid;
@@ -30,9 +47,9 @@ function SheetGrid() {
 			success : function(data) {
 				
 				if (data.msg == null || data.msg == '') {
-					temp.colNames = data.sheetTile;// 表格的列名
+					temp.colNames = data.sheetTile;// sheet的列名
 					temp.colModel = data.colModel;
-					temp.sheetName = data.sheetName;
+					temp.sheetName = data.sheetName;//sheet的名字
 					
 				} else {
 					alert(data.msg);
@@ -42,7 +59,7 @@ function SheetGrid() {
 			
 
 		});
-	}
+	};
 	this.loadTableData = function() {//加载表格数据
 		var temp = this;
 		this.sheetgridpro.jqGrid("setGridParam", {
