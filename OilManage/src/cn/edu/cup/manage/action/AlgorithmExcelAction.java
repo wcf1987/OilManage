@@ -13,14 +13,17 @@ import net.sf.json.JSONObject;
 import cn.edu.cup.file.ColModel;
 import cn.edu.cup.file.FileExcel;
 import cn.edu.cup.file.SheetContent;
+import cn.edu.cup.gui.dao.GUIDao;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
 import cn.edu.cup.map.business.Graphi;
 import cn.edu.cup.map.business.Point;
+import cn.edu.cup.tools.GraphiTools;
 import cn.edu.cup.tools.Tools;
 
 public class AlgorithmExcelAction {
+	
 	public static String ExcelAlgBaseDir = "ExcelFrame/";
 	public static String ExcelProBaseDir = "ExcelProject/";
 	public static String AlgBaseDir = "uploadAlgorithm/";
@@ -28,6 +31,7 @@ public class AlgorithmExcelAction {
 	int algID;
 	int sheetID;
 	int proID;
+	String proName;
 	private int page;
 
 	public int getPage() {
@@ -181,6 +185,27 @@ public class AlgorithmExcelAction {
 	
 		return "SUCCESS";
 	}
+	String JSONData="";
+	public String getJSONData() {
+		return JSONData;
+	}
+
+	public String viewGUI(){
+		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		GUIDao dao=new GUIDao();
+		JSONData=dao.getBlankData();
+		dao.close();
+		AlgorithmProDao dao1=new AlgorithmProDao();
+		this.proName=dao1.getProName(this.proID);
+		dao1.close();
+		graphi=excel.getGraphi();
+		GraphiTools.updateGraphi(graphi);
+		return "SUCCESS";
+	}
+	public String getProName() {
+		return proName;
+	}
+
 	Map<String,List<Point>> obs;
 	public String viewObstacle(){
 		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);

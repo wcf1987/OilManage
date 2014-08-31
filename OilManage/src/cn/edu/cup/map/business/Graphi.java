@@ -1,7 +1,6 @@
 package cn.edu.cup.map.business;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +41,10 @@ public class Graphi {
 	}
 	public Boolean addLine(String start,String end){
 		return true;
+	}
+	public Point getPoint(String start) {
+		
+		return points.get(start);
 	}
 
 }

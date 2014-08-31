@@ -358,17 +358,9 @@ function() {
 						/ platform.selectPainting.scaleN);
 				this.y((this.y() - platform.selectPainting.my)
 						/ platform.selectPainting.scaleN);
-				//this.id(getTimeByS());
-				
-				var name=prompt("请输入元件名称","");
-				if(name==null||name==''){
-					this.destroy()
-				}else{
-					this.nameStr=name;
-					this.id(name);
-					this.moveTo(platform.selectPainting.p);
+				this.id(getTimeByS());
+				this.moveTo(platform.selectPainting.p);
 				platform.selectPainting.hasChange();
-				}
 			}
 			poss = checkConn(this);
 			if (poss != null) {
@@ -377,7 +369,7 @@ function() {
 				this.y((this.y() - (poss.y/platform.selectPainting.scaleN)));
 				platform.draw();
 			}
-			leftpoly.showALLConnedPoints();
+			showALLConnedPoints();
 		} else {
 			if(platform.selectPainting!=null){
 			this.destroy();// 不在中间画布就摧毁
@@ -385,7 +377,7 @@ function() {
 
 		}
 
-		leftpoly.showALLConnedPoints();
+		showALLConnedPoints();
 		platform.draw();
 
 	};
@@ -468,7 +460,7 @@ function() {
 						} else	if (text == '删除该节点') {
 							platform.selectPainting.hasChange();		
 							clickshape.destroy();
-							leftpoly.showALLConnedPoints();
+							showALLConnedPoints();
 							$("#contextmenu").hide();		
 							platform.selectPainting.p.draw();
 						} else if (text == '更改颜色') {
@@ -537,7 +529,7 @@ function() {
 	getConnectedStatus=function(g){
 		
 	}
-	this.showALLConnPoints = function() {
+	showALLConnPoints = function() {
 		var points = platform.getAllChildren();
 		for (i1 = 0; i1 < points.length; i1++) {
 			showConnect(points[i1]);
@@ -546,7 +538,7 @@ function() {
 		platform.draw();
 		platform.setConnShowed(true);
 	}
-	this.showALLConnedPoints = function() {
+	showALLConnedPoints = function() {
 		var points = platform.getAllChildren();
 		for (i1 = 0; i1 < points.length; i1++) {
 			var right=getRightPoint(points[i1]);

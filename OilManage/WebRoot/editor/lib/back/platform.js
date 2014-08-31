@@ -526,21 +526,20 @@ var Platform=function(){
 	}
 	this.paintingArray=new Array;
 	
-	this.addLoadPainting=function(newone,scalN,proID,algid,name,data) {
+	this.addLoadPainting=function(newone,scalN,id,name) {
 		var paintings=new Paintings();
 		paintings.init();
 		paintings.p=newone;
 		paintings.initPoint();
 		paintings.scaleN=scalN;
-		paintings.proID=proID;//项目ID,t_guipro的id列
-		paintings.algID=algid;
+		paintings.ID=id;//项目ID,t_guipro的id列
 		paintings.name=name;//项目名称,t_guipro的proname列
 		this.addPainting(paintings);
 		this.paintingArray.push(paintings);
 		paintings.index=this.paintingArray.indexOf(paintings);
 		this.selectPainting.showSelected();
 
-		this.selectPainting.addGraphi(data);
+		
 		/*
 		 *加载模型后为每个元素添加 事件 ，为每个元素添加图形支持
 		 */
@@ -561,7 +560,7 @@ var Platform=function(){
 				document.body.style.cursor = 'default';
 			});
 		}
-		leftpoly.showALLConnedPoints();
+		showALLConnedPoints();
 		/*
 		 *加载模型后为每个元素添加 事件  结束
 		 */

@@ -7,7 +7,20 @@ public class Point {
 	String Name;
 
 	String type;
-
+	int Draw2DX;
+	int Draw2DY;
+	public int getDraw2DX() {
+		return Draw2DX;
+	}
+	public void setDraw2DX(int draw2dx) {
+		Draw2DX = draw2dx;
+	}
+	public int getDraw2DY() {
+		return Draw2DY;
+	}
+	public void setDraw2DY(int draw2dy) {
+		Draw2DY = draw2dy;
+	}
 	public void addAttr(String key,String value){
 		this.attribute.put(key, value);
 	}

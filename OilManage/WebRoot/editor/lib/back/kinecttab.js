@@ -101,7 +101,21 @@ var TabTools=function (){
 
 	
 	this.listGUIProGrid=function(isFirst){
-		this.load();
+		jQuery("#GUIProList").jqGrid("setGridParam", { 
+			url: "listGUIPro.action", //设置表格的url 
+			datatype: "json" //设置数据类型 
+		}); 
+		$('#GUIProList').trigger("reloadGrid");
+	/*	if(isFirst){//如果是刷新页面后在弹出框上点击的新建，则去掉关闭按钮
+			$("#listGUIPro_modal_close").remove();
+		}else{
+			
+		}*/
+		$('#listGUIPro_modal').modal({  
+			backdrop:'static',
+		     keyboard:false,
+		     show:true
+		     });
 	 }
 
 	this.createNewModal=function(isFirst){
@@ -295,37 +309,44 @@ var TabTools=function (){
 			});
 		}
 	}
+	this.load=function(selectedID) {
+		var exist=0;
+		$("input[name='proID']").each(function(){
+            if($(this).val()==selectedID){
+				$(this).next().click();
+				$('#listGUIPro_modal').modal('hide');
+				exist=1;
+				
+            }
+         });
 
-	this.load=function() {
-		
-
-
-		var proID=$("#proID").val();
-		  var algID=$("#curAlgID").val();
+		if(exist==0){
 			$.ajax({
 				type : 'POST',
-				url : 'viewGUI.action',
+				url : 'viewGUIPro.action',
 				data : {
-					proID:proID,
-					algID:algID,
-					InOrOut:"In"
+					
+					ID:selectedID,
+					type:0
 				},
 				success : function(data) {
-//					
+//					alert('图形化载入成功!');
+					//$('#selectedID').val(selectedID);
+					//data=jQuery.parseJSON(data);
+					$('#listGUIPro_modal').modal('hide');
 					try{
-						saveData=data['graphi']['points'];
+						saveData=data['dataView']['JSONData'];
 					}catch(err){
-						alert('该项目无法图形化建模，请检查数据');
+						alert('该项目模型为空！');
 					}
 					//alert(saveData);
 					//console.log(saveData['JSONData']);
-					var newone=Kinetic.Node.create(data['JSONData']);
-					var scalN=1;
-					var proid=proID;
-					var algid=algID;
-					var name=data['proName'];
-					var index=platform.addLoadPainting(newone,scalN,proID,algid,name,data);				
-					createTab(name,index,null,proID,algid,null,"pro");
+					var newone=Kinetic.Node.create(saveData);
+					var scalN=data['dataView']['scalN'];
+					var id=data['dataView']['id'];
+					var name=data['dataView']['proname'];
+					var index=platform.addLoadPainting(newone,scalN,id,name);				
+					createTab(name,index,null,id,null,"pro");
 					//createNewTab(data['dataView']['proname']);
 					platform.stage.draw();
 					log('项目'+name+'已打开！');		
@@ -334,13 +355,61 @@ var TabTools=function (){
 					alert(msg);
 				}
 			});
-	
+		}
+	}
+	this.load=function(selectedID) {
+		var exist=0;
+		$("input[name='proID']").each(function(){
+            if($(this).val()==selectedID){
+				$(this).next().click();
+				$('#listGUIPro_modal').modal('hide');
+				exist=1;
+				
+            }
+         });
+
+		if(exist==0){
+			$.ajax({
+				type : 'POST',
+				url : 'viewGUIPro.action',
+				data : {
+					
+					ID:selectedID,
+					type:0
+				},
+				success : function(data) {
+//					alert('图形化载入成功!');
+					//$('#selectedID').val(selectedID);
+					//data=jQuery.parseJSON(data);
+					$('#listGUIPro_modal').modal('hide');
+					try{
+						saveData=data['dataView']['JSONData'];
+					}catch(err){
+						alert('该项目模型为空！');
+					}
+					//alert(saveData);
+					//console.log(saveData['JSONData']);
+					var newone=Kinetic.Node.create(saveData);
+					var scalN=data['dataView']['scalN'];
+					var id=data['dataView']['id'];
+					var name=data['dataView']['proname'];
+					var index=platform.addLoadPainting(newone,scalN,id,name);				
+					createTab(name,index,null,id,null,"pro");
+					//createNewTab(data['dataView']['proname']);
+					platform.stage.draw();
+					log('项目'+name+'已打开！');		
+				},
+				error:function(msg){
+					alert(msg);
+				}
+			});
+		}
 	}
 	var tabX=50;
 	var tabY=50;
 	var position;
 	 
-	function createTab(proname,paintingIndex,subID,proID,algID,fProID,type){
+	function createTab(proname,paintingIndex,subID,proID,fProID,type){
 		$("#paintingTabs").children().removeClass("active");
 		var tabItem;
 		if(type=="sub"){
