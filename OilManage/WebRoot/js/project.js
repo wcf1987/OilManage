@@ -836,58 +836,58 @@ function openProject(proid){
 	var sid = 1;
 	//var proid = 11;
 	var algid = $("#curAlgID").val();
-	//var inputSheetNum=$("#inputSheetNum").val();
+	var inputSheetNum=$("#inputSheetNum").val();
 	var input_base_sheetNum=$("#input_base_sheetNum").val();
 	var input_function_sheetNum=$("#input_function_sheetNum").val();
 	var input_condition_sheetNum=$("#input_condition_sheetNum").val();
 	
 	var inOrOut="In";
 	
-/*	var sheetDiv = "#sheet";
-	var pageDiv = "#pager";
-	var delID="input_delsheet";
+	var sheetDiv = "#input-sheet";
+	var pageDiv = "#input-pager";
+	var delID="input-delsheet";
 	for(var i=0;i<inputSheetNum;i++){
 		var sheetgrid = new SheetGrid();
 
 		sheetgrid.GetDynamicCols(i, algid,inOrOut);
 		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);
 		
-	}*/
+	}
 	/*
 	 * 获取基础数据
 	 */
-	var sheetDiv = "#input-base-sheet";
-	var pageDiv = "#input-base-pager";
-	var delID="input-base-delsheet";
-	for(var i=0;i<input_base_sheetNum;i++){
-		var sheetgrid = new SheetGrid();
-
-		sheetgrid.GetDynamicCols(i, algid,inOrOut);
-		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);
-		
-	}
-	/*
-	 * 获取条件约束数据
-	 */
-	var sheetDiv = "#input-condition-sheet";
-	var pageDiv = "#input-condition-pager";
-	var delID="input-condition-delsheet";
-	for(var i=0;i<input_condition_sheetNum;i++){
-		var sheetgrid = new SheetGrid();
-
-		sheetgrid.GetDynamicCols(i+input_base_sheetNum*1+input_function_sheetNum*1, algid,inOrOut);
-		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);
-		
-	}
-	/*
-	 * 获取问题描述数据
-	 */
-	var sheetDiv = "#input-function-sheet";
-	var pageDiv = "#input-function-pager";
-	var delID="input-function-delsheet";
-	var sheetgrid = new SheetGrid();
-	sheetgrid.GetDynamicCols(input_base_sheetNum, algid,inOrOut);
-	sheetgrid.creategrid(proid, sheetDiv+0, pageDiv+0,delID+0);
+//	var sheetDiv = "#input-sheet";
+//	var pageDiv = "#input-pager";
+//	var delID="input-delsheet";
+//	for(var i=0;i<input_base_sheetNum;i++){
+//		var sheetgrid = new SheetGrid();
+//
+//		sheetgrid.GetDynamicCols(i, algid,inOrOut);
+//		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);
+//		
+//	}
+//	/*
+//	 * 获取条件约束数据
+//	 */
+//	var sheetDiv = "#input-condition-sheet";
+//	var pageDiv = "#input-condition-pager";
+//	var delID="input-condition-delsheet";
+//	for(var i=0;i<input_condition_sheetNum;i++){
+//		var sheetgrid = new SheetGrid();
+//
+//		sheetgrid.GetDynamicCols(i+input_base_sheetNum*1+input_function_sheetNum*1, algid,inOrOut);
+//		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);
+//		
+//	}
+//	/*
+//	 * 获取问题描述数据
+//	 */
+//	var sheetDiv = "#input-function-sheet";
+//	var pageDiv = "#input-function-pager";
+//	var delID="input-function-delsheet";
+//	var sheetgrid = new SheetGrid();
+//	sheetgrid.GetDynamicCols(input_base_sheetNum, algid,inOrOut);
+//	sheetgrid.creategrid(proid, sheetDiv+0, pageDiv+0,delID+0);
 		
 	$(".modal").modal('hide');
 }

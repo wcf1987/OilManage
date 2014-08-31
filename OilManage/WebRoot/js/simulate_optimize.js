@@ -1,5 +1,5 @@
 $().ready(function(){
-	$('#hydraulic_tab,#input-condition-container,#input-function-container,#output-container').easytabs({
+	$('#hydraulic_tab,#input-condition-container,#input-function-container').easytabs({
 		animate: false
 	});	
 	$('#importExcel').uploadify({
@@ -25,7 +25,25 @@ $().ready(function(){
 	
 	
 	}); 
+function openProjectModal(){
+	$('#add_project_modal').modal();
+	$('#load_modal').modal('hide');
+	createNewProject();
+}
 
+function listProjectModal(){
+	$('#list_project_modal>.modal-dialog').css({
+		 'margin-top': function () {
+		            return ($(window).height())/2-this.height/2;
+		        },
+		 'margin-right':function () {
+		            return 800;
+		            //(($(window).width())/2-this.width/2);
+		        }
+		});
+	$('#list_project_modal').modal();
+	$('#load_modal').modal('hide');
+}
 function uploadComplete(file, data, response) {
 	var tempJson = jQuery.parseJSON(data);
 	if(tempJson['msg']==null||tempJson['msg']==''){
@@ -146,15 +164,17 @@ function loadOutput(){
 	var outputSheetNum=$("#outputSheetNum").val();
 	//var inOrOut="In";
 	var inOrOut="Out";
-	var sheetDiv = "#output_sheet";
-	var pageDiv = "#output_pager";
-	var delID="output_delsheet";
+	var sheetDiv = "#output-sheet";
+	var pageDiv = "#output-pager";
+	var delID="output-delsheet";
 	for(var i=0;i<outputSheetNum;i++){
 		var sheetgrid = new SheetGrid();
 		sheetgrid.GetDynamicCols(i, algid,inOrOut);
-		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);				
+		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);		
 	}
+	
 }
+
 function exportOutputExcel(){
 	$.ajax({
 		type:'post',
@@ -173,24 +193,20 @@ function exportOutputExcel(){
 		}
 	});
 }
-function openProjectModal(){
-	$('#add_project_modal').modal();
-	$('#load_modal').modal('hide');
-	createNewProject();
-}
 
-function listProjectModal(){
-	$('#list_project_modal>.modal-dialog').css({
-		 'margin-top': function () {
-		            return ($(window).height())/2-this.height/2;
-		        },
-		 'margin-right':function () {
-		            return 800;
-		            //(($(window).width())/2-this.width/2);
-		        }
+function showData(type){
+	
+	if(type=="outputBase"||type=="outputFee"||type=="outputPosition"){
+		$(".outputDataDiv").each(function(index,item){
+			$(item).hide();
 		});
-	$('#list_project_modal').modal();
-	$('#load_modal').modal('hide');
+		$("#"+type).show();
+	}else if(type=="inputBase"||type=="inputFunction"||type=="inputCondition"){
+		$(".inputDataDiv").each(function(index,item){
+			$(item).hide();
+		});
+		$("#"+type).show();
+	}
 }
 
 

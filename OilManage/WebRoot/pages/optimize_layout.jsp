@@ -97,7 +97,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<input id="input_condition_sheetNum" style="display:none" value="2"/>
 						
 						<input id="outputSheetNum" style="display:none" value="12"/>
-						
+						<input id="output_base_sheetNum" style="display:none" value="7"/>
+						<input id="output_fee_sheetNum" style="display:none" value="1"/>
+						<input id="output_position_sheetNum" style="display:none" value="4"/>
 						<!-- 
 						if (id = 0)，井底流压计算；if (id = 1)，单气相管网水力计算；if (id = 2)，单气相管网热力计算；if (id = 3)，气固两相管网水力计算；if (id = 4)，气液两相管网水力计算
 						 -->
@@ -111,13 +113,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						    <li class='tab'><a href="#output_tab">输出</a></li>					    
 					    </ul>  
 						<div id="input_tab"><!-- 节点数据 -->					
-							<%@ include file="optimize_layout/input_tab.jsp" %>
+							<%@ include file="optimize_common/input_tab.jsp" %>
 			    		</div>
 			    		<div id="run_tab"><!-- 节点数据 -->
 							<%@ include file="optimize_common/run_tab.jsp" %>
 			    		</div>
 			    		<div id="output_tab"><!-- 节点数据 -->	
-							<%@ include file="optimize_layout/output_tab.jsp" %>
+							<%@ include file="optimize_common/output_tab.jsp" %>
 			    		</div>
 					</div>	            			
 										
