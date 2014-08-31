@@ -41,6 +41,7 @@ var Paintings = function() {
 			point.nameStr=p['name'];
 			point.id(p['name']);
 			this.p.add(point);
+			setPointText(point,p['name']);
 			point.x(p.draw2DX);
 			point.y(p.draw2DY);			
 			//point.x(p.draw2DY);

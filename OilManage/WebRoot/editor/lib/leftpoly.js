@@ -227,10 +227,19 @@ function() {
 				stroke : 'black',
 				strokeWidth : 2
 			});
-
+			var text = new Kinetic.Text({
+				  x: -5,
+				  y: 55,
+				  text: '元件设备',
+				  name:'textLabel',
+				  fontSize: 15,
+				  fontFamily: 'Calibri',
+				  fill: 'blue'
+				});
 			this.polys[k].x(0);
 			this.polys[k].y(0);
 			this.polyGroups[k].add(this.polys[k]);
+			this.polyGroups[k].add(text);
 			this.lock=false;
 			
 			//起点
@@ -362,10 +371,11 @@ function() {
 				
 				var name=prompt("请输入元件名称","");
 				if(name==null||name==''){
-					this.destroy()
+					this.destroy();
 				}else{
 					this.nameStr=name;
 					this.id(name);
+					setPointText(this,name);
 					this.moveTo(platform.selectPainting.p);
 				platform.selectPainting.hasChange();
 				}
