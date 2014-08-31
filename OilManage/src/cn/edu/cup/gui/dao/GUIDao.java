@@ -488,6 +488,14 @@ public class GUIDao {
 		HibernateSessionManager.closeThreadLocalSession();
 	}
 
+	public String getBlankData() {
+		String sql="select jsonData from t_guijson t where id=178";
+		SQLQuery q = session.createSQLQuery(sql);
+		
+		String json=((String)q.uniqueResult());
+		return json;
+	}
+
 
 
 

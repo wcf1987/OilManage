@@ -186,27 +186,18 @@ function drawLine(line,dis,rotation){
 	
 }
 function setImage(g){
-	var kinImg=getImagePoint(g);
+	kinImg=getImagePoint(g);
 	kinImg.setImage(leftpoly.getImgage(g));
-}
-function setPointText(g,Str){
-	var label=getTextPoint(g);
-	label.text(Str);
 }
 function getImagePoint(g){
 	tempArrayI = g.getChildren(function(node) {
-		return node.getName() != 'connPointsLeft' &&node.getName() != 'connPointsRight'&&node.getName() != 'textLabel'		
+		return node.getName() != 'connPointsLeft' &&node.getName() != 'connPointsRight'				
 	});
 	
 		return tempArrayI[0];
 	
 }
-function getTextPoint(g){
-	tempArrayI = g.getChildren(function(node) {
-		return node.getName() =='textLabel'	
-	});	
-		return tempArrayI[0];	
-}
+
 function checkCircle(v1,v2,length){
 	if(v2==null || v1==null){
 		return false;

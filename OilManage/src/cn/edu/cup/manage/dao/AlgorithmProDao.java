@@ -399,5 +399,13 @@ public class AlgorithmProDao {
 		}
 		return temp;
 	}
+	public String getProName(int proid){
+		String sql = "select t.Name from t_projects t where  t.id=? ";
+		SQLQuery q2 = session.createSQLQuery(sql);
+		q2.setParameter(0, proid);
+		String name = ((String) q2.uniqueResult());
+
+		return name;
+	}
 
 }
