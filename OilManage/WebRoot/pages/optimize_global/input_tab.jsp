@@ -9,17 +9,6 @@
 
 <div style="background-color:#fff;padding:5px;height:40px;">基础数据</div>
 <div id="input_base_div">
-	<div id="input-base-container" class="tabs-container ">
-	 <div id="input-base-tabs" class="panel-container">
-	 </div>
-	 <ul>
-		<li><a href="#input-base-tab0">井数据</a></li>	
-		<li><a href="#input-base-tab1">管道数据</a></li>
-		<li><a href="#input-base-tab2">经济数据</a></li>	
-		<li><a href="#input-base-tab3">障碍区</a></li>
-		<li><a href="#input-base-tab4">流体</a></li>	
-	 </ul>
-	</div>
 </div>
 
 <div style="background-color:#fff;padding:5px;height:40px;margin-top:40px;">约束条件</div>

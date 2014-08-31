@@ -43,19 +43,6 @@ $(function(){
 	/*
 	 * input_tab初始化
 	 */
-	var $dikedIndex=-1;//标识障碍区的sheetID
-	var $pathname=window.location.pathname;
-	switch($pathname){
-	case "/OilManage/pages/optimize_global.jsp":
-		$dikedIndex=3;
-		break;
-	case "/OilManage/pages/optimize_layout.jsp":
-		$dikedIndex=3;
-		break;
-	default:
-			break;
-	}
-
 	var input_base_sheetNum=$("#input_base_sheetNum").val();
 	var input_function_sheetNum=$("#input_function_sheetNum").val();
 	var input_condition_sheetNum=$("#input_condition_sheetNum").val();
@@ -71,12 +58,14 @@ $(function(){
 	var maxSheetNum=5;//每个container里放几个tab
 	var containerNum=parseInt(input_base_sheetNum/maxSheetNum)+1;//分几个container，一个container里面放5个tab
 	var lastTabSheetNum=input_base_sheetNum%maxSheetNum;//最后一个container中的tab数量(sheet)
-	
+	if(lastTabSheetNum==0){
+		containerNum-=1;
+	}
 	for(var i=0;i<containerNum;i++){//分别构建几个container
 		var maxSheetNumTemp=maxSheetNum;
 		input_base_div_html+="<div id='input-base-container"+i+"' class='tabs-container'><div id='input-base-panels"+i+"' class='panel-container'></div><ul id='input-base-ul"+i+"'></ul></div>";
 		$("#input_base_div").append(input_base_div_html);
-		if(i==containerNum-1){//如果是最后一个container
+		if(i==containerNum-1&&lastTabSheetNum>0){//如果是最后一个container
 			maxSheetNumTemp=lastTabSheetNum;
 		}
 		var panels="";
@@ -87,7 +76,7 @@ $(function(){
 			var inOrOut="In";
 			var sheetgrid = new SheetGrid();
 			var sheetName=sheetgrid.GetSheetName(sid,algid,inOrOut);
-			if(sid==$dikedIndex){//如果是障碍区的sheet序号
+			if(sheetName=="障碍区"){//如果是障碍区的sheet序号
 				panels+="<div id='input-base-tab"+sid+"'>"+
 			  	"<table id='input-base-sheet"+sid+"' class='table table-striped table-bordered table-hover datatable' style='width:600px' ></table>"+
 				"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:600px' >"+

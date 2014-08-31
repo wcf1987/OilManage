@@ -5,32 +5,9 @@
 	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="runAlg()">运行</button></div>						
 	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>						
 </div>
-<!-- <div id="input-container">
- <div id="input-tabs" class="panel-container">
- </div>
- <ul>
-	<li><a href="#input-table-tab0">井数据</a></li>	
-	<li><a href="#input-table-tab1">管道数据</a></li>
-	<li><a href="#input-table-tab2">经济数据</a></li>	
-	<li><a href="#input-table-tab3">障碍区</a></li>
-	<li><a href="#input-table-tab4">流体</a></li>	
-	<li><a href="#input-table-tab5">问题描述</a></li>
-	<li><a href="#input-table-tab6">预设站点位置</a></li>	
-	<li><a href="#input-table-tab7">布局约束</a></li>
- </ul>
-</div> -->
 
 <div style="background-color:#fff;padding:5px;height:40px;">基础数据</div>
-<div id="input-base-container" class="tabs-container ">
- <div id="input-base-tabs" class="panel-container">
- </div>
- <ul>
-	<li><a href="#input-base-tab0">井数据</a></li>	
-	<li><a href="#input-base-tab1">管道数据</a></li>
-	<li><a href="#input-base-tab2">经济数据</a></li>	
-	<li><a href="#input-base-tab3">障碍区</a></li>
-	<li><a href="#input-base-tab4">流体</a></li>	
- </ul>
+<div id="input_base_div">
 </div>
 
 <div style="background-color:#fff;padding:5px;height:40px;margin-top:40px;">约束条件</div>

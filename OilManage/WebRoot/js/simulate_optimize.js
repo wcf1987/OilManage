@@ -1,5 +1,5 @@
 $().ready(function(){
-	$('#hydraulic_tab,#input-base-container,#input-condition-container,#input-function-container,#output-container').easytabs({
+	$('#hydraulic_tab,#input-condition-container,#input-function-container,#output-container').easytabs({
 		animate: false
 	});	
 	$('#importExcel').uploadify({
