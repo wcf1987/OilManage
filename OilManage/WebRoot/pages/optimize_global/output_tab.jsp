@@ -10,7 +10,7 @@
 	</div>							
 </div>
 <div id="outputBase" class="outputDataDiv" style="display:block">
-	<div style="background-color:#fff;padding:5px;height:40px;">基础数据</div>
+	<div class="tab-title">基础数据</div>
 	<div id="output_base_div">
 	<!-- <div id="output-container">
 	 <div id="output-tabs" class="panel-container">
@@ -40,12 +40,12 @@
 	</div>
 </div>
 <div id="outputFee" class="outputDataDiv" style="display:none">
-	<div style="background-color:#fff;padding:5px;height:40px;">费用数据</div>
+	<div class="tab-title">费用数据</div>
 	<div id="output_fee_div">
 	</div>
 </div>
 <div id="outputPosition" class="outputDataDiv"  style="display:none">
-	<div style="background-color:#fff;padding:5px;height:40px;">站点</div>
+	<div class="tab-title">站点</div>
 	<div id="output_position_div">
 	</div>
 </div>

@@ -106,18 +106,7 @@ function initInputTab(){
 			animate: false
 		});	
 	}
-	/*
-	 * 约束条件tab创建
-	 */
-/*	var tabs="";
-	for(var i=0;i<input_condition_sheetNum;i++){
-		var sid=input_base_sheetNum*1+input_function_sheetNum*1+i;
-		tabs+="<div id='input-condition-tab"+i+"'>"+
-		  	"<table id='input-sheet"+sid+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
-			"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
-				"<div id='input-pager"+sid+"' ></div></div></div>";
-	}
-	$("#input-condition-tabs").html(tabs);*/
+
 	/*
 	 *问题描述tab创建
 	 */
@@ -204,14 +193,6 @@ function initInputTab(){
 			animate: false
 		});	
 	}
-	
-/*	var i=0;
-	var sid=input_condition_sheetNum*1;
-	var tabs="<div id='input-function-tab"+i+"'>"+
-		"<table id='input-sheet"+sid+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
-	"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
-		"<div id='input-pager"+sid+"' ></div></div></div>";
-	$("#input-function-tabs").html(tabs);*/
 	
 }
 function initOutputTab(){

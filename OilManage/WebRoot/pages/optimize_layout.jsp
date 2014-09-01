@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<script type="text/javascript" src="editor/lib/kinetic-v5.1.0.min.js"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="js/jqGrid/css/ui.jqgrid.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/redmond/jquery.ui.theme.css" />  
+	<!-- <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/redmond/jquery.ui.theme.css" />   -->
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/carousel.css">
 	<link rel="stylesheet" href="js/upload/uploadify.css">
@@ -106,7 +106,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 					
 					
-					<div id="hydraulic_tab" class="tab-container">
+					<div id="father_tab" class="tab-container">
 						<ul class='etabs'>
 						    <li class='tab'><a href="#input_tab">输入</a></li>
 						    <li class='tab'><a href="#run_tab">运行</a></li>

@@ -40,6 +40,7 @@ CREATE TABLE `t_algorithmscycle` (
 -- ----------------------------
 -- Records of t_algorithmscycle
 -- ----------------------------
+INSERT INTO `t_algorithmscycle` VALUES ('0', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-02 11:10:13', '井底流压计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', '井底流压计算输入表.xls', '井底流压计算结果.xls');
 INSERT INTO `t_algorithmscycle` VALUES ('1', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-02 11:10:13', '单气相管网水力计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', '单相管网水力计算(不考虑热力)输入表.xls', '单相管网水力计算结果(不考虑热力.xls');
 INSERT INTO `t_algorithmscycle` VALUES ('2', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-02 11:10:13', '单气相管网热力计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', '单相管网水力计算(考虑热力)输入表.xls', '单相管网水力计算结果(考虑热力).xls');
 INSERT INTO `t_algorithmscycle` VALUES ('3', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-02 11:10:13', '气固两相管网水力计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', '气固两相管网水力计算输入表.xls', '气固两相管网水力计算结果.xls');
@@ -49,4 +50,4 @@ INSERT INTO `t_algorithmscycle` VALUES ('6', '0', '0', '0', '1', '1', '2014-03-3
 INSERT INTO `t_algorithmscycle` VALUES ('7', '0', '0', '0', '1', '1', '2014-07-22 22:01:14', '2014-08-25 22:01:14', '整体设计', '', '', '2', '整体设计输入表.xls', '整体设计结果.xls');
 INSERT INTO `t_algorithmscycle` VALUES ('8', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-25 21:10:13', '布局设计', '', '', '2', '布局设计输入表.xls', '布局设计结果.xls');
 INSERT INTO `t_algorithmscycle` VALUES ('9', null, null, null, null, null, '2014-08-25 21:27:08', '2014-08-25 21:27:12', '参数设计', null, null, '2', '参数设计输入表.xls', '参数设计结果.xls');
-INSERT INTO `t_algorithmscycle` VALUES ('28', '0', '0', '0', '1', '1', '2014-08-02 11:10:13', '2014-08-02 11:10:13', '井底流压计算', 'simulation.jar', 'cn.edu.cup.cbm.simulation.Test', '1', '井底流压计算输入表.xls', '井底流压计算结果.xls');
+

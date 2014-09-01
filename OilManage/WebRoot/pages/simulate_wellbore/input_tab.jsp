@@ -5,7 +5,23 @@
 	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="runAlg()">运行</button></div>						
 	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>						
 </div>
-<div id="input-container">
+<div id="inputBase"  class="inputDataDiv">
+	<div class="tab-title">基础数据</div>
+	<div id="input_base_div">
+	</div>
+</div>
+<div id="inputCondition" class="inputDataDiv" style="display:none">
+	<div class="tab-title">约束条件</div>
+	<div id="input_condition_div">
+	</div>
+</div>
+
+<div id="inputFunction" class="inputDataDiv"  style="display:none">
+	<div class="tab-title">问题描述</div>
+	<div id="input_function_div">
+	</div>
+</div>
+<!-- <div id="input-container">
  <div class="panel-container">
   <div id="input-table-tab0">
   	<table id="sheet0" class="table table-striped table-bordered table-hover datatable" style="width:1230px" ></table>
@@ -25,7 +41,7 @@
 	<li><a href="#input-table-tab0">气井参数</a></li>
 	<li><a href="#input-table-tab1">流体参数</a></li>	
  </ul>
-</div>
+</div> -->
 
 <script type="text/javascript">
 /* $('#input-container').easytabs({

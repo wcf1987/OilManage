@@ -5,7 +5,25 @@
 	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="runAlg()">运行</button></div>						
 	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>						
 </div>
-<div id="input-container">
+
+<div id="inputBase"  class="inputDataDiv">
+	<div class="tab-title">基础数据</div>
+	<div id="input_base_div">
+	</div>
+</div>
+<div id="inputCondition" class="inputDataDiv" style="display:none">
+	<div class="tab-title">约束条件</div>
+	<div id="input_condition_div">
+	</div>
+</div>
+
+<div id="inputFunction" class="inputDataDiv"  style="display:none">
+	<div class="tab-title">问题描述</div>
+	<div id="input_function_div">
+	</div>
+</div>
+
+<!-- <div id="input-container">
  <div class="panel-container">
   <div id="input-table-tab0">
   	<table id="sheet0" class="table table-striped table-bordered table-hover datatable" style="width:1230px" ></table>
@@ -22,7 +40,7 @@
   </div>
   
   <div id="input-table-tab2">
-   	<!-- 表格 -->
+   	表格
 	<table id="sheet2"
 		class="table table-striped table-bordered table-hover datatable " style="width:1230px"></table>
 	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230">
@@ -31,7 +49,7 @@
   </div>
   
   <div id="input-table-tab3">
-	<!-- 表格 -->
+	表格
 	<table id="sheet3"
 		class="table table-striped table-bordered table-hover datatable " style="width:1230px"></table>
 	<div style="box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230">
@@ -47,15 +65,9 @@
 	<li><a href="#input-table-tab2">节点参数</a></li>
 	<li><a href="#input-table-tab3">管段参数</a></li>
  </ul>
-</div>
+</div> -->
 
-<script type="text/javascript">
-/* $('#input-container').easytabs({
-	animate: false
-  //animationSpeed: 2000,
-  //defaultTab: "li#the-second-tab"
-}); */
-</script>
+
 <style>
 /* Styles for Tabs on Bottom */
 #input-container { width: 100%; padding: 0; clear: both; }

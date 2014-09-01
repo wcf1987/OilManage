@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<script type="text/javascript" src="editor/lib/kinetic-v5.1.0.min.js"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="js/jqGrid/css/ui.jqgrid.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/redmond/jquery.ui.theme.css" />  
+	<!-- <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/redmond/jquery.ui.theme.css" />   -->
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/carousel.css">
 	<link rel="stylesheet" href="js/upload/uploadify.css">
@@ -90,29 +90,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<h2>单相管网水力计算&nbsp;<small>管网模拟</small></h2>
 						<input id="curAlgID" style="display:none" value="1"/>
 						<input id="proID" style="display:none" value=""/>
-						<input id="inputSheetNum" style="display:none" value="5"/>
-						<input id="outputSheetNum" style="display:none" value="6"/>
+						<input id="inputSheetNum" style="display:none" value="10"/>
+						<input id="input_base_sheetNum" style="display:none" value="10"/>
+						<input id="input_function_sheetNum" style="display:none" value="0"/>
+						<input id="input_condition_sheetNum" style="display:none" value="0"/>
 						
+						<input id="outputSheetNum" style="display:none" value="12"/>
+						<input id="output_base_sheetNum" style="display:none" value="12"/>
+						<input id="output_fee_sheetNum" style="display:none" value="0"/>
+						<input id="output_position_sheetNum" style="display:none" value="0"/>
 						<!-- 
 						if (id = 0)，井底流压计算；if (id = 1)，单气相管网水力计算；if (id = 2)，单气相管网热力计算；if (id = 3)，气固两相管网水力计算；if (id = 4)，气液两相管网水力计算
 						 -->
 					</div>
 					
 					
-					<div id="hydraulic_tab" class="tab-container">
+					<div id="father_tab" class="tab-container">
 						<ul class='etabs'>
 						    <li class='tab'><a href="#input_tab">输入</a></li>
 						    <li class='tab'><a href="#run_tab">运行</a></li>
 						    <li class='tab'><a href="#output_tab">输出</a></li>					    
 					    </ul>  
 						<div id="input_tab"><!-- 节点数据 -->					
-							<%@ include file="simulate_hydraulic/input_tab.jsp" %>
+							<%@ include file="simulate_common/input_tab.jsp" %>
 			    		</div>
 			    		<div id="run_tab"><!-- 节点数据 -->
 							<%@ include file="simulate_common/run_tab.jsp" %>
 			    		</div>
 			    		<div id="output_tab"><!-- 节点数据 -->	
-							<%@ include file="simulate_hydraulic/output_tab.jsp" %>
+							<%@ include file="simulate_common/output_tab.jsp" %>
 			    		</div>
 					</div>	            			
 										
@@ -131,51 +137,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="isRunning" style="display:none;padding:90px 120px;width:400px;height:100px;border:10px solid;border-radius:10px;background-color:white;">
 		<span>正在计算......</span>
 	</div> 
-		
-		<script type="text/javascript">
-/* 
-		$().ready(function(){
-			$('#hydraulic_tab,#input-container,#output-container').easytabs({
-				animate: false
-			});	
-			$('#importExcel').uploadify({
-				'swf' : 'js/upload/uploadify.swf',				
-				'cancelImg'   : 'js/upload/cancel.png',
-				'uploader' : 'uploadExcel.action',
-				'queueID' : 'fileQueue',
-				'auto' : true,
-				'multi' : false,
-				'buttonText' : '导入Excel',
-				'fileSizeLimit' : '5MB',
-				'fileObjName' : 'excelImport',
-				'onUploadSuccess' : uploadComplete,
-				'method' : 'post',
-				'fileTypeDesc' : '请选择xls xlsx文件',
-			    'fileTypeExts' : '*.xls; *.xlsx;',
-			    'onUploadStart': function (file) { 		
-			    	$("#importExcel").uploadify("settings", "formData",
-			    			{ 'proID':$("#proID").val(),'algID':$("#curAlgID").val(),'InOrOut':"In" });  
-			    }
- 			
-			});
-			}); 
-		function uploadComplete(file, data, response) {
-			var tempJson = jQuery.parseJSON(data);
-			if(tempJson['msg']==null||tempJson['msg']==''){
-				alert("上传成功！");
-				//openProject($("#proID").val());
-				var sheetDiv = "#sheet";
-				for(var i=0;i<5;i++){//刷新5个表格
-			    	$(sheetDiv+i).trigger("reloadGrid");
-			    }
-			}else{
-				alert(tempJson['msg']);
-			}
-		}
- */
-
-		</script>
-		   
+	<script type="text/javascript" src="js/optimize.js"></script>	
+	
   </body>
   
 </html>
