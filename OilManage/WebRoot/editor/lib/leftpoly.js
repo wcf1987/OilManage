@@ -101,19 +101,19 @@ function() {
 		closed : true
 	});
 */  
-	this.imgLoad = function (url,i){
+	this.imgLoad = function (url,type,i){
 	
 		this.imgobj[i] = new Image();
 	
 	    if (this.imgobj[i].complete) {
-	        this.createIMG(this.imgobj[i],i);
+	        this.createIMG(this.imgobj[i],type,i);
 	        platform.leftDraw();
 	   } else {
 	    	
 	    	this.imgobj[i].onload = function () {	    		
 	    		 //alert('get');
 	    		//leftpoly.imgobj[i].src = url;
-	    		leftpoly.createIMG(leftpoly.imgobj[i],i);
+	    		leftpoly.createIMG(leftpoly.imgobj[i],type,i);
 	 	        leftpoly.imgobj[i].onload = null;
 	        	//alert('in');
 	 	       
@@ -122,14 +122,14 @@ function() {
 	    //setTimeout("leftpoly.imgobj["+i+"].src = "+url+";",1000); 
 	    this.imgobj[i].src = url;
 	};
-	this.createIMG = function (img,i){
+	this.createIMG = function (img,type,i){
 		
 		leftpoly.polys[i] = new Kinetic.Image({
 		    x: 25,
 		    y: 10+i*70,
 		    image: img,
 		    width: 50,
-		    name : 'type'+i,
+		    name : type,
 		    height: 50
 		  });
 		 platform.leftDraw();
@@ -146,9 +146,55 @@ function() {
 		}
 		platform.drawLeft();
 	}
-		
+	this.addPoint=function(type,name,p){
+		var proID=$("#proID").val();
+		  var algID=$("#curAlgID").val();			
+        $.ajax({ 
+            type: "POST", 
+            url: "addPoint.action",
+            data: {
+            	proID:proID,
+				algID:algID,
+				InOrOut:"In",
+				type:type,
+				name:name
+			 }, 
+			 success : function(data) {
+            		if(data['msg']==null||data['msg']==""){
+            			
+            		}else{
+            			alert(data['msg']);
+            			p.destroy();
+            		}
+            } 
+          }); 
+	}	
+	this.delPoint=function(type,name,p){
+		var proID=$("#proID").val();
+		  var algID=$("#curAlgID").val();			
+        $.ajax({ 
+            type: "POST", 
+            url: "delPoint.action",
+            data: {
+            	proID:proID,
+				algID:algID,
+				InOrOut:"In",
+				type:type,
+				name:name
+			 }, 
+			 success : function(data) {
+            		if(data['msg']==null||data['msg']==""){
+            			//p.destroy();
+            		}else{
+            			alert(data['msg']);
+            			
+            		}
+            } 
+          }); 
+	}	
 	this.init = function() {
 		var urllist=[];
+		var typelist=[];
         $.ajax({ 
             type: "POST", 
             url: "listPointType.action",
@@ -159,6 +205,7 @@ function() {
             			//leftpoly.imgLoad(pointType.path,index); //这里用this.imgLoad会提示不存在，改成这样也不行，可能imgLoad里面包含的函数无法调用，但全部改成具体对象.方法 还是不行，浏览器不报错。
             			url=pointType.path;          				
             			urllist.push(url);
+            			typelist.push(pointType.type);
             	    	 }); 
             } 
           }); 
@@ -168,12 +215,12 @@ function() {
         	this.imgLoad(url,i);
         });*/
         for(var j = 0, l = urllist.length; j < l; j++ ){
-        	this.imgLoad( urllist[j],j);
+        	this.imgLoad( urllist[j],typelist[j],j);
         }
 	/*	for(var i=0;i<6;i++){
 			this.imgLoad('editor/icons/type'+i+'.svg',i);
 		}*/
-
+        
 		for ( var k=0;k<this.polys.length;k++) {
 			
 			this.polyGroups[k] = new Kinetic.Group({
@@ -228,14 +275,17 @@ function() {
 				strokeWidth : 2
 			});
 			var text = new Kinetic.Text({
-				  x: -5,
+				  x: -this.polylineLength,
 				  y: 55,
-				  text: '元件设备',
+				  text: this.polys[k].name(),
 				  name:'textLabel',
 				  fontSize: 15,
-				  fontFamily: 'Calibri',
-				  fill: 'blue'
+				  width:this.polylineLength+this.polylineLength+this.polywidth,
+				  align:'right',
+				  fontFamily: '宋体',
+				  fill: 'black'
 				});
+			text.align('center');
 			this.polys[k].x(0);
 			this.polys[k].y(0);
 			this.polyGroups[k].add(this.polys[k]);
@@ -377,7 +427,8 @@ function() {
 					this.id(name);
 					setPointText(this,name);
 					this.moveTo(platform.selectPainting.p);
-				platform.selectPainting.hasChange();
+					leftpoly.addPoint(this.name(),name,this);
+					platform.selectPainting.hasChange();
 				}
 			}
 			poss = checkConn(this);
@@ -476,11 +527,12 @@ function() {
 							$("#contextmenu").hide();		
 							platform.selectPainting.p.draw();
 						} else	if (text == '删除该节点') {
+							leftpoly.delPoint(clickshape.name(),clickshape.nameStr);
 							platform.selectPainting.hasChange();		
 							clickshape.destroy();
 							leftpoly.showALLConnedPoints();
 							$("#contextmenu").hide();		
-							platform.selectPainting.p.draw();
+							platform.draw();
 						} else if (text == '更改颜色') {
 							node.style.fillStyle = Math.floor(Math.random() * 250)
 									+ "," + Math.floor(Math.random() * 250) + ","

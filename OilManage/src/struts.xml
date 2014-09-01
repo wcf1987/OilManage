@@ -416,6 +416,20 @@
 
 			</result>
 		</action>
+		<action name="addPoint" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="addPoint">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delPoint" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="delPoint">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		<!-- 算法图形输出配置-->
 		
 		

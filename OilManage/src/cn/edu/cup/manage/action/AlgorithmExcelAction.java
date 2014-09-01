@@ -202,6 +202,28 @@ public class AlgorithmExcelAction {
 		GraphiTools.updateGraphi(graphi);
 		return "SUCCESS";
 	}
+	String type;
+	String name;
+	public String addPoint(){
+		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		int row=excel.addPoint(type+"数据",name);
+		if (row!=-1){msg="此名称节点已存在";}
+		return "SUCCESS";
+	}
+	public String delPoint(){
+		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		int row=excel.delPoint(type+"数据",name);
+		
+		return "SUCCESS";
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getProName() {
 		return proName;
 	}

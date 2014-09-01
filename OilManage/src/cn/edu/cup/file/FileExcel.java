@@ -315,6 +315,67 @@ public class FileExcel {
 		}
 		return null;
 	}
-
+	public int addPoint(String type, String name) {
+		SheetContent a=getSheetByName(this,type);
+		int row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
+		
+		
+		if(row==-1){
+			Map<String,String> p=new HashMap<String,String>();
+			
+			p.put("名称", name);
+			
+			row=a.addRow(p);
+			
+		}else{
+			return row;
+		}
+		
+	   a=getSheetByName(this,"节点数据");
+	   row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
+	
+	
+	if(row==-1){
+		Map<String,String> p=new HashMap<String,String>();
+		
+		p.put("名称", name);
+		p.put("气井、气源或分输点名称", name);
+		p.put("隶属关系",type.replace("数据", ""));
+		row=a.addRow(p);
+		return -1;
+	}else{
+		return row;
+	}
+	}
+	public int delPoint(String type, String name) {
+		SheetContent a=getSheetByName(this,type);
+		int row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
+		
+		
+		if(row!=-1){
+			a.removeRow(row);
+			
+		}
+		
+	   a=getSheetByName(this,"节点数据");
+	   row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
+	
+	
+	   if(row!=-1){		
+			a.removeRow(row);			
+		
+	   }
+	   
+	   a=getSheetByName(this,"管段连接");
+	   row=a.getExcelDataIndex(a, a.getTitleByName("上游节点"),name );
+	   if(row!=-1){		
+			a.removeRow(row);		
+	   }
+	   row=a.getExcelDataIndex(a, a.getTitleByName("下游节点"),name );
+	   if(row!=-1){		
+			a.removeRow(row);		
+	   }
+	return 0;
+	}
 
 }

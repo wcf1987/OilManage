@@ -39,7 +39,7 @@ public class SheetContent {
 			sheetContent.set(index,null);
 			
 		}
-		
+		updateSheet();
 		return 1;
 	}
 	public int updateSheet(){//修改excel的行的序号，去掉空行
@@ -215,7 +215,7 @@ public class SheetContent {
 		 }
 		sheetContent.add(row);
 		updateSheet();
-		return 1;
+		return sheetContent.size();
 		
 	}
 	public String getKeyFromValue(Map<String,Integer> map,int value){
@@ -283,11 +283,26 @@ public class SheetContent {
 				SheetContent a=f.getSheetByName(f,e.getType()+"数据");
 				int row=getExcelDataIndex(a, a.getTitleByName("名称"), lineStr.get(this.sheetTitle.get("气井、气源或分输点名称")));
 				int col=a.getTitleByName("X坐标(m)");
-				double x=Double.valueOf(getExcelData(a,row,col));
+				double x;
+				if(getExcelData(a,row,col)==null){
+				  x=0;
+				}else{
+				  x=Double.valueOf(getExcelData(a,row,col));
+				}
 				col=a.getTitleByName("Y坐标(m)");
-				double y=Double.valueOf(getExcelData(a,row,col));
+				double y;
+				if(getExcelData(a,row,col)==null){
+					  y=0;
+					}else{
+					  y=Double.valueOf(getExcelData(a,row,col));
+					}
 				col=a.getTitleByName("高程(m)");
 				String z=getExcelData(a,row,col);
+				if(z==null){
+					  z="0";
+					}else{
+					  x=Double.valueOf(getExcelData(a,row,col));
+					}
 				e.addAttr("高程(m)", z);
 				e.setGeodeticCoordinatesX(x);
 				e.setGeodeticCoordinatesY(y);
@@ -372,7 +387,7 @@ public class SheetContent {
 
 		return temp;
 	}
-	private int getExcelDataIndex(SheetContent sheet, int col, String value) {
+	public  int getExcelDataIndex(SheetContent sheet, int col, String value) {
 		List<List<String>> t1=sheet.sheetContent;
 		for(int i=1;i<t1.size();i++){
 			List<String> t2=t1.get(i);
