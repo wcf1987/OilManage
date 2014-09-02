@@ -142,8 +142,6 @@ function drawLines(data){
 				strokeWeight : 9,
 				strokeOpacity : 0.5
 			});
-			
-			
 			//map.addOverlay(polyline);
 			addArrow2(polyline, 5, Math.PI / 7)
 		}
@@ -157,28 +155,35 @@ function drawLines(data){
 			});
 			addArrow2(polyline, 5, Math.PI / 7)
 		}
-		var s = "";
-		s= "类别:" + p['type']  + "<br>";
+		var s = "<span style='font-size:14px;font-weight:bold'>管道信息</span><br>";
+		s=s+ "类别:" + p['type']  + "<br>";
 		var attr=p['attribute'];
 		for(var k1 in attr){
 			s = s + k1+":" + attr[k1] + "<br>"
 		}		
-		polyline.contstr=s;
+		polyline.contStr=s;
 		polyline.addEventListener("click", function(data) {
-			var opts = {
-					width : 300, // 信息窗口宽度
-					height : 150, // 信息窗口高度
-					title : "管道信息", // 信息窗口标题
-					enableMessage : true,// 设置允许信息窗发送短息
-					message : ""
-				};
-			//this.contstr
-			var infoWindow = new BMap.InfoWindow(this.contStr, opts);
-			this.openInfoWindow(infoWindow);
+			$("#lineAttrContent").html(this.contStr);
+			var x=data.clientX;//移动时根据鼠标位置计算控件左上角的绝对位置
+	        var y=data.pageY;
+			$("#lineAttr").css({
+				"display":"block",
+				"top":y,
+				"left":x,
+				"z-index":101
+				});
+//			var opts = {
+//					width : 300, // 信息窗口宽度
+//					height : 200, // 信息窗口高度
+//					title : "管道信息", // 信息窗口标题
+//					enableMessage : true,// 设置允许信息窗发送短息
+//					message : ""
+//				};
+//			var infoWindow = new BMap.InfoWindow(this.contStr, opts);
+//			this.openInfoWindow(infoWindow);
 		});
 		map.addOverlay(polyline);
 		map.enableScrollWheelZoom(false);
-
 		markers.push(polyline);
 	}
 	var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers,isAverangeCenter:true,girdSize:120,maxZoom:13});

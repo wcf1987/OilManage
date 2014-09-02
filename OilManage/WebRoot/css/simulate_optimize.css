@@ -21,6 +21,26 @@
     z-index:101
     
 }
+.popdivMapAttr
+{
+    position:absolute;
+    width:auto;
+    height:auto;
+   /*  border:1px solid #333333; */
+    background-color:white;
+    text-align:center;
+    line-height:400%;
+    font-size:13px;
+   /*  left:20%;
+    top:10%; */
+    margin-top:-600px;
+    margin-left:-300px;
+    border: 1px solid;
+    -moz-border-radius: 15px;      /* Gecko browsers */
+    -webkit-border-radius: 15px;   /* Webkit browsers */
+    z-index:101
+    
+}
 .close{
 	font-size:18px;
 	margin-top:2px;

@@ -37,6 +37,9 @@ $(function(){
 	            return ($(window).width())/2-$(this).width()/2;
 	        },
 	}); 
+	$("#close_lineAttr").click(function() {
+		$("#lineAttr").hide();
+	});
 	/*
 	 * 浮动div的可拖动设置
 	 */
@@ -44,6 +47,7 @@ $(function(){
 	initOutputTab();
 	
 });
+
 function initInputTab(){
 	/*
 	 * input_tab初始化

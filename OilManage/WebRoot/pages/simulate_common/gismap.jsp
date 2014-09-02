@@ -14,6 +14,10 @@
 
 </div><!-- /.container -->
 
+<div id="lineAttr" class="popdivMapAttr" style="display:none;width:325px;line-height:30px;height:300px;">
+	<a id="close_lineAttr" class="close">x</a>	
+	<div id="lineAttrContent"></div>
+</div>
 <style type="text/css">
 #allmap {
 	width: 100%;

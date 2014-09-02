@@ -88,8 +88,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    <!-- Wrap the rest of the page in another container to center all the content. -->
 	    
 		<div class="container marketing condiv" style="width:1200px;">
-	    <a href="javascript:showMap(44,0,'In')">输入文件地图</a>
-	      <a href="javascript:showMap(44,0,'Out')">输出文件地图</a>
+	    <a href="javascript:showMap(70,1,'In')">输入文件地图</a>
+	      <a href="javascript:showMap(70,1,'Out')">输出文件地图</a>
 	    	<hr class="featurette-divider" style="margin-top:10px;margin-bottom:10px;">
 	    	
 	      	<!-- Three columns of text below the carousel -->
@@ -120,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script type="text/javascript">
 
-
+initMap();
 
 </script>
 

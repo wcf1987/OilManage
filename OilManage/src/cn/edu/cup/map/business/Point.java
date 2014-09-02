@@ -25,7 +25,7 @@ public class Point {
 		this.attribute.put(key, value);
 	}
 	public void addAttr(Map<String,String>  KV){
-		this.attribute.putAll(KV);;
+		this.attribute.putAll(KV);
 	}
 	/**
 	 * da di zuo biao 

@@ -54,7 +54,8 @@ var myjingkou = new BMap.Icon("images/icons/jingkou.png",
 			anchor : new BMap.Size(15, 15)
 		});
 function drawPoints(data){
-	
+	var secRingCenter=null;
+	var secRingLabel2;
 	var jsonObject = data;
 	var pointArray = new Array();
 	var pMap = jsonObject['obs'];
@@ -63,23 +64,45 @@ function drawPoints(data){
 		id++;
 		ps = pMap[i];
 		var tempPoint= new Array();
+		var minLng=0;
+		var minLat=0;
+		var maxLng=0;
+		var maxLat=0;
 		for(var k =0;k<ps.length;k++){
-			p=ps[k];
 			
-			var bp=new BMap.Point(p['longitude'], p['latitude']);	
+			p=ps[k];	
+			var bp=new BMap.Point(p['longitude'], p['latitude']);				
 			if(id==0){
-				map.centerAndZoom(bp, 15);
+				map.centerAndZoom(bp, 15);	
 			}
 			tempPoint.push(bp);
-			
+			if(k==0){
+				minLng=p['longitude'];
+				maxLng=p['longitude'];
+				minLat=p['latitude'];
+				maxLat=p['latitude'];
+			}else{
+				if(p['longitude']<minLng){
+					minLng=p['longitude'];
+				}else if(p['longitude']>maxLng){
+					maxLng=p['longitude'];
+				}	
+				if(p['latitude']<minLat){
+					minLat=p['latitude'];
+				}else if(p['latitude']>maxLat){
+					maxLat=p['latitude'];
+				}
+			}
 		}
 		var polygon = new BMap.Polygon(tempPoint, 
 				styleOptions	);
-	
 		map.addOverlay(polygon);
-				
-
-		
+		var midLng=(minLng+maxLng)/2;
+		var midLat=(minLat+maxLat)/2;
+		secRingCenter = new BMap.Point(midLng,midLat);
+		secRingLabel2 = new BMap.Label(p['type'],{offset: new BMap.Size(10,-20), position: secRingCenter});
+		secRingLabel2.setStyle({"padding": "2px"});
+		map.addOverlay(secRingLabel2);		
 	}
 
 	}
