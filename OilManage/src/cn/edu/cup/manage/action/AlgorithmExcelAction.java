@@ -255,7 +255,9 @@ public class AlgorithmExcelAction {
 	List<DeviceKV> deviceKV;
 	public String listDevice(){
 		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		if(name!=null){
 		deviceKV=excel.getDevice(type+"数据",name);
+		}
 		return "SUCCESS";
 	}
 	public List<DeviceKV> getDeviceKV() {
@@ -501,6 +503,10 @@ public class AlgorithmExcelAction {
 				ExcelAlgBaseDir + path);
 		if (status == -1) {
 			msg = excel.getMsg();
+			return "SUCCESS";
+		}
+		if(sheetID>=excel.getSheetNum()){
+			msg="数据sheet数量过多，超过模板";
 			return "SUCCESS";
 		}
 		sheetTile = excel.getSheetByID(sheetID).getTitle();
