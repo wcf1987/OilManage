@@ -79,8 +79,8 @@ function() {
 	this.polyGroups = new Array;
 	this.connectionPoints = new Array;
 	this.radiusL=5;
-	this.polyhight=25;
-	this.polywidth=50;
+	this.polyhight=30;
+	this.polywidth=30;
 	this.polylineLength=20;
 	
 	this.lpoints=[ 0, 0, -this.polylineLength, 0];
@@ -128,9 +128,9 @@ function() {
 		    x: 25,
 		    y: 10+i*70,
 		    image: img,
-		    width: 50,
+		    width: this.polywidth,
 		    name : type,
-		    height: 50
+		    height:this.polyhight
 		  });
 		 platform.leftDraw();
 	}
@@ -233,7 +233,7 @@ function() {
 			
 			var lineLeft = new Kinetic.Line({
 				x : 0,
-				y : this.polyhight,
+				y : this.polyhight/2,
 				points : 	this.lpoints.concat(),
 				 
 				 stroke : 'black',
@@ -245,7 +245,7 @@ function() {
 			});
 			var lineRight = new Kinetic.Line({
 				x : this.polywidth,
-				y : this.polyhight,
+				y : this.polyhight/2,
 				 points : this.rpoints.concat(),
 				
 				 stroke : 'black',
@@ -256,7 +256,7 @@ function() {
 			});
 			var connPointsLeft = new Kinetic.Circle({
 				x : 0-this.polylineLength,
-				y : this.polyhight,
+				y : this.polyhight/2,
 
 				radius : this.radiusL,
 				fill : 'red',
@@ -267,7 +267,7 @@ function() {
 			
 			var connPointsRight = new Kinetic.Circle({
 				x : this.polywidth+this.polylineLength,
-				y : this.polyhight,
+				y : this.polyhight/2,
 				name : 'connPointsRight',
 				radius : this.radiusL,
 				fill : 'red',
@@ -276,7 +276,7 @@ function() {
 			});
 			var text = new Kinetic.Text({
 				  x: -this.polylineLength,
-				  y: 55,
+				  y: 30,//55,
 				  text: this.polys[k].name(),
 				  name:'textLabel',
 				  fontSize: 15,
@@ -293,7 +293,7 @@ function() {
 			this.lock=false;
 			
 			//起点
-			if(k==0){
+			if(k==0||k==1||k==2||k==3){
 				this.polyGroups[k].add(lineRight);
 				this.polyGroups[k].add(connPointsRight);
 				//this.polyGroups[k].add(PointRight);
@@ -304,14 +304,14 @@ function() {
 			}
 			
 			//终点
-			if(k==1){
+		/*	if(k==1){
 				this.polyGroups[k].add(lineLeft);
 				this.polyGroups[k].add(connPointsLeft);	
 				//this.polyGroups[k].add(PointLeft);
 				connPointsLeft.hide();
 				this.initPoint(this.polyGroups[k]);
 				continue;
-			}
+			}*/
 			this.polyGroups[k].add(lineRight);
 			this.polyGroups[k].add(lineLeft);
 			this.polyGroups[k].add(connPointsLeft);
