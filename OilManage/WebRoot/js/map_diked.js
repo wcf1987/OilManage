@@ -15,7 +15,7 @@ function showObstacle(proid,algid,Inorout) {
 			InOrOut:Inorout
 		},
 		success : function(data) {
-			drawPoints(data);
+			drawPointsDiked(data);
 			//drawLines(data);
 		}
 
@@ -53,7 +53,7 @@ var myjingkou = new BMap.Icon("images/icons/jingkou.png",
 		new BMap.Size(30, 30), {
 			anchor : new BMap.Size(15, 15)
 		});
-function drawPoints(data){
+function drawPointsDiked(data){
 	var secRingCenter=null;
 	var secRingLabel2;
 	var jsonObject = data;

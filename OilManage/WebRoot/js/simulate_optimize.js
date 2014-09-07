@@ -1,7 +1,7 @@
 $().ready(function(){
-	$('#father_tab').easytabs({
+/*	$('#father_tab').easytabs({
 		animate: false
-	});	
+	});	*/
 	$('#importExcel').uploadify({
 		'swf' : 'js/upload/uploadify.swf',				
 		'cancelImg'   : 'js/upload/cancel.png',
@@ -209,4 +209,9 @@ function showData(type){
 	}
 }
 
-
+function showTab(type){
+	$(".father_tab").each(function(index,item){
+		$(item).hide();
+	});
+	$("#"+type).show();
+}

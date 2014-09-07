@@ -17,8 +17,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="X-UA-Compatible" content="IE=9" />
 	
 	<script type="text/javascript" src="editor/lib/kinetic-v5.1.0.min.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/css/jquery-ui-1.10.3.custom.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="js/jqGrid/css/ui.jqgrid.css" />
-	<!-- <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/redmond/jquery.ui.theme.css" />   -->
+	<link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/redmond/jquery.ui.theme.css" />  
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/carousel.css">
 	<link rel="stylesheet" href="js/upload/uploadify.css">
@@ -110,17 +111,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 					<div id="father_tab" class="tab-container">
 						<ul class='etabs'>
-						    <li class='tab'><a href="#input_tab">输入</a></li>
-						    <li class='tab'><a href="#run_tab">运行</a></li>
-						    <li class='tab'><a href="#output_tab">输出</a></li>					    
+						    <li class='tab'><button id="input_tab_button" onclick="showTab('input_tab')">输入</button></li>
+						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">运行</button></li>
+						    <li class='tab'><button id="output_tab_button" onclick="showTab('output_tab')">输出</button></li>						    
 					    </ul>  
-						<div id="input_tab"><!-- 节点数据 -->					
+						<div id="input_tab" class="father_tab">				
 							<%@ include file="simulate_common/input_tab.jsp" %>
 			    		</div>
-			    		<div id="run_tab"><!-- 节点数据 -->
+			    		<div id="run_tab" class="father_tab" style="display:none">
 							<%@ include file="simulate_common/run_tab.jsp" %>
 			    		</div>
-			    		<div id="output_tab"><!-- 节点数据 -->	
+			    		<div id="output_tab" class="father_tab" style="display:none">
 							<%@ include file="simulate_common/output_tab.jsp" %>
 			    		</div>
 					</div>	            			
