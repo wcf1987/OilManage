@@ -11,7 +11,7 @@ function showMap(proid,algid,Inorout) {
 			InOrOut:Inorout
 		},
 		success : function(data) {
-			drawPoints(data);
+			drawPointsGis(data);
 			drawLines(data);
 		}
 
@@ -39,7 +39,7 @@ function initMap(){
 	map.addOverlay(marker1);
 	var point = new BMap.Point(116.404, 39.915);
 	}
-function drawPoints(data){
+function drawPointsGis(data){
 	
 	var jsonObject = data;
 	var pointArray = new Array();
