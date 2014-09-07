@@ -88,6 +88,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="span12">
 					<div class="page-header">
 						<h2>气液两相管网水力计算&nbsp;<small>管网模拟</small></h2>
+						<input id="tempStr1" style="display:none" value=""/>
+						<input id="tempStr2" style="display:none" value=""/>
 						<input id="curAlgID" style="display:none" value="4"/>
 						<input id="proID" style="display:none" value=""/>
 						<input id="inputSheetNum" style="display:none" value="4"/>

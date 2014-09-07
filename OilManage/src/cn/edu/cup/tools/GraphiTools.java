@@ -68,9 +68,16 @@ public class GraphiTools {
 	        String name = names.next();
 	        Node n = NodeMap.get(name);
 	        Point t=graphi.getPoint(name);
-	        t.setDraw2DX(n.y+100+base);
+	        if(n!=null){
+	        t.setDraw2DX(n.y+100);
 	        base=base+10;
 	        t.setDraw2DY(n.x);
+	        }else{
+	        	  t.setDraw2DX(500+base);
+	  	        
+	  	        t.setDraw2DY(500+base);	
+	        }
+	        
 	    }
 	}
 	public static void updateGraphi(Graphi g){

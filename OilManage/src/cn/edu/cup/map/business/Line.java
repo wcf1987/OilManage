@@ -45,6 +45,13 @@ public class Line{
 	}
 	String start;
 	String end;
+	String name;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	String type;
 	String length;
 	Map<String,String> attribute;

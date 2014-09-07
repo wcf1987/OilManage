@@ -1,5 +1,6 @@
 package cn.edu.cup.map.business;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Point {
@@ -46,7 +47,7 @@ public class Point {
 	double latitude;
 
 	public Point() {
-		// TODO Auto-generated constructor stub
+		this.attribute=new HashMap<String, String>();
 	}
 	public void getLatLonFromGeo(){
 		double a[]=new CoordinateConversion().utm2LatLon("50 S "+String.valueOf(this.GeodeticCoordinatesX)+" "+String.valueOf(this.GeodeticCoordinatesY));

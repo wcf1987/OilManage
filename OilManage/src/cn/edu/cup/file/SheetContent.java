@@ -39,7 +39,7 @@ public class SheetContent {
 			sheetContent.set(index,null);
 			
 		}
-		updateSheet();
+		
 		return 1;
 	}
 	public int updateSheet(){//修改excel的行的序号，去掉空行
@@ -281,31 +281,19 @@ public class SheetContent {
 				e.setAttribute(getAttribute(lineStr));
 				
 				SheetContent a=f.getSheetByName(f,e.getType()+"数据");
-				int row=getExcelDataIndex(a, a.getTitleByName("名称"), lineStr.get(this.sheetTitle.get("气井、气源或分输点名称")));
-				int col=a.getTitleByName("X坐标(m)");
-				double x;
-				if(getExcelData(a,row,col)==null){
-				  x=0;
-				}else{
-				  x=Double.valueOf(getExcelData(a,row,col));
+				//int row=getExcelDataIndex(this, a.getTitleByName("名称"), lineStr.get(this.sheetTitle.get("气井、气源或分输点名称")));
+				String X=lineStr.get(this.sheetTitle.get("X坐标(m)"));
+				String Y=lineStr.get(this.sheetTitle.get("Y坐标(m)"));
+				//String Z=lineStr.get(this.sheetTitle.get("高程(m)"));
+				if(X==null||X.equalsIgnoreCase("")){
+					X="0";
 				}
-				col=a.getTitleByName("Y坐标(m)");
-				double y;
-				if(getExcelData(a,row,col)==null){
-					  y=0;
-					}else{
-					  y=Double.valueOf(getExcelData(a,row,col));
-					}
-				col=a.getTitleByName("高程(m)");
-				String z=getExcelData(a,row,col);
-				if(z==null){
-					  z="0";
-					}else{
-					  x=Double.valueOf(getExcelData(a,row,col));
-					}
-				e.addAttr("高程(m)", z);
-				e.setGeodeticCoordinatesX(x);
-				e.setGeodeticCoordinatesY(y);
+				if(Y==null||Y.equalsIgnoreCase("")){
+					Y="0";
+				}
+				//e.addAttr("高程(m)", z);
+				e.setGeodeticCoordinatesX(Double.valueOf(X));
+				e.setGeodeticCoordinatesY(Double.valueOf(Y));
 				e.getLatLonFromGeo();
 				points.put(e.getName(),e);
 			}
@@ -314,28 +302,30 @@ public class SheetContent {
 			for(int i=1;i<this.sheetContent.size();i++){
 				Point e=new Point();
 				List<String> lineStr=this.sheetContent.get(i);
-				if(lineStr.get(sheetTitle.get("管段类型")).equalsIgnoreCase("Pipe")){
-					continue;
-				}
+				
 				if(this.sheetTitle.get("名称")==null){
 					return points;
 				}
-				e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
 				String t=lineStr.get(this.sheetTitle.get("管段类型"));
+				if(t.equalsIgnoreCase("Pipe")){
+					e.setType("管道");
+					e.setName(lineStr.get(this.sheetTitle.get("名称")));
+
+				}else{				
 				if(t.equalsIgnoreCase("CentCompressor")){
+					e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
 					e.setType("离心压缩机");
 				}
 				if(t.equalsIgnoreCase("ReciCompressor")){
+					e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
 					e.setType("往复式压缩机");
 				}
-				e.setAttribute(getAttribute(lineStr));
-				
 				SheetContent a=f.getSheetByName(f,e.getType()+"数据");
 				int row=getExcelDataIndex(a, a.getTitleByName("名称"), lineStr.get(this.sheetTitle.get("设备名称")));
 				int col=a.getTitleByName("X坐标(m)");
-				double x=Double.valueOf(getExcelData(a,row,col));
+				double x=0;
 				col=a.getTitleByName("Y坐标(m)");
-				double y=Double.valueOf(getExcelData(a,row,col));
+				double y=0;
 				
 				Map attr1=a.getAttribute(a.sheetContent.get(row));
 				e.addAttr(attr1);
@@ -344,6 +334,11 @@ public class SheetContent {
 				e.setGeodeticCoordinatesX(x);
 				e.setGeodeticCoordinatesY(y);
 				e.getLatLonFromGeo();
+				}
+				
+				e.addAttr(getAttribute(lineStr));
+				
+				
 				points.put(e.getName(),e);
 			}
 		}
@@ -355,31 +350,29 @@ public class SheetContent {
 			for(int i=1;i<this.sheetContent.size();i++){
 				
 				List<String> lineStr=this.sheetContent.get(i);
+				Line e1=new Line();
+				Line e2=new Line();
+				String midlle;
 				if(lineStr.get(sheetTitle.get("管段类型")).equalsIgnoreCase("Pipe")){
-					Line e=new Line();
-					e.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
-					e.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));
-					e.setLength(lineStr.get(this.sheetTitle.get("管长(km)")));
-					e.setType(this.Name);
-					e.setAttribute(getAttribute(lineStr));
-					temp.add(e);
+					
+					
+					 midlle=lineStr.get(this.sheetTitle.get("名称"));
+									
 				}else{
-					Line e1=new Line();
-					Line e2=new Line();
-					String midlle=lineStr.get(this.sheetTitle.get("设备名称"));
-					e1.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
-					e1.setEnd(midlle);
-					e1.setLength(lineStr.get(this.sheetTitle.get("")));
-					e1.setType(this.Name);
-					e2.setStart(midlle);
-					e2.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));
-					e2.setLength(lineStr.get(this.sheetTitle.get("")));
-					e2.setType(this.Name);
-					//e.setAttribute(getAttribute(lineStr));
-					temp.add(e1);
-					temp.add(e2);
+					 midlle=lineStr.get(this.sheetTitle.get("设备名称"));
+					
 				}
-				
+				e1.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
+				e1.setEnd(midlle);
+				//e1.setLength(lineStr.get(this.sheetTitle.get("")));
+				e1.setType("连接");
+				e2.setStart(midlle);
+				e2.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));
+				//e2.setLength(lineStr.get(this.sheetTitle.get("")));
+				e2.setType("连接");
+				//e.setAttribute(getAttribute(lineStr));
+				temp.add(e1);
+				temp.add(e2);
 				
 			}
 			
@@ -391,7 +384,7 @@ public class SheetContent {
 		List<List<String>> t1=sheet.sheetContent;
 		for(int i=1;i<t1.size();i++){
 			List<String> t2=t1.get(i);
-			if(t2.get(col).equalsIgnoreCase(value)){
+			if(t2.get(col)!=null&&t2.get(col).equalsIgnoreCase(value)){
 				return i;
 			}
 		}

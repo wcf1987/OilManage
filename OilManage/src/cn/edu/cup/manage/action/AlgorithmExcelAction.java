@@ -15,9 +15,11 @@ import cn.edu.cup.file.FileExcel;
 import cn.edu.cup.file.SheetContent;
 import cn.edu.cup.gui.dao.GUIDao;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
+import cn.edu.cup.manage.business.DeviceKV;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
 import cn.edu.cup.map.business.Graphi;
+import cn.edu.cup.map.business.Line;
 import cn.edu.cup.map.business.Point;
 import cn.edu.cup.tools.GraphiTools;
 import cn.edu.cup.tools.Tools;
@@ -216,6 +218,60 @@ public class AlgorithmExcelAction {
 		
 		return "SUCCESS";
 	}
+	List<Line> conn;
+	public void setConn(String conns) {
+		conns=conns.replace("[", "");
+		conns=conns.replace("]", "");
+ 		this.conn=new ArrayList<Line>();
+ 		String[] connStr=conns.split(",");
+ 		try{
+ 			for(int i=0;i<connStr.length;i=i+3){ 
+			
+			 JSONObject o =JSONObject.fromObject(connStr[i]+","+connStr[i+1]+","+connStr[i+2]);
+		 
+			 
+			 
+			 String left=String.valueOf(o.get("left"));
+			 String right=String.valueOf(o.get("right"));
+			 String name=String.valueOf(o.get("name"));
+			 Line connInfo = new Line(); 
+			 connInfo.setStart(left);
+			 connInfo.setEnd(right);
+			 connInfo.setName(name);
+			 this.conn.add(connInfo);
+		 }
+		 }catch(Exception  e){
+			e.printStackTrace(); 
+		 }
+	}
+
+	public String updateConn(){
+		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		for(int i=0;i<this.conn.size();i++){
+			excel.updateConn(this.conn.get(i));
+		}
+		return "SUCCESS";
+	}
+	List<DeviceKV> deviceKV;
+	public String listDevice(){
+		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		deviceKV=excel.getDevice(type+"数据",name);
+		return "SUCCESS";
+	}
+	public List<DeviceKV> getDeviceKV() {
+		return deviceKV;
+	}
+
+	String proper;
+	public String editDevice(){
+		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		excel.updateDevice(type+"数据",name,proper,newValue);
+		return "SUCCESS";
+	}
+	public void setProper(String proper) {
+		this.proper = proper;
+	}
+
 	public void setType(String type) {
 		this.type = type;
 	}

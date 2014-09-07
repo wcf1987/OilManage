@@ -430,6 +430,27 @@
 
 			</result>
 		</action>
+		<action name="updateConn" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="updateConn">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="listDevice" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="listDevice">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+				<action name="editDevice" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="editDevice">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		<!-- 算法图形输出配置-->
 		
 		

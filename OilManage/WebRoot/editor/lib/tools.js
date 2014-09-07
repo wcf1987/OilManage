@@ -112,22 +112,37 @@ function getPoly(g){
 function resizePoint(g){
 	l=getLeftLine(g);
 	lc=getLeftPoint(g);
-	//lch=getLeftPointHide(g);
+	// lch=getLeftPointHide(g);
 	r=getRightLine(g);
 	rc=getRightPoint(g);
-	//rch=getRightPointHide(g);
-	//poly=getPoly(g);	
+	// rch=getRightPointHide(g);
+	// poly=getPoly(g);
+	if(checkSpecial(g)){
+		if(lc!=null){
+			lc.x(leftpoly.polywidth+leftpoly.polylineLengthPainting);
+			lc.y(leftpoly.polyhight/2);
+			l.points(leftpoly.rpointsPainting.concat());
+			
+			}
+			if(rc!=null){
+			
+				rc.x(leftpoly.polywidth+leftpoly.polylineLengthPainting);
+				rc.y(leftpoly.polyhight/2);
+				r.points(leftpoly.rpointsPainting.concat());
+			}
+	}else{
 	if(lc!=null){
 	lc.x(0-leftpoly.polylineLengthPainting);
-	lc.y(leftpoly.polyhight);
+	lc.y(leftpoly.polyhight/2);
 	l.points(leftpoly.lpointsPainting.concat());
 	
 	}
 	if(rc!=null){
 	
 		rc.x(leftpoly.polywidth+leftpoly.polylineLengthPainting);
-		rc.y(leftpoly.polyhight);
+		rc.y(leftpoly.polyhight/2);
 		r.points(leftpoly.rpointsPainting.concat());
+	}
 	}
 }
 function movePoint(point,dis,rotation){
@@ -153,7 +168,7 @@ function movePoint(point,dis,rotation){
 				y:dis.x
 		}	
 	}
-	//logD('dis.x:'+realDis.x+' y:'+realDis.y);
+	// logD('dis.x:'+realDis.x+' y:'+realDis.y);
 	point.move(realDis);
 }
 function drawLine(line,dis,rotation){
@@ -261,7 +276,7 @@ function logD(i){
 	platform.log(i);
 }
 function sleep(milliSeconds){    
-    var startTime = new Date().getTime();  // get the current time   
+    var startTime = new Date().getTime();  // get the current time
     while (new Date().getTime() < startTime + milliSeconds);  // hog cpu
     }
 function imgLoadA(url){
@@ -270,3 +285,52 @@ function imgLoadA(url){
 	img.src = url;
 	return img;
 };
+function getPolyByType(p){
+	var type=p['type'];
+	for(var i=0;i<leftpoly.polyGroups.length;i++){
+		if (leftpoly.polyGroups[i].TYPE==type){
+			return leftpoly.polyGroups[i];
+		}
+		if (type=='离心压缩机'||type=='往复式压缩机'){
+			if(leftpoly.polyGroups[i].TYPE=='集气增压站'&&p['attribute']['隶属关系'].indexOf('JQZYZ')>-1){
+				return leftpoly.polyGroups[i];
+			}
+			if(leftpoly.polyGroups[i].TYPE=='主动增压点'&&p['attribute']['隶属关系'].indexOf('ZDZYD')>-1){
+				return leftpoly.polyGroups[i];
+			}
+			if(leftpoly.polyGroups[i].TYPE=='中央处理厂'&&p['attribute']['隶属关系'].indexOf('ZYCLC')>-1){
+				return leftpoly.polyGroups[i];
+			}
+		}
+		
+	}
+	return null;
+}
+function rotateSpesail(p){
+	if(checkSpecial(p))
+	{	
+		p.rotate(90);
+		p.y(p.y()-55);
+		}
+}
+function checkSpecial(p){
+	if(p.TYPE=='气井'||p.TYPE=='气源'||p.TYPE=='分输点')
+	{
+		return true;
+	}
+	return false;
+}
+function checkPipe(p){
+	if(p.TYPE=='集气增压站'||p.TYPE=='中央处理厂'||p.TYPE=='主动增压点'||p.TYPE=='离心压缩机'||p.TYPE=='往复式压缩机')
+	{
+		return true;
+	}
+	return false;
+}
+function checkAllPipe(p){
+	if(p.TYPE=='集气增压站'||p.TYPE=='中央处理厂'||p.TYPE=='主动增压点'||p.TYPE=='离心压缩机'||p.TYPE=='往复式压缩机'||p.TYPE=='管道')
+	{
+		return true;
+	}
+	return false;
+}

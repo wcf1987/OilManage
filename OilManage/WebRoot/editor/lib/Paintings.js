@@ -17,39 +17,28 @@ var Paintings = function() {
 		var id = -1;
 		for ( var i in pMap) {
 			id++;
-			//if(id==2) return ;
 			p = pMap[i];
-			//pointMap[i] = new BMap.Point(p['longitude'], p['latitude']);			
-			//myicon = myjingkou;
+
 			var point;
-			if (p['type'] == '气源') {
-				point=leftpoly.polyGroups[2].clone();
+
+			var ptemp=getPolyByType(p);
+			if(ptemp==null){
+				continue;
 			}
-			if (p['type'] == '气井') {
-				point=leftpoly.polyGroups[3].clone();
-			}
-			if (p['type'] == '分输点') {
-				point=leftpoly.polyGroups[4].clone();
-				
-			}
-			if (p['type'] == '中央处理厂数据') {
-				point=leftpoly.polyGroups[5].clone();
-			}
-			if (p['type'] == '中央处理厂数据') {
-				point=leftpoly.polyGroups[6].clone();
-			}
+			point=ptemp.clone();
 			point.nameStr=p['name'];
 			point.id(p['name']);
+			point.TYPE=ptemp.TYPE;
 			this.p.add(point);
 			setPointText(point,p['name']);
 			point.x(p.draw2DX);
-			point.y(p.draw2DY);			
-			//point.x(p.draw2DY);
-			//point.y(p.draw2DX);			
+			point.y(p.draw2DY);	
+			rotateSpesail(point);		
 			leftpoly.showALLConnPoints();
 			resizePoint(point);
+			this.p.draw();
 		}
-		this.p.draw();
+		
 
 	}
 	this.getPointByName=function(name){
@@ -74,41 +63,26 @@ var Paintings = function() {
 			if(startP!=null&&endP!=null){
 				var	rc=getRightPoint(startP);
 				var	lc=getLeftPoint(endP);
-				var dis={
+
+				if(checkSpecial(endP))
+				{var dis={
+						x:-(rc.getAbsolutePosition().x-lc.getAbsolutePosition().x)/this.scaleN,
+						y:-(rc.getAbsolutePosition().y-lc.getAbsolutePosition().y)/this.scaleN
+					}
+					var  r=getRightLine(startP);						
+					movePoint(rc,dis,startP.rotation());							
+					drawLine(r,dis,startP.rotation());	
+				}else{
+					var dis={
 							x:(rc.getAbsolutePosition().x-lc.getAbsolutePosition().x)/this.scaleN,
 							y:(rc.getAbsolutePosition().y-lc.getAbsolutePosition().y)/this.scaleN
 						}
-				var  l=getLeftLine(endP);
-				
-				//var	lch=getLeftPointHide(endP);
-				var	r=getRightLine(endP);
-				
-					var	poly=getPoly(endP);				
-					//if(l!=null&&lc.fill()!='red'){
-						//endP.setAbsolutePosition(pos);	
-						//logD('一次移动');
-						//logD('lch.x:'+lch.x()+' y:'+lch.y());
-						//logD('lc.x:'+lc.x()+' y:'+lc.y());
-						movePoint(lc,dis,endP.rotation());
-						//lc.move(point);
-						//logD('move to lc.x:'+lc.x()+' y:'+lc.y());
-						//logD('');
-						drawLine(l,dis,endP.rotation());	
-						this.p.draw();
-					//}				
-					//if(r!=null&&rc.fill()!='red'){
-						//endP.setAbsolutePosition(pos);	
-					//	movePoint(rc,dis,endP.rotation());
-					//	drawLine(r,dis,endP.rotation());
-					//}	
-			}
-			 //var polyline=leftpoly.polyGroups[9].clone();
-			
-			
-				
-				
-			 
-				
+					var  l=getLeftLine(endP);						
+					movePoint(lc,dis,endP.rotation());							
+					drawLine(l,dis,endP.rotation());	
+				}
+				this.p.draw();
+			}				
 		}		
 	}
 	this.addGraphi=function(data){
@@ -200,33 +174,45 @@ var Paintings = function() {
 		});
 		points = this.p.getChildren();
 		var re=null;
-		for (li = 0; li < points.length; li++) {
+		var leftconn;
+		var rightconn;
+		if(checkAllPipe(g)){
+		
+			for (li = 0; li < points.length; li++) {
 			tempArray2 = points[li].getChildren(function(node) {
 				return node.getName() == 'connPointsLeft'
 						|| node.getName() == 'connPointsRight'
 			});
-			if (checkCircle(tempArray[0], tempArray2[1],
+			if (points[li]!=g&&checkSpecial(points[li])&&checkCircle(tempArray[0], tempArray2[1],
 					tempArray[0].radius() )) {
-				this.addConnect(g,points[li]);
-				
-				
+				this.addConnect(g.nameStr,points[li],g);				
 			}
-			if (checkCircle(tempArray[1], tempArray2[0],
+			if (points[li]!=g&&checkSpecial(points[li])&&checkCircle(tempArray[1], tempArray2[0],
 					tempArray[0].radius())) {
-				this.addConnect(points[li],g);
+				this.addConnect(g.nameStr,g,points[li]);
 				
 			}
 		}
+			
 		return re;
 	}
-	this.addConnect=function(a,b){
+		
+	}
+	this.addConnect=function(name,a,b){
 		for(var l3=0;l3<this.connects.length;l3++){
-			if(this.connects[l3].left==a.id()&&this.connects[l3].right==b.id())
+			if(this.connects[l3].name==name&&this.connects[l3].name==a.nameStr){
+				this.connects[l3].right=b.nameStr;
 				return;
+			}
+			if(this.connects[l3].name==name&&this.connects[l3].name==b.nameStr){
+				this.connects[l3].left=a.nameStr;
+				return;
+			}	
 		}
 			var temp=new connectC;
-			temp.left=a.id();
-			temp.right=b.id();
+			temp.name=name;
+			temp.left=a.nameStr;
+			temp.right=b.nameStr;
 			this.connects.push(temp);
 		
 	}

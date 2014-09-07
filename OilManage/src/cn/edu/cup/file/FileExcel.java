@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import cn.edu.cup.manage.business.DeviceKV;
 import cn.edu.cup.manage.dao.AlgorithmsCycleDao;
 import cn.edu.cup.map.business.Graphi;
 import cn.edu.cup.map.business.Line;
@@ -200,8 +202,9 @@ public class FileExcel {
 	}
 	public Graphi getGraphi() {
 		Graphi a=new Graphi();
-		a.setLines(getLines());
 		a.setPoints(getPoints());
+		a.setLines(getLines());
+		
 		return a;
 	}
 	public int getType(int algid){
@@ -315,12 +318,21 @@ public class FileExcel {
 		}
 		return null;
 	}
+	public int getTypeCodeByName(String Name){
+		if(Name.equalsIgnoreCase("离心压缩机数据")||Name.equalsIgnoreCase("往复式压缩机数据"))
+			return 1;
+		if(Name.equalsIgnoreCase("气井数据")||Name.equalsIgnoreCase("气源数据")||Name.equalsIgnoreCase("分输点数据"))
+			return 0;
+		if(Name.equalsIgnoreCase("管道数据"))
+			return 2;
+		return 3;
+	}
 	public int addPoint(String type, String name) {
 		SheetContent a=getSheetByName(this,type);
-		int row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
+		//int row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
 		
-		
-		if(row==-1){
+		int row;
+/*		if(row==-1){
 			Map<String,String> p=new HashMap<String,String>();
 			
 			p.put("名称", name);
@@ -330,22 +342,73 @@ public class FileExcel {
 		}else{
 			return row;
 		}
-		
-	   a=getSheetByName(this,"节点数据");
-	   row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
-	
-	
-	if(row==-1){
-		Map<String,String> p=new HashMap<String,String>();
-		
-		p.put("名称", name);
-		p.put("气井、气源或分输点名称", name);
-		p.put("隶属关系",type.replace("数据", ""));
-		row=a.addRow(p);
-		return -1;
-	}else{
-		return row;
-	}
+		*/
+	   if(getTypeCodeByName(type)==1){
+		   a=getSheetByName(this,type);
+		   SheetContent b=getSheetByName(this,"管段连接");
+		   row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
+		   int row2=b.getExcelDataIndex(b, b.getTitleByName("设备名称"),name );
+		   
+		   if(row==-1&&row2==-1){
+			Map<String,String> p=new HashMap<String,String>();			
+			p.put("名称", name);
+			row=a.addRow(p);
+			
+			Map<String,String> p1=new HashMap<String,String>();			
+			p1.put("设备名称", name);
+			p1.put("名称", name);
+			if(type.equals("离心压缩机数据")){
+				p1.put("管段类型", "CentCompressor");
+			}else{
+				p1.put("管段类型", "ReciCompressor");
+			}
+			
+			row2=b.addRow(p1);
+			return -1;
+		}else{
+			return row;
+		}
+	   }
+	   if(getTypeCodeByName(type)==0){
+		   a=getSheetByName(this,"节点数据");
+		   row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
+		   if(row==-1){
+			Map<String,String> p=new HashMap<String,String>();			
+			p.put("名称", name);
+			p.put("气井、气源或分输点名称", name);
+			p.put("隶属关系",type.replace("数据", ""));
+			row=a.addRow(p);
+			return -1;
+		}else{
+			return row;
+		}
+	   }
+	   if(getTypeCodeByName(type)==2){
+		   a=getSheetByName(this,"管段连接");
+		   row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
+		   if(row==-1){
+			Map<String,String> p=new HashMap<String,String>();			
+			p.put("名称", name);
+			p.put("管段类型", "Pipe");
+			row=a.addRow(p);
+			return -1;
+		}else{
+			return row;
+		}
+	   }
+	   if(getTypeCodeByName(type)==3){
+		   a=getSheetByName(this,type);
+		   row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
+		   if(row==-1){
+			Map<String,String> p=new HashMap<String,String>();			
+			p.put("名称", name);
+			row=a.addRow(p);
+			return -1;
+		}else{
+			return row;
+		}
+	   }
+	   return 0;
 	}
 	public int delPoint(String type, String name) {
 		SheetContent a=getSheetByName(this,type);
@@ -354,7 +417,7 @@ public class FileExcel {
 		
 		if(row!=-1){
 			a.removeRow(row);
-			
+			a.updateSheet();
 		}
 		
 	   a=getSheetByName(this,"节点数据");
@@ -376,6 +439,117 @@ public class FileExcel {
 			a.removeRow(row);		
 	   }
 	return 0;
+	}
+	public void updateConn(Line line) {
+		 SheetContent a=getSheetByName(this,"管段连接");
+	
+		  
+			  
+			  
+		 int row=a.getExcelDataIndex(a, a.getTitleByName("名称"),line.getName());
+			   
+			   
+		 if(row!=-1){
+			 a.editCell(row,a.getTitleByName("上游节点"),line.getStart());
+			 a.editCell(row,a.getTitleByName("下游节点"),line.getEnd());
+				
+			}else{
+				
+			}
+		   
+		
+	}
+	public List<DeviceKV> getDevice(String type, String name) {
+		Point e=new Point();
+		List<DeviceKV> a=new ArrayList<>();
+		
+		if(type.equals("分输点数据")||type.equals("气井数据")||type.equals("气源数据")){
+			SheetContent sheet=getSheetByName(this,"节点数据");
+			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
+			List<String> line=sheet.sheetContent.get(row);
+			Map<String,String> map=sheet.getAttribute(line);
+			
+			for (Iterator<String> iter=map.keySet().iterator();iter.hasNext();) {
+				String key=iter.next();
+				String value=map.get(key);
+				DeviceKV KV=new DeviceKV();
+				KV.setName(key);
+				KV.setValue(value);
+				a.add(KV);
+			}
+		}
+		if(type.equals("管道数据")){
+			SheetContent sheet=getSheetByName(this,"管段连接");
+			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
+			List<String> line=sheet.sheetContent.get(row);
+			Map<String,String> map=sheet.getAttribute(line);
+			
+			for (Iterator<String> iter=map.keySet().iterator();iter.hasNext();) {
+				String key=iter.next();
+				String value=map.get(key);
+				DeviceKV KV=new DeviceKV();
+				KV.setName(key);
+				KV.setValue(value);
+				a.add(KV);
+			}
+		}
+		if(type.equals("离心压缩机数据")||type.equals("往复式压缩机数据")){
+			SheetContent sheet=getSheetByName(this,type);
+			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
+			List<String> line=sheet.sheetContent.get(row);
+			Map<String,String> map=sheet.getAttribute(line);
+			
+			for (Iterator<String> iter=map.keySet().iterator();iter.hasNext();) {
+				String key=iter.next();
+				String value=map.get(key);
+				DeviceKV KV=new DeviceKV();
+				KV.setName(key);
+				KV.setValue(value);
+				a.add(KV);
+			}
+		}
+		if(type.equals("阀组数据")||type.equals("过滤器数据")){
+			SheetContent sheet=getSheetByName(this,type);
+			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
+			List<String> line=sheet.sheetContent.get(row);
+			Map<String,String> map=sheet.getAttribute(line);
+			
+			for (Iterator<String> iter=map.keySet().iterator();iter.hasNext();) {
+				String key=iter.next();
+				String value=map.get(key);
+				DeviceKV KV=new DeviceKV();
+				KV.setName(key);
+				KV.setValue(value);
+				a.add(KV);
+			}
+		}
+		return a;
+		
+	}
+	public void updateDevice(String type, String name, String proper,
+			String newValue) {
+		if(type.equals("分输点数据")||type.equals("气井数据")||type.equals("气源数据")){
+			SheetContent sheet=getSheetByName(this,"节点数据");
+			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
+			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
+	
+		}
+		if(type.equals("管道数据")){
+			SheetContent sheet=getSheetByName(this,"管段连接");
+			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
+			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
+		}
+		if(type.equals("离心压缩机数据")||type.equals("往复式压缩机数据")){
+			SheetContent sheet=getSheetByName(this,type);
+			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
+			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
+		}
+		if(type.equals("阀组数据")||type.equals("过滤器数据")){
+			SheetContent sheet=getSheetByName(this,type);
+			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
+			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
+		}
+		
 	}
 
 }

@@ -3,76 +3,57 @@ var Leftpolys = /**
  */
 function() {
 	 var lastsel;
+	 var proID=$("#proID").val();
+	  var algID=$("#curAlgID").val();		
 	 var datagrid =jQuery("#PointPraList").jqGrid({
-		   	url:'listPointPra.action',
+		   	url:'listDevice.action',
 			datatype: "json",
 			mtype : 'POST',
-		   	colNames:['ID','属性中文名称', '属性英文名称', '属性值','属性ISO值','单位名称','单位符号'],
+			postData : {
+				algID : algID,
+				InOrOut:"In",
+				proID : proID
+				
+			}, 
+		   	colNames:['属性','值'],
 		   	colModel:[
-		   		{name:'ID',index:'ID', width:100,align:"center",hidden:true,editable:true},
-		   		{name:'par_display',index:'par_display', width:100, align:"center"},
-		   		{name:'par_name',index:'par_name', width:100,align:"center",hidden:true},
-		   		{name:'par_value',index:'par_value', width:100, align:"center",editable:true},
-		   		{name:'par_ISOValue',index:'par_ISOValue', width:100, align:"center",hidden:true,editable:true},		
-		   		{name:'measure_CName',index:'measure_CName', width:100,align:"center"},		
-		   		{name:'measure_Symbol',index:'measure_Symbol', width:100, align:"center"},
-//		   		{name:'act',index:'act', width:75,sortable:false}
+		   		{name:'name',index:'name', width:100,align:"center"},
+		   		{name:'value',index:'value', width:100, align:"center",editable:true},
 		   	],
-		   	width:700,//530
+		   	width:300,//530
 		   	rowNum:10,
-		   	rowList:[10,20,30],
-		   	pager: '#PointPraPager',
+		   	rowList:[10,20,30],		   	
 		   	sortname: 'id',
 		    viewrecords: true,
 		    sortorder: "desc",
-/*			gridComplete: function(){
-				var ids = jQuery("#PointPraList").jqGrid('getDataIDs');
-				for(var i=0;i < ids.length;i++){
-					var cl = ids[i];
-					be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#PointPraList').editRow('"+cl+"');\"  />"; 
-					se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#PointPraList').saveRow('"+cl+"');\"  />"; 
-					ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#PointPraList').restoreRow('"+cl+"');\" />"; 
-					jQuery("#PointPraList").jqGrid('setRowData',ids[i],{act:be+se+ce});
-				}	
-			},*/
-			editurl: "editPointPra.action",
+		    cellEdit:true,
+			cellsubmit : 'remote',
+			cellurl : 'editDevice.action',
+			beforeSubmitCell : function(rowid,celname,value,iRow,iCol) { 
+				//alert(/sd/);
+				var proper=jQuery("#PointPraList").jqGrid("getRowData", iRow).name 
+				var z={
+					algID : $("#curAlgID").val(),
+					InOrOut:"In",
+					proID : $("#proID").val(),
+					type:$("#tempStr1").val(),//元素点的类型
+					name:$("#tempStr2").val(),
+					proper:proper,
+					newValue:value					
+					};
+				return  z;
+				
+				} ,
 			caption: "属性列表",
 			jsonReader: {//读取后端json数据的格式
-				root: "pointPraList",//保存详细记录的名称
+				root: "deviceKV",//保存详细记录的名称
 				total: "total",//总共有多少页
 				page: "page",//当前是哪一页
 				records: "records",//总共记录数
 				repeatitems: false
 			},
 		});
-//		 $('#PointPraList').trigger("reloadGrid");
-	 datagrid.jqGrid('navGrid','#PointPraPager',{
-			edit : false,
-			add : false,
-			search:false,
-			del : false}).jqGrid('navButtonAdd',"#PointPraPager",{
-				title:'保存',
-				caption:"保存",	
-				id:"save_PointPraList",
-				onClickButton:function(){
-					var rowID = $("#PointPraList").jqGrid('getGridParam','selrow'); 				
-					jQuery("#PointPraList").jqGrid('saveRow',rowID, function(result) {
-							if (result.responseText=="") {alert("更新失败!"); return false;}
-							return true;
-						}
-					);
-					},
-				position:"first"
-			}).jqGrid('navButtonAdd',"#PointPraPager",{
-					title:'编辑',
-					caption:"编辑",
-					id:"edit_PointPraList",
-					onClickButton : function addModal(){
-						var rowID = $("#PointPraList").jqGrid('getGridParam','selrow'); 
-						jQuery("#PointPraList").jqGrid('editRow',rowID);
-					},
-					position:"first"
-				});
+
 
 	this.polys = new Array;
 	this.imgobj=new Array;
@@ -82,11 +63,11 @@ function() {
 	this.polyhight=30;
 	this.polywidth=30;
 	this.polylineLength=20;
-	
+	this.textHeight=20;
 	this.lpoints=[ 0, 0, -this.polylineLength, 0];
 	this.rpoints=[ 0, 0, this.polylineLength, 0];
 	//画布显示时，加大了线的长度
-	this.polylineLengthPainting=60;
+	this.polylineLengthPainting=40;
 	this.lpointsPainting=[ 0, 0, -this.polylineLengthPainting, 0];
 	this.rpointsPainting=[ 0, 0,this.polylineLengthPainting, 0];
 /*	this.polys[0] = new Kinetic.Line({
@@ -125,7 +106,7 @@ function() {
 	this.createIMG = function (img,type,i){
 		
 		leftpoly.polys[i] = new Kinetic.Image({
-		    x: 25,
+		    x: 35,
 		    y: 10+i*70,
 		    image: img,
 		    width: this.polywidth,
@@ -146,6 +127,30 @@ function() {
 		}
 		platform.drawLeft();
 	}
+	this.updateLines=function(){
+		platform.selectPainting.updateConnects();
+		s=JSON.stringify(platform.selectPainting.connects);
+		var proID=$("#proID").val();
+		var algID=$("#curAlgID").val();			
+        $.ajax({ 
+            type: "POST", 
+            url: "updateConn.action",
+            data: {
+            	proID:proID,
+				algID:algID,
+				InOrOut:"In",
+				conn:s
+			 }, 
+			 success : function(data) {
+            		if(data['msg']==null||data['msg']==""){
+            			
+            		}else{
+            			alert(data['msg']);
+            			p.destroy();
+            		}
+            } 
+          }); 
+	}	
 	this.addPoint=function(type,name,p){
 		var proID=$("#proID").val();
 		  var algID=$("#curAlgID").val();			
@@ -230,14 +235,14 @@ function() {
 				draggable : true
 
 			});
-			
+			this.polyGroups[k].TYPE=this.polys[k].name();
 			var lineLeft = new Kinetic.Line({
 				x : 0,
 				y : this.polyhight/2,
 				points : 	this.lpoints.concat(),
 				 
 				 stroke : 'black',
-				strokeWidth : 5,
+				strokeWidth : 3,
 
 				name : 'lineLeft',
 				closed : true
@@ -249,9 +254,20 @@ function() {
 				 points : this.rpoints.concat(),
 				
 				 stroke : 'black',
-				strokeWidth : 5,
+				strokeWidth : 3,
 
 				name : 'lineRight',
+				closed : true
+			});
+			var lineLeftSp = new Kinetic.Line({
+				x : this.polywidth,
+				y : this.polyhight/2,
+				 points : this.rpoints.concat(),
+				
+				 stroke : 'black',
+				strokeWidth : 3,
+
+				name : 'lineLeft',
 				closed : true
 			});
 			var connPointsLeft = new Kinetic.Circle({
@@ -274,13 +290,23 @@ function() {
 				stroke : 'black',
 				strokeWidth : 2
 			});
+			var connPointsLeftSp = new Kinetic.Circle({
+				x : this.polywidth+this.polylineLength,
+				y : this.polyhight/2,
+				name : 'connPointsLeft',
+				radius : this.radiusL,
+				fill : 'red',
+				stroke : 'black',
+				strokeWidth : 2
+			});
 			var text = new Kinetic.Text({
 				  x: -this.polylineLength,
-				  y: 30,//55,
+				  y: this.polyhight+5,//55,
 				  text: this.polys[k].name(),
 				  name:'textLabel',
-				  fontSize: 15,
+				  fontSize: 12,
 				  width:this.polylineLength+this.polylineLength+this.polywidth,
+				  height:this.textHeight,
 				  align:'right',
 				  fontFamily: '宋体',
 				  fill: 'black'
@@ -292,8 +318,8 @@ function() {
 			this.polyGroups[k].add(text);
 			this.lock=false;
 			
-			//起点
-			if(k==0||k==1||k==2||k==3){
+			/*//起点
+			if(){
 				this.polyGroups[k].add(lineRight);
 				this.polyGroups[k].add(connPointsRight);
 				//this.polyGroups[k].add(PointRight);
@@ -301,8 +327,23 @@ function() {
 				connPointsRight.hide();	
 				this.initPoint(this.polyGroups[k]);
 				continue;
+			}*/
+			//终点
+			if(this.polyGroups[k].TYPE=='分输点'||this.polyGroups[k].TYPE=='气井'||this.polyGroups[k].TYPE=='气源'){
+				this.polyGroups[k].add(lineRight);
+				this.polyGroups[k].add(connPointsRight);
+				//this.polyGroups[k].add(PointRight);
+				
+				connPointsRight.hide();	
+				
+				this.polyGroups[k].add(lineLeftSp);
+				this.polyGroups[k].add(connPointsLeftSp);
+				//this.polyGroups[k].add(PointRight);
+				
+				connPointsLeft.hide();	
+				this.initPoint(this.polyGroups[k]);
+				continue;
 			}
-			
 			//终点
 		/*	if(k==1){
 				this.polyGroups[k].add(lineLeft);
@@ -374,7 +415,14 @@ function() {
 				lch=getLeftPointHide(this);
 				r=getRightLine(this);
 				rc=getRightPoint(this);
-				poly=getPoly(this);				
+				poly=getPoly(this);	
+				if(checkSpecial(this)){
+					this.setAbsolutePosition(pos);					
+					movePoint(rc,dis,this.rotation());					
+					drawLine(r,dis,this.rotation());	
+					movePoint(lc,dis,this.rotation());					
+					drawLine(l,dis,this.rotation());
+				}else{
 				if(l!=null&&lc.fill()!='red'){
 					this.setAbsolutePosition(pos);	
 					//logD('一次移动');
@@ -390,7 +438,8 @@ function() {
 					this.setAbsolutePosition(pos);	
 					movePoint(rc,dis,this.rotation());
 					drawLine(r,dis,this.rotation());
-				}				
+				}	
+				}
 				//platform.draw();
 				return {
 					x : this.getAbsolutePosition().x,
@@ -423,11 +472,22 @@ function() {
 				if(name==null||name==''){
 					this.destroy();
 				}else{
+					if(checkPipe(this)){
+						var Type=prompt("请压缩机类型","");
+						if(Type==null||Type==''){
+							this.destroy();
+							return;
+						}
+						this.TYPE=Type;
+					}
 					this.nameStr=name;
 					this.id(name);
 					setPointText(this,name);
 					this.moveTo(platform.selectPainting.p);
-					leftpoly.addPoint(this.name(),name,this);
+					if(checkSpecial(this)){
+						this.rotate(90);
+					}
+					leftpoly.addPoint(this.TYPE,name,this);
 					platform.selectPainting.hasChange();
 				}
 			}
@@ -436,7 +496,9 @@ function() {
 				this.lock=true;
 				this.x((this.x() - (poss.x/platform.selectPainting.scaleN)));
 				this.y((this.y() - (poss.y/platform.selectPainting.scaleN)));
+				leftpoly.updateLines();
 				platform.draw();
+				
 			}
 			leftpoly.showALLConnedPoints();
 		} else {
@@ -476,8 +538,8 @@ function() {
 		    //双击事件的执行代码
 			$("#contextmenu").hide();
 			var clickshape = e.target.getParent();
-			point_name=clickshape.id();
-			point_type=clickshape.name();
+			point_name=clickshape.nameStr;
+			point_type=clickshape.TYPE;
 		// 当前位置弹出菜单（div）
 			var attrtop=this.getAbsolutePosition().y + 100;
 			var attrleft=this.getAbsolutePosition().x + 90;		
@@ -666,7 +728,7 @@ function() {
 		for (li = 0; li < points.length; li++) {
 			var tempL=getLeftPoint(points[li]);
 		
-			if (checkCircle(rightCir, tempL,
+			if (points[li]!=g&&checkCircle(rightCir, tempL,
 					leftpoly.radiusL*platform.selectPainting.scaleN * 2)) {
 				g.lock=true;
 				points[li].lock=true;
@@ -679,12 +741,14 @@ function() {
 					y : rightCir.getAbsolutePosition().y
 							- tempL.getAbsolutePosition().y,
 				}
-				
+				if(checkSpecial(g)){
+					leftCir.fill('yellow');
+				}
 			}
 		}
 		for (li = 0; li < points.length; li++) {
 			var tempR=getRightPoint(points[li]);
-			if (checkCircle(leftCir, tempR,
+			if (points[li]!=g&&checkCircle(leftCir, tempR,
 					leftpoly.radiusL*platform.selectPainting.scaleN  * 2)) {
 				g.lock=true;
 				points[li].lock=true;
@@ -697,7 +761,9 @@ function() {
 						y : leftCir.getAbsolutePosition().y
 								- tempR.getAbsolutePosition().y,
 					}
-				
+				if(checkSpecial(g)){
+					rightCir.fill('yellow');
+				}
 			}
 			
 		}		
@@ -708,18 +774,20 @@ function() {
 	/*
 	 * 属性编辑列表
 	 */
-	 showPrameter=function(point_name,pro_id,point_type,attrtop,attrleft){
+	 showPrameter=function(point_name,pro_id,type,attrtop,attrleft){
 //		$("#PointPraList").empty();
-
+		 $("#tempStr1").val(type);
+		 $("#tempStr2").val(point_name);
 		 jQuery("#PointPraList").jqGrid("setGridParam", { 
-			 url: "listPointPra.action", //设置表格的url 
+			 url: "listDevice.action", //设置表格的url 
 			 datatype: "json", //设置数据类型 
 			 postData: {
-				    pointName:point_name,//相当于pointID
-					pro_id:pro_id,//项目ID
-					pointType:point_type,//元素点的类型
+				 	algID : algID,
+					InOrOut:"In",
+					proID : proID,
+					type:type,//元素点的类型
 //					pointID:1,
-					pointPraID:$("#PointPraList").jqGrid("getRowData", $("#gridTable").jqGrid("getGridParam", "selrow")).ID
+					name:point_name
 					} 
 		 }); 
 		$('#PointPraList').trigger("reloadGrid");
