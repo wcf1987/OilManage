@@ -17,7 +17,7 @@ $(
 		'onUploadSuccess' : uploadComplete,
 		'method' : 'post',
 		'fileTypeDesc' : 'Image Files',
-	    'fileTypeExts' : '*.gif; *.jpg; *.png;*.svg;',
+	    'fileTypeExts' : '*.gif; *.jpg; *.png;*.svg;*.vsdx;',
 	    'onUploadStart': function (file) { 
 	    	var type=$("type_name").val();
 	    	var remark=$("#type_remark").val();
