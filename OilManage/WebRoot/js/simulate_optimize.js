@@ -80,7 +80,7 @@ function saveExcel(){
 	});
 }
 var intervalID;
-function runAlg(){
+function runAlg(way){
 	$.ajax({
 		type:'post',
 		url:'runAlgPro.action',
@@ -92,8 +92,11 @@ function runAlg(){
 	    	$("#outputarea").text("");
 	    	intervalID=setInterval ("listLog()", 5000);//每隔一段时间去请求日志信息
 	    	//location.href=window.location.pathname+"#run_tab";
+	    	if(way==0){
 	    	showTab("run_tab");
-	    	$("#isRunning").css({display:"block",top:"20%",left:"40%",position:"absolute"});
+	    }
+	    	$("#isRunning").css({display:"block",top:"15%",left:"55%",position:"absolute"});
+	    
 	    },
 		success:function(data){				
 			//$("#isRunning").hide();		
@@ -158,9 +161,12 @@ function listLog()
 	});
 
 }
-function loadOutput(){
+function loadOutput(way){
 	//location.href=window.location.pathname+"#output_tab";
-	showTab("output_tab");
+	if(way==0){
+		showTab("output_tab");
+    }
+	
 	var proid=$("#proID").val();
 	var sid = 1;
 	var algid = $("#curAlgID").val();
@@ -216,4 +222,12 @@ function showTab(type){
 		$(item).hide();
 	});
 	$("#"+type).show();
+	if(type=='run_tab'){
+		//runAlg(1);
+		tabtools.load();
+	}
+	if(type=='output_tab'){
+		//runAlg(1);
+		loadOutput(1);
+	}
 }

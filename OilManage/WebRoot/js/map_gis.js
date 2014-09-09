@@ -188,8 +188,8 @@ function drawLines(data){
 	
 }
 var myjingkou = new BMap.Icon("images/icons/qijing.png",
-		new BMap.Size(700, 700), {
-			anchor : new BMap.Size(15, 15)
+		new BMap.Size(70, 70), {
+		anchor : new BMap.Size(15, 15)
 		});
 var myfazu = new BMap.Icon("images/icons/fa.png", new BMap.Size(40, 40), {
 	anchor : new BMap.Size(20, 20)
