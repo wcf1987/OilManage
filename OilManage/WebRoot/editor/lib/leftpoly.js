@@ -780,6 +780,7 @@ function() {
 //		$("#PointPraList").empty();
 		 $("#tempStr1").val(type);
 		 $("#tempStr2").val(point_name);
+		 var proID=$("#proID").val();
 		 jQuery("#PointPraList").jqGrid("setGridParam", { 
 			 url: "listDevice.action", //设置表格的url 
 			 datatype: "json", //设置数据类型 
