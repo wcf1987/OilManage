@@ -1,11 +1,37 @@
 package cn.edu.cup.algjarexcel;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 public class RunInfoDetail extends RunInfo{
 	String fileInputPath;
 	String fileOutputPath;
 	ProjectInfo proinfo;
 
-
+	class MyOutputStream extends OutputStream{
+	    public void write(int arg0) throws IOException {
+	      // 写入指定的字节，忽略
+	    }   
+	   
+	    public void write(byte data[]) throws IOException{
+	      // 追加一行字符串
+	    	log(new String(data));
+	    }
+	   
+	    public void write(byte data[], int off, int len) throws IOException {
+	    
+	    	String S=new String(data,off,len);
+	      // 追加一行字符串中指定的部分，这个最重要
+	    	if(proinfo!=null&&proinfo.hisID!=0&&S.indexOf("Hibernate")==-1){
+	    		log(S.trim());
+	    	}else{
+	    		olderrStream.print(S);
+	    	}
+	      // 移动TextArea的光标到最后，实现自动滚动
+	      //txtLog.setCaretPosition(txtLog.getText().length());
+	    }
+	  }
 
 
 	public void setProinfo(ProjectInfo proinfo) {
@@ -23,9 +49,21 @@ public class RunInfoDetail extends RunInfo{
 	public void setFileOutputPath(String fileOutputPath) {
 		this.fileOutputPath = fileOutputPath;
 	}
-
+	PrintStream  printStream;
+	static PrintStream  oldStream;
+	static PrintStream  olderrStream;
+	static{
+		 oldStream=System.out;
+		 olderrStream=System.err;
+	}
 	public RunInfoDetail() {
 		super();
+		MyOutputStream out=new MyOutputStream();
+		 printStream = new PrintStream(out);
+	    // 指定标准输出到自己创建的PrintStream
+
+	    System.setOut(printStream);
+	    System.setErr(printStream);
 	}
 
 	@Override
