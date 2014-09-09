@@ -38,7 +38,7 @@ public class FileToGraphi {
 		String arrayTemp[]=line.split(",");
 		//a.setGroupNO(arrayTemp[0].trim());
 		//a.setWellNO(arrayTemp[1].trim());
-		a.setTypeByInt(arrayTemp[0].trim());
+		//a.setTypeByInt(arrayTemp[0].trim());
 		a.setName(arrayTemp[1].trim());
 		a.setGeodeticCoordinatesX(Double.valueOf(arrayTemp[2].trim()));
 		a.setGeodeticCoordinatesY(Double.valueOf(arrayTemp[3].trim()));

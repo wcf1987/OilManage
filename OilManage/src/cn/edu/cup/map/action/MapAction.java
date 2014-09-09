@@ -17,7 +17,7 @@ public class MapAction extends ActionSupport{
 	}
 	public int testinit(){
 		points=new ArrayList<Point>();
-		points.add(new Point(642150.4345, 3947632.937, "PH66-04", "PH1-002"));
+		/*points.add(new Point(642150.4345, 3947632.937, "PH66-04", "PH1-002"));
 		points.add(new Point(642370.2253, 3947415.113, "PH66-02", "PH1-002"));
 		points.add(new Point(642598.6307, 3947479.802, "PH66-05", "PH1-002"));
 		points.add(new Point(642877.5666, 3947678.192, "PH66-08", "PH1-002"));
@@ -34,7 +34,7 @@ public class MapAction extends ActionSupport{
 		points.add(new Point(644008.5306, 3949266.397, "PH88-02", "PH1-002"));
 		points.add(new Point(644586.7507, 3949695.279, "PH88-04", "PH1-002"));
 		points.add(new Point(644458.4138, 3949409.207, "PH88-03", "PH1-002"));
-		points.add(new Point(644135.4246, 3949632.468, "PH88-07", "PH1-002"));
+		points.add(new Point(644135.4246, 3949632.468, "PH88-07", "PH1-002"));*/
 		
 		return points.size();
 	}
