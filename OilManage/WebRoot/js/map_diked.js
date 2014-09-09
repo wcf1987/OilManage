@@ -115,8 +115,8 @@ var styleOptions = {
 	    fillOpacity: 0.6,      //填充的透明度，取值范围0 - 1。
 	    strokeStyle: 'solid' //边线的样式，solid或dashed。
 	}
-function init(){
-	 map = new BMap.Map("allmap", {
+function initdiked(){
+	 map = new BMap.Map("dikedmap", {
 		mapType : BMAP_HYBRID_MAP
 	}); // 创建Map实例
 	var point = new BMap.Point(116.404, 39.915); // 创建点坐标
@@ -156,7 +156,7 @@ var drawingManager = new BMapLib.DrawingManager(map, {
     enableDrawingTool: true, //是否显示工具栏
     drawingToolOptions: {
         anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
-        offset: new BMap.Size(5, 35), //偏离值
+        offset: new BMap.Size(125, 8), //偏离值
         drawingModes : [
                         
                         BMAP_DRAWING_POLYGON

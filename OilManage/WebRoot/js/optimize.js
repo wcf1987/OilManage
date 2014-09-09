@@ -342,14 +342,17 @@ function initOutputTab(){
 	}
 }
 function showDikedAreaMap(){//显示障碍区地图
-	if($("#dikedAreaMap").css("display")=="none"){
+	if($("#dikedAreaMap").css("display")==null||$("#dikedAreaMap").css("display")=="None"){
 		$("#dikedAreaMap").show();
 		var proid=$("#proID").val();
 		var algid=$("#curAlgID").val();
-		init();
+		initdiked();
 		showObstacle(proid,algid,"In");
+		$("#dikedAreaMap").css("display","Block")
 	}else{
 		$("#dikedAreaMap").hide();
+		$("#dikedAreaMap").css("display","None");
+		
 	}
 	
 }

@@ -26,6 +26,7 @@ public class CalcThread extends Thread {
 		alg.startCalc(proinfo.getAlgID());
 		
 		}catch(Exception e){
+			e.printStackTrace();
 			proinfo.getInfo().endsWithError(e.getMessage());
 		}
 		new AlgorithmExcelAction().reloadFileExcel(proinfo.getProid(), proinfo.getAlgID(), "Out");
