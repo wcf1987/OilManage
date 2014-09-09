@@ -126,7 +126,7 @@
 	<div id="pointPraClose" ><span style="font-size:25px;float:right;width:20px;align:center;margin-top:-30px;" onclick="closePraList()">x</span></div>
 	<table id="PointPraList" class="table table-striped table-bordered table-hover datatable " >
 	</table>
-  		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:700" >
+  		<div>
 		<div id="PointPraPager" ></div>
 	</div>		
 </div>

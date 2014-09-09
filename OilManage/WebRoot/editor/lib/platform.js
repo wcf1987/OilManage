@@ -17,14 +17,14 @@ var Platform=function(){
 	    y:40,
 	    id: 'centerlayer',
 	    width:1070,
-	    height:500
+	    height:750//500
 	});
 	this.gridlayer  = new Kinetic.Layer({
 	    x:100,
 	    y:this.centerlayer.y(),
 	    id: 'gridlayer',
 	    width:1070,
-	    height:500
+	    height:750//500
 	});
 
 	this.tablayer=new Kinetic.Layer({
@@ -75,7 +75,7 @@ var Platform=function(){
 	this.rectBackgroundCenter = new Kinetic.Rect({
 	   x: 10,
 	   y: 0,
-	   height: 500,
+	   height:750,//500,
 	   width: 1038,
 	   fill: 'transparent',
 	   draggable: false,
@@ -320,7 +320,7 @@ var Platform=function(){
 		
 		
 		
-		this.stage.add(this.outputlayer);
+		//this.stage.add(this.outputlayer);
 		this.stage.add(this.leftlayer);	
 		this.stage.add(this.gridlayer);//添加顺序很重要，先添加的在底层，这里网格将挡住拖拽超出到中间画布上的输出框内容。
 		this.stage.add(this.centerlayer);
@@ -434,7 +434,7 @@ var Platform=function(){
 //            width : gridlayer.width()-100,
 //            height :gridlayer.height()-100,
             width:1070,
-            height:480,//这个高度保证不挡住下面的输出框
+            height:750//480,//这个高度保证不挡住下面的输出框
 
     });
 
@@ -445,7 +445,7 @@ var Platform=function(){
             fill : "#fff",
             draggable : false,
             width :1070,
-            height :480//这个高度保证不挡住下面的输出框
+            height :750//480//这个高度保证不挡住下面的输出框
     });
 	this.drawGrid=function(){
 

@@ -20,7 +20,8 @@ function() {
 		   		{name:'name',index:'name', width:100,align:"center"},
 		   		{name:'value',index:'value', width:100, align:"center",editable:true},
 		   	],
-		   	width:300,//530
+		   	width:'auto',//530
+		   	height:'auto',
 		   	rowNum:10,
 		   	rowList:[10,20,30],		   	
 		   	sortname: 'id',
