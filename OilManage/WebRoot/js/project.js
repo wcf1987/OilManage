@@ -139,8 +139,8 @@ function list_project(){
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"openProject('"
-										+ rows.ID + "')\">打开</a>"
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"openProject("
+										+ rows.ID + ")\">打开</a>"
 							}
 						}
 						],
