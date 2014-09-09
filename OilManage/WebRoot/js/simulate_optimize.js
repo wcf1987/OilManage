@@ -224,7 +224,12 @@ function showTab(type){
 	$("#"+type).show();
 	if(type=='run_tab'){
 		//runAlg(1);
-		tabtools.load();
+		if($("#curAlgID").val()==1){
+			tabtools.load();
+		}else{
+			
+		}
+		showInputMap();
 	}
 	if(type=='output_tab'){
 		//runAlg(1);
