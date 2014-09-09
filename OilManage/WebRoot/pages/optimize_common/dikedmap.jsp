@@ -1,7 +1,9 @@
 <%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
+
 <script type="text/javascript" src="js/map_diked.js"></script>
 	
 <div id="dikedAreaMap"  class="popdiv" style="display:None;width:700px;height:600px;">
+
 <button id="dikedMove" style='margin:2px;border-radius:5px;float:left;font-size:12px;background-color:#A5CEA5;height:3em;line-height:2em;overflow: hidden;'>点我拖动</button>
 
 	<div class="container marketing" style="width:600px;">	
