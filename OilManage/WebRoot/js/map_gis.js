@@ -26,9 +26,9 @@ function clearMap(){
 var pointMap = {};
 var markers = [];
 var map;
-function initMap(){
+function initMapGis(){
 
-	map = new BMap.Map("allmap",{mapType: BMAP_HYBRID_MAP});
+	map = new BMap.Map("mapgis",{mapType: BMAP_HYBRID_MAP});
 	var point = new BMap.Point(116.404, 39.915);    //
 	map.centerAndZoom(point,8);                     // 
 	map.enableScrollWheelZoom();
@@ -63,11 +63,9 @@ function drawPointsGis(data){
 			myicon = myjiqizhan;
 			
 		}
+
 		if (p['type'] == '中央处理厂数据') {
-			myicon = myjiqizhan;
-		}
-		if (p['type'] == '中央处理厂数据') {
-			myicon = myjiqizhan;
+			myicon = zyclc;
 		}
 		var markertemp = new BMap.Marker(pointMap[i], {
 			icon : myicon
@@ -189,14 +187,17 @@ function drawLines(data){
 	var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers,isAverangeCenter:true,girdSize:120,maxZoom:13});
 	
 }
-var myjingkou = new BMap.Icon("images/icons/jingkou.png",
-		new BMap.Size(30, 30), {
+var myjingkou = new BMap.Icon("images/icons/qijing.png",
+		new BMap.Size(700, 700), {
 			anchor : new BMap.Size(15, 15)
 		});
-var myfazu = new BMap.Icon("images/icons/fazu.png", new BMap.Size(40, 40), {
+var myfazu = new BMap.Icon("images/icons/fa.png", new BMap.Size(40, 40), {
 	anchor : new BMap.Size(20, 20)
 });
-var myjiqizhan = new BMap.Icon("images/icons/jiqizhan.png", new BMap.Size(50,
+var zyclc = new BMap.Icon("images/icons/zhongyangchulichang.png", new BMap.Size(40, 40), {
+	anchor : new BMap.Size(20, 20)
+});
+var myjiqizhan = new BMap.Icon("images/icons/qiaozhuangyehuadian.png", new BMap.Size(50,
 		50), {
 	// 指定定位位置。
 	// 当标注显示在地图上时，其所指向的地理位置距离图标左上

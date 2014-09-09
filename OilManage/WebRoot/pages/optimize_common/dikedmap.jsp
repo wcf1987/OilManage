@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
-
-<div id="dikedAreaMap"  class="popdiv" style="display:none;width:700px;height:600px;">
+<script type="text/javascript" src="js/map_diked.js"></script>
+	
+<div id="dikedAreaMap"  class="popdiv" style="display:None;width:700px;height:600px;">
 <button id="dikedMove" style='margin:2px;border-radius:5px;float:left;font-size:12px;background-color:#A5CEA5;height:3em;line-height:2em;overflow: hidden;'>点我拖动</button>
 
 	<div class="container marketing" style="width:600px;">	
@@ -11,7 +12,7 @@
 		<!-- Three columns of text below the carousel -->
 		<div class="row" style="height:500px;">
 			<!-- 地图 -->
-			<div id="allmap" class="img-rounded"
+			<div id="dikedmap" class="img-rounded"
 				style="border:3px solid #333300;box-shadow:12px 12px 10px #333300;border-radius: 11px">
 				<div id="map"
 					style="height:100%;-webkit-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;"></div>
@@ -35,10 +36,10 @@
 	</div>
 </div>
 <script type="text/javascript">
-init();
+initdiked();
 </script>
 <style type="text/css">
-#allmap {
+#dikedmap {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
