@@ -21,23 +21,38 @@ function showMap(proid,algid,Inorout) {
 function clearMap(){
 	pointMap = {};
 	 markers = [];
-	map.clearOverlays();
+	 mapGis.clearOverlays();
 }
 var pointMap = {};
 var markers = [];
-var map;
-function initMapGis(){
+var mapGis;
+var mapWforGPS;
 
-	map = new BMap.Map("mapgis",{mapType: BMAP_HYBRID_MAP});
+function initMapGis(){
+	if(mapGis==null){
+	$("#showInputMap").bind("click",function(){
+		  var proID=$("#proID").val();
+		  var algID=$("#curAlgID").val();
+		  showMap(proID,algID,'In');
+		});
+	$("#showOutputMap").bind("click",function(){
+		  var proID=$("#proID").val();
+		  var algID=$("#curAlgID").val();
+		  showMap(proID,algID,'Out');
+		});
+	mapGis = new BMap.Map("mapgis",{mapType: BMAP_HYBRID_MAP});
 	var point = new BMap.Point(116.404, 39.915);    //
-	map.centerAndZoom(point,8);                     // 
-	map.enableScrollWheelZoom();
-	map.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_RIGHT}));
-	map.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT}));
-	map.addControl(new BMap.ScaleControl());
+	mapGis.centerAndZoom(point,8);                     // 
+	mapGis.enableScrollWheelZoom();
+	mapGis.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_RIGHT}));
+	mapGis.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT}));
+	mapGis.addControl(new BMap.ScaleControl());
 	var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925));
-	map.addOverlay(marker1);
+	 mapWforGPS = new BMapLib.MapWrapper(mapGis, BMapLib.COORD_TYPE_GPS); 
+
+	mapGis.addOverlay(marker1);
 	var point = new BMap.Point(116.404, 39.915);
+	}
 	}
 function drawPointsGis(data){
 	
@@ -48,9 +63,11 @@ function drawPointsGis(data){
 	for ( var i in pMap) {
 		id++;
 		p = pMap[i];
-		pointMap[i] = new BMap.Point(p['longitude'], p['latitude']);	
+		pointMap[i] = new BMap.Point(p['longitude'], p['latitude']);
+		//BMap.Convertor.translate(pointMap[i],0,translateCallback);  
+		
 		if(id==0){
-			map.centerAndZoom(pointMap[i], 15);
+			mapGis.centerAndZoom(pointMap[i], 15);
 		}
 		myicon = myjingkou;
 		if (p['type'] == '井数据') {
@@ -94,8 +111,9 @@ function drawPointsGis(data){
 			var infoWindow = new BMap.InfoWindow(this.contStr, opts);
 			this.openInfoWindow(infoWindow);
 		});
-		map.addOverlay(markertemp);
-		map.enableScrollWheelZoom(false);
+		mapWforGPS.addOverlay(markertemp);
+		//map.addOverlay(markertemp);
+		mapGis.enableScrollWheelZoom(false);
 		markers.push(markertemp);
 	}
 	
@@ -108,7 +126,18 @@ function drawLines(data){
 		var l = pLine[i];
 		var pointemp = new Array();
 		var polyline ;
-
+		if (l['type'] == '连接') {
+			// alert(pointMap[l['start']]);
+			pointemp[0] = pointMap[l['start']];
+			pointemp[1] = pointMap[l['end']];
+			polyline= new BMap.Polyline(pointemp, {
+				strokeColor : "red",
+				strokeWeight : 3,
+				strokeOpacity : 0.5
+			});
+			//map.addOverlay(polyline);
+			addArrow1(polyline, 5, Math.PI / 7);
+		}
 		if (l['type'] == '井阀组连接') {
 			// alert(pointMap[l['start']]);
 			pointemp[0] = pointMap[l['start']];
@@ -180,15 +209,15 @@ function drawLines(data){
 //			var infoWindow = new BMap.InfoWindow(this.contStr, opts);
 //			this.openInfoWindow(infoWindow);
 		});
-		map.addOverlay(polyline);
-		map.enableScrollWheelZoom(false);
+		mapGis.addOverlay(polyline);
+		mapGis.enableScrollWheelZoom(false);
 		markers.push(polyline);
 	}
-	var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers,isAverangeCenter:true,girdSize:120,maxZoom:13});
+	var markerClusterer = new BMapLib.MarkerClusterer(mapGis, {markers:markers,isAverangeCenter:true,girdSize:120,maxZoom:13});
 	
 }
-var myjingkou = new BMap.Icon("images/icons/qijing.png",
-		new BMap.Size(70, 70), {
+var myjingkou = new BMap.Icon("images/icons/jingkou.jpg",
+		new BMap.Size(40, 40), {
 		anchor : new BMap.Size(15, 15)
 		});
 var myfazu = new BMap.Icon("images/icons/fa.png", new BMap.Size(40, 40), {
@@ -213,8 +242,8 @@ function addArrow2(polyline, length, angleValue) { // 绘制箭头的函数
 	var linePoint = polyline.getPath();// 线的坐标串
 	var arrowCount = linePoint.length;
 	for ( var i = 1; i < arrowCount; i++) { // 在拐点处绘制箭头
-		var pixelStart = map.pointToPixel(linePoint[i - 1]);
-		var pixelEnd = map.pointToPixel(linePoint[i]);
+		var pixelStart = mapGis.pointToPixel(linePoint[i - 1]);
+		var pixelEnd = mapGis.pointToPixel(linePoint[i]);
 		var angle = angleValue;// 箭头和主线的夹角
 		var r = length; // r/Math.sin(angle)代表箭头长度
 		var delta = 0; // 主线斜率，垂直时无斜率
@@ -254,23 +283,23 @@ function addArrow2(polyline, length, angleValue) { // 绘制箭头的函数
 			pixelY1 = pixelTemY + Math.tan(angle) * r / param;
 		}
 
-		var pointArrow = map.pixelToPoint(new BMap.Pixel(pixelX, pixelY));
-		var pointArrow1 = map.pixelToPoint(new BMap.Pixel(pixelX1, pixelY1));
+		var pointArrow = mapGis.pixelToPoint(new BMap.Pixel(pixelX, pixelY));
+		var pointArrow1 = mapGis.pixelToPoint(new BMap.Pixel(pixelX1, pixelY1));
 		var Arrow = new BMap.Polyline(
 				[ pointArrow, linePoint[i], pointArrow1 ], {
 					strokeColor : "blue",
 					strokeWeight : 6,
 					strokeOpacity : 0.5
 				});
-		map.addOverlay(Arrow);
+		mapGis.addOverlay(Arrow);
 	}
 }
 function addArrow1(polyline, length, angleValue) { // 绘制箭头的函数
 	var linePoint = polyline.getPath();// 线的坐标串
 	var arrowCount = linePoint.length;
 	for ( var i = 1; i < arrowCount; i++) { // 在拐点处绘制箭头
-		var pixelStart = map.pointToPixel(linePoint[i - 1]);
-		var pixelEnd = map.pointToPixel(linePoint[i]);
+		var pixelStart = mapGis.pointToPixel(linePoint[i - 1]);
+		var pixelEnd = mapGis.pointToPixel(linePoint[i]);
 		var angle = angleValue;// 箭头和主线的夹角
 		var r = length; // r/Math.sin(angle)代表箭头长度
 		var delta = 0; // 主线斜率，垂直时无斜率
@@ -310,21 +339,21 @@ function addArrow1(polyline, length, angleValue) { // 绘制箭头的函数
 			pixelY1 = pixelTemY + Math.tan(angle) * r / param;
 		}
 
-		var pointArrow = map.pixelToPoint(new BMap.Pixel(pixelX, pixelY));
-		var pointArrow1 = map.pixelToPoint(new BMap.Pixel(pixelX1, pixelY1));
+		var pointArrow = mapGis.pixelToPoint(new BMap.Pixel(pixelX, pixelY));
+		var pointArrow1 = mapGis.pixelToPoint(new BMap.Pixel(pixelX1, pixelY1));
 		var Arrow = new BMap.Polyline(
 				[ pointArrow, linePoint[i], pointArrow1 ], {
 					strokeColor : "red",
 					strokeWeight : 3,
 					strokeOpacity : 0.5
 				});
-		map.addOverlay(Arrow);
+		mapGis.addOverlay(Arrow);
 	}
 }
 
 
 function viewMap(data) {
-	map.clearOverlays();
+	mapGis.clearOverlays();
 	var markers = [];
 	var jsonObject = data;
 	// alert(jsonObject['re']);
@@ -381,13 +410,13 @@ function viewMap(data) {
 			var infoWindow = new BMap.InfoWindow(temp, opts);
 			this.openInfoWindow(infoWindow);
 		});
-		map.addOverlay(markertemp);
-		map.enableScrollWheelZoom(false);
+		mapGis.addOverlay(markertemp);
+		mapGis.enableScrollWheelZoom(false);
 		markers.push(markertemp);
 	}
-	var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers,isAverangeCenter:true,girdSize:120,maxZoom:13});
+	var markerClusterer = new BMapLib.MarkerClusterer(mapGis, {markers:markers,isAverangeCenter:true,girdSize:120,maxZoom:13});
 
-	map.centerAndZoom(pointArray[0], 15);
+	mapGis.centerAndZoom(pointArray[0], 15);
 	for ( var lkey in pLine) {
 		var l = pLine[lkey];
 		var pointemp = new Array();
@@ -400,7 +429,7 @@ function viewMap(data) {
 				strokeWeight : 3,
 				strokeOpacity : 0.5
 			});
-			map.addOverlay(polyline);
+			mapGis.addOverlay(polyline);
 			addArrow1(polyline, 5, Math.PI / 7);
 		}
 		if (l['type'] == '2') {
@@ -411,7 +440,7 @@ function viewMap(data) {
 				strokeWeight : 6,
 				strokeOpacity : 0.5
 			});
-			map.addOverlay(polyline);
+			mapGis.addOverlay(polyline);
 			addArrow2(polyline, 5, Math.PI / 7)
 		}
 			}

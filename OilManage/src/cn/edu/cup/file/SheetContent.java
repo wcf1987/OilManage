@@ -404,6 +404,9 @@ public class SheetContent {
 			 titleS=iter.next();
 			 index=sheetTitle.get(titleS);
 			 if(titleS.indexOf(search)!=-1){
+				 if(lineStr.get(index).equals("")){
+					 return null;
+				 }
 				return  Double.valueOf(lineStr.get(index));
 			 }
 			
@@ -439,6 +442,9 @@ public class SheetContent {
 			for(int i=1;i<this.sheetContent.size();i++){
 				Line e=new Line();
 				List<String> lineStr=this.sheetContent.get(i);
+				if(lineStr.get(this.sheetTitle.get("管段顶点1"))==null||lineStr.get(this.sheetTitle.get("管段顶点1")).equals("")){
+					continue;
+				}
 				e.setStart(lineStr.get(this.sheetTitle.get("管段顶点1")));
 				e.setEnd(lineStr.get(this.sheetTitle.get("管段顶点2")));
 				e.setLength(lineStr.get(this.sheetTitle.get("管段长度（km）")));
@@ -462,7 +468,7 @@ public class SheetContent {
 			}
 			
 		}*/
-		if(getName().indexOf("管段")!=-1){			 
+		if(getName().indexOf("管段连接")!=-1){			 
 			for(int i=1;i<this.sheetContent.size();i++){
 				Line e=new Line();
 				List<String> lineStr=this.sheetContent.get(i);

@@ -25,19 +25,10 @@
 }
 </style>
 <script type="text/javascript">
-$(function(){
-	$("#showInputMap").bind("click",function(){
-		  var proID=$("#proID").val();
-		  var algID=$("#curAlgID").val();
-		  showMap(proID,algID,'In');
-		});
-	$("#showOutputMap").bind("click",function(){
-		  var proID=$("#proID").val();
-		  var algID=$("#curAlgID").val();
-		  showMap(proID,algID,'Out');
-		});
-	initMapGis();
-});
+
+
+	
+
 
 
 </script>

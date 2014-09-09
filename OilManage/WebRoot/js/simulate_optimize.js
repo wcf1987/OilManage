@@ -229,7 +229,10 @@ function showTab(type){
 		}else{
 			
 		}
-		showInputMap();
+			initMapGis();
+		  var proID=$("#proID").val();
+		  var algID=$("#curAlgID").val();
+		  showMap(proID,algID,'In');
 	}
 	if(type=='output_tab'){
 		//runAlg(1);
