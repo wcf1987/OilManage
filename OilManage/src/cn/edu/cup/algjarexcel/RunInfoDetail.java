@@ -23,7 +23,7 @@ public class RunInfoDetail extends RunInfo{
 	    
 	    	String S=new String(data,off,len);
 	      // 追加一行字符串中指定的部分，这个最重要
-	    	if(proinfo!=null&&proinfo.hisID!=0&&S.indexOf("Hibernate")==-1&&!S.trim().equalsIgnoreCase("")){
+	    	if(proinfo!=null&&proinfo.status==1&&S.indexOf("Hibernate")==-1&&!S.trim().equalsIgnoreCase("")){
 	    		log(S.trim());
 	    	}else{
 	    		olderrStream.print(S);

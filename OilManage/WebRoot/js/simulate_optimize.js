@@ -144,7 +144,9 @@ function listLog()
 			}			
 			$.each(data.loginfo,function(index,log){
 				if(log!=null&&log!=""){
-					$("#outputarea").append(log.logTime.replace("T"," ")+" "+log.info+"\n\r");
+					$("#outputarea").append(log.logTime.replace("T"," ")+" "+log.info+"\n");
+					var d = $("#outputarea").scrollHeight;
+					$("#outputarea").scrollTop = d;
 				}	 	
 			});			
 		},

@@ -4,7 +4,8 @@ var Leftpolys = /**
 function() {
 	 var lastsel;
 	 var proID=$("#proID").val();
-	  var algID=$("#curAlgID").val();		
+	  var algID=$("#curAlgID").val();
+	  if(proID!=0){
 	 var datagrid =jQuery("#PointPraList").jqGrid({
 		   	url:'listDevice.action',
 			datatype: "json",
@@ -54,7 +55,7 @@ function() {
 				repeatitems: false
 			},
 		});
-
+	  }		
 
 	this.polys = new Array;
 	this.imgobj=new Array;

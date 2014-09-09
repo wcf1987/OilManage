@@ -59,7 +59,8 @@ public class ProCalcManage {//工程计算进程管理类，控制计算进程ca
 			ProjectInfo proinfo=new ProjectInfo(proid);
 				
 			proinfo.createHisID(new Date());
-			proinfo.markStatus(1, AlgorithmPro.getStatus(1));	
+			proinfo.markStatus(1, AlgorithmPro.getStatus(1));
+			proinfo.status=1;
 			proinfo.logInfo(AlgorithmPro.getStatus(1));
 			startThread(proinfo);
 		}

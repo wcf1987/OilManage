@@ -254,7 +254,7 @@ public class PhysicalDao {
 				where.append(" where ");
 			where.append("t2.ISOBasicUnit=\"").append(iSOBasicUnit).append("\"");
 		}*/
-		System.out.print(where);
+		//System.out.print(where);
 		String sql="select t2.ID,t2.CName,t2.EName,t2.Description,t2.ISOBasicUnit from T_Physical t2 "+where.toString()+" order by t2."+sidx+" "+sord;
 		SQLQuery q = session.createSQLQuery(sql);
 		q.setFirstResult((page-1)*rows);
@@ -365,7 +365,7 @@ public class PhysicalDao {
 				where.append(" where ");
 			param.replaceAll(".*([';]+|(--)+).*\\/\"", " ");//特殊字符的过滤，防注入
 			where.append(tableName).append(".").append(fieldName).append(" like '%").append(param).append("%'");
-			System.out.println(where);
+			//System.out.println(where);
 		}
 		return where;
 	}

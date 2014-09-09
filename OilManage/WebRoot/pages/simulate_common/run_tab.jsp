@@ -8,17 +8,17 @@
 
 
 <div id="actions">					
-	<a href="javascript:createNewModal();" title="新建">
+	<!-- <a href="javascript:createNewModal();" title="新建">
 		<img src="editor/icons/sign_add.png" border="0" />
-	</a> 
+	</a> --> 
 	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
-	<a href="javascript:listGUIProGrid();" title="打开">
+	<a href="javascript:listGUIProGrid();" title="载入">
 		<img src="editor/icons/folder.png" border="0" />
 	</a> 
-	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
+	<!-- <img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
 	<a href="javascript:save();" title="保存">	
 		<img src="editor/icons/save_labled.png" border="0" alt="Organic" />
-	</a> 
+	</a>  -->
 	<img class="separator" src="editor/assets/images/toolbar_separator.gif"	border="0" width="1" height="16" /> 
 	<a href="javascript:scaleCenter(1.25);" title="放大画布">
 		<img src="editor/icons/arrow_expand.png" border="0" alt="Container" />

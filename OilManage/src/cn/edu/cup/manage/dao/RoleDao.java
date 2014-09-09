@@ -57,7 +57,7 @@ public class RoleDao {
 			  Object[] row = (Object[])l.get(i);;
 			  Integer id = (Integer)row[0];
 			  String name = (String)row[1];  
-			  System.out.println(id+" "+name);
+			  //System.out.println(id+" "+name);
 		}
 	}
 	

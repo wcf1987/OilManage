@@ -85,7 +85,7 @@ public class LoginAction extends ActionSupport{
         Map session = actionContext.getSession();
         session.put("user", user);
 		//System.out.println(getUsername());
-        System.out.println(user.getUsername()+"已登录");
+        //System.out.println(user.getUsername()+"已登录");
 		//System.out.println(getType());
         userDAO.close();
 		return "succ";
