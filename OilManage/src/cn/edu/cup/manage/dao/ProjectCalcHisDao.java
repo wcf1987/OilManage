@@ -8,12 +8,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 
+import cn.edu.cup.algjarexcel.ProjectInfo;
 import cn.edu.cup.manage.business.CalcHisInput;
 import cn.edu.cup.manage.business.CalcHisOutput;
 import cn.edu.cup.manage.business.ProjectCalcHis;
@@ -277,6 +273,17 @@ public class ProjectCalcHisDao {
 		q.setParameter(1, info);
 		q.setParameter(2, hisID);
 		int re = q.executeUpdate();
+		
+	}
+
+	public void checkHisID(ProjectInfo projectInfo) {
+		if(projectInfo.hisID==0){
+		String sql = "select max(id) from t_calchis t2 where t2.pro_id=? ";
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, projectInfo.proid);
+		Integer id = ((Integer) q.uniqueResult()).intValue();
+		projectInfo.hisID=id;
+		}
 		
 	}
 

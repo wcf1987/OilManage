@@ -63,6 +63,7 @@ public class ProjectInfo{
 	}
 	public void logInfo(String info2) {
 		ProjectCalcHisDao dao = new ProjectCalcHisDao();
+		dao.checkHisID(this);
 		dao.addCalcLog(hisID,info2,proid);
 		dao.close();
 	}
@@ -99,5 +100,5 @@ public class ProjectInfo{
 		//int result=dao.addAlgorithmPro(this.Description,this.authorID,this.name);
 		dao.close();
 	}
-    int hisID;
+   public int hisID;
 }

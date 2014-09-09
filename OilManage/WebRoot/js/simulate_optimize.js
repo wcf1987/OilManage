@@ -145,10 +145,11 @@ function listLog()
 			$.each(data.loginfo,function(index,log){
 				if(log!=null&&log!=""){
 					$("#outputarea").append(log.logTime.replace("T"," ")+" "+log.info+"\n");
-					var d = $("#outputarea").scrollHeight;
-					$("#outputarea").scrollTop = d;
+					
 				}	 	
-			});			
+			});	
+			var d = $("#outputarea")[0].scrollHeight;
+			$("#outputarea").scrollTop(d);
 		},
 		error:function(msg){
 			$("#outputarea").append("通信失败！\n\r");
