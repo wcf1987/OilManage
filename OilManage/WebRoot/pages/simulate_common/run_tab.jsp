@@ -63,7 +63,7 @@
 	</div>		
 </div>
 <div id="simulate_gismap" style="display:none">
-<%@ include file="gismap.jsp" %>
+ <%@ include file="gismap.jsp" %> 
 </div>
 		<!--The import panel-->
 <div id="import-dialog"

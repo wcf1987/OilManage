@@ -30,5 +30,5 @@
 	</div>
 </div>
 
-<%@ include file="../optimize_common/dikedmap.jsp" %>
+<%@ include file="./dikedmap.jsp" %>
 
