@@ -38,7 +38,7 @@ $(function(){
 		  var algID=$("#curAlgID").val();
 		  showMap(proID,algID,'Out');
 		});
-	initMap();
+	initMapGis();
 });
 
 
