@@ -91,8 +91,8 @@ function runAlg(){
 	    beforeSend:function(XMLHttpRequest){
 	    	$("#outputarea").text("");
 	    	intervalID=setInterval ("listLog()", 5000);//每隔一段时间去请求日志信息
-	    	location.href=window.location.pathname+"#run_tab";
-	    	//location.href = "pages/simulate_hydraulic.jsp#run_tab";
+	    	//location.href=window.location.pathname+"#run_tab";
+	    	showTab("run_tab");
 	    	$("#isRunning").css({display:"block",top:"20%",left:"40%",position:"absolute"});
 	    },
 		success:function(data){				
@@ -156,13 +156,12 @@ function listLog()
 
 }
 function loadOutput(){
-	location.href=window.location.pathname+"#output_tab";
-	//location.href="pages/simulate_hydraulic.jsp#output_tab";
+	//location.href=window.location.pathname+"#output_tab";
+	showTab("output_tab");
 	var proid=$("#proID").val();
 	var sid = 1;
 	var algid = $("#curAlgID").val();
 	var outputSheetNum=$("#outputSheetNum").val();
-	//var inOrOut="In";
 	var inOrOut="Out";
 	var sheetDiv = "#output-sheet";
 	var pageDiv = "#output-pager";
