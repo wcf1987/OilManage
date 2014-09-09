@@ -35,10 +35,10 @@ User userlogin=(User)(session.getAttribute("user"));
 		                <li class="dropdown-submenu">
 		                    <a tabindex="-1" href="javascript:;">管网模拟</a>
 		                    <ul class="dropdown-menu">
-		                        <li><a tabindex="-1" href="pages/simulate_hydraulic.jsp">单相管网水力计算</a></li>
-		                        <li><a tabindex="-1" href="pages/simulate_thermal.jsp">单相管网热力计算</a></li>
-		                        <li><a tabindex="-1" href="pages/simulate_gas_solid.jsp">气固两相管网计算</a></li>
-		                        <li><a tabindex="-1" href="pages/simulate_gas_liquid.jsp">气液两相管网计算</a></li>
+		                        <li><a tabindex="-1" href="pages/simulate_hydraulic.jsp">单相管网水力计算(不考虑热力)</a></li>
+		                        <li><a tabindex="-1" href="pages/simulate_thermal.jsp">单相管网水力计算(考虑热力)</a></li>
+		                        <li><a tabindex="-1" href="pages/simulate_gas_solid.jsp">气固两相管网水力计算</a></li>
+		                        <li><a tabindex="-1" href="pages/simulate_gas_liquid.jsp">气液两相管网水力计算</a></li>
 		                        <li><a tabindex="-1" href="pages/simulate_auto.jsp">自动计算</a></li>
 		                        <li class="divider"></li>
 		                        <li class="dropdown-submenu">

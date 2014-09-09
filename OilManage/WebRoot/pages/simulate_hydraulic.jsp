@@ -88,14 +88,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row-fluid row-fluid2">
 					<div class="span12">
 					<div class="page-header">
-						<h2>单相管网水力计算&nbsp;<small>管网模拟</small></h2>
+						<h2>单相管网水力计算(不考虑热力)&nbsp;<small>管网模拟</small></h2>
 						
 						<input id="tempStr1" style="display:none" value=""/>
 						<input id="tempStr2" style="display:none" value=""/>
 						<input id="curAlgID" style="display:none" value="1"/>
 						<input id="proID" style="display:none" value=""/>
-						<input id="inputSheetNum" style="display:none" value="10"/>
-						<input id="input_base_sheetNum" style="display:none" value="10"/>
+						<input id="inputSheetNum" style="display:none" value="7"/>
+						<input id="input_base_sheetNum" style="display:none" value="7"/>
 						<input id="input_function_sheetNum" style="display:none" value="0"/>
 						<input id="input_condition_sheetNum" style="display:none" value="0"/>
 						

@@ -98,8 +98,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<input id="input_function_sheetNum" style="display:none" value="0"/>
 						<input id="input_condition_sheetNum" style="display:none" value="0"/>
 						
-						<input id="outputSheetNum" style="display:none" value="2"/>
-						<input id="output_base_sheetNum" style="display:none" value="2"/>
+						<input id="outputSheetNum" style="display:none" value="5"/>
+						<input id="output_base_sheetNum" style="display:none" value="5"/>
 						<input id="output_fee_sheetNum" style="display:none" value="0"/>
 						<input id="output_position_sheetNum" style="display:none" value="0"/>
 						<!-- 

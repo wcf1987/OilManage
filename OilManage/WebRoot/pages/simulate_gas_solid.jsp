@@ -94,13 +94,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<input id="tempStr2" style="display:none" value=""/>
 						<input id="curAlgID" style="display:none" value="3"/>
 						<input id="proID" style="display:none" value=""/>
-						<input id="inputSheetNum" style="display:none" value="5"/>
-						<input id="input_base_sheetNum" style="display:none" value="5"/>
+						<input id="inputSheetNum" style="display:none" value="7"/>
+						<input id="input_base_sheetNum" style="display:none" value="7"/>
 						<input id="input_function_sheetNum" style="display:none" value="0"/>
 						<input id="input_condition_sheetNum" style="display:none" value="0"/>
 						
-						<input id="outputSheetNum" style="display:none" value="4"/>
-						<input id="output_base_sheetNum" style="display:none" value="4"/>
+						<input id="outputSheetNum" style="display:none" value="12"/>
+						<input id="output_base_sheetNum" style="display:none" value="12"/>
 						<input id="output_fee_sheetNum" style="display:none" value="0"/>
 						<input id="output_position_sheetNum" style="display:none" value="0"/>
 						<!-- 
