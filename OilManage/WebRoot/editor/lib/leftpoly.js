@@ -389,6 +389,7 @@ function() {
 	this.dragFun = function(pos) {
 
 		if(platform.selectPainting==null){
+			alert("您需要打开或新建一个工程");
 			return {
 				x : this.getAbsolutePosition().x,
 				y : this.getAbsolutePosition().y

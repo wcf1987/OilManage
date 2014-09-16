@@ -199,6 +199,10 @@ public class AlgorithmExcelAction {
 	}
 
 	public String viewExcelMap(){
+		if(this.proID==0){
+			msg="你需要打开或新建一个工程";
+			return "SUCCESS";
+		}
 		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
 		
 		graphi=excel.getGraphi();
@@ -211,6 +215,10 @@ public class AlgorithmExcelAction {
 	}
 
 	public String viewGUI(){
+		if(this.proID==0){
+			msg="你需要打开或新建一个工程";
+			return "SUCCESS";
+		}
 		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
 		GUIDao dao=new GUIDao();
 		JSONData=dao.getBlankData();
