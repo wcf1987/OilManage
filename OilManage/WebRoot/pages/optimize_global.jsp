@@ -59,6 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
 	<script type="text/javascript" src="js/baidu-map/convertor.js"></script>
 	<script type="text/javascript" src="js/baidu-map/changeMore.js"></script>
+	<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/changeMore.js"></script>
 	<script type="text/javascript" src="js/map_gis.js"></script>	
 	
 	<script type="text/javascript" src="js/map_diked.js"></script>
