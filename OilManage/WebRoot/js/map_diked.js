@@ -57,6 +57,29 @@ var myjingkou = new BMap.Icon("images/icons/jingkou.png",
 		});
 
 
+function callback(xyResults){
+	var pointsTemp=new Array();
+	var xyResult = null;
+	var k=-1;
+	for(var index in xyResults){
+		k++;
+		xyResult = xyResults[index];
+		if(xyResult.error != 0){continue;}
+		var point = new BMap.Point(xyResult.x, xyResult.y);
+		pointsTemp.push(point);
+		//var marker = new BMap.Marker(point);
+		//map.addOverlay(marker);
+		map.setCenter(point);
+		if(k==0){
+			var secRingCenter = point;
+			var secRingLabel2 = new BMap.Label(index,{offset: new BMap.Size(10,-20), position: secRingCenter});
+			secRingLabel2.setStyle({"padding": "2px"});
+			map.addOverlay(secRingLabel2);
+		}
+	}
+    var polygon = new BMap.Polygon(pointsTemp,{strokeColor:"blue",strokeWeight:5, strokeOpacity:0.5});
+	map.addOverlay(polygon);
+}	
 
 function drawPointsDiked(data){
 	backPointCou=0;
@@ -68,9 +91,9 @@ function drawPointsDiked(data){
 	var cou=0;
 	for(var i in pMap){
 		id++;
-		if(id>0){
-			continue;
-		}
+//		if(id>0){
+//			continue;
+//		}
 		ps = pMap[i];//一个障碍
 		var tempPoints= new Array();
 		for(var k=0;k<ps.length;k++){
@@ -79,21 +102,28 @@ function drawPointsDiked(data){
 			tempPoints.push(bp);
 		}
 		BMap.Convertor.transMore(tempPoints,0,callback);
+		
 		//setTimeout(function(){BMap.Convertor.transMore(tempPoints,0,callback);}, 3000);
 	}
 }
+/*
 function callback(xyResults){
+	var pointsTemp=new Array();
 	var xyResult = null;
 	for(var index in xyResults){
 		xyResult = xyResults[index];
 		if(xyResult.error != 0){continue;
 		var point = new BMap.Point(xyResult.x, xyResult.y);
+		pointsTemp.push(point);
 		var marker = new BMap.Marker(point);
 		map.addOverlay(marker);
 		map.setCenter(point);
 		}
 	}
-/*	var obstacle=xyResults;
+    var polygon = new BMap.Polygon(pointsTemp,{strokeColor:"blue",strokeWeight:5, strokeOpacity:0.5});
+	map.addOverlay(polygon);
+	
+	var obstacle=xyResults;
 	var polygon = new BMap.Polygon(obstacle,styleOptions);
 	//mapWforGPSDiked.addOverlay(polygon);
 	map.addOverlay(polygon);
@@ -136,7 +166,7 @@ function callback(xyResults){
 	secRingLabel2 = new BMap.Label(i,{offset: new BMap.Size(10,-20), position: secRingCenter});
 	secRingLabel2.setStyle({"padding": "2px"});
 	map.addOverlay(secRingLabel2);	
-*/
+
 
 }
 /*
