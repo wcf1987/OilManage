@@ -357,12 +357,14 @@ public class FileExcel {
 			Map<String,String> p1=new HashMap<String,String>();			
 			p1.put("设备名称", name);
 			p1.put("名称", name);
-			if(type.equals("离心压缩机数据")){
+			if(type.equals("离心压缩机数据"))
 				p1.put("管段类型", "CentCompressor");
-			}else{
+			if(type.equals("往复式压缩机数据"))
 				p1.put("管段类型", "ReciCompressor");
-			}
-			
+			if(type.equals("阀数据"))
+				p1.put("管段类型", "Valve");
+			if(type.equals("过滤器数据"))
+				p1.put("管段类型", "Filter");
 			row2=b.addRow(p1);
 			return -1;
 		}else{
@@ -508,7 +510,7 @@ public class FileExcel {
 				a.add(KV);
 			}
 		}
-		if(type.equals("阀组数据")||type.equals("过滤器数据")){
+		if(type.equals("阀数据")||type.equals("过滤器数据")){
 			SheetContent sheet=getSheetByName(this,type);
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			List<String> line=sheet.sheetContent.get(row);
@@ -544,7 +546,7 @@ public class FileExcel {
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
 		}
-		if(type.equals("阀组数据")||type.equals("过滤器数据")){
+		if(type.equals("阀数据")||type.equals("过滤器数据")){
 			SheetContent sheet=getSheetByName(this,type);
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			sheet.editCell(row, sheet.getTitleByName(proper), newValue);

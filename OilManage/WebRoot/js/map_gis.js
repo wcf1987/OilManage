@@ -1,6 +1,6 @@
 
-var myjingkou = new BMap.Icon("images/icons/jingkou.png",
-		new BMap.Size(30, 30), {
+var myjingkou = new BMap.Icon("images/icons/qijing.png",
+		new BMap.Size(40, 40), {
 		anchor : new BMap.Size(15, 15)
 		});
 var myfazu = new BMap.Icon("images/icons/fa.png", new BMap.Size(40, 40), {
