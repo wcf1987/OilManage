@@ -162,7 +162,8 @@ public class AlgorithmProjectsAction {
 		AlgorithmProDao dao = new AlgorithmProDao();
 
 		dataList = dao.getAlgorithmProsList(algID,page, rows, sidx, sord);
-
+		dao.close();
+		dao = new AlgorithmProDao();
 		records = dao.getCountAlgorithms(algID);
 
 		total = records / rows;

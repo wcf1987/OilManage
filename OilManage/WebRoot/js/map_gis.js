@@ -1,4 +1,5 @@
 
+
 var qj = new BMap.Icon("editor/icons/qijing.png",
 		new BMap.Size(40, 40), {
 		anchor : new BMap.Size(20, 20)

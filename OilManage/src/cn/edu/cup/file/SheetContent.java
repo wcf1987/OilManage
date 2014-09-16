@@ -320,6 +320,14 @@ public class SheetContent {
 					e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
 					e.setType("往复式压缩机");
 				}
+				if(t.equalsIgnoreCase("Filter")){
+					e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
+					e.setType("过滤器");
+				}
+				if(t.equalsIgnoreCase("Valve")){
+					e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
+					e.setType("阀");
+				}
 				SheetContent a=f.getSheetByName(f,e.getType()+"数据");
 				int row=getExcelDataIndex(a, a.getTitleByName("名称"), lineStr.get(this.sheetTitle.get("设备名称")));
 				int col=a.getTitleByName("X坐标(m)");
