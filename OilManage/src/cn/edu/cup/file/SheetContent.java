@@ -306,7 +306,13 @@ public class SheetContent {
 				if(this.sheetTitle.get("名称")==null){
 					return points;
 				}
-				String t=lineStr.get(this.sheetTitle.get("管段类型"));
+				Object it=this.sheetTitle.get("管段类型");
+				String t;
+				if(it==null){
+					t="Pipe";
+				}else{
+					t=lineStr.get(this.sheetTitle.get("管段类型"));
+				}
 				if(t.equalsIgnoreCase("Pipe")){
 					e.setType("管道");
 					e.setName(lineStr.get(this.sheetTitle.get("名称")));
@@ -330,9 +336,9 @@ public class SheetContent {
 				}
 				SheetContent a=f.getSheetByName(f,e.getType()+"数据");
 				int row=getExcelDataIndex(a, a.getTitleByName("名称"), lineStr.get(this.sheetTitle.get("设备名称")));
-				int col=a.getTitleByName("X坐标(m)");
+				//int col=a.getTitleByName("X坐标(m)");
 				double x=0;
-				col=a.getTitleByName("Y坐标(m)");
+				//col=a.getTitleByName("Y坐标(m)");
 				double y=0;
 				
 				Map attr1=a.getAttribute(a.sheetContent.get(row));
@@ -361,15 +367,23 @@ public class SheetContent {
 				Line e1=new Line();
 				Line e2=new Line();
 				String midlle;
-				if(lineStr.get(sheetTitle.get("管段类型")).equalsIgnoreCase("Pipe")){
+				
+				if(sheetTitle.get("管段类型")!=null&&lineStr.get(sheetTitle.get("管段类型")).equalsIgnoreCase("Pipe")){
 					
 					
 					 midlle=lineStr.get(this.sheetTitle.get("名称"));
 									
 				}else{
-					 midlle=lineStr.get(this.sheetTitle.get("设备名称"));
-					
+					if(sheetTitle.get("管段类型")!=null){
+						
+						 midlle=lineStr.get(this.sheetTitle.get("设备名称"));
+						
+										
+					}else{
+						 midlle=lineStr.get(this.sheetTitle.get("名称"));
+					}
 				}
+				
 				e1.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
 				e1.setEnd(midlle);
 				//e1.setLength(lineStr.get(this.sheetTitle.get("")));

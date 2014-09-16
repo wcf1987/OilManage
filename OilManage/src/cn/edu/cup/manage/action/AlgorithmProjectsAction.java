@@ -340,6 +340,9 @@ public class AlgorithmProjectsAction {
 		calcHisID = dao.getcalcLastest(this.ID);
 		loginfo=dao.getLogList(calcHisID);
 		dao.close();
+		if(status==0){
+			status=1;
+		}
 		return "SUCCESS";
 	}
 

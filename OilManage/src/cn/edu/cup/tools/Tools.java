@@ -25,6 +25,9 @@ public class Tools {
 	    public static String createKeyFromProAndALg(int proid,int algid,String InOrOut){
 	    	return String.valueOf(proid)+"_"+String.valueOf(algid)+"_"+InOrOut;
 	    }
+	    public static String createKeyFromProAndALg(int algid,String InOrOut){
+	    	return String.valueOf(algid)+"_"+InOrOut;
+	    }
 		public static void copyFile(File sourceFile, File targetFile) throws IOException {
 	        BufferedInputStream inBuff = null;
 	        BufferedOutputStream outBuff = null;

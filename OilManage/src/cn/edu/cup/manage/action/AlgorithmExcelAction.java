@@ -129,7 +129,25 @@ public class AlgorithmExcelAction {
 		return excel;
 
 	}
-
+	private FileExcel getFileExcelTitle(int algid,
+			String inOrOut2, String file) {
+		String key = Tools.createKeyFromProAndALg(algid,InOrOut);
+		FileExcel excel = cacheList.get(key);
+		if (excel != null) {// 先从缓存读取excel
+			return excel;
+		}
+		
+		excel = new FileExcel();
+		int status = excel.readExcel(0, algid, InOrOut,
+				file);
+		if (status == -1) {
+			msg = excel.getMsg();
+			return null;
+		}
+		cacheList.put(key, excel);
+		//session.put("ExcelCacheList", cacheList);
+		return excel;
+	}
 	public FileExcel reloadFileExcel(int proid, int algid, String InOrOut) {
 		
 		String key = Tools.createKeyFromProAndALg(proid, algid, InOrOut);
@@ -492,15 +510,18 @@ public class AlgorithmExcelAction {
 		AlgorithmsCycleDao dao = new AlgorithmsCycleDao();
 
 		AlgorithmsCycle p = dao.getAlgorithmDetail(this.algID);
-		FileExcel excel = new FileExcel();
+		//FileExcel excel = new FileExcel();
 		String path = "";
 		if (this.InOrOut.equals("In")) {
 			path = p.getStructFileIn();
 		} else {
 			path = p.getStructFileOut();
 		}
-		int status = excel.readExcel(this.proID, this.algID, this.InOrOut,
-				ExcelAlgBaseDir + path);
+		FileExcel excel = getFileExcelTitle(this.algID, this.InOrOut,ExcelAlgBaseDir + path);
+		
+		//int status = excel.readExcel(this.proID, this.algID, this.InOrOut,
+		//		ExcelAlgBaseDir + path);
+		int status=1;
 		if (status == -1) {
 			msg = excel.getMsg();
 			return "SUCCESS";
@@ -515,6 +536,8 @@ public class AlgorithmExcelAction {
 		dao.close();
 		return "SUCCESS";
 	}
+
+
 
 	public String getSheetName() {
 		return sheetName;

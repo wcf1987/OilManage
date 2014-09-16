@@ -320,12 +320,13 @@ var TabTools=function (){
 					//alert(saveData);
 					//console.log(saveData['JSONData']);
 					var newone=Kinetic.Node.create(data['JSONData']);
+					platform.clearPainting();
 					var scalN=1;
 					var proid=proID;
 					var algid=algID;
 					var name=data['proName'];
 					var index=platform.addLoadPainting(newone,scalN,proID,algid,name,data);				
-					createTab(name,index,null,proID,algid,null,"pro");
+					//createTab(name,index,null,proID,algid,null,"pro");
 					//createNewTab(data['dataView']['proname']);
 					platform.stage.draw();
 					log('项目'+name+'已打开！');		

@@ -90,13 +90,13 @@ public class FileExcel {
 		try {
 			String path=Tools.getWebRoot()+fileName;
 			inputStream = new FileInputStream(new File(path));
-
+			//System.out.println(123);
 			Workbook wb = null;
 			// 解析xls格式
 			if (fileName.endsWith("xls")) {
 
 				wb = new HSSFWorkbook(inputStream);
-
+			
 				// 解析xlsx格式
 			} else if (fileName.endsWith("xlsx")) {
 				wb = new XSSFWorkbook(inputStream);// 解析xlsx格式

@@ -1,7 +1,7 @@
 var Platform=function(){
 	this.stage = new Kinetic.Stage({
         container: 'container',
-        width: 1150,
+        width: 1072,
         height: 800,
         
       });
@@ -14,35 +14,29 @@ var Platform=function(){
 	});
 	this.centerlayer   = new Kinetic.Layer({
 	    x:100,
-	    y:40,
+	    y:0,
 	    id: 'centerlayer',
-	    width:1070,
-	    height:750//500
+	    width:960,
+	    height:this.stage.getHeight()//500
 	});
 	this.gridlayer  = new Kinetic.Layer({
 	    x:100,
 	    y:this.centerlayer.y(),
 	    id: 'gridlayer',
-	    width:1070,
-	    height:750//500
+	    width:this.centerlayer.getWidth(),
+	    height:this.centerlayer.getHeight()//500
 	});
 
 	this.tablayer=new Kinetic.Layer({
 		x:100,
 		y:2,
 		id:'tablayer',
-		width:1070,
+		width:this.centerlayer.getWidth(),
 		height:50,
 		draggable:false,
 	});
 
-	this.outputlayer= new Kinetic.Layer({
-		x:100,
-		y:540,
-		id:'outputlayer',
-		width:1070,
-		height:250,
-	});
+
 	this.paintingGroup = new Kinetic.Group({
 		x : 100,
 		y : 0,
@@ -75,18 +69,18 @@ var Platform=function(){
 	this.rectBackgroundCenter = new Kinetic.Rect({
 	   x: 10,
 	   y: 0,
-	   height:750,//500,
-	   width: 1038,
+	   height:this.centerlayer.getHeight(),//500,
+	   width: this.centerlayer.getWidth(),
 	   fill: 'transparent',
 	   draggable: false,
 	   stroke:'black',
 	   name: 'rectBackgroundCenter'
 	 });
-    this.rectBackgroundOutput =new Kinetic.Rect({
+   /* this.rectBackgroundOutput =new Kinetic.Rect({
     	x:10,
     	y:5,
     	height:250,
-    	width:1040,  
+    	width:this.centerlayer.getWidth(),  
     	stroke:'black',
     	name:'rectBackgroundOutput',
     	fill:'#F8F8F8',
@@ -100,7 +94,7 @@ var Platform=function(){
     	  x: 10,
     	  y: 5,//0
     	  height:250,
-      	  width:1000,
+      	  width:this.centerlayer.getWidth(),
 	  	  fontSize: 20,
 //	      fontFamily: '微软雅黑',
 	  	  levels:0,
@@ -109,16 +103,16 @@ var Platform=function(){
 //      	  fill:'green',
 	      lineHeight:1,
 	      //text:'输出：\n'
-    	});
+    	});*/
     this.areas = new Kinetic.Group();
 	this.scrollbars = new Kinetic.Group();
 	var container = this.stage.getContainer();
-	 this.rectBackgroundText.dragBoundFunc(function(){
+	 /*this.rectBackgroundText.dragBoundFunc(function(){
 		  return {
 		    x: this.getAbsolutePosition().x,
 		    y: pos.y
 		  };
-		});
+		});*/
 	
 	    /*
 	     * horizontal scrollbars
@@ -126,14 +120,14 @@ var Platform=function(){
 	   this.hscrollArea = new Kinetic.Rect({
 	      x: 12,//20
 	      y: this.centerlayer.getHeight() - 22,
-	      width: this.centerlayer.getWidth() - 52,//70
+	      width: this.centerlayer.getWidth() - 12,//70
 	      height: 20,
 	      fill:'#E8E8E8',
 	      opacity: 1
 	    });
 	    
 	   this.hscroll = new Kinetic.Rect({
-	        x: 20,
+	        x: 12,
 	        y: this.centerlayer.getHeight() - 22,
 	        width: 130,
 	        height: 20,
@@ -145,8 +139,8 @@ var Platform=function(){
 	          if(newX < platform.centerlayer.x()+12) {
 	            newX = platform.centerlayer.x()+12;
 	          }
-	          else if(newX > platform.centerlayer.getWidth()-72 ) {
-	            newX = platform.centerlayer.getWidth() -72;
+	          else if(newX > platform.centerlayer.getWidth()-32 ) {
+	            newX = platform.centerlayer.getWidth() -32;
 	          }
 	    
 	          return {
@@ -164,7 +158,7 @@ var Platform=function(){
 	     * vertical scrollbars
 	     */
 	   this.vscrollArea = new Kinetic.Rect({
-	      x: this.centerlayer.getWidth() - 42,
+	      x: this.centerlayer.getWidth() - 12,
 	      y: 0,//20
 	      width: 20,
 	      height: this.centerlayer.getHeight() - 2,//70
@@ -172,8 +166,8 @@ var Platform=function(){
 	      opacity:1
 	    });
 	   this.vscroll = new Kinetic.Rect({
-	        x: this.centerlayer.getWidth() - 42,
-	        y: 20,
+	        x: this.centerlayer.getWidth() - 12,
+	        y: 12,
 	        width: 20,
 	        height: 130,
 	        fill: '#99CCFF',
@@ -205,93 +199,6 @@ var Platform=function(){
 	   this.vscroll.embossDirection(top);
 	   this.vscroll.embossStrength(1);
 	   
-	   /*
-	    *output scroll 
-	    */
-	   this.outputareas = new Kinetic.Group();
-	   this.outputscrollbars = new Kinetic.Group();
-		   this.outputHscrollArea = new Kinetic.Rect({
-		      x: 11,//20
-		      y: this.outputlayer.getHeight() - 17,
-		      width: this.outputlayer.getWidth() - 52,//70
-		      height: 20,
-		      fill:'#E8E8E8',
-		      opacity: 1
-		    });
-		    
-		   this.outputHscroll = new Kinetic.Rect({
-		        x: 10,
-		        y: this.outputlayer.getHeight()-17,
-		        width: 50,
-		        height: 20,
-		        fill: '#99CCFF',
-		        dragOnTop: false,
-		        draggable: true,
-		        dragBoundFunc: function(pos) {
-		          var newX = pos.x;
-		          if(newX < platform.outputlayer.x()+12) {
-		            newX = platform.outputlayer.x()+12;
-		          }
-		          else if(newX > platform.outputlayer.getWidth()+2 ) {
-		            newX = platform.outputlayer.getWidth() +2;
-		          }
-		    
-		          return {
-		            x: newX,
-		            y: this.getAbsolutePosition().y
-		          }
-		        },
-		        opacity: 0.9,
-		        stroke: 'black',
-		        strokeWidth: 0.5,
-		        cornerRadius:2
-		      });
-
-		    /*
-		     * vertical outputscrollbars
-		     */
-		   this.outputVscrollArea = new Kinetic.Rect({
-		      x: this.outputlayer.getWidth() - 42,
-		      y: 6,//20
-		      width: 50,
-		      height: this.outputlayer.getHeight() - 3,//70
-		      fill: '#E8E8E8',
-		      opacity:1
-		    });
-		   this.outputVscroll = new Kinetic.Rect({
-		        x: this.outputlayer.getWidth() - 42,
-		        y: 8,
-		        width: 20,
-		        height: 30,
-		        fill: '#99CCFF',
-		        dragOnTop: false,
-		        draggable: true,
-		        dragBoundFunc: function(pos) {
-		          var newY = pos.y;
-		          if(newY < 10+platform.outputlayer.y()) {
-		            newY = 10+platform.outputlayer.y();
-		          }
-		          else if(newY > platform.outputlayer.getHeight()-50+platform.outputlayer.y()) {
-		            newY = platform.outputlayer.getHeight() - 50+platform.outputlayer.y();
-		          }
-		         
-		          return {
-		        	  
-		            x: this.getAbsolutePosition().x,
-		            y: newY
-		          }
-		        },
-		        opacity: 0.9,
-		        stroke: 'black',
-		        strokeWidth: 0.5,
-		        cornerRadius:2,
-		        embossWhiteLevel:0.8,
-		        embossStrength:0.8,
-		        embossDirection:top
-		      });
-		   /*
-		    *output scroll 
-		    */
 	this.selectPainting=null;	
 	this.bgGroup;
 	this.bgRect=null;
@@ -315,8 +222,8 @@ var Platform=function(){
 		this.leftlayer.add(this.rectBackgroundLeft);
 		
 		this.centerlayer.add(this.rectBackgroundCenter);
-		this.outputlayer.add(this.rectBackgroundOutput);
-		this.outputlayer.add(this.rectBackgroundText);
+		//this.outputlayer.add(this.rectBackgroundOutput);
+		//this.outputlayer.add(this.rectBackgroundText);
 		
 		
 		
@@ -353,7 +260,7 @@ var Platform=function(){
 		/*
 	     * output scrollbars
 	     */
-	   this.outputscrollbars.on('mouseover', function() {
+	 /*  this.outputscrollbars.on('mouseover', function() {
 	      document.body.style.cursor = 'pointer';
 	    });
 	   this.outputscrollbars.on('mouseout', function() {
@@ -367,7 +274,7 @@ var Platform=function(){
 //	    this.outputscrollbars.add(this.outputHscroll);
 	    this.outputscrollbars.add(this.outputVscroll);
 	    platform.outputlayer.add(this.outputareas);
-	    platform.outputlayer.add(this.outputscrollbars);
+	    platform.outputlayer.add(this.outputscrollbars);*/
 	    platform.stage.draw();
 	}
 
@@ -433,8 +340,8 @@ var Platform=function(){
             draggable : false,
 //            width : gridlayer.width()-100,
 //            height :gridlayer.height()-100,
-            width:1070,
-            height:750//480,//这个高度保证不挡住下面的输出框
+            width:this.centerlayer.getWidth(),
+            height:this.centerlayer.getHeight()//480,//这个高度保证不挡住下面的输出框
 
     });
 
@@ -444,8 +351,8 @@ var Platform=function(){
             y : 0,
             fill : "#fff",
             draggable : false,
-            width :1070,
-            height :750//480//这个高度保证不挡住下面的输出框
+            width:this.centerlayer.getWidth(),
+            height:this.centerlayer.getHeight()//480,//这个高度保证不挡住下面的输出框
     });
 	this.drawGrid=function(){
 
@@ -590,8 +497,14 @@ var Platform=function(){
 		this.paintingArray[index]=null;
 		this.stage.draw();
 	}
+	this.clearPainting=function(){
+		if(this.selectPainting!=null){
+		this.selectPainting.p.destroy();
+		
+		this.selectPainting=null;
+		}
+	}
 	this.draw=function(){
-		this.selectPainting.p.draw();
 	}
 	this.leftDraw=function(){
 		this.leftlayer.draw();
@@ -608,9 +521,9 @@ var Platform=function(){
 		this.selectPainting.updatePoints();
 	}
 	this.log=function(str){
-		s=this.rectBackgroundText.text();
-		this.rectBackgroundText.text(s+str+'\n');
-		this.outputlayer.draw();
+		//s=this.rectBackgroundText.text();
+		//this.rectBackgroundText.text(s+str+'\n');
+		//this.outputlayer.draw();
 	}
 
 };
