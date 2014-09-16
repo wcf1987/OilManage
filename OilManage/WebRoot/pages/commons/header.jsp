@@ -30,7 +30,7 @@ User userlogin=(User)(session.getAttribute("user"));
 		                系统模拟<span class="caret"></span>
 		            </a>
 		            <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">              
-		                <li><a href="pages/simulate_wellbore.jsp">井筒模拟</a></li>
+		                <li><a href="pages/simulate_wellbore.jsp">井底流压计算</a></li>
 		                <li class="divider"></li>
 		                <li class="dropdown-submenu">
 		                    <a tabindex="-1" href="javascript:;">管网模拟</a>
