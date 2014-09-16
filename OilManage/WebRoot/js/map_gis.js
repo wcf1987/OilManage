@@ -1,16 +1,46 @@
 
-var myjingkou = new BMap.Icon("images/icons/qijing.png",
+
+var qj = new BMap.Icon("editor/icons/qijing.png",
 		new BMap.Size(40, 40), {
-		anchor : new BMap.Size(15, 15)
+		anchor : new BMap.Size(20, 20)
 		});
-var myfazu = new BMap.Icon("images/icons/fa.png", new BMap.Size(40, 40), {
+var fa = new BMap.Icon("editor/icons/fa.png", 
+		new BMap.Size(40, 40), {
 	anchor : new BMap.Size(20, 20)
 });
-var zyclc = new BMap.Icon("images/icons/zhongyangchulichang.png", new BMap.Size(40, 40), {
+var zyclc = new BMap.Icon("editor/icons/zhongyangchulichang.png", 
+		new BMap.Size(40, 40), {
 	anchor : new BMap.Size(20, 20)
 });
-var myjiqizhan = new BMap.Icon("images/icons/qiaozhuangyehuadian.png", new BMap.Size(50,
-		50), {
+
+var qy = new BMap.Icon("editor/icons/waiyuanjiedian.png", 
+		new BMap.Size(40, 40), {
+	anchor : new BMap.Size(20, 20)
+});
+var glq = new BMap.Icon("editor/icons/guolvqi.png", 
+		new BMap.Size(40, 40), {
+	anchor : new BMap.Size(20, 20)
+});
+var fsd = new BMap.Icon("editor/icons/waifenshudian.png", 
+		new BMap.Size(40, 40), {
+	anchor : new BMap.Size(20, 20)
+});
+
+var zdzyd = new BMap.Icon("editor/icons/zhudongzengyadian.png", 
+		new BMap.Size(40, 40), {
+	anchor : new BMap.Size(20, 20)
+});
+var qzyhd = new BMap.Icon("editor/icons/qiaozhuangyehuadian.png", 
+		new BMap.Size(40, 40), {
+	anchor : new BMap.Size(20, 20)
+});
+var fz = new BMap.Icon("editor/icons/fazu.png", 
+		new BMap.Size(40, 40), {
+	anchor : new BMap.Size(20, 20)
+});
+
+var jqzyz = new BMap.Icon("images/icons/jiqizengyazhan.png", 
+		new BMap.Size(50,50), {
 	// 指定定位位置。
 	// 当标注显示在地图上时，其所指向的地理位置距离图标左上
 	// 角各偏移10像素和25像素。您可以看到在本例中该位置即是
@@ -21,8 +51,27 @@ var myjiqizhan = new BMap.Icon("images/icons/qiaozhuangyehuadian.png", new BMap.
 // 需要指定大图的偏移位置，此做法与css sprites技术类似。
 // imageOffset: new BMap.Size(0, 0 - index * 25) // 设置图片偏移
 });
-function showMap(proid,algid,Inorout) {
+function showMapIn(proid,algid,Inorout){
+	$.ajax({
+		type : 'POST',
+		url : 'viewExcelMap.action',
+		data : {
+			proID:proid,
+			algID:algid,
+			InOrOut:Inorout
+		},
+		success : function(data) {
+			clearMap();
+			drawPointsGis(data);
+			drawLines(data);
+			
+			
+		}
 
+	});
+
+}
+function showMapOut(proid,algid,Inorout){
 	$.ajax({
 		type : 'POST',
 		url : 'viewExcelMap.action',
@@ -34,10 +83,20 @@ function showMap(proid,algid,Inorout) {
 		success : function(data) {
 			drawPointsGis(data);
 			drawLines(data);
+			
+			
 		}
 
 	});
 
+}
+function showMap(proid,algid,Inorout) {
+	if(Inorout=="In"){
+		showMapIn(proid,algid,Inorout);
+	}else{
+		showMapIn(proid,algid,"In");
+		showMapIn(proid,algid,Inorout);
+	}
 }
 function clearMap(){
 	pointMap = {};
@@ -90,21 +149,40 @@ function drawPointsGis(data){
 		if(id==0){
 			mapGis.centerAndZoom(pointMap[i], 15);
 		}
-		myicon = myjingkou;
-		if (p['type'] == '井数据') {
-			myicon = myjingkou;
+		myicon = qj;
+		if (p['type'] == '井数据'||p['type'] == '井位置'||p['type'] == '气井') {
+			myicon = qj;
 		}
-		if (p['type'] == '阀组数据') {
-			myicon = myfazu;
+		if (p['type'] == '气源') {
+			myicon = qy;
 		}
-		if (p['type'] == '集齐站数据') {
-			myicon = myjiqizhan;
+		if (p['type'] == '分输点') {
+			myicon = fsd;
+		}
+		if (p['type'] == '阀') {
+			myicon = fa;
+		}
+		if (p['type'] == '过滤器') {
+			myicon = glq;
+		}
+		if (p['type'] == '阀组数据'||p['type'] == '阀组位置'||p['type'] == '阀组') {
+			myicon = fz;
+		}
+		if (p['type'] == '集气站数据'||p['type'] == '集气站位置'||p['type'] == '集气增压站') {
+			myicon = jqzyz;
 			
 		}
 
-		if (p['type'] == '中央处理厂数据') {
+		if (p['type'] == '中央处理厂数据'||p['type'] == '中央处理厂位置'||p['type'] == '中央处理厂') {
 			myicon = zyclc;
 		}
+		if (p['type'] == '主动增压点数据'||p['type'] == '主动增压点位置'||p['type'] == '主动增压点') {
+			myicon = zdzyd;
+		}
+		if (p['type'] == '撬装液化点数据'||p['type'] == '撬装液化点位置'||p['type'] == '撬装液化点') {
+			myicon = qzyhd;
+		}
+		
 		var markertemp = new BMap.Marker(pointMap[i], {
 			icon : myicon
 		});

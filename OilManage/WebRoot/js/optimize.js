@@ -31,7 +31,7 @@ $(function(){
 
 	$("#dikedAreaMap").css({
 	 'top': function () {
-	            return ($(window).height())/2-$(this).height()/2;
+	            return ($(window).height())+$(this).height()/2;
 	        },
 	 'left':function () {
 	            return ($(window).width())/2-$(this).width()/2;
@@ -347,7 +347,7 @@ function showDikedAreaMap(){//显示障碍区地图
 		var proid=$("#proID").val();
 		var algid=$("#curAlgID").val();
 		initdiked();
-		showObstacle(proid,algid,"In");
+		//showObstacle();
 	}else{
 		$("#dikedAreaMap").hide();
 		

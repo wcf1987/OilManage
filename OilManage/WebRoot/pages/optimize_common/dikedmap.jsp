@@ -7,7 +7,7 @@
 <button id="dikedMove" style='margin:2px;border-radius:5px;float:left;font-size:12px;background-color:#A5CEA5;height:3em;line-height:2em;overflow: hidden;'>点我拖动</button>
 
 	<div class="container marketing" style="width:600px;">	
-		<a href="javascript:showObstacle(44,0,'In')">更新障碍区地图</a> 
+		<a href="javascript:showObstacle()">更新障碍区地图</a> 
 	<!-- 	<hr class="featurette-divider"
 			style="margin-top:10px;margin-bottom:10px;">
  -->

@@ -2,10 +2,10 @@
 var proID;
 var algID;
 var InOrOut;
-function showObstacle(proid,algid,Inorout) {
-	 proID=proid;
-	 algID=algid;
-	 InOrOut=Inorout;
+function showObstacle() {
+	var proid=$("#proID").val();
+	var algid=$("#curAlgID").val();
+	var Inorout="In";
 	$.ajax({
 		type : 'POST',
 		url : 'viewObstacle.action',
@@ -23,14 +23,16 @@ function showObstacle(proid,algid,Inorout) {
 
 }
 function addObstacle(name,list) {
-
+	var proid=$("#proID").val();
+	var algid=$("#curAlgID").val();
+	var Inorout="In";
 	$.ajax({
 		type : 'POST',
 		url : 'addObstacle.action',
 		data : {
-			proID:proID,
-			algID:algID,
-			InOrOut:InOrOut,
+			proID:proid,
+			algID:algid,
+			InOrOut:Inorout,
 			poly:JSON.stringify(list),
 			obsName:name
 		},
@@ -71,7 +73,17 @@ function drawPointsDiked(data){
 		for(var k =0;k<ps.length;k++){
 			
 			p=ps[k];	
-			var bp=new BMap.Point(p['longitude'], p['latitude']);				
+			var bp=new BMap.Point(p['longitude'], p['latitude']);		
+			//BMap.Convertor.translate(bp,0,translateCallback);
+			/*translateCallback = function (point){
+			 * var bptrue=point
+				var marker = new BMap.Marker(point);
+				bm.addOverlay(marker);
+				}
+				
+				*
+				*/
+			
 			if(id==0){
 				map.centerAndZoom(bp, 15);	
 			}
@@ -96,6 +108,8 @@ function drawPointsDiked(data){
 		}
 		var polygon = new BMap.Polygon(tempPoint, 
 				styleOptions	);
+		//mapWforGPSDiked.addOverlay(polygon);
+
 		map.addOverlay(polygon);
 		var midLng=(minLng+maxLng)/2;
 		var midLat=(minLat+maxLat)/2;
@@ -115,6 +129,7 @@ var styleOptions = {
 	    fillOpacity: 0.6,      //填充的透明度，取值范围0 - 1。
 	    strokeStyle: 'solid' //边线的样式，solid或dashed。
 	}
+var mapWforGPSDiked ;
 function initdiked(){
 	 map = new BMap.Map("dikedmap", {
 		mapType : BMAP_HYBRID_MAP
@@ -130,14 +145,15 @@ function initdiked(){
 	map.addControl(new BMap.NavigationControl({
 		anchor : BMAP_ANCHOR_TOP_LEFT
 	})); //添加默认缩放平移控件
+	 mapWforGPSDiked = new BMapLib.MapWrapper(map, BMapLib.COORD_TYPE_GPS); 
 
 	map.addControl(new BMap.ScaleControl());
-	var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925)); // 创建标注
-	map.addOverlay(marker1);
+	//var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925)); // 创建标注
+	//map.addOverlay(marker1);
 	var point = new BMap.Point(116.404, 39.915);
-var overlays = [];
-//回调获得覆盖物信息
-var overlaycomplete = function(e){
+	var overlays = [];
+	//回调获得覆盖物信息
+	var overlaycomplete = function(e){
     overlays.push(e.overlay);
     if (e.drawingMode == BMAP_DRAWING_POLYLINE || e.drawingMode == BMAP_DRAWING_POLYGON || e.drawingMode == BMAP_DRAWING_RECTANGLE) {
         //result += ' 所画的点个数：' + e.overlay.getPath().length;
