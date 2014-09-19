@@ -220,6 +220,11 @@ function SheetGrid() {
 		for(var i=0;i<inputSheetNum;i++){//刷新5个表格
 	    	$(sheetDiv+i).trigger("reloadGrid");
 	    }
+		var sheetDiv = "#output-sheet";
+		var inputSheetNum=$("#outputSheetNum").val();
+		for(var i=0;i<inputSheetNum;i++){//刷新5个表格
+	    	$(sheetDiv+i).trigger("reloadGrid");
+	    }
 	}
 
 	deleteSheet=function(data) {

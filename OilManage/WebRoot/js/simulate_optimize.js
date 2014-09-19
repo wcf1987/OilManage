@@ -180,7 +180,8 @@ function loadOutput(way){
 		sheetgrid.GetDynamicCols(i, algid,inOrOut);
 		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);		
 	}
-	
+	var sheetGrid=new SheetGrid();
+	sheetGrid.reloadGrid();
 }
 
 function exportOutputExcel(){

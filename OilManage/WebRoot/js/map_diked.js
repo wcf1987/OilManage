@@ -22,7 +22,28 @@ function showObstacle() {
 	});
 
 }
-function addObstacle(name,list) {
+
+
+var addcallback=function(xyResults,name,points){
+//	x = 2*x1-x2，y = 2*y1-y2 
+	var pointsTemp=new Array();
+	var xyResult = null;
+	$.each(xyResults,function(i){
+		xyResult = xyResults[i];
+		var xyRP=new BMap.Point(xyResult.x,xyResult.y);
+		xyPoint=points[i];
+		var x=2*xyPoint.x-xyRP.lng;
+		var y=2*xyPoint.y-xyRP.lat;
+		var point = new BMap.Point(x,y);
+		pointsTemp.push(point);
+		map.setCenter(point);
+		if(i==0){
+			var secRingCenter = point;
+			var secRingLabel2 = new BMap.Label(name,{offset: new BMap.Size(10,-20), position: secRingCenter});
+			secRingLabel2.setStyle({"padding": "2px"});
+			map.addOverlay(secRingLabel2);
+		}
+	});
 	var proid=$("#proID").val();
 	var algid=$("#curAlgID").val();
 	var Inorout="In";
@@ -33,16 +54,20 @@ function addObstacle(name,list) {
 			proID:proid,
 			algID:algid,
 			InOrOut:Inorout,
-			poly:JSON.stringify(list),
+			poly:JSON.stringify(pointsTemp),
 			obsName:name
 		},
 		success : function(data) {
+			drawPointsDiked(data);
 			//drawPoints(data);
 			//drawLines(data);
 		}
 
 	});
+}	
 
+function addObstacle(name,list) {
+	BMap.Convertor.transMore(list,0,addcallback,name);
 }
 function clearMap(){
 	pointMap = {};
@@ -56,8 +81,7 @@ var myjingkou = new BMap.Icon("images/icons/jingkou.png",
 			anchor : new BMap.Size(15, 15)
 		});
 
-
-function callback(xyResults){
+var callback=function(xyResults,i,points){
 	var pointsTemp=new Array();
 	var xyResult = null;
 	var k=-1;
@@ -72,7 +96,7 @@ function callback(xyResults){
 		map.setCenter(point);
 		if(k==0){
 			var secRingCenter = point;
-			var secRingLabel2 = new BMap.Label(index,{offset: new BMap.Size(10,-20), position: secRingCenter});
+			var secRingLabel2 = new BMap.Label(i,{offset: new BMap.Size(10,-20), position: secRingCenter});
 			secRingLabel2.setStyle({"padding": "2px"});
 			map.addOverlay(secRingLabel2);
 		}
@@ -80,7 +104,6 @@ function callback(xyResults){
     var polygon = new BMap.Polygon(pointsTemp,{strokeColor:"blue",strokeWeight:5, strokeOpacity:0.5});
 	map.addOverlay(polygon);
 }	
-
 function drawPointsDiked(data){
 	backPointCou=0;
 	totalPointCou=0;
@@ -101,8 +124,22 @@ function drawPointsDiked(data){
 			var bp=new BMap.Point(p['longitude'], p['latitude']);
 			tempPoints.push(bp);
 		}
-		BMap.Convertor.transMore(tempPoints,0,callback);
-		
+		if(id==1){
+		tempPoints= [new BMap.Point(116.3786889372559,39.90762965106183),
+		        				  new BMap.Point(116.38632786853032,39.90795884517671),
+		        				  new BMap.Point(116.39534009082035,39.907432133833574),
+		        				  new BMap.Point(116.40624058825688,39.90789300648029),
+		        				  new BMap.Point(116.41413701159672,39.90795884517671)
+		        				 ];
+		}else if(id==2){
+			tempPoints= [new BMap.Point(100.3786889372559,39.90762965106183),
+       				  new BMap.Point(100.38632786853032,39.90795884517671),
+       				  new BMap.Point(100.39534009082035,39.907432133833574),
+       				  new BMap.Point(100.40624058825688,39.90789300648029),
+       				  new BMap.Point(100.41413701159672,39.90795884517671)
+       				 ];
+		}
+		BMap.Convertor.transMore(tempPoints,0,callback,i);
 		//setTimeout(function(){BMap.Convertor.transMore(tempPoints,0,callback);}, 3000);
 	}
 }

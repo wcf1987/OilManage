@@ -356,6 +356,7 @@ public class AlgorithmExcelAction {
 		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
 		excel.getObstacleSheet().addObstacle(this.poly,this.obsName);
 		saveExcel();
+		viewObstacle();
 		return "SUCCESS";
 	}
 	public Map<String, List<Point>> getObs() {
