@@ -214,8 +214,8 @@ function SheetGrid() {
 	
 		
 	}
-	this.reloadGrid=function(){
-		var sheetDiv = "#sheet";
+	this.reloadGrid=function(){//保存的时候用到了
+		var sheetDiv = "#input-sheet";
 		var inputSheetNum=$("#inputSheetNum").val();
 		for(var i=0;i<inputSheetNum;i++){//刷新5个表格
 	    	$(sheetDiv+i).trigger("reloadGrid");
