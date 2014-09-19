@@ -154,6 +154,7 @@ public class SheetContent {
 						{
 						
 						}else{
+							value=Tools.checkContent(value);
 							valueTemp.add(value);
 						}
 						//System.out.print(value + "\t");
@@ -161,6 +162,7 @@ public class SheetContent {
 							if(this.sheetID==1){
 							//	System.out.println("catch");
 							}
+							value=Tools.checkContent(value);
 							this.sheetTitle.put(value, cIndex+1);
 							
 							colModel.add(new ColModel(value));
@@ -169,7 +171,7 @@ public class SheetContent {
 						value = "";
 						if(rIndex>0)
 						{
-						
+							value=Tools.checkContent(value);
 							valueTemp.add(value);
 						}
 						

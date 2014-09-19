@@ -133,5 +133,11 @@ public class Tools {
 			path=path+File.separator;
 			return path;
 	    }
+	    public static String checkContent(String old){
+	    	String newStr=old.replace("（","(" );
+	    	 newStr=newStr.replace("）",")" );
+	    	
+	    	 return newStr;
+	    }
 
 }
