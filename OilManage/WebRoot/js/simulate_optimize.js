@@ -49,7 +49,7 @@ function uploadComplete(file, data, response) {
 	if(tempJson['msg']==null||tempJson['msg']==''){
 		alert("上传成功！");
 		//openProject($("#proID").val());
-		var sheetDiv = "#sheet";
+		var sheetDiv = "#input-sheet";
 		var inputSheetNum=$("#inputSheetNum").val();
 		for(var i=0;i<inputSheetNum;i++){//刷新5个表格
 	    	$(sheetDiv+i).trigger("reloadGrid");
