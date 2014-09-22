@@ -33,13 +33,22 @@ function() {
 			cellurl : 'editDevice.action',
 			beforeSubmitCell : function(rowid,celname,value,iRow,iCol) { 
 				//alert(/sd/);
-				var proper=jQuery("#PointPraList").jqGrid("getRowData", iRow).name 
+				var type=leftpoly.clickshape.TYPE;
+				var name=leftpoly.clickshape.nameStr;
+				
+				var proper=jQuery("#PointPraList").jqGrid("getRowData", iRow).name;
+				if(proper=='名称'){
+					
+					setPointText(leftpoly.clickshape,value);
+					leftpoly.clickshape.nameStr=value;
+					platform.draw();
+				}
 				var z={
 					algID : $("#curAlgID").val(),
 					InOrOut:"In",
 					proID : $("#proID").val(),
-					type:$("#tempStr1").val(),//元素点的类型
-					name:$("#tempStr2").val(),
+					type:type,//元素点的类型
+					name:name,
 					proper:proper,
 					newValue:value					
 					};
@@ -584,6 +593,7 @@ function() {
 			var clickshape = e.target.getParent();
 			point_name=clickshape.nameStr;
 			point_type=clickshape.TYPE;
+			leftpoly.clickshape=clickshape;
 		// 当前位置弹出菜单（div）
 			var attrtop=this.getAbsolutePosition().y + 100;
 			var attrleft=this.getAbsolutePosition().x + 90;		
@@ -603,6 +613,7 @@ function() {
 		    var clickshape = e.target.getParent();
 			var point_name=clickshape.id();
 			var point_type=clickshape.TYPE;
+			leftpoly.clickshape=clickshape;
 			// 当前位置弹出菜单（div）
 			var attrtop=this.getAbsolutePosition().y+260;//300
 			var attrleft=this.getAbsolutePosition().x + 250;//450
