@@ -28,7 +28,11 @@ var Paintings = function() {
 			point=ptemp.clone();
 			point.nameStr=p['name'];
 			point.id(p['name']);
-			point.TYPE=ptemp.TYPE;
+			point.TYPE=p['type'];
+			var types=getPolyByYSJ(p);
+			if(types!=""){
+				point.TYPE=types;
+			}
 			this.p.add(point);
 			setPointText(point,p['name']);
 			point.x(p.draw2DX);

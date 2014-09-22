@@ -445,7 +445,11 @@ public class SheetContent {
 		String value;
 		int index;
 		Map<String,String> t=new HashMap<String,String>();
-		 for(Iterator<String> iter=sheetTitle.keySet().iterator();iter.hasNext();){
+		
+		List<String> list=sheetContent.get(0);
+		list=list.subList(1, list.size());
+	
+		 for(Iterator<String> iter=list.iterator();iter.hasNext();){
 			 titleS=iter.next();
 			 index=sheetTitle.get(titleS);
 			 if(index==0){

@@ -155,7 +155,11 @@ function() {
 	}	
 	this.addPoint=function(type,name,p){
 		var proID=$("#proID").val();
-		  var algID=$("#curAlgID").val();			
+		  var algID=$("#curAlgID").val();	
+		  var ysjls=p.YSJLS;
+		  if (ysjls==null){
+			  ysjls=0;
+		  }
         $.ajax({ 
             type: "POST", 
             url: "addPoint.action",
@@ -164,6 +168,7 @@ function() {
 				algID:algID,
 				InOrOut:"In",
 				type:type,
+				YSJLS:ysjls,
 				name:name
 			 }, 
 			 success : function(data) {
@@ -456,7 +461,31 @@ function() {
 			y : this.getAbsolutePosition().y
 		};
 	};
-	
+	this.addPointByInput=function(po,name){
+		if(name==null||name==''){
+			po.destroy();
+		}
+		po.nameStr=name;
+		po.id(name);
+		setPointText(po,name);
+		po.moveTo(platform.selectPainting.p);
+		if(checkSpecial(po)){
+			po.rotate(90);
+		}
+		leftpoly.addPoint(po.TYPE,name,po);
+		platform.selectPainting.hasChange();
+		poss = checkConn(po);
+		if (poss != null) {
+			po.lock=true;
+			po.x((po.x() - (poss.x/platform.selectPainting.scaleN)));
+			po.y((po.y() - (poss.y/platform.selectPainting.scaleN)));
+			leftpoly.updateLines();
+			
+			
+		}
+		leftpoly.showALLConnedPoints();
+		platform.draw();
+	}
 	this.cloneFun = function(e) {
 
 		var userPos = platform.stage.getPointerPosition();
@@ -471,29 +500,32 @@ function() {
 						/ platform.selectPainting.scaleN);
 				//this.id(getTimeByS());
 				
-				var name=prompt("请输入元件名称","");
-				if(name==null||name==''){
-					this.destroy();
-				}else{
+				
 					if(checkPipe(this)){
-						var Type=prompt("请压缩机类型","");
-						if(Type==null||Type==''){
-							this.destroy();
-							return;
-						}
-						this.TYPE=Type;
+						leftpoly.PipeTemp=this;
+						leftpoly.PipeTempType=this.TYPE;
+						$('#add_ysj_modal').modal();
+						return;
+					}else{						
+						var name=prompt("请输入元件名称","");
+						//leftpoly.addPointByInput(this,name);
 					}
-					this.nameStr=name;
-					this.id(name);
-					setPointText(this,name);
-					this.moveTo(platform.selectPainting.p);
-					if(checkSpecial(this)){
-						this.rotate(90);
+					var po=this;
+					if(name==null||name==''){
+						po.destroy();
 					}
-					leftpoly.addPoint(this.TYPE,name,this);
+					po.nameStr=name;
+					po.id(name);
+					setPointText(po,name);
+					po.moveTo(platform.selectPainting.p);
+					if(checkSpecial(po)){
+						po.rotate(90);
+					}
+					leftpoly.addPoint(po.TYPE,name,po);
 					platform.selectPainting.hasChange();
-				}
+					
 			}
+			
 			poss = checkConn(this);
 			if (poss != null) {
 				this.lock=true;
@@ -519,20 +551,29 @@ function() {
 	this.cloneFun2 = function(e) {
 
 		if (e.type == 'mousedown'
-				&&platform.selectPainting!=null &&this.getLayer() != platform.selectPainting.p) {
+				&&platform.selectPainting!=null &&this.getLayer()!= platform.selectPainting.p) {
 			var cloneOfItem = this.clone();
 			hideConnection(this);
 			
 			hideConnection(cloneOfItem);
 			// cloneOfItem.off('mousedown touchstart');
 			platform.leftlayer.add(cloneOfItem);
-
+			cloneOfItem.TYPE=this.TYPE;
+			leftpoly.polyGroups[leftpoly.searchPointIndex(this)]=cloneOfItem;
+			
 		}
 		if (e.type == 'dragend') {
 
 		}
 
 	};
+	this.searchPointIndex=function(g){
+		for(var i=0;i<leftpoly.polyGroups.length;i++){
+			if(leftpoly.polyGroups[i]==g){
+				return i;
+			}
+		}
+	}
 	var TimeFn=null;
 	this.dbclickFun = function(e) {
 		if (e.type == 'dblclick') {
@@ -561,7 +602,7 @@ function() {
 		    clearTimeout(TimeFn);
 		    var clickshape = e.target.getParent();
 			var point_name=clickshape.id();
-			var point_type=clickshape.name();
+			var point_type=clickshape.TYPE;
 			// 当前位置弹出菜单（div）
 			var attrtop=this.getAbsolutePosition().y+260;//300
 			var attrleft=this.getAbsolutePosition().x + 250;//450
@@ -592,7 +633,7 @@ function() {
 							$("#contextmenu").hide();		
 							platform.selectPainting.p.draw();
 						} else	if (text == '删除该节点') {
-							leftpoly.delPoint(clickshape.name(),clickshape.nameStr);
+							leftpoly.delPoint(clickshape.TYPE,clickshape.nameStr,clickshape);
 							platform.selectPainting.hasChange();		
 							clickshape.destroy();
 							leftpoly.showALLConnedPoints();

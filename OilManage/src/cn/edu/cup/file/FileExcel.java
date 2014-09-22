@@ -327,7 +327,16 @@ public class FileExcel {
 			return 2;
 		return 3;
 	}
-	public int addPoint(String type, String name) {
+	public String getTypeByYSJLS(String Name){
+		if(Name.equalsIgnoreCase("集气增压站"))
+			return "JQZYZ01";
+		if(Name.equalsIgnoreCase("主动增压点"))
+			return "ZDZYD01";
+		if(Name.equalsIgnoreCase("中央处理厂"))
+			return "ZYCLC01";
+		return "";
+	}
+	public int addPoint(String type, String name,String YSJLS) {
 		SheetContent a=getSheetByName(this,type);
 		//int row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
 		
@@ -351,20 +360,25 @@ public class FileExcel {
 		   
 		   if(row==-1&&row2==-1){
 			Map<String,String> p=new HashMap<String,String>();			
+			YSJLS=getTypeByYSJLS(YSJLS);
 			p.put("名称", name);
+			p.put("管段隶属关系", YSJLS);
 			row=a.addRow(p);
 			
 			Map<String,String> p1=new HashMap<String,String>();			
 			p1.put("设备名称", name);
 			p1.put("名称", name);
-			if(type.equals("离心压缩机数据"))
+			
+			if(type.equals("离心压缩机数据")){
 				p1.put("管段类型", "CentCompressor");
-			if(type.equals("往复式压缩机数据"))
+				p1.put("管段隶属关系", YSJLS);}
+			if(type.equals("往复式压缩机数据")){
 				p1.put("管段类型", "ReciCompressor");
-			if(type.equals("阀数据"))
-				p1.put("管段类型", "Valve");
-			if(type.equals("过滤器数据"))
-				p1.put("管段类型", "Filter");
+				p1.put("管段隶属关系", YSJLS);}
+			if(type.equals("阀数据")){
+				p1.put("管段类型", "Valve");}
+			if(type.equals("过滤器数据")){
+				p1.put("管段类型", "Filter");}
 			row2=b.addRow(p1);
 			return -1;
 		}else{
@@ -414,12 +428,15 @@ public class FileExcel {
 	}
 	public int delPoint(String type, String name) {
 		SheetContent a=getSheetByName(this,type);
-		int row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
+		int row;
+		if(a!=null){
+		row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
 		
 		
 		if(row!=-1){
 			a.removeRow(row);
 			a.updateSheet();
+		}
 		}
 		
 	   a=getSheetByName(this,"节点数据");
@@ -430,7 +447,7 @@ public class FileExcel {
 			a.removeRow(row);			
 		
 	   }
-	   
+	   a.updateSheet();
 	   a=getSheetByName(this,"管段连接");
 	   row=a.getExcelDataIndex(a, a.getTitleByName("上游节点"),name );
 	   if(row!=-1){		
@@ -440,6 +457,11 @@ public class FileExcel {
 	   if(row!=-1){		
 			a.removeRow(row);		
 	   }
+	   row=a.getExcelDataIndex(a, a.getTitleByName("名称"),name );
+	   if(row!=-1){		
+			a.removeRow(row);		
+	   }
+	   a.updateSheet();
 	return 0;
 	}
 	public void updateConn(Line line) {
@@ -470,8 +492,9 @@ public class FileExcel {
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			List<String> line=sheet.sheetContent.get(row);
 			Map<String,String> map=sheet.getAttribute(line);
-			
-			for (Iterator<String> iter=map.keySet().iterator();iter.hasNext();) {
+			List<String> list=sheet.sheetContent.get(0);
+			list=list.subList(1, list.size());
+			for (Iterator<String> iter=list.iterator();iter.hasNext();) {
 				String key=iter.next();
 				String value=map.get(key);
 				DeviceKV KV=new DeviceKV();
@@ -485,8 +508,9 @@ public class FileExcel {
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			List<String> line=sheet.sheetContent.get(row);
 			Map<String,String> map=sheet.getAttribute(line);
-			
-			for (Iterator<String> iter=map.keySet().iterator();iter.hasNext();) {
+			List<String> list=sheet.sheetContent.get(0);
+			list=list.subList(1, list.size());
+			for (Iterator<String> iter=list.iterator();iter.hasNext();) {
 				String key=iter.next();
 				String value=map.get(key);
 				DeviceKV KV=new DeviceKV();
@@ -500,8 +524,9 @@ public class FileExcel {
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			List<String> line=sheet.sheetContent.get(row);
 			Map<String,String> map=sheet.getAttribute(line);
-			
-			for (Iterator<String> iter=map.keySet().iterator();iter.hasNext();) {
+			List<String> list=sheet.sheetContent.get(0);
+			list=list.subList(1, list.size());
+			for (Iterator<String> iter=list.iterator();iter.hasNext();) {
 				String key=iter.next();
 				String value=map.get(key);
 				DeviceKV KV=new DeviceKV();
@@ -515,8 +540,9 @@ public class FileExcel {
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			List<String> line=sheet.sheetContent.get(row);
 			Map<String,String> map=sheet.getAttribute(line);
-			
-			for (Iterator<String> iter=map.keySet().iterator();iter.hasNext();) {
+			List<String> list=sheet.sheetContent.get(0);
+			list=list.subList(1, list.size());
+			for (Iterator<String> iter=list.iterator();iter.hasNext();) {
 				String key=iter.next();
 				String value=map.get(key);
 				DeviceKV KV=new DeviceKV();

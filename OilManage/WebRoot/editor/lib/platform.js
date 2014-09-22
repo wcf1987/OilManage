@@ -505,6 +505,7 @@ var Platform=function(){
 		}
 	}
 	this.draw=function(){
+		this.selectPainting.p.draw();
 	}
 	this.leftDraw=function(){
 		this.leftlayer.draw();
@@ -520,6 +521,7 @@ var Platform=function(){
 		this.selectPainting.updateConnects();
 		this.selectPainting.updatePoints();
 	}
+	
 	this.log=function(str){
 		//s=this.rectBackgroundText.text();
 		//this.rectBackgroundText.text(s+str+'\n');

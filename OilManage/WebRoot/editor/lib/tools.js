@@ -206,7 +206,9 @@ function setImage(g){
 }
 function setPointText(g,Str){
 	var label=getTextPoint(g);
+	
 	label.text(Str);
+	
 }
 function getImagePoint(g){
 	tempArrayI = g.getChildren(function(node) {
@@ -292,13 +294,13 @@ function getPolyByType(p){
 			return leftpoly.polyGroups[i];
 		}
 		if (type=='离心压缩机'||type=='往复式压缩机'){
-			if(leftpoly.polyGroups[i].TYPE=='集气增压站'&&p['attribute']['隶属关系'].indexOf('JQZYZ')>-1){
+			if(leftpoly.polyGroups[i].TYPE=='集气增压站'&&p['attribute']['管段隶属关系']!=null&&p['attribute']['管段隶属关系'].indexOf('JQZYZ')>-1){
 				return leftpoly.polyGroups[i];
 			}
-			if(leftpoly.polyGroups[i].TYPE=='主动增压点'&&p['attribute']['隶属关系'].indexOf('ZDZYD')>-1){
+			if(leftpoly.polyGroups[i].TYPE=='主动增压点'&&p['attribute']['管段隶属关系']!=null&&p['attribute']['管段隶属关系'].indexOf('ZDZYD')>-1){
 				return leftpoly.polyGroups[i];
 			}
-			if(leftpoly.polyGroups[i].TYPE=='中央处理厂'&&p['attribute']['隶属关系'].indexOf('ZYCLC')>-1){
+			if(leftpoly.polyGroups[i].TYPE=='中央处理厂'&&p['attribute']['管段隶属关系']!=null&&p['attribute']['管段隶属关系'].indexOf('ZYCLC')>-1){
 				return leftpoly.polyGroups[i];
 			}
 		}
@@ -306,6 +308,14 @@ function getPolyByType(p){
 	}
 	return null;
 }
+function getPolyByYSJ(p){
+	var type=p['type'];
+	
+	if (type=='离心压缩机'||type=='往复式压缩机'){
+		return type;
+		}
+		return "";
+	}
 function rotateSpesail(p){
 	if(checkSpecial(p))
 	{	
@@ -333,4 +343,12 @@ function checkAllPipe(p){
 		return true;
 	}
 	return false;
+}
+function addYSJ(){
+	var po=leftpoly.PipeTemp;
+	var name=$("#YSJName").val()
+	po.TYPE=$("#YSJType").val();
+	po.YSJLS=leftpoly.PipeTempType;
+	leftpoly.addPointByInput(po,name);
+	$('#add_ysj_modal').modal('hide');
 }

@@ -232,9 +232,15 @@ public class AlgorithmExcelAction {
 	}
 	String type;
 	String name;
+	String YSJLS;
+	public void setYSJLS(String ySJLS) {
+		YSJLS = ySJLS;
+	}
+
 	public String addPoint(){
 		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
-		int row=excel.addPoint(type+"数据",name);
+		
+		int row=excel.addPoint(type+"数据",name,YSJLS);
 		if (row!=-1){msg="此名称节点已存在";}
 		return "SUCCESS";
 	}

@@ -76,3 +76,39 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+<!-- 添加压缩机的模态框 -->   	
+<div class="modal fade" id="add_ysj_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加压缩机</h4>
+      </div>
+      <div class="modal-body">
+     	 <form id="addYSJForm" method="post"> 
+     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">
+      		
+      			<tr>
+      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >名称:</label></td>
+		            <td><input id="YSJName" type="text" class="input2" name="name" maxlength="30"/><em style="color:red">*</em></td>
+      			</tr>
+      			<tr>
+      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >压缩机类型：</label></td>
+      				<td>      			
+      					<select id="YSJType" style="width:178px">
+  							<option value ="离心压缩机" selected>离心压缩机</option>
+  							<option value ="往复式压缩机">往复式压缩机</option>
+						</select></td>
+
+      			</tr>      			    				
+		   </table>
+		   <div class="modal-footer">
+		        <button type="button" class="btn btn-primary"  onclick="addYSJ()">保存</button>
+		   </div>
+		 </form> 
+      </div>
+     
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -408,7 +408,7 @@ function() {
 			$("#contextmenu").hide();
 			var clickshape = e.target.getParent();
 			point_name=clickshape.id();
-			point_type=clickshape.name();
+			point_type=clickshape.TYPE;
 		// 当前位置弹出菜单（div）
 			var attrtop=this.getAbsolutePosition().y + 100;
 			var attrleft=this.getAbsolutePosition().x + 90;		
@@ -427,7 +427,7 @@ function() {
 		    clearTimeout(TimeFn);
 		    var clickshape = e.target.getParent();
 			var point_name=clickshape.id();
-			var point_type=clickshape.name();
+			var point_type=clickshape.TYPE;
 			// 当前位置弹出菜单（div）
 			var attrtop=this.getAbsolutePosition().y+260;//300
 			var attrleft=this.getAbsolutePosition().x + 250;//450
