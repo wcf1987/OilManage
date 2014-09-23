@@ -294,13 +294,13 @@ function getPolyByType(p){
 			return leftpoly.polyGroups[i];
 		}
 		if (type=='离心压缩机'||type=='往复式压缩机'){
-			if(leftpoly.polyGroups[i].TYPE=='集气增压站'&&p['attribute']['管段隶属关系']!=null&&p['attribute']['管段隶属关系'].indexOf('JQZYZ')>-1){
+			if(leftpoly.polyGroups[i].TYPE=='集气增压站'&&p['attribute']['设备位置']!=null&&p['attribute']['设备位置'].indexOf('JQZYZ')>-1){
 				return leftpoly.polyGroups[i];
 			}
-			if(leftpoly.polyGroups[i].TYPE=='主动增压点'&&p['attribute']['管段隶属关系']!=null&&p['attribute']['管段隶属关系'].indexOf('ZDZYD')>-1){
+			if(leftpoly.polyGroups[i].TYPE=='主动增压点'&&p['attribute']['设备位置']!=null&&p['attribute']['设备位置'].indexOf('ZDZYD')>-1){
 				return leftpoly.polyGroups[i];
 			}
-			if(leftpoly.polyGroups[i].TYPE=='中央处理厂'&&p['attribute']['管段隶属关系']!=null&&p['attribute']['管段隶属关系'].indexOf('ZYCLC')>-1){
+			if(leftpoly.polyGroups[i].TYPE=='中央处理厂'&&p['attribute']['设备位置']!=null&&p['attribute']['设备位置'].indexOf('ZYCLC')>-1){
 				return leftpoly.polyGroups[i];
 			}
 		}
@@ -351,4 +351,13 @@ function addYSJ(){
 	po.YSJLS=leftpoly.PipeTempType;
 	leftpoly.addPointByInput(po,name);
 	$('#add_ysj_modal').modal('hide');
+}
+function getIndexOfArray(arr1,element){
+	for(var i=0;i<arr1.length;i++){
+		if(arr1[i]==element){
+			return i;
+		}
+		
+	}
+	return -1;
 }

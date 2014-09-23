@@ -5,7 +5,9 @@ function() {
 	 var lastsel;
 	 var proID=$("#proID").val();
 	  var algID=$("#curAlgID").val();
-	  if(proID!=0){
+	if(proID==""){
+		proID=0;//这样一改，就不会出现属性框时不时无法加载的问题了
+	}
 	 var datagrid =jQuery("#PointPraList").jqGrid({
 		   	url:'listDevice.action',
 			datatype: "json",
@@ -64,7 +66,7 @@ function() {
 				repeatitems: false
 			},
 		});
-	  }		
+	  	
 
 	this.polys = new Array;
 	this.imgobj=new Array;
@@ -834,7 +836,7 @@ function() {
 		 $("#tempStr1").val(type);
 		 $("#tempStr2").val(point_name);
 		 var proID=$("#proID").val();
-		 jQuery("#PointPraList").jqGrid("setGridParam", { 
+		 /*jQuery("#PointPraList").jqGrid("setGridParam", { 
 			 url: "listDevice.action", //设置表格的url 
 			 datatype: "json", //设置数据类型 
 			 postData: {
@@ -842,11 +844,23 @@ function() {
 					InOrOut:"In",
 					proID : proID,
 					type:type,//元素点的类型
-//					pointID:1,
 					name:point_name
 					} 
 		 }); 
-		$('#PointPraList').trigger("reloadGrid");
+		$('#PointPraList').trigger("reloadGrid");*/
+		
+		jQuery("#PointPraList").jqGrid("setGridParam", {
+			 url: "listDevice.action", //设置表格的url 
+			 datatype: "json", //设置数据类型 
+			postData : {
+				algID : algID,
+				InOrOut:"In",
+				proID : proID,
+				type:type,//元素点的类型
+				name:point_name
+			}
+		}).trigger("reloadGrid");
+		
 		$("#pointPra").css({
 			top :attrtop,
 			left : attrleft,

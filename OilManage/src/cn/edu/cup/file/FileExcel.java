@@ -362,7 +362,7 @@ public class FileExcel {
 			Map<String,String> p=new HashMap<String,String>();			
 			YSJLS=getTypeByYSJLS(YSJLS);
 			p.put("名称", name);
-			p.put("管段隶属关系", YSJLS);
+			p.put("设备位置", YSJLS);
 			row=a.addRow(p);
 			
 			Map<String,String> p1=new HashMap<String,String>();			
@@ -371,10 +371,10 @@ public class FileExcel {
 			
 			if(type.equals("离心压缩机数据")){
 				p1.put("管段类型", "CentCompressor");
-				p1.put("管段隶属关系", YSJLS);}
+				p1.put("设备位置", YSJLS);}
 			if(type.equals("往复式压缩机数据")){
 				p1.put("管段类型", "ReciCompressor");
-				p1.put("管段隶属关系", YSJLS);}
+				p1.put("设备位置", YSJLS);}
 			if(type.equals("阀数据")){
 				p1.put("管段类型", "Valve");}
 			if(type.equals("过滤器数据")){
