@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script defer="defer" type="text/javascript" src="editor/lib/Paintings.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/tools.js"></script>
 	<script defer="defer" type="text/javascript" src="editor/lib/kinecttab.js"></script>
-
+	<script defer="defer" type="text/javascript" src="editor/lib/pipe.js"></script>
 		
 	<script defer="defer" type="text/javascript" src="js/simulate_hydraulic.js"></script>
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>

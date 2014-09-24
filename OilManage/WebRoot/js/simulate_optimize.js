@@ -17,6 +17,7 @@ $().ready(function(){
 		'fileTypeDesc' : '请选择xls xlsx文件',
 	    'fileTypeExts' : '*.xls; *.xlsx;',
 	    'onUploadStart': function (file) { 		
+	    	//$('#importExcel').message("正在上传"); 
 	    	$("#importExcel").uploadify("settings", "formData",
 	    			{ 'proID':$("#proID").val(),'algID':$("#curAlgID").val(),'InOrOut':"In" });  
 	    }
@@ -238,5 +239,12 @@ function showTab(type){
 	if(type=='output_tab'){
 		//runAlg(1);
 		loadOutput(1);
+	}
+	if(type=='input_tab'){
+		var inputSheetNum=$("#inputSheetNum").val();
+		var sheetDiv = "#input-sheet";
+		for(var i=0;i<inputSheetNum;i++){//刷新5个表格
+	    	$(sheetDiv+i).trigger("reloadGrid");
+	    }
 	}
 }

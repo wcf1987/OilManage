@@ -381,8 +381,9 @@ function() {
 			connPointsRight.hide();	
 			this.initPoint(this.polyGroups[k]);
 			
+	
 		}
-
+		pipeInit();
 	}
 	this.initPoint = function(point){
 		point.dragBoundFunc(this.dragFun);
@@ -615,6 +616,8 @@ function() {
 		    var clickshape = e.target.getParent();
 			var point_name=clickshape.id();
 			var point_type=clickshape.TYPE;
+			var algID=$("#curAlgID").val();
+			var proID=$("#proID").val();
 			leftpoly.clickshape=clickshape;
 			// 当前位置弹出菜单（div）
 			var attrtop=this.getAbsolutePosition().y+260;//300
@@ -689,9 +692,17 @@ function() {
 						}else if (text == '属性') {
 							platform.selectPainting.hasChange();	
 							$("#contextmenu").hide();
-							pro_id=$(".active > input[name='proID']").val();
-							showPrameter(point_name,pro_id,point_type,attrtop,attrleft);									
+							//pro_id=$(".active > input[name='proID']").val();
+							showPrameter(point_name,proID,point_type,attrtop,attrleft);									
 							platform.selectPainting.p.draw();
+						}else if (text == '管道图示') {
+							if(point_type=='管道'){	
+								$("#contextmenu").hide();
+								//pro_id=$(".active > input[name='proID']").val();
+								showPipe(point_name,proID,algID,attrtop,attrleft);									
+								platform.selectPainting.p.draw();
+							}
+							
 						}
 						//hideALLConnPoints();					
 						// $("#contextmenu").hide();

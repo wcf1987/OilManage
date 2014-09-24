@@ -1,6 +1,6 @@
 package cn.edu.cup.algjarexcel;
 
-import cn.edu.cup.manage.action.AlgorithmExcelAction;
+import cn.edu.cup.file.FileExcelManager;
 
 public class CalcThread extends Thread {
 	ProjectInfo proinfo;
@@ -29,7 +29,7 @@ public class CalcThread extends Thread {
 			e.printStackTrace();
 			proinfo.getInfo().endsWithError(e.getMessage());
 		}
-		new AlgorithmExcelAction().reloadFileExcel(proinfo.getProid(), proinfo.getAlgID(), "Out");
+		FileExcelManager.reloadFileExcel(proinfo.getProid(), proinfo.getAlgID(), "Out");
 	}
 
 }

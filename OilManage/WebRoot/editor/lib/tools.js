@@ -15,6 +15,7 @@ function save(){
 	platform.update();
 	tabtools.save();
 }
+
 function clickLoad(s){
 	if(s==1){
 		createNewModal(true);

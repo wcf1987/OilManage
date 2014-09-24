@@ -119,6 +119,7 @@
 	<li><a>缩小</a></li>	-->		
 	<li><a>删除该节点</a></li>
 	<li><a>属性</a></li>
+	<li><a>管道图示</a></li>
 	<li><a>进入站点</a></li>
    </ul>
    <!-- 属性框 -->
@@ -129,6 +130,28 @@
   		<div>
 		<div id="PointPraPager" ></div>
 	</div>		
+</div>
+<div id="PipePra"  style=" display: none;z-index:100;position:absolute">
+	<div id="PipePraClose" >
+	<span style="font-size:25px;float:right;width:20px;align:center;margin-top:-30px;" onclick="closePipeList()">x</span>
+	</div>
+ <div id="pipetab-container" class="tab-container" data-easytabs="true">
+  <ul class='etabs'>
+    <li class='tab'><a href="#tabs1-Pipe1">参数表</a></li>
+    <li class='tab'><a href="#tabs1-Pipe2">分布图</a></li>   
+  </ul>
+  <div id="#tabs1-Pipe1">
+   <table id="PipePraList" class="table table-striped table-bordered table-hover datatable " >
+	</table>
+  	<div>
+		<div id="PipePraPager" ></div>
+	</div>	
+  </div>
+  <div id="#tabs1-Pipe2">
+    <div id="graphiDraw" style="width:100%; height:auto;margin-left:200px;"></div> 	
+    <!-- content -->
+  </div>
+  </div>	
 </div>
 <script>
 function changeGIS(){

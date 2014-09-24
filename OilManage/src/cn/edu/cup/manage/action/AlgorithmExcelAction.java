@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import net.sf.json.JSONObject;
 import cn.edu.cup.file.ColModel;
 import cn.edu.cup.file.FileExcel;
+import cn.edu.cup.file.FileExcelManager;
 import cn.edu.cup.file.SheetContent;
 import cn.edu.cup.gui.dao.GUIDao;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
@@ -26,10 +26,7 @@ import cn.edu.cup.tools.Tools;
 
 public class AlgorithmExcelAction {
 	
-	public static String ExcelAlgBaseDir = "ExcelFrame/";
-	public static String ExcelProBaseDir = "ExcelProject/";
-	public static String AlgBaseDir = "uploadAlgorithm/";
-	public static String uploadTemp = "uploadTemp/";
+
 	int algID;
 	int sheetID;
 	int proID;
@@ -70,10 +67,10 @@ public class AlgorithmExcelAction {
 	}
 
 	public String uploadExcel() {
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);// 从缓存或者文件里面读取excel内容
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);// 从缓存或者文件里面读取excel内容
 
 		FileExcel importExcle = new FileExcel();
-		String fileTemp = uploadTemp
+		String fileTemp = FileExcelManager.uploadTemp
 				+ excelImport.getName().substring(0,
 						excelImport.getName().lastIndexOf(".")) + ".xls";
 		try {
@@ -91,96 +88,17 @@ public class AlgorithmExcelAction {
 		saveExcel();// 保存到文件
 		return "SUCCESS";
 	}
-	public  static final Map<String, FileExcel> cacheList= new ConcurrentHashMap <String, FileExcel>();
-	public FileExcel getFileExcel(int proid, int algid, String InOrOut) {
-		/*ActionContext actionContext = ActionContext.getContext();
-		Map session = actionContext.getSession();
-		Map<String, FileExcel> cacheList = (Map<String, FileExcel>) session
-				.get("ExcelCacheList");
 
-		if (cacheList == null) {
-			cacheList = new HashMap<String, FileExcel>();
-			// session.put("ExcelCacheList", cacheList);
 
-		}*/
-		String key = Tools.createKeyFromProAndALg(proid, algid, InOrOut);
-		FileExcel excel = cacheList.get(key);
-		if (excel != null) {// 先从缓存读取excel
-			return excel;
-		}
 
-		AlgorithmProDao dao = new AlgorithmProDao();
-
-		String filepath = dao.getProFile(this.proID, algid, InOrOut);// 缓存没有，则从项目路径寻找excel文件
-		dao.close();
-		if (filepath == null || filepath.equals("")) {
-			msg = "Excel文件未找到";
-			return null;
-		}
-		excel = new FileExcel();
-		int status = excel.readExcel(this.proID, algid, InOrOut,
-				ExcelProBaseDir + filepath);
-		if (status == -1) {
-			msg = excel.getMsg();
-			return null;
-		}
-		cacheList.put(key, excel);
-		//session.put("ExcelCacheList", cacheList);
-		return excel;
-
-	}
-	private FileExcel getFileExcelTitle(int algid,
-			String inOrOut2, String file) {
-		String key = Tools.createKeyFromProAndALg(algid,InOrOut);
-		FileExcel excel = cacheList.get(key);
-		if (excel != null) {// 先从缓存读取excel
-			return excel;
-		}
-		
-		excel = new FileExcel();
-		int status = excel.readExcel(0, algid, InOrOut,
-				file);
-		if (status == -1) {
-			msg = excel.getMsg();
-			return null;
-		}
-		cacheList.put(key, excel);
-		//session.put("ExcelCacheList", cacheList);
-		return excel;
-	}
-	public FileExcel reloadFileExcel(int proid, int algid, String InOrOut) {
-		
-		String key = Tools.createKeyFromProAndALg(proid, algid, InOrOut);
-		FileExcel excel;
-
-		AlgorithmProDao dao = new AlgorithmProDao();
-
-		String filepath = dao.getProFile(proid, algid, InOrOut);
-		dao.close();
-		if (filepath == null || filepath.equals("")) {
-			msg = "Excel文件未找到";
-			return null;
-		}
-		excel = new FileExcel();
-		int status = excel.readExcel(this.proID, algid, InOrOut,
-				ExcelProBaseDir + filepath);
-		if (status == -1) {
-			msg = excel.getMsg();
-			return null;
-		}
-		cacheList.put(key, excel);
-		//session.put("ExcelCacheList", cacheList);
-		return excel;
-
-	}
 
 	public String saveExcel() {//保存到文件
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		int re = excel.saveExcel();
 		if (re == -1) {
 			msg = "保存失败，请检查数据结构";
 		}
-		reloadFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcelManager.reloadFileExcel(this.proID, this.algID, this.InOrOut);
 		return "SUCCESS";
 	}
 
@@ -203,7 +121,7 @@ public class AlgorithmExcelAction {
 			msg="你需要打开或新建一个工程";
 			return "SUCCESS";
 		}
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		
 		graphi=excel.getGraphi();
 	
@@ -219,7 +137,7 @@ public class AlgorithmExcelAction {
 			msg="你需要打开或新建一个工程";
 			return "SUCCESS";
 		}
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		GUIDao dao=new GUIDao();
 		JSONData=dao.getBlankData();
 		dao.close();
@@ -238,14 +156,14 @@ public class AlgorithmExcelAction {
 	}
 
 	public String addPoint(){
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		
 		int row=excel.addPoint(type+"数据",name,YSJLS);
 		if (row!=-1){msg="此名称节点已存在";}
 		return "SUCCESS";
 	}
 	public String delPoint(){
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		int row=excel.delPoint(type+"数据",name);
 		
 		return "SUCCESS";
@@ -278,7 +196,7 @@ public class AlgorithmExcelAction {
 	}
 
 	public String updateConn(){
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		for(int i=0;i<this.conn.size();i++){
 			excel.updateConn(this.conn.get(i));
 		}
@@ -286,7 +204,7 @@ public class AlgorithmExcelAction {
 	}
 	List<DeviceKV> deviceKV;
 	public String listDevice(){
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		if(name!=null){
 		deviceKV=excel.getDevice(type+"数据",name);
 		}
@@ -298,7 +216,7 @@ public class AlgorithmExcelAction {
 
 	String proper;
 	public String editDevice(){
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		excel.updateDevice(type+"数据",name,proper,newValue);
 		return "SUCCESS";
 	}
@@ -320,7 +238,7 @@ public class AlgorithmExcelAction {
 
 	Map<String,List<Point>> obs;
 	public String viewObstacle(){
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		
 		graphi=excel.getObstacleGraphi();
 		obs=excel.getObstacleMap();
@@ -359,7 +277,7 @@ public class AlgorithmExcelAction {
 	}
 
 	public String addObstacle(){
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		excel.getObstacleSheet().addObstacle(this.poly,this.obsName);
 		saveExcel();
 		viewObstacle();
@@ -416,7 +334,7 @@ public class AlgorithmExcelAction {
 	}
 
 	public String addSheetContent() {
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		SheetContent sheet = excel.getSheetByID(sheetID);
 		sheet.addRow(this.postMap);
 		//putFileExcel(excel);
@@ -424,7 +342,7 @@ public class AlgorithmExcelAction {
 	}
 
 	public String editSheetContent() {
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		SheetContent sheet = excel.getSheetByID(sheetID);
 		sheet.editCell(Index_ID, col_ID, newValue);
 		//putFileExcel(excel);
@@ -444,7 +362,7 @@ public class AlgorithmExcelAction {
 	}
 
 	public String delSheetContent() {
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		if (!ids.isEmpty()) {
 
 			for (int id : ids) {
@@ -463,7 +381,7 @@ public class AlgorithmExcelAction {
 
 	public String listSheetContent() {
 
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		if (excel == null) {
 			return "SUCCESS";
 		}
@@ -532,7 +450,7 @@ public class AlgorithmExcelAction {
 		} else {
 			path = p.getStructFileOut();
 		}
-		FileExcel excel = getFileExcelTitle(this.algID, this.InOrOut,ExcelAlgBaseDir + path);
+		FileExcel excel = FileExcelManager.getFileExcelTitle(this.algID, this.InOrOut,FileExcelManager.ExcelAlgBaseDir + path);
 		
 		//int status = excel.readExcel(this.proID, this.algID, this.InOrOut,
 		//		ExcelAlgBaseDir + path);
@@ -579,7 +497,7 @@ public class AlgorithmExcelAction {
 	}
 	String filePath;
 	public String exportFile(){
-		FileExcel excel = getFileExcel(this.proID, this.algID, this.InOrOut);
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		filePath=excel.getFileName();
 		return "SUCCESS";
 	}

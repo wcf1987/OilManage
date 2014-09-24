@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import cn.edu.cup.algjar.CalcInfo;
 import cn.edu.cup.algjarexcel.RunInfoDetail;
 import cn.edu.cup.file.FileExcel;
+import cn.edu.cup.file.FileExcelManager;
 import cn.edu.cup.manage.action.AlgorithmExcelAction;
 import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
@@ -101,13 +102,13 @@ public class AlgorithmProDao {
 		AlgorithmsCycle p=dao.getAlgorithmDetail(algID);
 		FileExcel excel=new FileExcel();
 		
-		String pathIn=Tools.getWebRoot()+AlgorithmExcelAction.ExcelAlgBaseDir+p.getStructFileIn();
-		String pathOut=Tools.getWebRoot()+AlgorithmExcelAction.ExcelAlgBaseDir+p.getStructFileOut();
+		String pathIn=Tools.getWebRoot()+FileExcelManager.ExcelAlgBaseDir+p.getStructFileIn();
+		String pathOut=Tools.getWebRoot()+FileExcelManager.ExcelAlgBaseDir+p.getStructFileOut();
 
 		String proIn=Tools.getUUID()+".xls";
 		String proOut=Tools.getUUID()+".xls";
-		Tools.copyFile(pathIn, Tools.getWebRoot()+AlgorithmExcelAction.ExcelProBaseDir+proIn, true);
-		Tools.copyFile(pathOut,Tools.getWebRoot()+AlgorithmExcelAction.ExcelProBaseDir+proOut, true);
+		Tools.copyFile(pathIn, Tools.getWebRoot()+FileExcelManager.ExcelProBaseDir+proIn, true);
+		Tools.copyFile(pathOut,Tools.getWebRoot()+FileExcelManager.ExcelProBaseDir+proOut, true);
 		
 		Query q = session
 				.createSQLQuery("insert into t_projects (description,authorID,addtime,name,Type,profileIn,profileout,status,Algorithm_ID,info,runtime) values (?,?,?,?,?,?,?,?,?,?,0)");
@@ -180,7 +181,7 @@ public class AlgorithmProDao {
 		SQLQuery q2 = session.createSQLQuery(sql);
 		q2.setParameter(0, pro_id);
 		String alg = ((String) q2.uniqueResult());
-		alg=Tools.getWebRoot()+AlgorithmExcelAction.AlgBaseDir+alg;
+		alg=Tools.getWebRoot()+FileExcelManager.AlgBaseDir+alg;
 		return alg;
 	}
 
@@ -306,8 +307,8 @@ public class AlgorithmProDao {
 		int algid=searchProAlg(pro_id2);
 		String filein=getProFile(pro_id2,algid,"In");
 		String fileout=getProFile(pro_id2,algid,"Out");
-		filein=Tools.getWebRoot()+AlgorithmExcelAction.ExcelProBaseDir+filein;
-		fileout=Tools.getWebRoot()+AlgorithmExcelAction.ExcelProBaseDir+fileout;
+		filein=Tools.getWebRoot()+FileExcelManager.ExcelProBaseDir+filein;
+		fileout=Tools.getWebRoot()+FileExcelManager.ExcelProBaseDir+fileout;
 		info.setAlgorthm(algid);
 		info.setFileInputPath(filein);
 		info.setFileOutputPath(fileout);

@@ -450,7 +450,16 @@
 			<result name="SUCCESS" type="json">
 
 			</result>
+			
 		</action>
+				<action name="listPipe" class="cn.edu.cup.manage.action.AlgorithmPipeAction"
+			method="listPipe">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
 		<!-- 算法图形输出配置-->
 		
 		

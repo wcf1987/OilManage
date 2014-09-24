@@ -328,6 +328,7 @@ var TabTools=function (){
 					var index=platform.addLoadPainting(newone,scalN,proID,algid,name,data);				
 					//createTab(name,index,null,proID,algid,null,"pro");
 					//createNewTab(data['dataView']['proname']);
+					
 					platform.stage.draw();
 					log('项目'+name+'已打开！');		
 				},
