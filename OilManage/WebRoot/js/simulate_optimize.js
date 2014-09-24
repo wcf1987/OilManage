@@ -2,6 +2,7 @@ $().ready(function(){
 /*	$('#father_tab').easytabs({
 		animate: false
 	});	*/
+	
 	$('#importExcel').uploadify({
 		'swf' : 'js/upload/uploadify.swf',				
 		'cancelImg'   : 'js/upload/cancel.png',
