@@ -119,6 +119,7 @@ function graphiDraw(){
 			drawnew.style="width:1000px; height:400px;margin-top:0px;margin-left:0px;";
 			$("#graphiDraw").append(drawnew)	
 			// loadLines(pro_id,temp.id,i,drawnew.id);
+			
 			dataX=createX(data['content']);
 			dataY=createY(data['content']);
 			drawPipeLines(dataX,dataY,drawnew.id);
@@ -127,6 +128,9 @@ function graphiDraw(){
 }
 function createX(cont){
 	var data=new Array;
+	if(cont==null){
+		return data;
+	}
 	for(var i=0;i<cont.length;i++){
 		data.push(parseInt(cont[i]['里程(m)']));
 	}
@@ -135,6 +139,9 @@ function createX(cont){
 function createY(cont){
 	var data=new Array;
 	var datatemp=new Array
+	if(cont==null){
+		return data;
+	}
 	for(var i=0;i<cont.length;i++){
 		datatemp.push( parseFloat(cont[i]['高程(m)']));
 	}
