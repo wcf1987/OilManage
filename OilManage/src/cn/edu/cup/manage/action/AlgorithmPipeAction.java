@@ -73,19 +73,47 @@ public class AlgorithmPipeAction {
 			return "SUCCESS";
 		}
 		records = sheetContent.getSize()-1;
-		if(rows==0){
-			sheetContent.buildContent(0, records+1);				
-		}else{
-			sheetContent.buildContent(page, rows);
-		}
+		//if(rows==0){
+		sheetContent.buildContent(1, records+1);				
+		//}else{
+		//	sheetContent.buildContent(page, rows);
+		//}
 		content = sheetContent.getContent();
 		selectContent(pipeName);
-		total = records / rows;
-		if (records % rows != 0) {
-			total++;
+		
+		if(rows!=0){
+			int start=(page-1)*rows;
+			int end=start+rows;
+			records=content.size();
+			if(end>records){
+				end=records;
+				
+			}
+			
+			content=content.subList(start, end);
+			total = records / rows;
+			if (records % rows != 0) {
+				total++;
+			}
 		}
+		
 		//putFileExcel(excel);
 		return "SUCCESS";
+	}
+	public int getRecords() {
+		return records;
+	}
+	public int getRows() {
+		return rows;
+	}
+	public int getRowNum() {
+		return rowNum;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public int getPage() {
+		return page;
 	}
 	private void selectContent(String name){
 		for(int i=content.size()-1;i>=0;i--){

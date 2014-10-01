@@ -699,7 +699,9 @@ function() {
 							if(point_type=='管道'){	
 								$("#contextmenu").hide();
 								//pro_id=$(".active > input[name='proID']").val();
-								
+								leftpoly.pipeName=point_name;
+								leftpoly.pipeProID=proID;
+								leftpoly.pipeAlgID=algID;
 								showPipe(point_name,proID,algID,attrtop,attrleft);									
 								platform.selectPainting.p.draw();
 								

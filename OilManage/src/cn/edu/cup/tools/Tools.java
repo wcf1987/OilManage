@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class Tools {
 	 /**
@@ -136,8 +137,32 @@ public class Tools {
 	    public static String checkContent(String old){
 	    	String newStr=old.replace("（","(" );
 	    	 newStr=newStr.replace("）",")" );
-	    	
+	    	 int a;
+	    	 //System.out.println(newStr+"   "+String.valueOf(getType(newStr)));
+	    	 if(getType(newStr)==1){
+	    		Double b=Double.parseDouble(newStr);
+	    		newStr=String.valueOf(b.intValue());
+	    	 }
 	    	 return newStr;
+	    }
+	    //整型判断
+	    public static int getType(String str){
+	     if(str==null )
+	      return -1;
+	     double a;
+	     try{
+	    	  a=Double.parseDouble(str);
+	    	}catch(NumberFormatException  e){
+	    		
+	    		return 3;
+	    	}
+	     
+	     int b=(int)a;  
+	     double c=a%1;
+	     if(c==0.0){
+	    	 return 1;
+	     }
+	     return 2;
 	    }
 
 }

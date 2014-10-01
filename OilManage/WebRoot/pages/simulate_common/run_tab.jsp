@@ -1,6 +1,9 @@
 <%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
 
-
+	<script src="js/Highcharts-4.0.1/highcharts.js"></script>
+	<script src="js/Highcharts-4.0.1/js/modules/exporting.js"></script>
+	
+	<script type="text/javascript" src="js/Highcharts-4.0.1/js/themes/gray.js"></script>
 
 <div id="running-container" >
 	<div><span>运行输出台</span><button onclick="loadOutput(0)">查看输出</button></div>
@@ -141,7 +144,7 @@
 <div id="pipecontainer" class="tab-container">
   <ul class='etabs'>
     <li class='tab'><a href="#tabs1-Pipe1">参数表</a></li>
-    <li class='tab'><a href="#tabs1-Pipe2">分布图</a></li>   
+    <li class='tab'><a href="#tabs1-Pipe2" onclick="graphiDraw()">分布图</a></li>   
   </ul>
   <div id="tabs1-Pipe1">
    <table id="PipePraList" class="table table-striped table-bordered table-hover datatable " >
@@ -151,8 +154,8 @@
 	</div>	
   </div>
   <div id="tabs1-Pipe2">
-    <div id="graphiDraw" style="width:100%; height:auto;margin-left:200px;"></div> 	
-    content
+    <div id="graphiDraw" style="width:100%; height:auto;margin-left:0px;" ></div> 	
+    
   </div>
   </div>	
 </div>
@@ -161,6 +164,14 @@
 $('#pipecontainer').easytabs({
 	animate: false
 	 }); 
+/* $('#pipecontainer')
+  .bind('easytabs:after', function(event, clicked, targetPanel, settings) {
+   
+   
+  }); */
+/*  $('#pipecontainer').bind('tabsselect', function(event, ui) {
+  alert(ui.index);
+}); */
 function changeGIS(){
 	var diagramo_show=$("#editor").css('display');
 	var gis_show=$("#simulate_gismap").css('display');

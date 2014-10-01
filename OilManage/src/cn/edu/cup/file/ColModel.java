@@ -8,6 +8,11 @@ public class ColModel {
 	String index;
 	String edittype;
 	Map editoptions;
+	Map editrules;
+	public Map getEditrules() {
+		return editrules;
+	}
+
 	boolean editable=true;
 	int width;
 	public boolean isEditable() {
@@ -43,6 +48,7 @@ public class ColModel {
 		this.index=name;
 		this.hidden=false;
 		this.edittype="text";
+		this.editrules=new HashMap();
 		if(this.name.equals("控制模式")){
 			this.edittype="select";
 			String str[] = {"Flow","Pressure"};
@@ -61,6 +67,11 @@ public class ColModel {
 			String str[] = {"气井","气源","分输点","其他"};
 			this.editoptions=getValueMap("value", getDoubleKeyMap(str));
 			
+			//this.editoptions="{value:{CentCompressor:'CentCompressor',ReciCompressor:'ReciCompressor',Pipe:'Pipe'}}";	
+		}
+		if(this.name.equals("分段数")){
+			//this.editoptions=getValueMap("value", getDoubleKeyMap(str));
+			this.editrules.put("integer", true);
 			//this.editoptions="{value:{CentCompressor:'CentCompressor',ReciCompressor:'ReciCompressor',Pipe:'Pipe'}}";	
 		}
 	}

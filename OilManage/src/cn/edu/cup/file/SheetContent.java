@@ -1,13 +1,11 @@
 package cn.edu.cup.file;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.naming.ldap.StartTlsResponse;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -63,7 +61,7 @@ public class SheetContent {
 		return this.sheetTitle.get(name);
 	}
 	public int buildContent(int page, int rows){
-		content=new ArrayList<Map<String,String>>();
+		content=new CopyOnWriteArrayList<Map<String,String>>();
 		Map<String, String> temp;
 		String titleS;
 		String value;
@@ -147,15 +145,18 @@ public class SheetContent {
 				
 				for (int cIndex = firstCellIndex; cIndex < lastCellIndex; cIndex++) {
 					Cell cell = row.getCell(cIndex);
+					
 					String value = "";
 					if (cell != null) {
 						value = cell.toString();
+						
 						if(rIndex==0&&value.equals(""))
 						{
 						
 						}else{
 							value=Tools.checkContent(value);
 							valueTemp.add(value);
+							
 						}
 						//System.out.print(value + "\t");
 						if(rIndex==0&&!value.equals("")){

@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body style="background-color:#CCCCCC;">
-  <div id="graphiDraw" style="width:100%; height:auto;margin-left:200px;"></div> 		
+  <div id="graphiDraw" style="width:100%; height:auto;margin-left:200px;" onclick="graphiDraw();"></div> 		
   </body>
   
 </html>
