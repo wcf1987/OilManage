@@ -166,6 +166,7 @@ public class Tools {
 	     int b=(int)a;  
 	     double c=a%1;
 	     if(c>-0.00000000001&&c<=0.00000000001){
+	    	    
 	    	 return 1;
 	     }
 	     return 2;
