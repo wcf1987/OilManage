@@ -39,7 +39,7 @@ function pipeInit(){
 	   	pager : PipePraPager,
 	    viewrecords: true,
 	    sortorder: "desc",		   
-		caption: "管道列表",
+		caption: pipeName+"管道沿线参数",
 		jsonReader: {// 读取后端json数据的格式
 			root: "content",// 保存详细记录的名称
 			total: "total",// 总共有多少页
@@ -74,6 +74,7 @@ function closePipeList(){
 }
 function showPipe(pipeName,proID,algID,attrtop,attrleft){
 	 var lastsel;
+	 jQuery("#PipePraList").jqGrid('setCaption',pipeName+" 管道沿线参数") 
 		jQuery("#PipePraList").jqGrid("setGridParam", {
 			 url: "listPipe.action", // 设置表格的url
 			 datatype: "json", // 设置数据类型
@@ -122,7 +123,7 @@ function graphiDraw(){
 			
 			dataX=createX(data['content']);
 			dataY=createY(data['content']);
-			drawPipeLines(dataX,dataY,drawnew.id);
+			drawPipeLines(dataX,dataY,drawnew.id,pipeName);
 			}
 		});
 }
@@ -163,7 +164,7 @@ function createY(cont){
 	data.push(datatemp);
 	return data;
 }
-function drawPipeLines(XData,YData,container){
+function drawPipeLines(XData,YData,container,pipeName){
 	var	chart = new Highcharts.Chart({
 		  		chart: {
 		  			renderTo: container,
@@ -178,7 +179,7 @@ function drawPipeLines(XData,YData,container){
 	                stype:{ "color": "#000000", "fontSize": "18px"}
 	            },
 	            subtitle: {
-	                text: '分布图',
+	                text: pipeName+'管道沿线参数分布图',
 	                x: -20,
 	                stype:{ "color": "#000000", "fontSize": "26px"}
 	            },
