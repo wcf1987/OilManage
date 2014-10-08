@@ -146,6 +146,12 @@ public class Tools {
 	    	 return newStr;
 	    }
 	    //整型判断
+	    /**
+	     * @param str
+	     * @return 1 代表是整数
+	     *         2 代表是浮点数
+	     *         3 代表是字符串
+	     */
 	    public static int getType(String str){
 	     if(str==null )
 	      return -1;
@@ -159,10 +165,13 @@ public class Tools {
 	     
 	     int b=(int)a;  
 	     double c=a%1;
-	     if(c==0.0){
+	     if(c>-0.00000000001&&c<=0.00000000001){
 	    	 return 1;
 	     }
 	     return 2;
+	    }
+	    public static void main(String args[]){
+	    	System.out.println(getType("4800.000000000001"));
 	    }
 
 }
