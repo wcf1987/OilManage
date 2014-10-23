@@ -168,13 +168,13 @@ public class FileExcel {
 		    wb.write(out);		
 		} catch (IOException e) {
 		
-		    System.out.println(e.toString());
+		    //System.out.println(e.toString());
 			return -1;
 		} finally {
 		    try {
 		        out.close();
 		    } catch (IOException e) {
-		        System.out.println(e.toString());
+		        //System.out.println(e.toString());
 		    }
 		}	
  
