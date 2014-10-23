@@ -174,5 +174,16 @@ public class Tools {
 	    public static void main(String args[]){
 	    	System.out.println(getType("4800.000000000001"));
 	    }
-
+	    public static int getPrintSource(){
+			Throwable t = new Throwable();
+	    	StackTraceElement stack[] = t.getStackTrace();
+	    	for (int i=0;i<stack.length;i++){
+	    		if(stack[i].getFileName().equalsIgnoreCase("CalcThread.java")&&stack[i].getMethodName().equalsIgnoreCase("run")){
+	    			//print by alg
+	    			return 1;
+	    		}
+	    	}
+	    	//print by web 
+	    	return 2;
+	    }
 }

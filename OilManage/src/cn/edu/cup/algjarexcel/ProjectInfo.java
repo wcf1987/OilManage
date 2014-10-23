@@ -65,6 +65,7 @@ public class ProjectInfo{
 		ProjectCalcHisDao dao = new ProjectCalcHisDao();
 		dao.checkHisID(this);
 		dao.addCalcLog(hisID,info2,proid);
+
 		dao.close();
 	}
 	public void end(int i, String info2) {

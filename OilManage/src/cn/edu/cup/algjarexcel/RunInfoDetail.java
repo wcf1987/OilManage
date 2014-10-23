@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import cn.edu.cup.tools.Tools;
+
 public class RunInfoDetail extends RunInfo{
 	String fileInputPath;
 	String fileOutputPath;
@@ -20,10 +22,10 @@ public class RunInfoDetail extends RunInfo{
 	    }
 	   
 	    public void write(byte data[], int off, int len) throws IOException {
-	    
+	    	
 	    	String S=new String(data,off,len);
 	      // 追加一行字符串中指定的部分，这个最重要
-	    	if(proinfo!=null&&proinfo.status==1&&S.indexOf("Hibernate")==-1&&!S.trim().equalsIgnoreCase("")){
+	    	if(proinfo!=null&&proinfo.status==1&&Tools.getPrintSource()==1&&!S.trim().equalsIgnoreCase("")){
 	    		log(S.trim());
 	    	}else{
 	    		olderrStream.print(S);
@@ -77,6 +79,7 @@ public class RunInfoDetail extends RunInfo{
 	public String log(String info) {
 		// TODO Auto-generated method stub
 		proinfo.logInfo(info);
+
 		return info;
 	}
 
