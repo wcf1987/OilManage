@@ -15,6 +15,7 @@ var Paintings = function() {
 		var pointArray = new Array();
 		var pMap = jsonObject['graphi']['points'];
 		var id = -1;
+		var pLine = jsonObject['graphi']['lines'];
 		for ( var i in pMap) {
 			id++;
 			p = pMap[i];
@@ -23,6 +24,14 @@ var Paintings = function() {
 
 			var ptemp=getPolyByType(p);
 			if(ptemp==null){
+				continue;
+			}
+			if(ptemp=='其他'){
+				delLinesInDraw(pLine,p['name']);
+				continue;
+			}
+			if(p['attribute']['隶属关系']!=null&&p['attribute']['隶属关系']=='管道'){
+				delLinesInDraw(pLine,p['name']);
 				continue;
 			}
 			point=ptemp.clone();
@@ -42,7 +51,7 @@ var Paintings = function() {
 			resizePoint(point);
 			this.p.draw();
 		}
-		
+		return pLine;
 
 	}
 	this.getPointByName=function(name){
@@ -54,9 +63,36 @@ var Paintings = function() {
 		}
 		return null;
 	}
-	this.drawLines=function(data){
-		var jsonObject = data;
-		var pLine = jsonObject['graphi']['lines'];	
+	function delLinesInDraw(pLine,pointName){
+		var endOver=null;
+		var startOver=null;
+		for(var i=pLine.length-1;i>=0;i--){
+			var l= pLine[i];
+			//if(i!=0) continue;
+			var start=l['start'];
+			var end=l['end'];
+			if(start==pointName){
+				endOver=end;
+				if(startOver!=null){
+					l['start']=startOver;
+				}else{
+					pLine.splice(i,1);
+				}
+			}
+			if(end==pointName){
+				startOver=start;
+				if(endOver!=null){
+					l['end']=endOver;
+				}else{
+					pLine.splice(i,1);
+				}
+			}
+		}
+		
+	}
+	this.drawLines=function(pLine){
+		//var jsonObject = data;
+		//var pLine = jsonObject['graphi']['lines'];	
 		for ( var i=0;i<pLine.length;i++) {
 			var l = pLine[i];
 			//if(i!=0) continue;
@@ -90,8 +126,8 @@ var Paintings = function() {
 		}		
 	}
 	this.addGraphi=function(data){
-		this.drawPoints(data);
-		this.drawLines(data);
+		var pline=this.drawPoints(data);
+		this.drawLines(pline);
 		leftpoly.showALLConnedPoints();
 		this.p.draw();
 	}

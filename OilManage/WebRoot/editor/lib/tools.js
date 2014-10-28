@@ -305,7 +305,9 @@ function getPolyByType(p){
 				return leftpoly.polyGroups[i];
 			}
 		}
-		
+		if (type=='其他'){
+			return '其他';
+		}
 	}
 	return null;
 }
