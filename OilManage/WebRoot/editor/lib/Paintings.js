@@ -223,11 +223,12 @@ var Paintings = function() {
 				return node.getName() == 'connPointsLeft'
 						|| node.getName() == 'connPointsRight'
 			});
-			if (points[li]!=g&&checkSpecial(points[li])&&checkCircle(tempArray[0], tempArray2[1],
+			//&&checkSpecial(points[li])
+			if (points[li]!=g&&checkCircle(tempArray[0], tempArray2[1],
 					tempArray[0].radius() )) {
 				this.addConnect(g.nameStr,points[li],g);				
 			}
-			if (points[li]!=g&&checkSpecial(points[li])&&checkCircle(tempArray[1], tempArray2[0],
+			if (points[li]!=g&&checkCircle(tempArray[1], tempArray2[0],
 					tempArray[0].radius())) {
 				this.addConnect(g.nameStr,g,points[li]);
 				
