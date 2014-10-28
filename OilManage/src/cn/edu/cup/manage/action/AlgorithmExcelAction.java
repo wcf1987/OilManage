@@ -70,19 +70,21 @@ public class AlgorithmExcelAction {
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);// 从缓存或者文件里面读取excel内容
 
 		FileExcel importExcle = new FileExcel();
+		try {
 		String fileTemp = FileExcelManager.uploadTemp
 				+ excelImport.getName().substring(0,
 						excelImport.getName().lastIndexOf(".")) + ".xls";
-		try {
+		
 			Tools.copyFile(excelImport, new File(Tools.getWebRoot() + fileTemp));
-		} catch (IOException e) {
+		
+		int status = importExcle.readExcel(this.proID, this.algID,
+				this.InOrOut, fileTemp);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			msg = "上传失败";
 			return "SUCCESS";
 		}
-		int status = importExcle.readExcel(this.proID, this.algID,
-				this.InOrOut, fileTemp);
 		excel.coverFromImport(importExcle);
 		//putFileExcel(excel);// excel放到缓存里
 		saveExcel();// 保存到文件
