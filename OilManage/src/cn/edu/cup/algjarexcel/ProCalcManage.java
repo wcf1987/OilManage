@@ -78,6 +78,7 @@ public class ProCalcManage {//工程计算进程管理类，控制计算进程ca
 					dao.setProCalcStatus(pro_id, status, AlgorithmPro.getStatus(2));
 				}
 			}
+			
 			dao.close();
 		}
 

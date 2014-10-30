@@ -409,7 +409,7 @@ public class SheetContent {
 		List<List<String>> t1=sheet.sheetContent;
 		for(int i=1;i<t1.size();i++){
 			List<String> t2=t1.get(i);
-			if(t2.get(col)!=null&&t2.get(col).equalsIgnoreCase(value)){
+			if(t2!=null&&t2.get(col)!=null&&t2.get(col).equalsIgnoreCase(value)){
 				return i;
 			}
 		}

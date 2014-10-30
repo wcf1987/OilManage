@@ -29,7 +29,7 @@ public class JarTools {
             Constructor c1=cla.getDeclaredConstructor(new Class[]{});   
             c1.setAccessible(true);   
             AlgorithmPlugTools a1=(AlgorithmPlugTools)c1.newInstance(new Object[]{});   
-	        
+	        loader.close();
             return a1;
 	        //System.out.println(a1.startCalc());//调用Jar中的类方法
 
@@ -58,7 +58,7 @@ public class JarTools {
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvocationTargetException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
