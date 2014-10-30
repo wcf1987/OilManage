@@ -13,10 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import cn.edu.cup.manage.business.DeviceKV;
@@ -95,7 +97,13 @@ public class FileExcel {
 			// 解析xls格式
 			if (fileName.endsWith("xls")) {
 
-				wb = new HSSFWorkbook(inputStream);
+				try {
+					wb = new HSSFWorkbook(inputStream);
+				} catch (OfficeXmlFileException e) {
+					// TODO Auto-generated catch block
+					inputStream = new FileInputStream(new File(path));
+					wb = new XSSFWorkbook(inputStream);// 解析xlsx格式
+				}
 			
 				// 解析xlsx格式
 			} else if (fileName.endsWith("xlsx")) {
@@ -146,8 +154,8 @@ public class FileExcel {
 	}
 	public int saveExcel(){//保存到文件
 		//生成Workbook
-		HSSFWorkbook wb = new HSSFWorkbook();
-
+		//Workbook  wb = new SXSSFWorkbook(1000);
+		Workbook  wb = new XSSFWorkbook();
 		//添加Worksheet（不添加sheet时生成的xls文件打开时会报错）
 		//@SuppressWarnings("unused")
 		List<Sheet> sheets=new ArrayList<Sheet>();

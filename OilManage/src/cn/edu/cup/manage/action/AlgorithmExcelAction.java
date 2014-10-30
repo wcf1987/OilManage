@@ -87,7 +87,7 @@ public class AlgorithmExcelAction {
 		}
 		excel.coverFromImport(importExcle);
 		//putFileExcel(excel);// excel放到缓存里
-		saveExcel();// 保存到文件
+		//saveExcel();// 保存到文件
 		return "SUCCESS";
 	}
 
@@ -100,7 +100,7 @@ public class AlgorithmExcelAction {
 		if (re == -1) {
 			msg = "保存失败，请检查数据结构";
 		}
-		FileExcelManager.reloadFileExcel(this.proID, this.algID, this.InOrOut);
+		//FileExcelManager.reloadFileExcel(this.proID, this.algID, this.InOrOut);
 		return "SUCCESS";
 	}
 
@@ -281,7 +281,7 @@ public class AlgorithmExcelAction {
 	public String addObstacle(){
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		excel.getObstacleSheet().addObstacle(this.poly,this.obsName);
-		saveExcel();
+		//saveExcel();
 		viewObstacle();
 		return "SUCCESS";
 	}
