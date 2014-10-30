@@ -154,8 +154,8 @@ public class FileExcel {
 	}
 	public int saveExcel(){//保存到文件
 		//生成Workbook
-		//Workbook  wb = new SXSSFWorkbook(1000);
-		Workbook  wb = new XSSFWorkbook();
+		Workbook  wb = new SXSSFWorkbook(1000);
+		//Workbook  wb = new XSSFWorkbook();
 		//添加Worksheet（不添加sheet时生成的xls文件打开时会报错）
 		//@SuppressWarnings("unused")
 		List<Sheet> sheets=new ArrayList<Sheet>();
