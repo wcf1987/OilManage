@@ -227,7 +227,7 @@ function showTab(type){
 	$("#"+type).show();
 	if(type=='run_tab'){
 		//runAlg(1);
-		if($("#curAlgID").val()==1){
+		if($("#curAlgID").val()==1||$("#curAlgID").val()==2||$("#curAlgID").val()==3||$("#curAlgID").val()==4){
 			tabtools.load();
 		}else{
 			

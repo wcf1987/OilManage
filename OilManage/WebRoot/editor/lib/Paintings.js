@@ -64,31 +64,45 @@ var Paintings = function() {
 		return null;
 	}
 	function delLinesInDraw(pLine,pointName){
-		var endOver=null;
-		var startOver=null;
+		var endOver=new Array();
+		var startOver=new Array();
+		var startKey=null;
+		var endKey=null;
+		for(var i=pLine.length-1;i>=0;i--){
+			var l= pLine[i];
+			var start=l['start'];
+			var end=l['end'];
+			if(end==pointName){
+				
+				if(startKey==null){
+					startKey=start;
+					pLine.splice(i,1);
+				}else{
+					startOver.push(pLine[i]);
+					pLine.splice(i,1);
+				}
+				
+				
+			}
+		}
 		for(var i=pLine.length-1;i>=0;i--){
 			var l= pLine[i];
 			//if(i!=0) continue;
 			var start=l['start'];
 			var end=l['end'];
 			if(start==pointName){
-				endOver=end;
-				if(startOver!=null){
-					l['start']=startOver;
-				}else{
-					pLine.splice(i,1);
-				}
-			}
-			if(end==pointName){
-				startOver=start;
-				if(endOver!=null){
-					l['end']=endOver;
-				}else{
-					pLine.splice(i,1);
-				}
-			}
+				endOver.push(end);				
+				l['start']=startKey;	
+				endKey=end;
+			}			
 		}
-		
+		for(var i=0;i<startOver.length;i++){
+			var l= startOver[i];
+			//if(i!=0) continue;
+						
+			l['end']=endKey;				
+			pLine.push(l);			
+		}
 	}
 	this.drawLines=function(pLine){
 		//var jsonObject = data;

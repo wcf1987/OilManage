@@ -179,7 +179,7 @@ public class Tools {
 	    	StackTraceElement stack[] = t.getStackTrace();
 	    	for (int i=0;i<stack.length;i++){
 	    		if(stack[i].getFileName().equalsIgnoreCase("CalcThread.java")&&stack[i].getMethodName().equalsIgnoreCase("run")){
-	    			//print by alg
+	    			//t.printStackTrace();
 	    			return 1;
 	    		}
 	    	}

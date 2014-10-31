@@ -83,7 +83,7 @@ public class FileExcel {
 	public String getFileName() {
 		return fileName;
 	}
-	public synchronized int  readExcel(int proID,int algid,String InOrOut,String fileName) throws IOException {
+	public  int  readExcel(int proID,int algid,String InOrOut,String fileName) throws IOException {
 		this.proID=proID;
 		this.algID=algid;
 		this.fileName=fileName;
@@ -97,7 +97,7 @@ public class FileExcel {
 			// 解析xls格式
 			if (fileName.endsWith("xls")) {
 
-					System.out.println("read excel"+fileName);
+					//System.out.println("read excel"+fileName);
 					wb = new HSSFWorkbook(inputStream);
 				
 			
@@ -156,7 +156,7 @@ public class FileExcel {
 	public int saveExcel(){//保存到文件
 		//生成Workbook
 		//Workbook  wb = new SXSSFWorkbook(1000);
-		Workbook  wb = new XSSFWorkbook();
+		Workbook  wb = new HSSFWorkbook();
 		//添加Worksheet（不添加sheet时生成的xls文件打开时会报错）
 		//@SuppressWarnings("unused")
 		List<Sheet> sheets=new ArrayList<Sheet>();
@@ -174,6 +174,7 @@ public class FileExcel {
 
 		try {
 		    out = new FileOutputStream(Tools.getWebRoot()+this.fileName);
+		    System.out.println("save "+this.fileName);
 		    wb.write(out);		
 		} catch (IOException e) {
 		

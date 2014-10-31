@@ -243,7 +243,7 @@ function() {
 	/*	for(var i=0;i<6;i++){
 			this.imgLoad('editor/icons/type'+i+'.svg',i);
 		}*/
-        
+        //this.polys.push(this.polys[0]);
 		for ( var k=0;k<this.polys.length;k++) {
 			
 			this.polyGroups[k] = new Kinetic.Group({
