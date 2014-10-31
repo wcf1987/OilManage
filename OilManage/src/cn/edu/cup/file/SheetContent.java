@@ -114,8 +114,13 @@ public class SheetContent {
 		
 		getType(this.Name);
 		sheetContent=new ArrayList<List<String>>();
+		Row row;
+		Cell temp;
+		Cell cell;
+		int firstCellIndex;
+		int lastCellIndex;
 		for (int rIndex = firstRowIndex; rIndex <= lastRowIndex; rIndex++) {
-			Row row = sheet.getRow(rIndex);
+			row = sheet.getRow(rIndex);
 			
 			boolean flag=false;
 			if(row!=null){
@@ -123,7 +128,7 @@ public class SheetContent {
 				if(rIndex==10&&this.Name.equals("节点参数")){
 					//System.out.println("sus");
 				}
-				Cell temp = row.getCell(tIdex);
+				temp = row.getCell(tIdex);
 				String str=null;
 				if(temp==null){
 					
@@ -137,14 +142,14 @@ public class SheetContent {
 			}
 			}
 			if (row != null&&flag) {
-				int firstCellIndex = sheet.getRow(firstRowIndex).getFirstCellNum();
-				int lastCellIndex = sheet.getRow(firstRowIndex).getLastCellNum();
+				 firstCellIndex = sheet.getRow(firstRowIndex).getFirstCellNum();
+				 lastCellIndex = sheet.getRow(firstRowIndex).getLastCellNum();
 				valueTemp=new ArrayList<String>();
 				
 				
 				
 				for (int cIndex = firstCellIndex; cIndex < lastCellIndex; cIndex++) {
-					Cell cell = row.getCell(cIndex);
+					cell = row.getCell(cIndex);
 					
 					String value = "";
 					if (cell != null) {

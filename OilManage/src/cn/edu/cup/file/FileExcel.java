@@ -83,7 +83,7 @@ public class FileExcel {
 	public String getFileName() {
 		return fileName;
 	}
-	public int readExcel(int proID,int algid,String InOrOut,String fileName) {
+	public synchronized int  readExcel(int proID,int algid,String InOrOut,String fileName) throws IOException {
 		this.proID=proID;
 		this.algID=algid;
 		this.fileName=fileName;
@@ -97,13 +97,9 @@ public class FileExcel {
 			// 解析xls格式
 			if (fileName.endsWith("xls")) {
 
-				try {
+					System.out.println("read excel"+fileName);
 					wb = new HSSFWorkbook(inputStream);
-				} catch (OfficeXmlFileException e) {
-					// TODO Auto-generated catch block
-					inputStream = new FileInputStream(new File(path));
-					wb = new XSSFWorkbook(inputStream);// 解析xlsx格式
-				}
+				
 			
 				// 解析xlsx格式
 			} else if (fileName.endsWith("xlsx")) {
@@ -123,29 +119,34 @@ public class FileExcel {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 			msg = "Excel文件未找到";
 			return -1;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			msg = "Excel文件格式不正确";
+			//inputStream.close();
 			return -1;
 		}
+		inputStream.close();
 		return 1;
 	}
 	public int getAlgID() {
 		return algID;
 	}
+	Cell cell1_1;
 	public int insertCell(Row row1,int i,int j,String value){
 		if(j==0){
 			return 1;
 		}
-		Cell cell1_1 = row1.createCell(j-1);  
+		cell1_1 = row1.createCell(j-1);  
 		cell1_1.setCellValue(value);
 		return 1;
 	}
+	Row row;
 	public int insertRow(Sheet sheet,int i,List<String> values){
-		Row row = sheet.createRow(i);  
+		row = sheet.createRow(i);  
 		for(int j=0;j<values.size();j++){
 			insertCell(row,i,j,values.get(j));
 		}
@@ -154,8 +155,8 @@ public class FileExcel {
 	}
 	public int saveExcel(){//保存到文件
 		//生成Workbook
-		Workbook  wb = new SXSSFWorkbook(1000);
-		//Workbook  wb = new XSSFWorkbook();
+		//Workbook  wb = new SXSSFWorkbook(1000);
+		Workbook  wb = new XSSFWorkbook();
 		//添加Worksheet（不添加sheet时生成的xls文件打开时会报错）
 		//@SuppressWarnings("unused")
 		List<Sheet> sheets=new ArrayList<Sheet>();

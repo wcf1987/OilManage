@@ -1,5 +1,6 @@
 package cn.edu.cup.file;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,7 +14,7 @@ public class FileExcelManager {
 	public static String uploadTemp = "uploadTemp/";
 	public  static final Map<String, FileExcel> cacheList= new ConcurrentHashMap <String, FileExcel>();
 	static String  msg;
-	public static FileExcel  getFileExcel(int proid, int algid, String InOrOut) {
+	public static synchronized FileExcel  getFileExcel(int proid, int algid, String InOrOut) {
 		/*ActionContext actionContext = ActionContext.getContext();
 		Map session = actionContext.getSession();
 		Map<String, FileExcel> cacheList = (Map<String, FileExcel>) session
@@ -39,8 +40,14 @@ public class FileExcelManager {
 			return null;
 		}
 		excel = new FileExcel();
-		int status = excel.readExcel(proid, algid, InOrOut,
-				ExcelProBaseDir + filepath);
+		int status;
+		try {
+			status = excel.readExcel(proid, algid, InOrOut,
+					ExcelProBaseDir + filepath);
+		} catch (IOException e) {
+			status=-1;
+			e.printStackTrace();
+		}
 		if (status == -1) {
 			msg = excel.getMsg();
 			return null;
@@ -50,7 +57,7 @@ public class FileExcelManager {
 		return excel;
 
 	}
-	public static FileExcel reloadFileExcel(int proid, int algid, String InOrOut) {
+	public static synchronized FileExcel reloadFileExcel(int proid, int algid, String InOrOut) {
 		
 		String key = Tools.createKeyFromProAndALg(proid, algid, InOrOut);
 		FileExcel excel;
@@ -64,8 +71,14 @@ public class FileExcelManager {
 			return null;
 		}
 		excel = new FileExcel();
-		int status = excel.readExcel(proid, algid, InOrOut,
-				FileExcelManager.ExcelProBaseDir + filepath);
+		int status;
+		try {
+			status = excel.readExcel(proid, algid, InOrOut,
+					FileExcelManager.ExcelProBaseDir + filepath);
+		} catch (IOException e) {
+			status=-1;
+			e.printStackTrace();
+		}
 		if (status == -1) {
 			msg = excel.getMsg();
 			return null;
@@ -75,7 +88,7 @@ public class FileExcelManager {
 		return excel;
 
 	}
-	public static FileExcel getFileExcelTitle(int algid,
+	public static synchronized FileExcel getFileExcelTitle(int algid,
 			String inOrOut, String file) {
 		String key = Tools.createKeyFromProAndALg(algid,inOrOut);
 		FileExcel excel = cacheList.get(key);
@@ -84,8 +97,14 @@ public class FileExcelManager {
 		}
 		
 		excel = new FileExcel();
-		int status = excel.readExcel(0, algid, inOrOut,
-				file);
+		int status;
+		try {
+			status = excel.readExcel(0, algid, inOrOut,
+					file);
+		} catch (IOException e) {
+			status=-1;
+			e.printStackTrace();
+		}
 		if (status == -1) {
 			msg = excel.getMsg();
 			return null;
