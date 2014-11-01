@@ -331,10 +331,12 @@ public class FileExcel {
 	public int getTypeCodeByName(String Name){
 		if(Name.equalsIgnoreCase("离心压缩机数据")||Name.equalsIgnoreCase("往复式压缩机数据"))
 			return 1;
-		if(Name.equalsIgnoreCase("气井数据")||Name.equalsIgnoreCase("气源数据")||Name.equalsIgnoreCase("分输点数据"))
+		if(Name.equalsIgnoreCase("气井数据")||Name.equalsIgnoreCase("气源数据")||Name.equalsIgnoreCase("分输点数据")||Name.equalsIgnoreCase("其他数据"))
 			return 0;
 		if(Name.equalsIgnoreCase("管道数据"))
 			return 2;
+		if(Name.equalsIgnoreCase("其他"))
+			return 4;
 		return 3;
 	}
 	public String getTypeByYSJLS(String Name){
@@ -497,7 +499,7 @@ public class FileExcel {
 		Point e=new Point();
 		List<DeviceKV> a=new ArrayList<>();
 		
-		if(type.equals("分输点数据")||type.equals("气井数据")||type.equals("气源数据")){
+		if(type.equals("分输点数据")||type.equals("气井数据")||type.equals("气源数据")||type.equals("其他数据")){
 			SheetContent sheet=getSheetByName(this,"节点数据");
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			List<String> line=sheet.sheetContent.get(row);

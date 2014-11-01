@@ -305,9 +305,7 @@ function getPolyByType(p){
 				return leftpoly.polyGroups[i];
 			}
 		}
-		if (type=='其他'){
-			return '其他';
-		}
+		
 	}
 	return null;
 }
@@ -327,7 +325,7 @@ function rotateSpesail(p){
 		}
 }
 function checkSpecial(p){
-	if(p.TYPE=='气井'||p.TYPE=='气源'||p.TYPE=='分输点')
+	if(p.TYPE=='气井'||p.TYPE=='气源'||p.TYPE=='分输点'||p.TYPE=='其他')
 	{
 		return true;
 	}

@@ -147,7 +147,13 @@ public class AlgorithmExcelAction {
 		this.proName=dao1.getProName(this.proID);
 		dao1.close();
 		graphi=excel.getGraphi();
-		GraphiTools.updateGraphi(graphi);
+		try {
+			GraphiTools.updateGraphi(graphi);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			graphi=null;
+			e.printStackTrace();
+		}
 		return "SUCCESS";
 	}
 	String type;

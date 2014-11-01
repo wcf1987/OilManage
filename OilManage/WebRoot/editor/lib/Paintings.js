@@ -21,19 +21,19 @@ var Paintings = function() {
 			p = pMap[i];
 
 			var point;
-
+			
 			var ptemp=getPolyByType(p);
 			if(ptemp==null){
 				continue;
 			}
-			if(ptemp=='其他'){
-				delLinesInDraw(pLine,p['name']);
-				continue;
-			}
-			if(p['attribute']['隶属关系']!=null&&p['attribute']['隶属关系']=='管道'){
-				delLinesInDraw(pLine,p['name']);
-				continue;
-			}
+			//if(ptemp=='其他'){
+			//	delLinesInDraw(pLine,p['name']);
+			//	continue;
+			//}
+			//if(p['attribute']['隶属关系']!=null&&p['attribute']['隶属关系']=='管道'){
+			//	delLinesInDraw(pLine,p['name']);
+			//	continue;
+			//}
 			point=ptemp.clone();
 			point.nameStr=p['name'];
 			point.id(p['name']);
@@ -238,11 +238,11 @@ var Paintings = function() {
 						|| node.getName() == 'connPointsRight'
 			});
 			//&&checkSpecial(points[li])
-			if (points[li]!=g&&checkCircle(tempArray[0], tempArray2[1],
+			if (points[li]!=g&&checkSpecial(points[li])&&checkCircle(tempArray[0], tempArray2[1],
 					tempArray[0].radius() )) {
 				this.addConnect(g.nameStr,points[li],g);				
 			}
-			if (points[li]!=g&&checkCircle(tempArray[1], tempArray2[0],
+			if (points[li]!=g&&checkSpecial(points[li])&&checkCircle(tempArray[1], tempArray2[0],
 					tempArray[0].radius())) {
 				this.addConnect(g.nameStr,g,points[li]);
 				

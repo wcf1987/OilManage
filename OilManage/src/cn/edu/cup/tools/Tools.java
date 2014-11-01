@@ -178,7 +178,7 @@ public class Tools {
 			Throwable t = new Throwable();
 	    	StackTraceElement stack[] = t.getStackTrace();
 	    	for (int i=0;i<stack.length;i++){
-	    		if(stack[i].getFileName().equalsIgnoreCase("CalcThread.java")&&stack[i].getMethodName().equalsIgnoreCase("run")){
+	    		if(stack[i]!=null&&stack[i].getFileName()!=null&&stack[i].getMethodName()!=null&&stack[i].getFileName().equalsIgnoreCase("CalcThread.java")&&stack[i].getMethodName().equalsIgnoreCase("run")){
 	    			//t.printStackTrace();
 	    			return 1;
 	    		}

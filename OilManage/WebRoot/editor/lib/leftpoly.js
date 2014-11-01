@@ -120,7 +120,7 @@ function() {
 		
 		leftpoly.polys[i] = new Kinetic.Image({
 		    x: 35,
-		    y: 10+i*70,
+		    y: 10+i*60,
 		    image: img,
 		    width: this.polywidth,
 		    name : type,
@@ -347,7 +347,7 @@ function() {
 				continue;
 			}*/
 			//终点
-			if(this.polyGroups[k].TYPE=='分输点'||this.polyGroups[k].TYPE=='气井'||this.polyGroups[k].TYPE=='气源'){
+			if(this.polyGroups[k].TYPE=='分输点'||this.polyGroups[k].TYPE=='气井'||this.polyGroups[k].TYPE=='气源'||this.polyGroups[k].TYPE=='其他'){
 				this.polyGroups[k].add(lineRight);
 				this.polyGroups[k].add(connPointsRight);
 				//this.polyGroups[k].add(PointRight);

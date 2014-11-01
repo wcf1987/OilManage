@@ -45,13 +45,14 @@ public class GraphiTools {
 			String edgeString = "(20)";
 			addEdge(sourceAction, targetAction, 20, edgeString);
 		}
-		
+		if(directedGraph.edges.size()!=0){
 		// 自动布局 首先用DirectedGraphLayout如果出现异常（图不是整体连通的）则采用NodeJoiningDirectedGraphLayout
 		// 后者可以对非连通图进行布局坐标计算，但效果不如前者好，所以首选前者，当前者不可以处理时采用后者
 		try{
 			new DirectedGraphLayout().visit(directedGraph);
 		}catch(Exception e1){
 			new NodeJoiningDirectedGraphLayout().visit(directedGraph);
+		}
 		}
 		applyGraphResults();
 		return g;
@@ -64,6 +65,7 @@ public class GraphiTools {
 	protected void applyGraphResults() {
 		int base=10;
 		Iterator<String> names=graphi.getPoints().keySet().iterator();
+		int i=10;
 	    for (;names.hasNext();) {
 	        String name = names.next();
 	        Node n = NodeMap.get(name);
@@ -73,8 +75,8 @@ public class GraphiTools {
 	        base=base+10;
 	        t.setDraw2DY(n.x);
 	        }else{
-	        	  t.setDraw2DX(500+base);
-	  	        
+	        	  t.setDraw2DX(500+base+i);
+	  	        i=i+10;
 	  	        t.setDraw2DY(500+base);	
 	        }
 	        
