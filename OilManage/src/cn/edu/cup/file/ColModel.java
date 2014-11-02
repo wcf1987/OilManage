@@ -64,7 +64,7 @@ public class ColModel {
 		}
 		if(this.name.equals("隶属关系")){
 			this.edittype="select";
-			String str[] = {"气井","气源","分输点","管道","其他"};
+			String str[] = {"气井","气源","分输点","设备连接点"};
 			this.editoptions=getValueMap("value", getDoubleKeyMap(str));
 			
 			//this.editoptions="{value:{CentCompressor:'CentCompressor',ReciCompressor:'ReciCompressor',Pipe:'Pipe'}}";	

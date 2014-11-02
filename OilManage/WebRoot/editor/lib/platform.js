@@ -314,7 +314,14 @@ var Platform=function(){
 	this.addLeft=function(left){
 		left.platform=this;
 		for (var k in left.polyGroups)
-		{this.leftlayer.add(left.polyGroups[k]);}		
+		{
+			if(checkLinked(left.polyGroups[k])){
+				continue;
+			}
+			this.leftlayer.add(left.polyGroups[k]);
+		
+		
+		}		
 		this.leftlayer.draw();
 	}
 

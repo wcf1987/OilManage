@@ -347,7 +347,7 @@ function() {
 				continue;
 			}*/
 			//终点
-			if(this.polyGroups[k].TYPE=='分输点'||this.polyGroups[k].TYPE=='气井'||this.polyGroups[k].TYPE=='气源'||this.polyGroups[k].TYPE=='其他'){
+			if(checkSpecial(this.polyGroups[k])){
 				this.polyGroups[k].add(lineRight);
 				this.polyGroups[k].add(connPointsRight);
 				//this.polyGroups[k].add(PointRight);
@@ -362,6 +362,31 @@ function() {
 				this.initPoint(this.polyGroups[k]);
 				continue;
 			}
+			if(checkLinked(this.polyGroups[k])){
+				this.polyGroups[k].add(lineRight);
+				this.polyGroups[k].add(connPointsRight);
+				//this.polyGroups[k].add(PointRight);
+				
+				connPointsRight.hide();	
+				
+				this.polyGroups[k].add(lineLeftSp);
+				this.polyGroups[k].add(connPointsLeftSp);
+				//this.polyGroups[k].add(PointRight);
+				
+				this.polys[k].hide();
+					
+				lineRight.hide();
+				
+				lineLeftSp.hide();
+				connPointsLeftSp.hide();
+				text.hide();
+				
+				//connPointsLeft.hide();
+				//connPointsRight.hide();
+				this.initPoint(this.polyGroups[k]);
+				continue;
+			}
+			
 			//终点
 		/*	if(k==1){
 				this.polyGroups[k].add(lineLeft);
@@ -371,13 +396,17 @@ function() {
 				this.initPoint(this.polyGroups[k]);
 				continue;
 			}*/
+			
 			this.polyGroups[k].add(lineRight);
 			this.polyGroups[k].add(lineLeft);
 			this.polyGroups[k].add(connPointsLeft);
 			//this.polyGroups[k].add(PointLeft);
 			this.polyGroups[k].add(connPointsRight);
 			//this.polyGroups[k].add(PointRight);
+			
 			connPointsLeft.hide();
+			
+			
 			connPointsRight.hide();	
 			this.initPoint(this.polyGroups[k]);
 			
@@ -436,7 +465,7 @@ function() {
 				r=getRightLine(this);
 				rc=getRightPoint(this);
 				poly=getPoly(this);	
-				if(checkSpecial(this)){
+				if(checkSpecial(this)||checkLinked(this)){
 					this.setAbsolutePosition(pos);					
 					movePoint(rc,dis,this.rotation());					
 					drawLine(r,dis,this.rotation());	
@@ -481,7 +510,7 @@ function() {
 		po.id(name);
 		setPointText(po,name);
 		po.moveTo(platform.selectPainting.p);
-		if(checkSpecial(po)){
+		if(checkSpecial(po)||checkLinked(po)){
 			po.rotate(90);
 		}
 		leftpoly.addPoint(po.TYPE,name,po);
@@ -530,7 +559,7 @@ function() {
 					po.id(name);
 					setPointText(po,name);
 					po.moveTo(platform.selectPainting.p);
-					if(checkSpecial(po)){
+					if(checkSpecial(po)||checkLinked(po)){
 						po.rotate(90);
 					}
 					leftpoly.addPoint(po.TYPE,name,po);
@@ -813,7 +842,7 @@ function() {
 					y : rightCir.getAbsolutePosition().y
 							- tempL.getAbsolutePosition().y,
 				}
-				if(checkSpecial(g)){
+				if(checkSpecial(g)||checkLinked(g)){
 					leftCir.fill('yellow');
 				}
 			}
@@ -833,7 +862,7 @@ function() {
 						y : leftCir.getAbsolutePosition().y
 								- tempR.getAbsolutePosition().y,
 					}
-				if(checkSpecial(g)){
+				if(checkSpecial(g)||checkLinked(g)){
 					rightCir.fill('yellow');
 				}
 			}

@@ -118,7 +118,7 @@ function resizePoint(g){
 	rc=getRightPoint(g);
 	// rch=getRightPointHide(g);
 	// poly=getPoly(g);
-	if(checkSpecial(g)){
+	if(checkSpecial(g)||checkLinked(g)){
 		if(lc!=null){
 			lc.x(leftpoly.polywidth+leftpoly.polylineLengthPainting);
 			lc.y(leftpoly.polyhight/2);
@@ -318,14 +318,21 @@ function getPolyByYSJ(p){
 		return "";
 	}
 function rotateSpesail(p){
-	if(checkSpecial(p))
+	if(checkSpecial(p)||checkLinked(p))
 	{	
 		p.rotate(90);
 		p.y(p.y()-55);
 		}
 }
 function checkSpecial(p){
-	if(p.TYPE=='气井'||p.TYPE=='气源'||p.TYPE=='分输点'||p.TYPE=='其他')
+	if(p.TYPE=='气井'||p.TYPE=='气源'||p.TYPE=='分输点')
+	{
+		return true;
+	}
+	return false;
+}
+function checkLinked(p){
+	if(p.TYPE=='设备连接点')
 	{
 		return true;
 	}

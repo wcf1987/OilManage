@@ -114,7 +114,6 @@ public class FileExcel {
 				//System.out.println(sheet.getSheetName());
 				
 				}
-			
 			msg="excle解析成功";
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -329,15 +328,16 @@ public class FileExcel {
 		return null;
 	}
 	public int getTypeCodeByName(String Name){
-		if(Name.equalsIgnoreCase("离心压缩机数据")||Name.equalsIgnoreCase("往复式压缩机数据"))
-			return 1;
-		if(Name.equalsIgnoreCase("气井数据")||Name.equalsIgnoreCase("气源数据")||Name.equalsIgnoreCase("分输点数据")||Name.equalsIgnoreCase("其他数据"))
+		if(Name.equalsIgnoreCase("气井数据")||Name.equalsIgnoreCase("气源数据")||Name.equalsIgnoreCase("分输点数据")||Name.equals("设备连接点数据"))
 			return 0;
+		if(Name.equalsIgnoreCase("离心压缩机数据")||Name.equalsIgnoreCase("往复式压缩机数据"))
+			return 1;		
 		if(Name.equalsIgnoreCase("管道数据"))
-			return 2;
-		if(Name.equalsIgnoreCase("其他"))
-			return 4;
-		return 3;
+			return 2;		
+		if(Name.equalsIgnoreCase("阀数据")||Name.equalsIgnoreCase("过滤器数据"))
+			return 3;
+		
+		return 9;
 	}
 	public String getTypeByYSJLS(String Name){
 		if(Name.equalsIgnoreCase("集气增压站"))
@@ -499,7 +499,7 @@ public class FileExcel {
 		Point e=new Point();
 		List<DeviceKV> a=new ArrayList<>();
 		
-		if(type.equals("分输点数据")||type.equals("气井数据")||type.equals("气源数据")||type.equals("其他数据")){
+		if(getTypeCodeByName(type)==0){
 			SheetContent sheet=getSheetByName(this,"节点数据");
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			List<String> line=sheet.sheetContent.get(row);
@@ -515,7 +515,7 @@ public class FileExcel {
 				a.add(KV);
 			}
 		}
-		if(type.equals("管道数据")){
+		if(getTypeCodeByName(type)==2){
 			SheetContent sheet=getSheetByName(this,"管段连接");
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			List<String> line=sheet.sheetContent.get(row);
@@ -531,7 +531,7 @@ public class FileExcel {
 				a.add(KV);
 			}
 		}
-		if(type.equals("离心压缩机数据")||type.equals("往复式压缩机数据")){
+		if(getTypeCodeByName(type)==1){
 			SheetContent sheet=getSheetByName(this,type);
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			List<String> line=sheet.sheetContent.get(row);
@@ -547,7 +547,7 @@ public class FileExcel {
 				a.add(KV);
 			}
 		}
-		if(type.equals("阀数据")||type.equals("过滤器数据")){
+		if(getTypeCodeByName(type)==3){
 			SheetContent sheet=getSheetByName(this,type);
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			List<String> line=sheet.sheetContent.get(row);
@@ -568,23 +568,23 @@ public class FileExcel {
 	}
 	public void updateDevice(String type, String name, String proper,
 			String newValue) {
-		if(type.equals("分输点数据")||type.equals("气井数据")||type.equals("气源数据")){
+		if(getTypeCodeByName(type)==0){
 			SheetContent sheet=getSheetByName(this,"节点数据");
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
 	
 		}
-		if(type.equals("管道数据")){
+		if(getTypeCodeByName(type)==2){
 			SheetContent sheet=getSheetByName(this,"管段连接");
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
 		}
-		if(type.equals("离心压缩机数据")||type.equals("往复式压缩机数据")){
+		if(getTypeCodeByName(type)==1){
 			SheetContent sheet=getSheetByName(this,type);
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
 		}
-		if(type.equals("阀数据")||type.equals("过滤器数据")){
+		if(getTypeCodeByName(type)==3){
 			SheetContent sheet=getSheetByName(this,type);
 			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
 			sheet.editCell(row, sheet.getTitleByName(proper), newValue);

@@ -63,7 +63,7 @@ var Paintings = function() {
 		}
 		return null;
 	}
-	function delLinesInDraw(pLine,pointName){
+/*	function delLinesInDraw(pLine,pointName){
 		var endOver=new Array();
 		var startOver=new Array();
 		var startKey=null;
@@ -103,7 +103,7 @@ var Paintings = function() {
 			l['end']=endKey;				
 			pLine.push(l);			
 		}
-	}
+	}*/
 	this.drawLines=function(pLine){
 		//var jsonObject = data;
 		//var pLine = jsonObject['graphi']['lines'];	
@@ -118,7 +118,7 @@ var Paintings = function() {
 				var	rc=getRightPoint(startP);
 				var	lc=getLeftPoint(endP);
 
-				if(checkSpecial(endP))
+				if(checkSpecial(endP)||checkLinked(endP))
 				{var dis={
 						x:-(rc.getAbsolutePosition().x-lc.getAbsolutePosition().x)/this.scaleN,
 						y:-(rc.getAbsolutePosition().y-lc.getAbsolutePosition().y)/this.scaleN
@@ -238,11 +238,11 @@ var Paintings = function() {
 						|| node.getName() == 'connPointsRight'
 			});
 			//&&checkSpecial(points[li])
-			if (points[li]!=g&&checkSpecial(points[li])&&checkCircle(tempArray[0], tempArray2[1],
+			if (points[li]!=g&&(checkSpecial(points[li])||checkLinked(points[li]))&&checkCircle(tempArray[0], tempArray2[1],
 					tempArray[0].radius() )) {
 				this.addConnect(g.nameStr,points[li],g);				
 			}
-			if (points[li]!=g&&checkSpecial(points[li])&&checkCircle(tempArray[1], tempArray2[0],
+			if (points[li]!=g&&(checkSpecial(points[li])||checkLinked(points[li]))&&checkCircle(tempArray[1], tempArray2[0],
 					tempArray[0].radius())) {
 				this.addConnect(g.nameStr,g,points[li]);
 				

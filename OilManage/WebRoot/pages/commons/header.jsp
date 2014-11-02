@@ -39,7 +39,7 @@ User userlogin=(User)(session.getAttribute("user"));
 		                        <li><a tabindex="-1" href="pages/simulate_thermal.jsp">单相管网水力计算(考虑热力)</a></li>
 		                        <li><a tabindex="-1" href="pages/simulate_gas_solid.jsp">气固两相管网水力计算</a></li>
 		                        <li><a tabindex="-1" href="pages/simulate_gas_liquid.jsp">气液两相管网水力计算</a></li>
-		                        <li><a tabindex="-1" href="pages/simulate_auto.jsp">自动计算</a></li>
+		                        
 		                        <li class="divider"></li>
 		                        <li class="dropdown-submenu">
 		                            <a href="javascript:;">二级菜单</a>
