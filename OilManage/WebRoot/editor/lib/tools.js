@@ -369,3 +369,13 @@ function getIndexOfArray(arr1,element){
 	}
 	return -1;
 }
+function searchGrid(grid1,colname,colvalue){
+	
+	for(var iRow=0;iRow<grid1.getGridParam("records")+1;iRow++){
+		var proper=grid1.jqGrid("getRowData", iRow)[colname];
+		if(proper==colvalue){
+			return iRow;
+		}
+	}
+	return -1;
+}

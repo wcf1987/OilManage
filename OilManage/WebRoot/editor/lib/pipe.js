@@ -1,8 +1,3 @@
-function testpipe1(){
-
-	alert(/tools2/);
-}
-
 function pipeInit(){
 	algID=0;
 	proID=0;
@@ -169,7 +164,7 @@ function drawPipeLines(XData,YData,container,pipeName){
 		  		chart: {
 		  			renderTo: container,
 			        type: 'line',
-			//backgroundColor:'#66ffff',
+			  		backgroundColor:'#FFFFFF',
 			  		borderWidth:5
 			  		
 			  },
@@ -194,6 +189,9 @@ function drawPipeLines(XData,YData,container,pipeName){
 	            },
 	            yAxis: [
 	            	{ //高程(m)
+	            		lineWidth : 1,
+	            		allowDecimals:false ,//是否允许刻度有小数
+	            		
 	                    labels: {
 	                        formatter: function() {
 	                            return this.value +' (m)';
@@ -211,7 +209,9 @@ function drawPipeLines(XData,YData,container,pipeName){
 	                    opposite: true
 
 	                }, { // 压力(MPa)
-	                    gridLineWidth: 0,
+	                    //gridLineWidth: 0,
+	                    lineWidth : 1,
+	                    allowDecimals:false ,//是否允许刻度有小数
 	                    title: {
 	                        text: '压力(MPa)',
 	                        style: {
@@ -228,11 +228,13 @@ function drawPipeLines(XData,YData,container,pipeName){
 	                    }
 
 	                }, { // 流量(m3/d)
-	                    gridLineWidth: 0,
+	                    //gridLineWidth: 0,
+	                    lineWidth : 1,
+	                    allowDecimals:false ,//是否允许刻度有小数
 	                    title: {
 	                        text: '流量(m3/d)',
 	                        style: {
-	                            color: '#FAFAD2'
+	                            color: '#000066'
 	                        }
 	                    },
 	                    labels: {
@@ -240,12 +242,14 @@ function drawPipeLines(XData,YData,container,pipeName){
 	                            return this.value +' (m3/d)';
 	                        },
 	                        style: {
-	                            color: '#FAFAD2'
+	                            color: '#000066'
 	                        }
 	                    }
 
 	                }, { // 温度(℃)
-	                    gridLineWidth: 0,
+	                    //gridLineWidth: 0,
+	                    lineWidth : 1,
+	                    allowDecimals:false, //是否允许刻度有小数
 	                    title: {
 	                        text: '温度(℃)',
 	                        style: {
@@ -271,6 +275,15 @@ function drawPipeLines(XData,YData,container,pipeName){
 	                layout: 'vertical',
 	                align: 'left',
 	                verticalAlign: 'middle',
+	                itemHoverStyle: {
+	                	color: '#000000'
+	                },
+	                itemHiddenStyle: {
+	                	color: '#CCCCCC'
+	                },
+	                itemStyle: {
+	                	color: '#000000'
+	                },
 	                borderWidth: 3
 	            },
 	            series:  [{
@@ -279,6 +292,8 @@ function drawPipeLines(XData,YData,container,pipeName){
 	                tooltip: {
 	                    valueSuffix: ' (m)'
 	                },
+	                yAxis: 0,//坐标轴序号
+
 	                data: YData[0]
 	                	// [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3,
 						// 18.3, 13.9]
@@ -289,12 +304,13 @@ function drawPipeLines(XData,YData,container,pipeName){
 	                    valueSuffix: ' (MPa)'
 	                },
 	                color:'#FF00FF',
+	                yAxis: 1,//坐标轴序号
 	                data: YData[1]
 	            }, {
 	                name: '流量(m3/d)',
 	                type: 'spline',
-	                color:'#FAFAD2',
-	                
+	                color:'#000066',
+	                yAxis: 2,//坐标轴序号
 	                tooltip: {
 	                    valueSuffix: ' (m3/d)'
 	                },
@@ -305,7 +321,7 @@ function drawPipeLines(XData,YData,container,pipeName){
 	                tooltip: {
 	                    valueSuffix: ' 温度(℃)'
 	                },
-
+	                yAxis: 3,//坐标轴序号
 	                color:'#FFB6C1',
 	                data: YData[3]
 	            }]

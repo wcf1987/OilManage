@@ -62,7 +62,7 @@ function showMapIn(proid,algid,Inorout){
 		},
 		success : function(data) {
 			clearMap();
-			drawPointsGis(data);
+			drawPointsGis(data,proid,algid,Inorout);
 			drawLines(data);
 			
 			
@@ -81,7 +81,7 @@ function showMapOut(proid,algid,Inorout){
 			InOrOut:Inorout
 		},
 		success : function(data) {
-			drawPointsGis(data);
+			drawPointsGis(data,proid,algid,Inorout);
 			drawLines(data);
 			
 			
@@ -134,18 +134,21 @@ function initMapGis(){
 	var point = new BMap.Point(116.404, 39.915);
 	}
 	}
-function drawPointsGis(data){
+function drawPointsGis(data,proid,algid,Inorout){
 	
 	var jsonObject = data;
 	var pointArray = new Array();
 	var pMap = jsonObject['graphi']['points'];
 	var id = -1;
 	for ( var i in pMap) {
-		id++;
+		
 		p = pMap[i];
 		pointMap[i] = new BMap.Point(p['longitude'], p['latitude']);
 		//BMap.Convertor.translate(pointMap[i],0,translateCallback);  
-		
+		if(p['type']=='管道'){
+			continue;
+		}
+		id++;
 		if(id==0){
 			mapGis.centerAndZoom(pointMap[i], 15);
 		}
@@ -199,16 +202,17 @@ function drawPointsGis(data){
 		
 		// map.openInfoWindow(infoWindow,pointArray[i]); //开启信息窗口
 		markertemp.contStr=s;
+		markertemp.proID=proid;
+		markertemp.algID=algid;
+		markertemp.InOrOut=Inorout;
+		markertemp.type=p['type'];
+		markertemp.point_name=p['name'];
+		markertemp.long=p['longitude'];
+		markertemp.lati=p['latitude'];
 		markertemp.addEventListener("click", function(data) {
-			var opts = {
-					width : 300, // 信息窗口宽度
-					height : 250, // 信息窗口高度
-					title : "节点信息", // 信息窗口标题
-					enableMessage : true,// 设置允许信息窗发送短息
-					message : ""
-				}
-			var infoWindow = new BMap.InfoWindow(this.contStr, opts);
-			this.openInfoWindow(infoWindow);
+			
+			getDeviceProper(this);
+			
 		});
 		mapWforGPS.addOverlay(markertemp);
 		//map.addOverlay(markertemp);
@@ -217,6 +221,47 @@ function drawPointsGis(data){
 	}
 	
 
+}
+function getDeviceProper(markPoi){
+		
+		 var proID=$("#proID").val();
+		 $.ajax({
+				url:'listDevice.action',
+				type:'post',
+				async: true,  //异步请求
+				data:{
+					algID : markPoi.algID,
+					InOrOut:markPoi.InOrOut,
+					proID : markPoi.proID,
+					type:markPoi.type,//元素点的类型
+					name:markPoi.point_name
+				},
+				dataType:'json',
+				success:function(data){
+					var Prop = data['deviceKV'];
+					
+					
+					var s = "";
+					s = "类别:" + markPoi.type  + "<br>";
+					for(var k2=0;k2<Prop.length;k2++){
+						s=s+Prop[k2]['name']+" : "+Prop[k2]['value'] + "<br>";
+					}
+					s = s + "经度:" + this.long + "<br>"
+					s = s+ "纬度:" + this.lati + "<br>"
+					var opts = {
+							width : 300, // 信息窗口宽度
+							height : 250, // 信息窗口高度
+							title : "节点信息", // 信息窗口标题
+							enableMessage : true,// 设置允许信息窗发送短息
+							message : ""
+						}
+					
+					var infoWindow = new BMap.InfoWindow(s, opts);
+					markPoi.openInfoWindow(infoWindow);
+				}
+			});	
+	
+				
 }
 function drawLines(data){
 	var jsonObject = data;
@@ -289,6 +334,7 @@ function drawLines(data){
 		}		
 		polyline.contStr=s;
 		polyline.addEventListener("click", function(data) {
+			
 			$("#lineAttrContent").html(this.contStr);
 			var x=data.clientX;//移动时根据鼠标位置计算控件左上角的绝对位置
 	        var y=data.pageY;
@@ -430,7 +476,7 @@ function addArrow1(polyline, length, angleValue) { // 绘制箭头的函数
 }
 
 
-function viewMap(data) {
+/*function viewMap(data) {
 	mapGis.clearOverlays();
 	var markers = [];
 	var jsonObject = data;
@@ -526,3 +572,4 @@ function viewMap(data) {
 
 
 
+*/

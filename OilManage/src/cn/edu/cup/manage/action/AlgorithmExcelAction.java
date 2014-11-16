@@ -125,7 +125,7 @@ public class AlgorithmExcelAction {
 		}
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		
-		graphi=excel.getGraphi();
+		graphi=excel.getGisGraphi();
 	
 		return "SUCCESS";
 	}
@@ -213,8 +213,13 @@ public class AlgorithmExcelAction {
 	List<DeviceKV> deviceKV;
 	public String listDevice(){
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
-		if(name!=null){
-		deviceKV=excel.getDevice(type+"数据",name);
+		if(name!=null&&this.InOrOut.equals("In")){
+			deviceKV=excel.getDiviceIn(type+"数据",name);
+		}
+		if(name!=null&&this.InOrOut.equals("Out")){
+			FileExcel excelIn = FileExcelManager.getFileExcel(this.proID, this.algID, "In");
+			
+			deviceKV=excel.getDiviceOut(type+"数据",name,excelIn);
 		}
 		return "SUCCESS";
 	}
@@ -391,6 +396,7 @@ public class AlgorithmExcelAction {
 
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		if (excel == null) {
+			msg="excel文件出现异常";
 			return "SUCCESS";
 		}
 		if (sheetID >= excel.getSheetNum()) {
@@ -406,10 +412,17 @@ public class AlgorithmExcelAction {
 		if (records % rows != 0) {
 			total++;
 		}
+		if(this.algID==0&&this.InOrOut.equals("Out")&&this.sheetID==0){
+			JDLY=content.get(0).get("值");
+		}
 		//putFileExcel(excel);
 		return "SUCCESS";
 	}
+public String getJDLY() {
+		return JDLY;
+	}
 
+String JDLY="0";
 	public int getRecords() {
 		return records;
 	}

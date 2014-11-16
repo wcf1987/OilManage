@@ -123,9 +123,10 @@
 	<li><a>放大</a></li>
 	<li><a>缩小</a></li>	-->		
 	<li><a>删除该节点</a></li>
-	<li><a>属性</a></li>
+	<li><a>输入属性</a></li>
+	<li><a>输出属性</a></li>
 	<li><a>管道图示</a></li>
-	<li><a>进入站点</a></li>
+	
    </ul>
    <!-- 属性框 -->
 <div id="pointPra"  style=" display: none;z-index:100;position:absolute">

@@ -366,6 +366,151 @@ public class SheetContent {
 		}
 		return points;
 	}
+	public Map<String,Point> getGisSimulationPoints(FileExcel f) {
+		Map<String,Point> points=new HashMap<String, Point>();
+		if(getName().indexOf("节点数据")!=-1){
+			for(int i=1;i<this.sheetContent.size();i++){
+				Point e=new Point();
+				List<String> lineStr=this.sheetContent.get(i);
+				if(this.sheetTitle.get("名称")==null){
+					return points;
+				}
+				e.setName(lineStr.get(this.sheetTitle.get("名称")));
+			
+				e.setType(lineStr.get(this.sheetTitle.get("隶属关系")));
+				//e.setAttribute(getAttribute(lineStr));
+				
+				//SheetContent a=f.getSheetByName(f,e.getType()+"数据");
+				//int row=getExcelDataIndex(this, a.getTitleByName("名称"), lineStr.get(this.sheetTitle.get("气井、气源或分输点名称")));
+				String X=lineStr.get(this.sheetTitle.get("X坐标(m)"));
+				String Y=lineStr.get(this.sheetTitle.get("Y坐标(m)"));
+				//String Z=lineStr.get(this.sheetTitle.get("高程(m)"));
+				if(X==null||X.equalsIgnoreCase("")){
+					X="0";
+				}
+				if(Y==null||Y.equalsIgnoreCase("")){
+					Y="0";
+				}
+				//e.addAttr("高程(m)", z);
+				e.setGeodeticCoordinatesX(Double.valueOf(X));
+				e.setGeodeticCoordinatesY(Double.valueOf(Y));
+				e.getLatLonFromGeo();
+				points.put(e.getName(),e);
+			}
+		}
+		if(getName().indexOf("管段连接")!=-1){
+			for(int i=1;i<this.sheetContent.size();i++){
+				Point e=new Point();
+				List<String> lineStr=this.sheetContent.get(i);
+				
+				if(this.sheetTitle.get("名称")==null){
+					return points;
+				}
+				Object it=this.sheetTitle.get("管段类型");
+				String t;
+				if(it==null){
+					t="Pipe";
+				}else{
+					t=lineStr.get(this.sheetTitle.get("管段类型"));
+				}
+				if(t.equalsIgnoreCase("Pipe")){
+					
+					//e.setType("管道");
+					//e.setName(lineStr.get(this.sheetTitle.get("名称")));
+					continue;
+
+				}else{				
+				if(t.equalsIgnoreCase("CentCompressor")){
+					e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
+					e.setType("离心压缩机");
+				}
+				if(t.equalsIgnoreCase("ReciCompressor")){
+					e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
+					e.setType("往复式压缩机");
+				}
+				if(t.equalsIgnoreCase("Filter")){
+					e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
+					e.setType("过滤器");
+				}
+				if(t.equalsIgnoreCase("Valve")){
+					e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
+					e.setType("阀");
+				}
+				SheetContent a=f.getSheetByName(f,e.getType()+"数据");
+				int row=getExcelDataIndex(a, a.getTitleByName("名称"), lineStr.get(this.sheetTitle.get("设备名称")));
+				//int col=a.getTitleByName("X坐标(m)");
+				double x=0;
+				//col=a.getTitleByName("Y坐标(m)");
+				double y=0;
+				
+				//Map attr1=a.getAttribute(a.sheetContent.get(row));
+				//e.addAttr(attr1);
+				
+				
+				e.setGeodeticCoordinatesX(x);
+				e.setGeodeticCoordinatesY(y);
+				e.getLatLonFromGeo();
+				}
+				
+				//e.addAttr(getAttribute(lineStr));
+				
+				
+				points.put(e.getName(),e);
+			}
+		}
+		return points;
+	}
+	public List<Line> getGisSimulationLines() {
+		List<Line> temp=new ArrayList<Line>();
+		if(getName().indexOf("管段连接")!=-1){			 
+			for(int i=1;i<this.sheetContent.size();i++){
+				
+				List<String> lineStr=this.sheetContent.get(i);
+				Line e1=new Line();
+				Line e2=new Line();
+				String midlle;
+				
+				if(sheetTitle.get("管段类型")!=null&&lineStr.get(sheetTitle.get("管段类型")).equalsIgnoreCase("Pipe")){
+					
+					
+					// midlle=lineStr.get(this.sheetTitle.get("名称"));
+					e1.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
+					e1.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));	
+					e1.setType("连接");
+					temp.add(e1);
+				}else{
+					midlle=lineStr.get(this.sheetTitle.get("设备名称"));
+					/*if(sheetTitle.get("管段类型")!=null){
+						
+						 
+						
+										
+					}else{
+						 midlle=lineStr.get(this.sheetTitle.get("名称"));
+					}*/
+					
+					e1.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
+					e1.setEnd(midlle);
+					//e1.setLength(lineStr.get(this.sheetTitle.get("")));
+					e1.setType("连接");
+					e2.setStart(midlle);
+					e2.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));
+					//e2.setLength(lineStr.get(this.sheetTitle.get("")));
+					e2.setType("连接");
+					//e.setAttribute(getAttribute(lineStr));
+					temp.add(e1);
+					temp.add(e2);
+					
+				}
+				
+			
+				
+			}
+			
+		}
+
+		return temp;
+	}
 	public List<Line> getSimulationLines() {
 		List<Line> temp=new ArrayList<Line>();
 		if(getName().indexOf("管段连接")!=-1){			 
@@ -420,7 +565,7 @@ public class SheetContent {
 		}
 		return -1;
 	}
-	private String getExcelData(SheetContent sheet, int i,int j) {
+	public String getExcelData(SheetContent sheet, int i,int j) {
 		List<List<String>> t1=sheet.sheetContent;
 		return t1.get(i).get(j);
 		

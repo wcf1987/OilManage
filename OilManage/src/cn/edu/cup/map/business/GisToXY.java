@@ -13,10 +13,10 @@ public class GisToXY {
 			CoordinateConversion conversion  = new CoordinateConversion();
 			
 				//System.out.println(conversion.latLon2MGRUTM(39.54,116.23));
-				System.out.println(conversion.latLon2UTM(0.0020344264806718363,112.52839387784051));
-				double a[]=conversion.utm2LatLon("50 s 1912.89 225.56");
-				System.out.println(a[0]);
-				System.out.println(a[1]);
+				//System.out.println(conversion.latLon2UTM(0.0020344264806718363,112.52839387784051));
+				//double a[]=conversion.utm2LatLon("50 s 1912.89 225.56");
+				//System.out.println(a[0]);
+				//System.out.println(a[1]);
 				//BufferedReader  bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("F:\\Location_Trace.txt")));
 				//OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream("D:\\rs.txt"));
 				//String data = null;

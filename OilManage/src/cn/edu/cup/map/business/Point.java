@@ -1,7 +1,9 @@
 package cn.edu.cup.map.business;
 
 import java.util.HashMap;
+
 import java.util.Map;
+
 
 public class Point {
 
@@ -50,13 +52,14 @@ public class Point {
 		this.attribute=new HashMap<String, String>();
 	}
 	public void getLatLonFromGeo(){
-		double a[]=new CoordinateConversion().utm2LatLon("50 S "+String.valueOf(this.GeodeticCoordinatesX)+" "+String.valueOf(this.GeodeticCoordinatesY));
+		double a[]=CoordinateConversion.GaussProjInvCal(this.GeodeticCoordinatesX,this.GeodeticCoordinatesY);
 		this.latitude=a[0];
 		this.Longitude=a[1];
 	}
 	public void getGeoFromLatLon(){
-		this.GeodeticCoordinatesX=new CoordinateConversion().latLon2UTMX(this.latitude,this.Longitude);
-		this.GeodeticCoordinatesY=new CoordinateConversion().latLon2UTMY(this.latitude,this.Longitude);
+		double temp[] = CoordinateConversion.GaussProjCal(this.latitude, this.Longitude);
+		this.GeodeticCoordinatesX=temp[0];
+		this.GeodeticCoordinatesY=temp[1];
 	}
 	public String getName() {
 		return Name;

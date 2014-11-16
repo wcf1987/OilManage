@@ -25,7 +25,7 @@ function() {
 		   	],
 		   	width:'auto',//530
 		   	height:'auto',
-		   	rowNum:10,
+		   	rowNum:30,
 		   	rowList:[10,20,30],		   	
 		   	sortname: 'id',
 		    viewrecords: true,
@@ -33,12 +33,121 @@ function() {
 		    cellEdit:true,
 			cellsubmit : 'remote',
 			cellurl : 'editDevice.action',
+			formatCell : function(rowid, cellname, value, iRow, iCol){
+				var proper=jQuery("#PointPraList").jqGrid("getRowData", iRow).name;
+				if(proper=='控制模式'){
+					//this.edittype="select";
+					//this.editoptions={"value":{'Flow':'Flow','Pressure':Pressure}};
+					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{}} });
+					
+					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{'Flow':'Flow','Pressure':'Pressure'}} });
+					return ;
+				}
+				
+				if(proper=='节点压力(MPa)'){
+					var rowC=searchGrid(jQuery("#PointPraList"),'name','控制模式');
+					if(rowC!=-1){
+						var tempC=jQuery("#PointPraList").jqGrid("getRowData", rowC).value;
+						if(tempC=='Flow'){
+							jQuery("#PointPraList").setRowProp('value',{edittype:'text',editoptions:{maxlength:0,value:""}});
+						
+						
+						
+						}else{
+							jQuery("#PointPraList").setColProp('value',{edittype:'text',editoptions:{maxlength:20,value:""}});
+						}
+					}
+					return ;
+				}
+				if(proper=='节点流量(m3/d)'){
+						var rowC=searchGrid(jQuery("#PointPraList"),'name','控制模式');
+						if(rowC!=-1){
+							var tempC=jQuery("#PointPraList").jqGrid("getRowData", rowC).value;
+							if(tempC=='Pressure'){
+								jQuery("#PointPraList").setColProp('value',{edittype:'text',editoptions:{maxlength:0,value:""}});
+								
+							
+							}else{
+								jQuery("#PointPraList").setColProp('value',{edittype:'text',editoptions:{maxlength:20,value:""}});
+								
+							}	
+						}
+						return ;
+					}
+				if(proper=='隶属关系'){
+					//this.edittype="select";
+					//"气井","气源","分输点","设备连接点";
+					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{}} });
+					
+					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{'气井':'气井','气源':'气源','分输点':'分输点','设备连接点':'设备连接点'}} });
+					return ;
+				}
+				if(proper=='气体方程'){
+					//this.edittype="select";
+					//this.editoptions={"value":{'Flow':'Flow','Pressure':Pressure}};
+					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{}} });
+					
+					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{'Colebrook':'Colebrook','FormerSU':'FormerSU','PanA':'PanA','PanB':'PanB','Weymouth':'Weymouth'}} });
+					return ;
+				}
+				if(proper=='压缩机类型'){
+					//this.edittype="select";
+					//this.editoptions={"value":{'Flow':'Flow','Pressure':Pressure}};
+					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{}} });
+					
+					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{'离心压缩机':'离心压缩机','往复式压缩机':'往复式压缩机'}} });
+					return ;
+				}
+				jQuery("#PointPraList").setColProp('value',{editable:true,edittype:'text',editoptions:{value:"",maxlength:20} });
+				
+			},
 			beforeSubmitCell : function(rowid,celname,value,iRow,iCol) { 
 				//alert(/sd/);
 				var type=leftpoly.clickshape.TYPE;
 				var name=leftpoly.clickshape.nameStr;
 				
 				var proper=jQuery("#PointPraList").jqGrid("getRowData", iRow).name;
+				var propervalue=value;
+				if(proper=='控制模式'){
+					if(propervalue=='Flow'){
+						var rowC=searchGrid(jQuery("#PointPraList"),'name','节点压力(MPa)');
+						
+						jQuery("#PointPraList").setCell (rowC,'value',' ');  
+					
+					}
+					if(propervalue=='Pressure'){
+						var	rowC=searchGrid(jQuery("#PointPraList"),'name','节点流量(m3/d)');
+						
+						jQuery("#PointPraList").setCell (rowC,'value',' ');  
+					
+					}
+					
+				}
+				if(proper=='压缩机类型'){
+					if(propervalue=='离心压缩机'){
+						var rowC=searchGrid(jQuery("#PointPraList"),'name','相对余隙容积α');						
+						jQuery("#PointPraList").setCell (rowC,'value',' ');  
+						var rowC=searchGrid(jQuery("#PointPraList"),'name','活塞直径D(m)');						
+						jQuery("#PointPraList").setCell (rowC,'value',' ');  
+						var rowC=searchGrid(jQuery("#PointPraList"),'name','活塞行程S(m)');						
+						jQuery("#PointPraList").setCell (rowC,'value',' ');  
+						var rowC=searchGrid(jQuery("#PointPraList"),'name','气缸级数n');						
+						jQuery("#PointPraList").setCell (rowC,'value',' ');  
+						var rowC=searchGrid(jQuery("#PointPraList"),'name','转速N(r/min)');						
+						jQuery("#PointPraList").setCell (rowC,'value',' ');  
+					
+					}
+					if(propervalue=='往复式压缩机'){
+						var	rowC=searchGrid(jQuery("#PointPraList"),'name','特性曲线参数a');
+						
+						jQuery("#PointPraList").setCell (rowC,'value',' ');  
+						var	rowC=searchGrid(jQuery("#PointPraList"),'name','特性曲线参数b');
+						
+						jQuery("#PointPraList").setCell (rowC,'value',' ');  
+					
+					}
+					
+				}
 				if(proper=='名称'){
 					
 					setPointText(leftpoly.clickshape,value);
@@ -423,6 +532,9 @@ function() {
 		point.on('mouseover', function() {
 			document.body.style.cursor = 'pointer';
 		});
+		point.on('mousemove', function() {
+			//alert(/xss/);
+		});
 		point.on('mouseout', function() {
 			document.body.style.cursor = 'default';
 		});
@@ -718,11 +830,17 @@ function() {
 								y : clickshape.scaleY()
 							});
 							platform.selectPainting.p.draw();
-						}else if (text == '属性') {
+						}else if (text == '输入属性') {
 							platform.selectPainting.hasChange();	
 							$("#contextmenu").hide();
 							//pro_id=$(".active > input[name='proID']").val();
 							showPrameter(point_name,proID,point_type,attrtop,attrleft);									
+							platform.selectPainting.p.draw();
+						}if (text == '输出属性') {
+							
+							$("#contextmenu").hide();
+							//pro_id=$(".active > input[name='proID']").val();
+							showPrameterOut(point_name,proID,point_type,attrtop,attrleft);									
 							platform.selectPainting.p.draw();
 						}else if (text == '管道图示') {
 							if(point_type=='管道'){	
@@ -911,7 +1029,34 @@ function() {
 		}).show();	
 		
 	 }
-		
+		/*
+		 * 输出属性列表
+		 */
+		 showPrameterOut=function(point_name,pro_id,type,attrtop,attrleft){
+//			$("#PointPraList").empty();
+			 $("#tempStr1").val(type);
+			 $("#tempStr2").val(point_name);
+			 var proID=$("#proID").val();
+			
+			
+			jQuery("#PointPraList").jqGrid("setGridParam", {
+				 url: "listDevice.action", //设置表格的url 
+				 datatype: "json", //设置数据类型 
+				postData : {
+					algID : algID,
+					InOrOut:"Out",
+					proID : proID,
+					type:type,//元素点的类型
+					name:point_name
+				}
+			}).trigger("reloadGrid");
+			
+			$("#pointPra").css({
+				top :attrtop,
+				left : attrleft,
+			}).show();	
+			
+		 }		
 	
 }
 
