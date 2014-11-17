@@ -386,3 +386,6 @@ function searchGrid(grid1,colname,colvalue){
 	}
 	return -1;
 }
+function optimizeInit(){
+	listProjectModal();
+}

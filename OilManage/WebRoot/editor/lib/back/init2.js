@@ -17,7 +17,7 @@ function initLight() {
 	tabtools=new TabTools(); 
 	
 	initMouseWheel();
-
+	listProjectModal();
 
 
 	$('#load_modal').modal({

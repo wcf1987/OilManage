@@ -176,7 +176,8 @@ function list_project(){
 				caption:"添加",
 				id:"add_ProjectList",
 				onClickButton : function addModal(){
-						createNewProject();	
+						//createNewProject();	
+						openProjectModal();
 				},
 				position:"first"
 			

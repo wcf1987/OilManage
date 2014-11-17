@@ -20,12 +20,12 @@ function initLight() {
 
 
 
-	$('#load_modal').modal({
+	/*$('#load_modal').modal({
 		     backdrop:'static',
 		     keyboard:false,
 		     show:true
-		 });
-		  
+		 });*/
+	listProjectModal();	  
 
 
 		
