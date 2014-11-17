@@ -82,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
     
   
-  <body id="body">
+  <body id="body" onload="optimizeInit();">
 
 	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
@@ -144,11 +144,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<span>正在计算......</span>
 	</div> 
 	<script type="text/javascript">
-	$('#load_modal').modal({
+	/* $('#load_modal').modal({
 		     backdrop:'static',
 		     keyboard:false,
 		     show:true
-		 });
+		 }); */
+		 listProjectModal();	
 	</script>		
 	<script type="text/javascript" src="js/optimize.js"></script>	 
   </body>

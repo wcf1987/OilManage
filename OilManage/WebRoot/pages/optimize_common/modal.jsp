@@ -38,14 +38,14 @@
       				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >描述：</label></td>
       				<td><input id="Description" type="text" class="input2" name="Description" maxlength="10" /><em style="color:red">*</em></td>
       			</tr>
-				<tr style="display:block">
+				<!-- <tr style="display:block">
       				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">作者：</label></td>
       				<td>		      					 
 			        	<select id="authorID" name=authorID>		                  
 	              		</select>
  						<em style="color:red">*</em>    						
       				</td>
-      			</tr>	    				
+      			</tr>	 -->    				
 		   </table>
 		   <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -75,4 +75,6 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script type="text/javascript">
 
+</script>

@@ -29,11 +29,12 @@ $().ready(function(){
 	}); 
 function openProjectModal(){
 	$('#add_project_modal').modal();
-	$('#load_modal').modal('hide');
+	$('#list_project_modal').modal('hide');
 	createNewProject();
 }
 
 function listProjectModal(){
+	
 	$('#list_project_modal>.modal-dialog').css({
 		 'margin-top': function () {
 		            return ($(window).height())/2-this.height/2;
