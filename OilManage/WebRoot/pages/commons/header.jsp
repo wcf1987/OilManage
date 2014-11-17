@@ -17,12 +17,13 @@ else{
     <!--  <div class="container"> -->
     <div class="navbar  navbar-static-top" role="navigation" style="">
     	<ul  class="nav navbar-nav" style="float:left;">
-    		<img style="width:30%;margin-left:100px;margin-top:20px;" alt="中联公司" src="images/zhonglian.png">
+    		<img style="width:20%;margin-left:0px;margin-top:20px;" alt="中联公司" src="images/zhonglian.png">
+    		<img style="width:15%;margin-left:10px;margin-top:20px;" alt="中联公司" src="images/zhongguoshiyoudaxue.png">
     	</ul>
-		<ul style="float:left;margin-top:35px;font-weight:bold;font-family:微软雅黑;font-size:18px;color:rgba(61, 85, 120, 1)">
+		<ul style="margin-left:-200px;float:left;margin-top:55px;font-weight:bold;font-family:微软雅黑;font-size:30px;color:rgba(61, 85, 120, 1)">
 			煤层气集输系统
 		</ul>
-    	<ul  class="nav navbar-nav" style="float:left;margin-top:40px;">
+    	<ul  class="nav navbar-nav" style="float:right;margin-top:70px;margin-right:30px">
 	      		<!-- <li><img style="width:20%;" alt="中联公司" src="images/zhongguoshiyoudaxue.jpg"></li> -->
 	      		<li>系统时间：<span id="nowtime"></span></li>
 	      		<li><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/5人</span></span></li>
