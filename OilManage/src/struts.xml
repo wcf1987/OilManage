@@ -8,7 +8,7 @@
 	<package name="user" extends="struts-default">
 		<!-- UserManage Begin -->
 		<action name="login" method="login" class="cn.edu.cup.manage.action.LoginAction">
-			<result name="succ" type="redirect">/pages/data.jsp</result>
+			<result name="succ" type="redirect">/pages/home.jsp</result>
 			<result name="fail" type="redirect">/pages/login.jsp</result>
 		</action>
 		
