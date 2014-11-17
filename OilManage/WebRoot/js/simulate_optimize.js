@@ -214,11 +214,22 @@ function showData(type){
 		$("#"+type).show();
 		$("#showOutputMap").click();
 	}else if(type=="inputBase"||type=="inputFunction"||type=="inputCondition"||type=="inputGisMap"||type=="inputDcMap"){
+		if($("#curAlgID").val()==1||$("#curAlgID").val()==2||$("#curAlgID").val()==3||$("#curAlgID").val()==4){
+			tabtools.load();
+		}else{
+			
+		}
+		initMapGis();
+		var proID=$("#proID").val();
+		var algID=$("#curAlgID").val();
+		showMap(proID,algID,'In');
+	  
 		$(".inputDataDiv").each(function(index,item){
 			$(item).hide();
 		});
 		$("#"+type).show();
 		$("#showInputMap").click();
+		
 	}
 }
 
