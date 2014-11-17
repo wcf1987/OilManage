@@ -48,12 +48,9 @@ function() {
 					if(rowC!=-1){
 						var tempC=jQuery("#PointPraList").jqGrid("getRowData", rowC).value;
 						if(tempC=='Flow'){
-							jQuery("#PointPraList").setRowProp('value',{edittype:'text',editoptions:{maxlength:0,value:""}});
-						
-						
-						
+							jQuery("#PointPraList").setColProp('value',{edittype:'text',editoptions:{maxlength:0,value:""}});
 						}else{
-							jQuery("#PointPraList").setColProp('value',{edittype:'text',editoptions:{maxlength:20,value:""}});
+							jQuery("#PointPraList").setColProp('value',{edittype:'text',editoptions:{maxlength:20,value:value}});
 						}
 					}
 					return value;
@@ -67,7 +64,7 @@ function() {
 								
 							
 							}else{
-								jQuery("#PointPraList").setColProp('value',{edittype:'text',editoptions:{maxlength:20,value:""}});
+								jQuery("#PointPraList").setColProp('value',{edittype:'text',editoptions:{maxlength:20,value:value}});
 								
 							}	
 						}
@@ -101,45 +98,48 @@ function() {
 				//alert(/sd/);
 				var type=leftpoly.clickshape.TYPE;
 				var name=leftpoly.clickshape.nameStr;
-				
+				var bkcolor="#999999";
+				var nrcolor="#FFFFFF";
 				var proper=jQuery("#PointPraList").jqGrid("getRowData", iRow).name;
 				var propervalue=value;
 				if(proper=='控制模式'){
-					/*if(propervalue=='Flow'){
-						var rowC=searchGrid(jQuery("#PointPraList"),'name','节点压力(MPa)');
-						
-						jQuery("#PointPraList").setCell (rowC,'value',' ');  
-					
+					if(propervalue=='Flow'){
+						var rowC=searchGrid(jQuery("#PointPraList"),'name','节点压力(MPa)');						
+						jQuery("#PointPraList").setCell (rowC,'value',' ',{background:bkcolor});  
+						rowC=searchGrid(jQuery("#PointPraList"),'name','节点流量(m3/d)');						
+						jQuery("#PointPraList").setCell (rowC,'value',' ',{background:nrcolor});  
 					}
 					if(propervalue=='Pressure'){
-						var	rowC=searchGrid(jQuery("#PointPraList"),'name','节点流量(m3/d)');
-						
-						jQuery("#PointPraList").setCell (rowC,'value',' ');  
-					
-					}*/
+						var	rowC=searchGrid(jQuery("#PointPraList"),'name','节点流量(m3/d)');						
+						jQuery("#PointPraList").setCell (rowC,'value',' ',{background:bkcolor});  
+						rowC=searchGrid(jQuery("#PointPraList"),'name','节点压力(MPa)');						
+						jQuery("#PointPraList").setCell (rowC,'value',' ',{background:nrcolor});
+					}
 					
 				}
 				if(proper=='压缩机类型'){
 					if(propervalue=='离心压缩机'){
-						/*var rowC=searchGrid(jQuery("#PointPraList"),'name','相对余隙容积α');						
-						jQuery("#PointPraList").setCell (rowC,'value',' ');  
-						var rowC=searchGrid(jQuery("#PointPraList"),'name','活塞直径D(m)');						
-						jQuery("#PointPraList").setCell (rowC,'value',' ');  
-						var rowC=searchGrid(jQuery("#PointPraList"),'name','活塞行程S(m)');						
-						jQuery("#PointPraList").setCell (rowC,'value',' ');  
-						var rowC=searchGrid(jQuery("#PointPraList"),'name','气缸级数n');						
-						jQuery("#PointPraList").setCell (rowC,'value',' ');  
-						var rowC=searchGrid(jQuery("#PointPraList"),'name','转速N(r/min)');						
-						jQuery("#PointPraList").setCell (rowC,'value',' ');  */
+						var rowC=searchGrid(jQuery("#PointPraList"),'name','相对余隙容积α');							
+						jQuery("#PointPraList").setCell (rowC,'value',' ',{background:bkcolor});  						
+						jQuery("#PointPraList").setCell (rowC+1,'value',' ',{background:bkcolor});  						
+						jQuery("#PointPraList").setCell (rowC+2,'value',' ',{background:bkcolor});  					
+						jQuery("#PointPraList").setCell (rowC+3,'value',' ',{background:bkcolor});  					
+						jQuery("#PointPraList").setCell (rowC+4,'value',' ',{background:bkcolor});  
+						rowC=searchGrid(jQuery("#PointPraList"),'name','特性曲线参数a');						
+						jQuery("#PointPraList").setCell (rowC,'value',' ',{background:nrcolor});  						
+						jQuery("#PointPraList").setCell (rowC+1,'value',' ',{background:nrcolor});
 						leftpoly.clickshape.TYPE='离心压缩机';
 					}
 					if(propervalue=='往复式压缩机'){
-						/*var	rowC=searchGrid(jQuery("#PointPraList"),'name','特性曲线参数a');
-						
-						jQuery("#PointPraList").setCell (rowC,'value',' ');  
-						var	rowC=searchGrid(jQuery("#PointPraList"),'name','特性曲线参数b');
-						
-						jQuery("#PointPraList").setCell (rowC,'value',' '); */ 
+						var	rowC=searchGrid(jQuery("#PointPraList"),'name','特性曲线参数a');						
+						jQuery("#PointPraList").setCell (rowC,'value',' ',{background:bkcolor});						
+						jQuery("#PointPraList").setCell (rowC+1,'value',' ',{background:bkcolor}); 
+						rowC=searchGrid(jQuery("#PointPraList"),'name','相对余隙容积α');							
+						jQuery("#PointPraList").setCell (rowC,'value',' ',{background:nrcolor});  						
+						jQuery("#PointPraList").setCell (rowC+1,'value',' ',{background:nrcolor});  						
+						jQuery("#PointPraList").setCell (rowC+2,'value',' ',{background:nrcolor});  					
+						jQuery("#PointPraList").setCell (rowC+3,'value',' ',{background:nrcolor});  					
+						jQuery("#PointPraList").setCell (rowC+4,'value',' ',{background:nrcolor}); 
 						leftpoly.clickshape.TYPE='往复式压缩机';
 					}
 					
@@ -520,7 +520,13 @@ function() {
 		pipeInit();
 	}
 	this.initPoint = function(point){
+		var algID=$("#curAlgID").val();
+		if(algID==4&&checkQY(point)){
+			point.draggable(false);
+			return;
+		}
 		point.dragBoundFunc(this.dragFun);
+		
 		point.on('click', this.clickFunc);
 //		point.on('dblclick', this.dbclickFun);
 		point.on('dragend', this.cloneFun);
@@ -549,7 +555,6 @@ function() {
 				y : this.getAbsolutePosition().y
 			};
 		}
-	
 		
 		if (checkPoint(pos, platform.centerlayer)) {		
 			if((this.lock==null||this.lock==false)){
@@ -701,6 +706,7 @@ function() {
 
 		if (e.type == 'mousedown'
 				&&platform.selectPainting!=null &&this.getLayer()!= platform.selectPainting.p) {
+			
 			var cloneOfItem = this.clone();
 			hideConnection(this);
 			

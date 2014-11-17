@@ -1,9 +1,11 @@
 package cn.edu.cup.algjarexcel;
 
 import java.util.Date;
-import java.util.Iterator;
+import java.util.List;
 
-import cn.edu.cup.algjar.CalcInfo;
+import cn.edu.cup.file.FileExcel;
+import cn.edu.cup.file.FileExcelManager;
+import cn.edu.cup.file.SheetContent;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.manage.dao.ProjectCalcHisDao;
 import cn.edu.cup.manage.dao.ProjectOutputDao;
@@ -102,4 +104,12 @@ public class ProjectInfo{
 		dao.close();
 	}
    public int hisID;
+public String checkInputStatus() {
+	FileExcel excel = FileExcelManager.getFileExcel(this.proid, this.alg_ID, "In");
+	
+	return excel.checkStatus();
+	
+
+}
+
 }
