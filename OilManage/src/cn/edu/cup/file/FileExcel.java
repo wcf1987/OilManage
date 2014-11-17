@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -422,9 +423,9 @@ public class FileExcel {
 	public boolean checkCol(String type, String colName) {
 
 		if (type.equalsIgnoreCase("离心压缩机数据")
-				|| type.equalsIgnoreCase("往复式压缩机数据") ) {
-			String colNames[] = {"序号","名称", "管段类型", "管长(km)", "管内径(m)", "绝对粗糙度(m)",
-					"气体方程", "分段数" };
+				|| type.equalsIgnoreCase("往复式压缩机数据")) {
+			String colNames[] = { "序号", "名称", "管段类型", "管长(km)", "管内径(m)",
+					"绝对粗糙度(m)", "气体方程", "分段数" };
 			for (int i = 0; i < colNames.length; i++) {
 				if (colName.equalsIgnoreCase(colNames[i])) {
 					return false;
@@ -433,7 +434,7 @@ public class FileExcel {
 			return true;
 		}
 		if (type.equalsIgnoreCase("管道数据")) {
-			String colNames[] = {  "设备名称" };
+			String colNames[] = { "设备名称" };
 			for (int i = 0; i < colNames.length; i++) {
 				if (colName.equalsIgnoreCase(colNames[i])) {
 					return false;
@@ -442,8 +443,7 @@ public class FileExcel {
 			return true;
 		}
 		if (type.equalsIgnoreCase("阀数据")) {
-			String colNames[] = { "名称", "管段类型",
-					"分段数" };
+			String colNames[] = { "名称", "管段类型", "分段数" };
 			for (int i = 0; i < colNames.length; i++) {
 				if (colName.equalsIgnoreCase(colNames[i])) {
 					return false;
@@ -452,8 +452,7 @@ public class FileExcel {
 			return true;
 		}
 		if (type.equalsIgnoreCase("过滤器数据")) {
-			String colNames[] = { "名称", "管段类型","绝对粗糙度(m)",
-					"分段数","气体方程" };
+			String colNames[] = { "名称", "管段类型", "绝对粗糙度(m)", "分段数", "气体方程" };
 			for (int i = 0; i < colNames.length; i++) {
 				if (colName.equalsIgnoreCase(colNames[i])) {
 					return false;
@@ -461,7 +460,6 @@ public class FileExcel {
 			}
 			return true;
 		}
-		
 
 		return true;
 	}
@@ -710,140 +708,114 @@ public class FileExcel {
 		return a;
 
 	}
-public List<DeviceKV> getDiviceIn(String type, String name) {
-		Point e=new Point();
-		List<DeviceKV> a=new ArrayList<>();
-		
-		if(getTypeCodeByName(type)==0){
-			SheetContent sheet=getSheetByName(this,"节点数据");
-			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
-			List<String> line=sheet.sheetContent.get(row);
-			Map<String,String> map=sheet.getAttribute(line);
-			List<String> list=sheet.sheetContent.get(0);
-			list=list.subList(1, list.size());
-			for (Iterator<String> iter=list.iterator();iter.hasNext();) {
-				String key=iter.next();
-				String value=map.get(key);
-				DeviceKV KV=new DeviceKV();
-				KV.setName(key);
-				KV.setValue(value);
-				if(key.equals("序号")||key.equals("隶属关系")){
-					continue;
-				}
-				a.add(KV);
-			}
-			
-		}
-		if(getTypeCodeByName(type)==2){
-			SheetContent sheet=getSheetByName(this,"管段连接");
-			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
-			List<String> line=sheet.sheetContent.get(row);
-			Map<String,String> map=sheet.getAttribute(line);
-			List<String> list=sheet.sheetContent.get(0);
-			list=list.subList(1, list.size());
-			for (Iterator<String> iter=list.iterator();iter.hasNext();) {
-				String key=iter.next();
-				String value=map.get(key);
-				DeviceKV KV=new DeviceKV();
-				KV.setName(key);
-				KV.setValue(value);
-				if(key.equals("序号")||key.equals("设备名称")){
-					continue;
-				}
-				a.add(KV);
-			}
-			
-		}
-		if(getTypeCodeByName(type)==1){
-			TransTable temp=new TransTable(this, type);
-			a=temp.createData(name);
-			/*
-			SheetContent sheet=getSheetByName(this,"管段连接");	
-			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("设备名称"), name);
-			List<String> line=sheet.sheetContent.get(row);
-			Map<String,String> map=sheet.getAttribute(line);
-			List<String> list=sheet.sheetContent.get(0);
-			list=list.subList(1, list.size());
-			for (int i=0;i<BASE.length;i++) {
-				
-				String key=BASE[i];				
-				String value=map.get(key);				
-				DeviceKV KV=new DeviceKV();
-				KV.setName(key);
-				KV.setValue(value);
-				a.add(KV);
-			}
-						
-			String value=map.get("设备名称");				
-			DeviceKV KV=new DeviceKV();
-			KV.setName("压缩机名称");
-			KV.setValue(value);
-			a.add(KV);
-			
-			
-			 value=map.get("设备名称");				
-			 KV=new DeviceKV();
-			KV.setName("压缩机类型");
-			KV.setValue(type);
-			a.add(KV);
-			
-			sheet=getSheetByName(this,type);			
-			row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
-			 line=sheet.sheetContent.get(row);
-			 map=sheet.getAttribute(line);
-			 list=sheet.sheetContent.get(0);
-			list=list.subList(1, list.size());
-			if(type.equalsIgnoreCase("离心压缩机数据")){
-				for (int i=0;i<LXYSJ.length;i++) {
-					
-					String key=LXYSJ[i];				
-					 value=map.get(key);
-					 KV=new DeviceKV();
-					KV.setName(key);
-					KV.setValue(value);
-					a.add(KV);
-				}
-			}
-			if(type.equalsIgnoreCase("往复式压缩机数据")){
-				for (int i=0;i<WFYSJ.length;i++) {
-					
-					String key=WFYSJ[i];				
-					 value=map.get(key);
-					 KV=new DeviceKV();
-					KV.setName(key);
-					KV.setValue(value);
-					a.add(KV);
-				}
-				
-			}
-			*/
-		}
-		if(getTypeCodeByName(type)==3){
 
-			/*SheetContent sheet=getSheetByName(this,"管段连接");	
-			int row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("设备名称"), name);
-			List<String> line=sheet.sheetContent.get(row);
-			Map<String,String> map=sheet.getAttribute(line);			
-			
-			ArrayList<Note>=TransTable.findByType(type);
-			 
-			 for (int i=0;i<KEYS.length;i++) {
-					
-					String key=KEYS[i];				
-					String value=map.get(key);	
-					if(value==null){
-						value=map2.get(key);
-					}
-					DeviceKV KV=new DeviceKV();
-					KV.setName(key);
-					KV.setValue(value);
-					a.add(KV);
-				}*/
-			TransTable temp=new TransTable(this, type);
-			a=temp.createData(name);
+	public List<DeviceKV> getDiviceIn(String type, String name) {
+		Point e = new Point();
+		List<DeviceKV> a = new ArrayList<>();
+
+		if (getTypeCodeByName(type) == 0) {
+			SheetContent sheet = getSheetByName(this, "节点数据");
+			int row = sheet.getExcelDataIndex(sheet,
+					sheet.getTitleByName("名称"), name);
+			List<String> line = sheet.sheetContent.get(row);
+			Map<String, String> map = sheet.getAttribute(line);
+			List<String> list = sheet.sheetContent.get(0);
+			list = list.subList(1, list.size());
+			for (Iterator<String> iter = list.iterator(); iter.hasNext();) {
+				String key = iter.next();
+				String value = map.get(key);
+				DeviceKV KV = new DeviceKV();
+				KV.setName(key);
+				KV.setValue(value);
+				if (key.equals("序号") || key.equals("隶属关系")) {
+					continue;
+				}
+				a.add(KV);
+			}
+
+		}
+		if (getTypeCodeByName(type) == 2) {
+			SheetContent sheet = getSheetByName(this, "管段连接");
+			int row = sheet.getExcelDataIndex(sheet,
+					sheet.getTitleByName("名称"), name);
+			List<String> line = sheet.sheetContent.get(row);
+			Map<String, String> map = sheet.getAttribute(line);
+			List<String> list = sheet.sheetContent.get(0);
+			list = list.subList(1, list.size());
+			for (Iterator<String> iter = list.iterator(); iter.hasNext();) {
+				String key = iter.next();
+				String value = map.get(key);
+				DeviceKV KV = new DeviceKV();
+				KV.setName(key);
+				KV.setValue(value);
+				if (key.equals("序号") || key.equals("设备名称")) {
+					continue;
+				}
+				a.add(KV);
+			}
+
+		}
+		if (getTypeCodeByName(type) == 1) {
+			TransTable temp = new TransTable(this, type);
+			a = temp.createData(name);
+			/*
+			 * SheetContent sheet=getSheetByName(this,"管段连接"); int
+			 * row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("设备名称"),
+			 * name); List<String> line=sheet.sheetContent.get(row);
+			 * Map<String,String> map=sheet.getAttribute(line); List<String>
+			 * list=sheet.sheetContent.get(0); list=list.subList(1,
+			 * list.size()); for (int i=0;i<BASE.length;i++) {
+			 * 
+			 * String key=BASE[i]; String value=map.get(key); DeviceKV KV=new
+			 * DeviceKV(); KV.setName(key); KV.setValue(value); a.add(KV); }
+			 * 
+			 * String value=map.get("设备名称"); DeviceKV KV=new DeviceKV();
+			 * KV.setName("压缩机名称"); KV.setValue(value); a.add(KV);
+			 * 
+			 * 
+			 * value=map.get("设备名称"); KV=new DeviceKV(); KV.setName("压缩机类型");
+			 * KV.setValue(type); a.add(KV);
+			 * 
+			 * sheet=getSheetByName(this,type);
+			 * row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"),
+			 * name); line=sheet.sheetContent.get(row);
+			 * map=sheet.getAttribute(line); list=sheet.sheetContent.get(0);
+			 * list=list.subList(1, list.size());
+			 * if(type.equalsIgnoreCase("离心压缩机数据")){ for (int
+			 * i=0;i<LXYSJ.length;i++) {
+			 * 
+			 * String key=LXYSJ[i]; value=map.get(key); KV=new DeviceKV();
+			 * KV.setName(key); KV.setValue(value); a.add(KV); } }
+			 * if(type.equalsIgnoreCase("往复式压缩机数据")){ for (int
+			 * i=0;i<WFYSJ.length;i++) {
+			 * 
+			 * String key=WFYSJ[i]; value=map.get(key); KV=new DeviceKV();
+			 * KV.setName(key); KV.setValue(value); a.add(KV); }
+			 * 
+			 * }
+			 */
+		}
+		if (getTypeCodeByName(type) == 3) {
+
+			/*
+			 * SheetContent sheet=getSheetByName(this,"管段连接"); int
+			 * row=sheet.getExcelDataIndex(sheet, sheet.getTitleByName("设备名称"),
+			 * name); List<String> line=sheet.sheetContent.get(row);
+			 * Map<String,String> map=sheet.getAttribute(line);
+			 * 
+			 * ArrayList<Note>=TransTable.findByType(type);
+			 * 
+			 * for (int i=0;i<KEYS.length;i++) {
+			 * 
+			 * String key=KEYS[i]; String value=map.get(key); if(value==null){
+			 * value=map2.get(key); } DeviceKV KV=new DeviceKV();
+			 * KV.setName(key); KV.setValue(value); a.add(KV); }
+			 */
+			TransTable temp = new TransTable(this, type);
+			a = temp.createData(name);
 		}
 		return a;
-		
+
 	}
 
 	public void updateDevice(String type, String name, String proper,
@@ -862,23 +834,416 @@ public List<DeviceKV> getDiviceIn(String type, String name) {
 			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
 		}
 		if (getTypeCodeByName(type) == 1) {
-			TransTable temp=new TransTable(this, type);
+			TransTable temp = new TransTable(this, type);
 			temp.updateData(name, proper, newValue);
-			/*SheetContent sheet = getSheetByName(this, type);
-			int row = sheet.getExcelDataIndex(sheet,
-					sheet.getTitleByName("名称"), name);
-			sheet.editCell(row, sheet.getTitleByName(proper), newValue);*/
+			/*
+			 * SheetContent sheet = getSheetByName(this, type); int row =
+			 * sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
+			 * sheet.editCell(row, sheet.getTitleByName(proper), newValue);
+			 */
 		}
 		if (getTypeCodeByName(type) == 3) {
-			TransTable temp=new TransTable(this, type);
+			TransTable temp = new TransTable(this, type);
 			temp.updateData(name, proper, newValue);
-			/*SheetContent sheet = getSheetByName(this, type);
-			int row = sheet.getExcelDataIndex(sheet,
-					sheet.getTitleByName("名称"), name);
-			
-			sheet.editCell(row, sheet.getTitleByName(proper), newValue);*/
+			/*
+			 * SheetContent sheet = getSheetByName(this, type); int row =
+			 * sheet.getExcelDataIndex(sheet, sheet.getTitleByName("名称"), name);
+			 * 
+			 * sheet.editCell(row, sheet.getTitleByName(proper), newValue);
+			 */
 		}
 
 	}
+	public String checkNum(String numS,String a,String b){
+		if (numS == null || numS.equals("")) {
+			return a+"中，"+b+"要大于0";
+		}
+		Double temp;
+		try {
+			temp = Double.valueOf(numS);
+		} catch (NumberFormatException e) {
+			return a+"中，"+b+"要是数字";
 
+		}
+		if (temp <= 0) {
+			return a+"中，"+b+"要大于0";
+		}
+		return "OK";
+	}
+	public String checkNumLow(String numS,String a,String b){
+		if (numS == null || numS.equals("")) {
+			return a+"中，"+b+"要小于0";
+		}
+		Double temp;
+		try {
+			temp = Double.valueOf(numS);
+		} catch (NumberFormatException e) {
+			return a+"中，"+b+"要是数字";
+
+		}
+		if (temp > 0) {
+			return a+"中，"+b+"要小于0";
+		}
+		return "OK";
+	}
+	/*
+	  * 判断是否为整数 
+	  * @param str 传入的字符串 
+	  * @return 是整数返回true,否则返回false 
+	*/
+
+
+	  public static boolean isInteger(String str) {  
+	    Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");  
+	    return pattern.matcher(str).matches();  
+	  }
+
+	public String checkNumInt(String numS,String a,String b){
+		if (numS == null || numS.equals("")) {
+			return a+"中，"+b+"要大于0";
+		}
+		Double temp;
+		try {
+			temp = Double.valueOf(numS);
+		} catch (NumberFormatException e) {
+			return a+"中，"+b+"要是数字";
+
+		}
+		if (temp <= 0) {
+			return a+"中，"+b+"要大于0";
+		}
+		if (temp <= 0) {
+			return a+"中，"+b+"要大于0";
+		}
+		if(!isInteger(numS)){
+			return a+"中，"+b+"要是整数";
+		}
+		return "OK";
+	}
+	public String check1() {
+		// 一个模型中，至少要有一个气井、气源或分输点
+		SheetContent sheet = getSheetByName(this, "节点数据");
+		if (sheet != null) {
+			int row1 = sheet.getExcelDataIndex(sheet,
+					sheet.getTitleByName("隶属关系"), "气源");
+			int row2 = sheet.getExcelDataIndex(sheet,
+					sheet.getTitleByName("隶属关系"), "气源");
+			int row3 = sheet.getExcelDataIndex(sheet,
+					sheet.getTitleByName("隶属关系"), "气源");
+			if (row1 == -1 && row2 == -1 && row3 == -1) {
+				return "一个模型中，至少要有一个气井、气源或分输点";
+			}
+
+		}
+		return "OK";
+	}
+
+	public String check2() {
+		// 过滤器中，管长、管内径、上下游节点的压力要大于0
+		SheetContent sheet = getSheetByName(this, "管段连接");
+		SheetContent sheet2 = getSheetByName(this, "节点数据");
+		if (sheet != null&&sheet.getTitleByName("管段类型")!=null) {
+			List<Integer> rowList = sheet.getExcelDataIndexs(sheet,
+					sheet.getTitleByName("管段类型"), "Filter");
+			for (int i = 0; i < rowList.size(); i++) {
+				String stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("管长(km)"));
+				String re=checkNum(stemp,"过滤器","管长(km)");
+				if(!re.equals("OK")){
+					return re;
+				}			
+				
+				stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("管内径(m)"));
+				re=checkNum(stemp,"过滤器","管内径");
+				if(!re.equals("OK")){
+					return re;
+				}
+				
+				stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("上游节点"));
+				int row2=sheet2.getExcelDataIndex(sheet2, sheet.getTitleByName("名称"), stemp);
+				stemp = sheet2.getExcelData(sheet, row2,
+						sheet2.getTitleByName("节点压力(MPa)"));
+				
+				re=checkNum(stemp,"过滤器","上游节点压力");
+				if(!re.equals("OK")){
+					return re;
+				}
+				
+				stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("下游节点"));
+				row2=sheet2.getExcelDataIndex(sheet2, sheet.getTitleByName("名称"), stemp);
+				stemp = sheet2.getExcelData(sheet, row2,
+						sheet2.getTitleByName("节点压力(MPa)"));
+				re=checkNum(stemp,"过滤器","下游节点压力");
+				if(!re.equals("OK")){
+					return re;
+				}
+
+			}
+		}
+		return "OK";
+	}
+	public String check3() {
+		// 在阀的属性窗口中，管长、管内径、绝对粗糙度、上下游节点的压力要大于0
+		SheetContent sheet = getSheetByName(this, "管段连接");
+		SheetContent sheet2 = getSheetByName(this, "节点数据");
+		if (sheet != null&&sheet.getTitleByName("管段类型")!=null) {
+			List<Integer> rowList = sheet.getExcelDataIndexs(sheet,
+					sheet.getTitleByName("管段类型"), "Valve");
+			for (int i = 0; i < rowList.size(); i++) {
+				String stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("管长(km)"));
+				String re=checkNum(stemp,"阀","管长");
+				if(!re.equals("OK")){
+					return re;
+				}
+
+				stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("管内径(m)"));
+				re=checkNum(stemp,"阀","管内径");
+				if(!re.equals("OK")){
+					return re;
+				}
+				
+				stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("绝对粗糙度(m)"));
+				re=checkNum(stemp,"阀","绝对粗糙度");
+				if(!re.equals("OK")){
+					return re;
+				}
+				
+				stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("上游节点"));
+				int row2=sheet2.getExcelDataIndex(sheet2, sheet.getTitleByName("名称"), stemp);
+				stemp = sheet2.getExcelData(sheet, row2,
+						sheet2.getTitleByName("节点压力(MPa)"));
+				
+				re=checkNum(stemp,"阀","上游节点压力");
+				if(!re.equals("OK")){
+					return re;
+				}
+
+				stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("下游节点"));
+				row2=sheet2.getExcelDataIndex(sheet2, sheet.getTitleByName("名称"), stemp);
+				stemp = sheet2.getExcelData(sheet, row2,
+						sheet2.getTitleByName("节点压力(MPa)"));
+				re=checkNum(stemp,"阀","下游节点压力");
+				if(!re.equals("OK")){
+					return re;
+				}
+
+			}
+		}
+		return "OK";
+	}
+	
+	public String check4() {
+		// 在阀的属性窗口中，管长、管内径、绝对粗糙度、上下游节点的压力要大于0
+		SheetContent sheet = getSheetByName(this, "管段连接");
+		SheetContent sheet2 = getSheetByName(this, "节点数据");
+		SheetContent sheet3 = getSheetByName(this, "往复式压缩机数据");
+		if (sheet != null&&sheet.getTitleByName("管段类型")!=null) {
+			List<Integer> rowList = sheet.getExcelDataIndexs(sheet,
+					sheet.getTitleByName("管段类型"), "ReciCompressor");
+			for (int i = 0; i < rowList.size(); i++) {
+				String stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("设备名称"));
+				int row=sheet3.getExcelDataIndex(sheet3, sheet3.getTitleByName("名称"), stemp);
+				
+
+				stemp = sheet3.getExcelData(sheet3, row,
+						sheet3.getTitleByName("相对余隙容积α"));
+				String re=checkNum(stemp,"往复式压缩机数据","相对余隙容积α");
+				if(!re.equals("OK")){
+					return re;
+				}
+				
+				stemp = sheet3.getExcelData(sheet3, row,
+						sheet3.getTitleByName("活塞直径D(m)"));
+				re=checkNum(stemp,"往复式压缩机数据","活塞直径D(m)");
+				if(!re.equals("OK")){
+					return re;
+				}
+				
+				stemp = sheet3.getExcelData(sheet3, row,
+						sheet3.getTitleByName("活塞行程S(m)"));
+				re=checkNum(stemp,"往复式压缩机数据","活塞行程S(m)");
+				if(!re.equals("OK")){
+					return re;
+				}
+				
+				stemp = sheet3.getExcelData(sheet3, row,
+						sheet3.getTitleByName("气缸级数n"));
+				re=checkNumInt(stemp,"往复式压缩机数据","气缸级数n");
+				if(!re.equals("OK")){
+					return re;
+				}
+				
+				stemp = sheet3.getExcelData(sheet3, row,
+						sheet3.getTitleByName("转速N(r/min)"));
+				re=checkNum(stemp,"往复式压缩机数据","转速N(r/min)");
+				if(!re.equals("OK")){
+					return re;
+				}
+				stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("上游节点"));
+				int row2=sheet2.getExcelDataIndex(sheet2, sheet.getTitleByName("名称"), stemp);
+				stemp = sheet2.getExcelData(sheet, row2,
+						sheet2.getTitleByName("节点压力(MPa)"));
+				re=checkNum(stemp,"往复式压缩机数据","上游节点压力");
+				if(!re.equals("OK")){
+					return re;
+				}
+				
+
+				stemp = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("下游节点"));
+				row2=sheet2.getExcelDataIndex(sheet2, sheet.getTitleByName("名称"), stemp);
+				stemp = sheet2.getExcelData(sheet, row2,
+						sheet2.getTitleByName("节点压力(MPa)"));
+				re=checkNum(stemp,"往复式压缩机数据","下游节点压力");
+				if(!re.equals("OK")){
+					return re;
+				}
+
+			}
+		}
+		return "OK";
+	}
+	
+	public String check5(String type) {
+		// 在气井和气源属性窗口中，流体的质量含气率需在(0,1)区间内，流体中的固体颗粒浓度需在[0,0.768]区间内，流体温度需大于0，体积流量和质量流量要小于0 ；
+
+		SheetContent sheet = getSheetByName(this, "节点数据");
+
+		if (sheet != null) {
+			List<Integer> rowList = sheet.getExcelDataIndexs(sheet,
+					sheet.getTitleByName("隶属关系"), type);
+			for (int i = 0; i < rowList.size(); i++) {
+				String stemp1 = sheet.getExcelData(sheet, rowList.get(i),
+						sheet.getTitleByName("名称"));
+				String stemp;
+				Integer col=sheet.getTitleByName("流体的质量含气率");
+		
+				if(col!=null){
+					stemp = sheet.getExcelData(sheet, rowList.get(i),col);
+					String re=checkNum(stemp,type,"流体的质量含气率");
+					if(!re.equals("OK")){
+						return re;
+					}
+					double temp = Double.valueOf(stemp);
+					if(temp<0||temp>1){
+						return type+"中，"+"流体的质量含气率"+"要大于0小于1";
+					}
+				}
+				
+				col=sheet.getTitleByName("流体中的固体颗粒浓度(g/s)");
+				
+				if(col!=null){
+					stemp = sheet.getExcelData(sheet, rowList.get(i),col);
+					String re=checkNum(stemp,type,"流体中的固体颗粒浓度");
+					if(!re.equals("OK")){
+						return re;
+					}
+					double temp = Double.valueOf(stemp);
+					if(temp<0||temp>0.768){
+						return type+"中，"+"流体的质量含气率"+"要大于0小于0.768";
+					}
+				}
+				
+				col=sheet.getTitleByName("流体温度");				
+				if(col!=null){
+					stemp = sheet.getExcelData(sheet, rowList.get(i),col);
+					String re=checkNum(stemp,type,"流体温度");
+					if(!re.equals("OK")){
+						return re;
+					}					
+				}
+				
+				col=sheet.getTitleByName("体积流量");				
+				if(col!=null){
+					stemp = sheet.getExcelData(sheet, rowList.get(i),col);
+					String re=checkNumLow(stemp,type,"体积流量");
+					if(!re.equals("OK")){
+						return re;
+					}					
+				}
+				
+				col=sheet.getTitleByName("质量流量");				
+				if(col!=null){
+					stemp = sheet.getExcelData(sheet, rowList.get(i),col);
+					String re=checkNumLow(stemp,type,"质量流量");
+					if(!re.equals("OK")){
+						return re;
+					}					
+				}
+
+			}
+		}
+		return "OK";
+	}
+	public String check6() {
+		// 在气井和气源属性窗口中，流体的质量含气率需在(0,1)区间内，流体中的固体颗粒浓度需在[0,0.768]区间内，流体温度需大于0，体积流量和质量流量要小于0 ；
+
+		SheetContent sheet = getSheetByName(this, "节点数据");
+
+		if (sheet != null) {		
+			for (int i = 1; i < sheet.getSize(); i++) {
+				String stemp1 = sheet.getExcelData(sheet, i,
+						sheet.getTitleByName("名称"));
+				String stemp;
+				Integer col=sheet.getTitleByName("控制模式");
+				stemp = sheet.getExcelData(sheet, i,col);
+				if(stemp!=null&&!stemp.equals("")){
+					if(stemp.equals("Pressure")){
+						col=sheet.getTitleByName("节点压力(MPa)");
+						stemp = sheet.getExcelData(sheet, i,col);
+						String re=checkNum(stemp,"节点","节点压力");
+						if(!re.equals("OK")){
+							return re;
+						}	
+					}
+				}else{
+					return "节点数据中，控制模式不能为空";
+				}			
+
+			}
+		}
+		return "OK";
+	}
+	public String checkStatus() {
+		String s=check1();
+		if(!s.equals("OK")){
+			return s;
+		}
+		s=check2();
+		if(!s.equals("OK")){
+			return s;
+		}
+		s=check3();
+		if(!s.equals("OK")){
+			return s;
+		}
+		s=check4();
+		if(!s.equals("OK")){
+			return s;
+		}
+		s=check5("气井");
+		if(!s.equals("OK")){
+			return s;
+		}
+		s=check5("气源");
+		if(!s.equals("OK")){
+			return s;
+		}
+		s=check6();
+		if(!s.equals("OK")){
+			return s;
+		}
+		
+		return "OK";
+	}
 }

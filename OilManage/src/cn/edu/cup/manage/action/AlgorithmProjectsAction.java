@@ -306,9 +306,15 @@ public class AlgorithmProjectsAction {
 		ProCalcManage pcm=ProCalcManage.getInstance();
 		pcm.checkRunStatus();
 		ProjectInfo proinfo=new ProjectInfo(this.ID);
+		
 		if(proinfo.getStatus()==1){
 			msg="工程正在运行中，请稍后或强项终止工程运行";
 			status=1;
+			return "SUCCESS";
+		}
+		String s=proinfo.checkInputStatus();
+		if(!s.equals("OK")){
+			msg=s;
 			return "SUCCESS";
 		}
 		status=1;

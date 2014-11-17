@@ -345,6 +345,13 @@ function checkPipe(p){
 	}
 	return false;
 }
+function checkQY(p){
+	if(p.TYPE=='集气增压站'||p.TYPE=='中央处理厂'||p.TYPE=='主动增压点'||p.TYPE=='离心压缩机'||p.TYPE=='往复式压缩机'||p.TYPE=='阀'||p.TYPE=='过滤器')
+	{
+		return true;
+	}
+	return false;
+}
 function checkAllPipe(p){
 	if(p.TYPE=='集气增压站'||p.TYPE=='中央处理厂'||p.TYPE=='主动增压点'||p.TYPE=='离心压缩机'||p.TYPE=='往复式压缩机'||p.TYPE=='管道')
 	{

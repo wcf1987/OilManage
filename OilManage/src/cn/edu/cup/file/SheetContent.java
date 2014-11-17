@@ -57,7 +57,7 @@ public class SheetContent {
 		list.set(index,valueNew);
 		return list;
 	}
-	public int getTitleByName(String name){
+	public Integer getTitleByName(String name){
 		return this.sheetTitle.get(name);
 	}
 	public int buildContent(int page, int rows){
@@ -470,34 +470,19 @@ public class SheetContent {
 				Line e2=new Line();
 				String midlle;
 				
-				if(sheetTitle.get("管段类型")!=null&&lineStr.get(sheetTitle.get("管段类型")).equalsIgnoreCase("Pipe")){
-					
-					
-					// midlle=lineStr.get(this.sheetTitle.get("名称"));
+				if((sheetTitle.get("管段类型")!=null&&lineStr.get(sheetTitle.get("管段类型")).equalsIgnoreCase("Pipe"))||(sheetTitle.get("管段类型")==null)){
 					e1.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
 					e1.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));	
 					e1.setType("连接");
 					temp.add(e1);
-				}else{
-					midlle=lineStr.get(this.sheetTitle.get("设备名称"));
-					/*if(sheetTitle.get("管段类型")!=null){
-						
-						 
-						
-										
-					}else{
-						 midlle=lineStr.get(this.sheetTitle.get("名称"));
-					}*/
-					
+				}else{					
+					midlle=lineStr.get(this.sheetTitle.get("设备名称"));					
 					e1.setStart(lineStr.get(this.sheetTitle.get("上游节点")));
 					e1.setEnd(midlle);
-					//e1.setLength(lineStr.get(this.sheetTitle.get("")));
 					e1.setType("连接");
 					e2.setStart(midlle);
 					e2.setEnd(lineStr.get(this.sheetTitle.get("下游节点")));
-					//e2.setLength(lineStr.get(this.sheetTitle.get("")));
 					e2.setType("连接");
-					//e.setAttribute(getAttribute(lineStr));
 					temp.add(e1);
 					temp.add(e2);
 					
@@ -564,6 +549,17 @@ public class SheetContent {
 			}
 		}
 		return -1;
+	}
+	public  List<Integer> getExcelDataIndexs(SheetContent sheet, int col, String value) {
+		List<List<String>> t1=sheet.sheetContent;
+		List<Integer> li=new ArrayList<Integer>();
+		for(int i=1;i<t1.size();i++){
+			List<String> t2=t1.get(i);
+			if(t2!=null&&t2.get(col)!=null&&t2.get(col).equalsIgnoreCase(value)){
+				li.add(i);
+			}
+		}
+		return li;
 	}
 	public String getExcelData(SheetContent sheet, int i,int j) {
 		List<List<String>> t1=sheet.sheetContent;
