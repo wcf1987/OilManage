@@ -207,16 +207,18 @@ function exportOutputExcel(){
 
 function showData(type){
 	
-	if(type=="outputBase"||type=="outputFee"||type=="outputPosition"){
+	if(type=="outputBase"||type=="outputFee"||type=="outputPosition"||type=="outputGisMap"){
 		$(".outputDataDiv").each(function(index,item){
 			$(item).hide();
 		});
 		$("#"+type).show();
-	}else if(type=="inputBase"||type=="inputFunction"||type=="inputCondition"){
+		$("#showOutputMap").click();
+	}else if(type=="inputBase"||type=="inputFunction"||type=="inputCondition"||type=="inputGisMap"||type=="inputDcMap"){
 		$(".inputDataDiv").each(function(index,item){
 			$(item).hide();
 		});
 		$("#"+type).show();
+		$("#showInputMap").click();
 	}
 }
 
@@ -249,3 +251,4 @@ function showTab(type){
 	    }
 	}
 }
+

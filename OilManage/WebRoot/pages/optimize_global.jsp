@@ -94,8 +94,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div class="container-fluid">
 				<div class="row-fluid row-fluid2">
 					<div class="span12">
-					<div class="page-header">
-						<h2>整体设计&nbsp;<small>整装区块设计</small></h2>
+					<div class="head">
+						<h2>整体设计</h2>
 						<input id="curAlgID" style="display:none" value="7"/>
 						<input id="proID" style="display:none" value=""/>
 						

@@ -81,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!--   
   <body  id="body"  onload="initLight();">
  -->
- <body >
+ <body id="body">
 	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
 	</div>  
@@ -90,8 +90,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div class="container-fluid">
 				<div class="row-fluid row-fluid2">
 					<div class="span12">
-					<div class="page-header">
-						<h2>系统扩建设计&nbsp;</h2>
+					<div class="head">
+						<h2>系统扩建设计</h2>
 						<input id="curAlgID" style="display:none" value="6"/>
 						<input id="proID" style="display:none" value=""/>
 						<input id="inputSheetNum" style="display:none" value="4"/>

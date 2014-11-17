@@ -5,8 +5,8 @@
 <script type="text/javascript" src="js/map_gis.js"></script>	
 	   
 <div class="container marketing" style="width:1050px;">
-<button id="showInputMap" type="button"  style="position:relative; top:50px;left:50px;z-index:10;">工程输入地图展示</button>
-<button id="showOutputMap" type="button" style="position:relative; top:50px;left:50px;z-index:10;">工程输出地图展示</button>
+<button id="showInputMap" type="button"  style="display:none;position:relative; top:50px;left:50px;z-index:10;">工程输入地图展示</button>
+<button id="showOutputMap" type="button" style="display:none;position:relative; top:50px;left:50px;z-index:10;">工程输出地图展示</button>
  	<!-- Three columns of text below the carousel -->
   	<div class="row" style="margin-bottom:0px;">
 

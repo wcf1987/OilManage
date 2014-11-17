@@ -4,8 +4,10 @@
 <!-- Wrap the rest of the page in another container to center all the content. -->
    
 <div class="container marketing" style="width:1050px;">
-<div style="background-color:white;width:1050px;"><button id="showInputMap" type="button"  style="position:relative; top:50px;left:50px;z-index:10;">工程输入地图展示</button>
-<button id="showOutputMap" type="button" style="position:relative; top:50px;left:50px;z-index:10;">工程输出地图展示</button></div>
+<div style="background-color:white;width:1050px;">
+<button id="showInputMap" type="button"  style="display:none;position:relative; top:50px;left:50px;z-index:10;">工程输入地图展示</button>
+<button id="showOutputMap" type="button" style="display:none;position:relative; top:50px;left:50px;z-index:10;">工程输出地图展示</button>
+</div>
   	<div class="row" style="margin-bottom:0px;">
   		<!-- å°å¾ -->
   		<div id="mapgis" class="img-rounded" style="border:3px solid #333300;box-shadow:12px 12px 10px #333300;border-radius: 11px"></div>
