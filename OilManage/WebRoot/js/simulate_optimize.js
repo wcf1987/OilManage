@@ -209,27 +209,29 @@ function exportOutputExcel(){
 function showData(type){
 	
 	if(type=="outputBase"||type=="outputFee"||type=="outputPosition"||type=="outputGisMap"){
-		$(".outputDataDiv").each(function(index,item){
+		initMapGis();//地图模型的加载
+		var proID=$("#proID").val();
+		var algID=$("#curAlgID").val();
+		showMap(proID,algID,'Out');	
+		$(".outputDataDiv").each(function(index,item){//tab切换
 			$(item).hide();
 		});
 		$("#"+type).show();
-		$("#showOutputMap").click();
 	}else if(type=="inputBase"||type=="inputFunction"||type=="inputCondition"||type=="inputGisMap"||type=="inputDcMap"){
-		if($("#curAlgID").val()==1||$("#curAlgID").val()==2||$("#curAlgID").val()==3||$("#curAlgID").val()==4){
+		if($("#curAlgID").val()==1||$("#curAlgID").val()==2||$("#curAlgID").val()==3||$("#curAlgID").val()==4){//笛卡尔模型的加载
 			tabtools.load();
 		}else{
 			
 		}
-		initMapGis();
+		initMapGis();//地图模型的加载
 		var proID=$("#proID").val();
 		var algID=$("#curAlgID").val();
-		showMap(proID,algID,'In');
-	  
-		$(".inputDataDiv").each(function(index,item){
+		showMap(proID,algID,'In');	  
+		$(".inputDataDiv").each(function(index,item){//tab切换
 			$(item).hide();
 		});
 		$("#"+type).show();
-		$("#showInputMap").click();
+	
 		
 	}
 }
@@ -240,16 +242,15 @@ function showTab(type){
 	});
 	$("#"+type).show();
 	if(type=='run_tab'){
-		//runAlg(1);
-		if($("#curAlgID").val()==1||$("#curAlgID").val()==2||$("#curAlgID").val()==3||$("#curAlgID").val()==4){
-			tabtools.load();
-		}else{
-			
-		}
-			initMapGis();
-		  var proID=$("#proID").val();
-		  var algID=$("#curAlgID").val();
-		  showMap(proID,algID,'In');
+//		if($("#curAlgID").val()==1||$("#curAlgID").val()==2||$("#curAlgID").val()==3||$("#curAlgID").val()==4){
+//			tabtools.load();
+//		}else{
+//			
+//		}
+//			initMapGis();
+//		  var proID=$("#proID").val();
+//		  var algID=$("#curAlgID").val();
+//		  showMap(proID,algID,'In');
 	}
 	if(type=='output_tab'){
 		//runAlg(1);

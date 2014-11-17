@@ -94,7 +94,7 @@ function showMap(proid,algid,Inorout) {
 	if(Inorout=="In"){
 		showMapIn(proid,algid,Inorout);
 	}else{
-		showMapIn(proid,algid,"In");
+		showMapIn(proid,algid,"In");//如果是查看输出地图，则先加载输入
 		showMapIn(proid,algid,Inorout);
 	}
 }
@@ -110,16 +110,16 @@ var mapWforGPS;
 
 function initMapGis(){
 	if(mapGis==null){
-	$("#showInputMap").bind("click",function(){
-		  var proID=$("#proID").val();
-		  var algID=$("#curAlgID").val();
-		  showMap(proID,algID,'In');
-		});
-	$("#showOutputMap").bind("click",function(){
-		  var proID=$("#proID").val();
-		  var algID=$("#curAlgID").val();
-		  showMap(proID,algID,'Out');
-		});
+//	$("#showInputMap").bind("click",function(){
+//		  var proID=$("#proID").val();
+//		  var algID=$("#curAlgID").val();
+//		  showMap(proID,algID,'In');
+//		});
+//	$("#showOutputMap").bind("click",function(){
+//		  var proID=$("#proID").val();
+//		  var algID=$("#curAlgID").val();
+//		  showMap(proID,algID,'Out');
+//		});
 	mapGis = new BMap.Map("mapgis",{mapType: BMAP_HYBRID_MAP});
 	var point = new BMap.Point(116.404, 39.915);    //
 	mapGis.centerAndZoom(point,8);                     // 
