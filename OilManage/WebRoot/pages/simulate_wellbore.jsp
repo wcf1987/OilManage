@@ -62,7 +62,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/colorPicker_new.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="css/tabs.css" />
-	<!-- <link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/processui.css" />  -->
 	<!-- 自定义 -->
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>	
 	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>		
@@ -110,21 +109,58 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						 -->
 					</div>
 					
-					
-					<div id="father_tab" class="tab-container">
-						<ul class='etabs'>
+				
+					<div id="father_tab" class="tab-container" >
+					<!-- 	<ul class='etabs'>
 						    <li class='tab'><button id="input_tab_button" onclick="showTab('input_tab')">输入</button></li>
 						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">查看运行</button></li>
 						    <li class='tab'><button id="output_tab_button" onclick="showTab('output_tab')">输出</button></li>						    
-					    </ul>  
+					    </ul>  --> 
+				<!-- 	    <div  style="float:left;">
+							<img  style="width:100px"  src="images/jingtong.png" />
+						</div> -->
+						<div>
 						<div id="input_tab" class="father_tab">				
-							<%@ include file="simulate_common/input_tab.jsp" %>
+							<div style="background-color:#fff;padding:5px;border:2px solid;height:40px;">
+								<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="showData('inputBase')">输入数据</button></div>
+								<div style="float:left;height:30px;width:120px;margin-right:10px;"><input type="file" name="importExcel" id="importExcel"/></div> 
+								<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="saveExcel()">保存数据</button></div>						
+								<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>
+							</div>
+							<div id="inputBase"  class="inputDataDiv">
+								<!-- <div class="tab-title">基础数据</div> -->
+								<div id="input_base_div">
+								</div>
+							</div>
+							<div id="inputCondition" class="inputDataDiv" style="display:none">
+								<div class="tab-title">约束条件</div>
+								<div id="input_condition_div">
+								</div>
+							</div>
+							
+							<div id="inputFunction" class="inputDataDiv"  style="display:none">
+								<div class="tab-title">问题描述</div>
+								<div id="input_function_div">
+								</div>
+							</div>
+							<div id="inputGisMap" class="inputDataDiv" style="display:none">
+								<%@ include file="simulate_common/gismap.jsp" %>
+							</div>
+							<div id="inputDcMap" class="inputDataDiv" style="display:none">
+								<%@ include file="simulate_common/dcmodel.jsp" %>
+							</div>
 			    		</div>
-			    		<div id="run_tab" class="father_tab" style="display:none">
-							<%@ include file="simulate_common/run_tab.jsp" %>
+			    		<div id="run_tab" class="father_tab" style="margin-top:42px;">
+			    			
+			    			<button onclick="run_load_output()" style="margin-top:20px;margin-left:20px">计算井底流压</button>
+						<%-- 	<%@ include file="simulate_common/run_tab.jsp" %> --%>
 			    		</div>
-			    		<div id="output_tab" class="father_tab" style="display:none">
-							<%@ include file="simulate_common/output_tab.jsp" %>
+			    		<div id="output_tab" class="father_tab">
+							<div id="outputBase" class="outputDataDiv" style="display:block">
+								<div id="output_base_div">
+								</div>
+							</div>				
+			    		</div>
 			    		</div>
 					</div>	            			
 										
@@ -148,5 +184,53 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </body>
   
 </html>
+<script>
+function run_load_output(){
+	$.ajax({
+		type:'post',
+		async: false,  
+		url:'runAlgPro.action',
+		data:{
+			ID:$("#proID").val()
+		},
+		dataType:'json',
+	    beforeSend:function(XMLHttpRequest){
+	    	$("#outputarea").text("");
+	    	intervalID=setInterval ("listLog()", 5000);//每隔一段时间去请求日志信息
+	    	//$("#isRunning").css({display:"block",top:"15%",left:"55%",position:"absolute"});
+	    
+	    },
+		success:function(data){				
+			//$("#isRunning").hide();		
+			if(data.msg==null||data.msg==""){
+				//alert("运行结束！")
+			}else{
+				alert(data.msg);
+			}					
+		},
+		error:function(msg){						
+			alert(msg);	
+		}
+	});
+	
+	var proid=$("#proID").val();
+	var sid = 1;
+	var algid = $("#curAlgID").val();
+	var outputSheetNum=$("#outputSheetNum").val();
+	var inOrOut="Out";
+	var sheetDiv = "#output-sheet";
+	var pageDiv = "#output-pager";
+	var delID="output-delsheet";
+	for(var i=0;i<outputSheetNum;i++){
+		var sheetgrid = new SheetGrid();
+		sheetgrid.GetDynamicCols(i, algid,inOrOut);
+		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);		
+	}
+	var sheetGrid=new SheetGrid();
+	sheetGrid.reloadGrid();
+}
 
+
+
+</script>
 	
