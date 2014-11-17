@@ -52,19 +52,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script defer="defer" type="text/javascript" src="editor/lib/kinecttab.js"></script>
 	<script  type="text/javascript" src="editor/lib/pipe.js"></script>
 		
-	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4bfe7b8632739c89a1b8e95529da1d97"></script>
-	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
-	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
-	<script type="text/javascript" src="http://api.map.baidu.com/library/MapWrapper/1.2/src/MapWrapper.min.js"></script>  
-		<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/changeMore.js"></script>
-	<script type="text/javascript" src="js/map_gis.js"></script>
 	
 	<script defer="defer" type="text/javascript" src="js/global.js"></script>
 	<script defer="defer" type="text/javascript" src="js/diagram.js"></script>
 	<script defer="defer" type="text/javascript" src="js/dynamicSheet.js"></script>
 	<script defer="defer" type="text/javascript" src="js/project.js"></script>	
 	<script defer="defer" type="text/javascript" src="js/simulate_optimize.js"></script>
-		<script defer="defer" type="text/javascript" src="js/PipeCharts.js"></script>	
+	<script defer="defer" type="text/javascript" src="js/PipeCharts.js"></script>	
 	<link type='text/css' href='editor/assets/simplemodal/css/diagramo.css' rel='stylesheet' media='screen' />
 	<link rel="stylesheet" media="screen" type="text/css" href="editor/assets/css/colorPicker_new.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="css/tabs.css" />
@@ -75,7 +69,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/simulate_optimize.css"/>
 	<link rel="stylesheet" type="text/css" href="css/dynamicSheet.css" />
 	
-
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4bfe7b8632739c89a1b8e95529da1d97"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/MapWrapper/1.2/src/MapWrapper.min.js"></script>  
+	<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/changeMore.js"></script>
+	<script type="text/javascript" src="js/map_gis.js"></script>
+	
   </head>
     
   
@@ -89,8 +89,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div class="container-fluid">
 				<div class="row-fluid row-fluid2">
 					<div class="span12">
-					<div class="page-header">
-						<h2>井底流压计算&nbsp;</h2>
+					<div class="head">
+						<h2>井底流压计算</h2>
 						
 						<input id="tempStr1" style="display:none" value=""/>
 						<input id="tempStr2" style="display:none" value=""/>
@@ -114,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div id="father_tab" class="tab-container">
 						<ul class='etabs'>
 						    <li class='tab'><button id="input_tab_button" onclick="showTab('input_tab')">输入</button></li>
-						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">运行</button></li>
+						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">查看运行</button></li>
 						    <li class='tab'><button id="output_tab_button" onclick="showTab('output_tab')">输出</button></li>						    
 					    </ul>  
 						<div id="input_tab" class="father_tab">				

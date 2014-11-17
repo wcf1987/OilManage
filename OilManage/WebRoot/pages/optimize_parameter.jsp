@@ -82,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
     
   
-  <body  id="body" >
+  <body id="body">
 
 	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
@@ -92,8 +92,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div class="container-fluid">
 				<div class="row-fluid row-fluid2">
 					<div class="span12">
-					<div class="page-header">
-						<h2>参数设计&nbsp;<small>整装区块设计</small></h2>
+					<div class="head">
+						<h2>参数设计</h2>
 						<input id="curAlgID" style="display:none" value="9"/>
 						<input id="proID" style="display:none" value=""/>
 						<input id="inputSheetNum" style="display:none" value="16"/>
@@ -114,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div id="father_tab" class="tab-container">
 						<ul class='etabs'>
 						    <li class='tab'><button id="input_tab_button" onclick="showTab('input_tab')">输入</button></li>
-						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">运行</button></li>
+						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">查看运行</button></li>
 						    <li class='tab'><button id="output_tab_button" onclick="showTab('output_tab')">输出</button></li>							    
 					    </ul>  
 						<div id="input_tab" class="father_tab">				

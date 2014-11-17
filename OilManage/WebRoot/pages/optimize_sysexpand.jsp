@@ -73,7 +73,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 自定义 -->
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>	
 	<link rel="stylesheet" type="text/css" href="css/diagram.css"/>		
-	<link rel="stylesheet" type="text/css" href="css/simulate_hydraulic.css"/>
 	<link rel="stylesheet" type="text/css" href="css/dynamicSheet.css" />
 	<link rel="stylesheet" type="text/css" href="css/simulate_optimize.css" />
 
@@ -82,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!--   
   <body  id="body"  onload="initLight();">
  -->
- <body >
+ <body id="body">
 	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
 	</div>  
@@ -91,8 +90,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div class="container-fluid">
 				<div class="row-fluid row-fluid2">
 					<div class="span12">
-					<div class="page-header">
-						<h2>系统扩建设计&nbsp;</h2>
+					<div class="head">
+						<h2>系统扩建设计</h2>
 						<input id="curAlgID" style="display:none" value="6"/>
 						<input id="proID" style="display:none" value=""/>
 						<input id="inputSheetNum" style="display:none" value="4"/>
@@ -113,7 +112,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div id="father_tab" class="tab-container">
 						<ul class='etabs'>
 						    <li class='tab'><button id="input_tab_button" onclick="showTab('input_tab')">输入</button></li>
-						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">运行</button></li>
+						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">查看运行</button></li>
 						    <li class='tab'><button id="output_tab_button" onclick="showTab('output_tab')">输出</button></li>						    
 					    </ul>  
 						<div id="input_tab" class="father_tab">				

@@ -793,7 +793,7 @@ function loadAuthorOptions(){
 	}
 
 function createNewProject(){
-	loadAuthorOptions();//加载作者选项		
+	//loadAuthorOptions();//加载作者选项		
 	$('#add_project_modal').modal();
 	$("#addProjectForm").validate({
 		debug:true,
@@ -803,17 +803,11 @@ function createNewProject(){
 		rules:{
 			name:{
 				required:true
-			},
-			authorID:{
-				required:true
 			}
 		},
 		messages:{
 			name:{
 				required:"名称不能为空！"
-			},
-			authorID:{
-				required:"请选择作者！"
 			}
 		},
 		submitHandler:function(){

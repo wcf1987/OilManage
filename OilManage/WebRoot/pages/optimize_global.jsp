@@ -94,8 +94,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div class="container-fluid">
 				<div class="row-fluid row-fluid2">
 					<div class="span12">
-					<div class="page-header">
-						<h2>整体设计&nbsp;<small>整装区块设计</small></h2>
+					<div class="head">
+						<h2>整体设计</h2>
 						<input id="curAlgID" style="display:none" value="7"/>
 						<input id="proID" style="display:none" value=""/>
 						
@@ -117,7 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div id="father_tab" class="tab-container">
 						<ul class='etabs'>
 						    <li class='tab'><button id="input_tab_button" onclick="showTab('input_tab')">输入</button></li>
-						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">运行</button></li>
+						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">查看运行</button></li>
 						    <li class='tab'><button id="output_tab_button" onclick="showTab('output_tab')">输出</button></li>						    
 					    </ul>  
 			    		<div id="input_tab" class="father_tab">				

@@ -4,7 +4,7 @@
 	<textarea  id="outputarea" name="outputarea" disabled="">
 	</textarea>
 
-	<%@ include file="gismap.jsp" %>
+	<%-- <%@ include file="gismap.jsp" %> --%>
 </div>
 
 

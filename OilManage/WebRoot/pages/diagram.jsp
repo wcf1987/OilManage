@@ -260,10 +260,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >类型：</label></td>
 		      				<td><input id="type" type="text" class="input2" name="type" /></td>
 		      			</tr>
-		      			<tr>
+		     		    <tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">作者：</label></td>
 			        		<td><select id="authorID" name="authorID"></select><em style="color:red">*</em></td>   						
-		      			</tr>
+		      			</tr> 
 		      				    				
 				   </table>
 				   <div class="modal-footer">
