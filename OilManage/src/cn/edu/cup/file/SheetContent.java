@@ -348,10 +348,10 @@ public class SheetContent {
 				double x=0;
 				//col=a.getTitleByName("Y坐标(m)");
 				double y=0;
-				
+				if(row>-1){
 				Map attr1=a.getAttribute(a.sheetContent.get(row));
 				e.addAttr(attr1);
-				
+				}
 				
 				e.setGeodeticCoordinatesX(x);
 				e.setGeodeticCoordinatesY(y);

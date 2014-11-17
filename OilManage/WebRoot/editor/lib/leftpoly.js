@@ -38,10 +38,9 @@ function() {
 				if(proper=='控制模式'){
 					//this.edittype="select";
 					//this.editoptions={"value":{'Flow':'Flow','Pressure':Pressure}};
-					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{}} });
 					
 					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{'Flow':'Flow','Pressure':'Pressure'}} });
-					return ;
+					return value;
 				}
 				
 				if(proper=='节点压力(MPa)'){
@@ -57,7 +56,7 @@ function() {
 							jQuery("#PointPraList").setColProp('value',{edittype:'text',editoptions:{maxlength:20,value:""}});
 						}
 					}
-					return ;
+					return value;
 				}
 				if(proper=='节点流量(m3/d)'){
 						var rowC=searchGrid(jQuery("#PointPraList"),'name','控制模式');
@@ -72,34 +71,31 @@ function() {
 								
 							}	
 						}
-						return ;
+						return value;
 					}
 				if(proper=='隶属关系'){
 					//this.edittype="select";
 					//"气井","气源","分输点","设备连接点";
-					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{}} });
 					
 					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{'气井':'气井','气源':'气源','分输点':'分输点','设备连接点':'设备连接点'}} });
-					return ;
+					return value;
 				}
 				if(proper=='气体方程'){
 					//this.edittype="select";
 					//this.editoptions={"value":{'Flow':'Flow','Pressure':Pressure}};
-					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{}} });
 					
 					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{'Colebrook':'Colebrook','FormerSU':'FormerSU','PanA':'PanA','PanB':'PanB','Weymouth':'Weymouth'}} });
-					return ;
+					return value;
 				}
 				if(proper=='压缩机类型'){
 					//this.edittype="select";
 					//this.editoptions={"value":{'Flow':'Flow','Pressure':Pressure}};
-					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{}} });
 					
 					jQuery("#PointPraList").setColProp('value',{edittype:'select', editoptions:{value:{'离心压缩机':'离心压缩机','往复式压缩机':'往复式压缩机'}} });
-					return ;
+					return value;
 				}
-				jQuery("#PointPraList").setColProp('value',{editable:true,edittype:'text',editoptions:{value:"",maxlength:20} });
-				
+				jQuery("#PointPraList").setColProp('value',{editable:true,edittype:'text',editoptions:{value:value,maxlength:20} });
+				return value;
 			},
 			beforeSubmitCell : function(rowid,celname,value,iRow,iCol) { 
 				//alert(/sd/);
@@ -109,7 +105,7 @@ function() {
 				var proper=jQuery("#PointPraList").jqGrid("getRowData", iRow).name;
 				var propervalue=value;
 				if(proper=='控制模式'){
-					if(propervalue=='Flow'){
+					/*if(propervalue=='Flow'){
 						var rowC=searchGrid(jQuery("#PointPraList"),'name','节点压力(MPa)');
 						
 						jQuery("#PointPraList").setCell (rowC,'value',' ');  
@@ -120,12 +116,12 @@ function() {
 						
 						jQuery("#PointPraList").setCell (rowC,'value',' ');  
 					
-					}
+					}*/
 					
 				}
 				if(proper=='压缩机类型'){
 					if(propervalue=='离心压缩机'){
-						var rowC=searchGrid(jQuery("#PointPraList"),'name','相对余隙容积α');						
+						/*var rowC=searchGrid(jQuery("#PointPraList"),'name','相对余隙容积α');						
 						jQuery("#PointPraList").setCell (rowC,'value',' ');  
 						var rowC=searchGrid(jQuery("#PointPraList"),'name','活塞直径D(m)');						
 						jQuery("#PointPraList").setCell (rowC,'value',' ');  
@@ -134,17 +130,17 @@ function() {
 						var rowC=searchGrid(jQuery("#PointPraList"),'name','气缸级数n');						
 						jQuery("#PointPraList").setCell (rowC,'value',' ');  
 						var rowC=searchGrid(jQuery("#PointPraList"),'name','转速N(r/min)');						
-						jQuery("#PointPraList").setCell (rowC,'value',' ');  
-					
+						jQuery("#PointPraList").setCell (rowC,'value',' ');  */
+						leftpoly.clickshape.TYPE='离心压缩机';
 					}
 					if(propervalue=='往复式压缩机'){
-						var	rowC=searchGrid(jQuery("#PointPraList"),'name','特性曲线参数a');
+						/*var	rowC=searchGrid(jQuery("#PointPraList"),'name','特性曲线参数a');
 						
 						jQuery("#PointPraList").setCell (rowC,'value',' ');  
 						var	rowC=searchGrid(jQuery("#PointPraList"),'name','特性曲线参数b');
 						
-						jQuery("#PointPraList").setCell (rowC,'value',' ');  
-					
+						jQuery("#PointPraList").setCell (rowC,'value',' '); */ 
+						leftpoly.clickshape.TYPE='往复式压缩机';
 					}
 					
 				}

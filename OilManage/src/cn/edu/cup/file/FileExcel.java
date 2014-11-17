@@ -727,8 +727,12 @@ public List<DeviceKV> getDiviceIn(String type, String name) {
 				DeviceKV KV=new DeviceKV();
 				KV.setName(key);
 				KV.setValue(value);
+				if(key.equals("序号")||key.equals("隶属关系")){
+					continue;
+				}
 				a.add(KV);
 			}
+			
 		}
 		if(getTypeCodeByName(type)==2){
 			SheetContent sheet=getSheetByName(this,"管段连接");
@@ -743,8 +747,12 @@ public List<DeviceKV> getDiviceIn(String type, String name) {
 				DeviceKV KV=new DeviceKV();
 				KV.setName(key);
 				KV.setValue(value);
+				if(key.equals("序号")||key.equals("设备名称")){
+					continue;
+				}
 				a.add(KV);
 			}
+			
 		}
 		if(getTypeCodeByName(type)==1){
 			TransTable temp=new TransTable(this, type);
@@ -854,18 +862,21 @@ public List<DeviceKV> getDiviceIn(String type, String name) {
 			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
 		}
 		if (getTypeCodeByName(type) == 1) {
-			SheetContent sheet = getSheetByName(this, type);
+			TransTable temp=new TransTable(this, type);
+			temp.updateData(name, proper, newValue);
+			/*SheetContent sheet = getSheetByName(this, type);
 			int row = sheet.getExcelDataIndex(sheet,
 					sheet.getTitleByName("名称"), name);
-			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
+			sheet.editCell(row, sheet.getTitleByName(proper), newValue);*/
 		}
 		if (getTypeCodeByName(type) == 3) {
-			
-			SheetContent sheet = getSheetByName(this, type);
+			TransTable temp=new TransTable(this, type);
+			temp.updateData(name, proper, newValue);
+			/*SheetContent sheet = getSheetByName(this, type);
 			int row = sheet.getExcelDataIndex(sheet,
 					sheet.getTitleByName("名称"), name);
 			
-			sheet.editCell(row, sheet.getTitleByName(proper), newValue);
+			sheet.editCell(row, sheet.getTitleByName(proper), newValue);*/
 		}
 
 	}
