@@ -506,7 +506,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			              		</select>
 		 						<em style="color:red">*</em>    						
 		      				</td>
-		      			</tr>		    				
+		      			</tr> 	    				
 				   </table>
 				   <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

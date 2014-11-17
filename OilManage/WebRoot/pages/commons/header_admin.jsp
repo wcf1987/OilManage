@@ -9,20 +9,28 @@ else{
 
 }
 %>
-
- <div class="navbar-wrapper">
+<input style="display:none" id="authorID" value="<%out.print(userlogin.getUserid());%>"/>
+ <div class="navbar-wrapper" style="margin-top:-35px">
     <!-- <div class="container"> -->
+	<div class="navbar  navbar-static-top" role="navigation" >
+	  	<ul  class="nav navbar-nav" style="float:left;">
+	  		<img style="width:30%;margin-left:100px;margin-top:20px;" alt="中联公司" src="images/zhonglian.png">
+	  	</ul>
+		<ul style="float:left;margin-top:35px;font-weight:bold;font-family:微软雅黑;font-size:18px;color:rgba(61, 85, 120, 1)">
+			煤层气集输系统
+		</ul>
+	  	<ul  class="nav navbar-nav" style="float:left;margin-top:40px;">
+	     		<!-- <li><img style="width:20%;" alt="中联公司" src="images/zhongguoshiyoudaxue.jpg"></li> -->
+	     		<li>系统时间：<span id="nowtime"></span></li>
+	     		<li><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/5人</span></span></li>
+	   </ul>
+	  </div>
+    
       <div class="navbar navbar-inverse navbar-static-top" role="navigation">
        <div class="container"> 
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+        <!--   <div class="navbar-header">
             <a class="navbar-brand" href="pages/home.jsp"><div style="color:#A9DBAF;font-weight:bold;font-family:微软雅黑;">煤层气集输系统&nbsp;<span style="color:#D7E3E6;font-size:16px;">后台管理</span></div></a>
-          </div>
+          </div> -->
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">              
               <li><a id="data" href="pages/data.jsp">数据管理</a></li>
@@ -34,7 +42,7 @@ else{
                        
 			<div class="text-center" style="margin-top:8px;margin-right:25px;" id="userId">
 				<div style="margin-left:5px;margin-top:5px;"><a class="logout" style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">注销</a></div>
-			  <div style="color:#E8F6E2;float:right;margin-top:5px;">您好,<a class="logout" href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>	
+			 <%--  <div style="color:#E8F6E2;float:right;margin-top:5px;">您好,<a class="logout" href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>	 --%>
 			</div>
 		 </div>
 	</div> 
@@ -64,5 +72,8 @@ else{
  				break;
  			
  		}
-	
+   		setInterval(function() {
+   		    var now = (new Date()).toLocaleString();
+   		    $('#nowtime').text(now);
+   		}, 1000);
  </script>

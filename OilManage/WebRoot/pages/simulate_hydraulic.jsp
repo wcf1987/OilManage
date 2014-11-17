@@ -56,7 +56,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
 	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
 	<script type="text/javascript" src="http://api.map.baidu.com/library/MapWrapper/1.2/src/MapWrapper.min.js"></script>  
-		<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/changeMore.js"></script>
+	<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/changeMore.js"></script>
+	<script type="text/javascript" src="js/baidu-map/convertor.js"></script>
+	<script type="text/javascript" src="js/baidu-map/changeMore.js"></script>
 	<script type="text/javascript" src="js/map_gis.js"></script>
 	
 	<script defer="defer" type="text/javascript" src="js/global.js"></script>
@@ -89,8 +91,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div class="container-fluid">
 				<div class="row-fluid row-fluid2">
 					<div class="span12">
-					<div class="page-header">
-						<h2>单相管网水力计算(不考虑热力)&nbsp;<small>管网模拟</small></h2>
+					<div class="head">
+						<h2>单相管网水力计算(不考虑热力)</h2>
 						
 						<input id="tempStr1" style="display:none" value=""/>
 						<input id="tempStr2" style="display:none" value=""/>
@@ -114,7 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div id="father_tab" class="tab-container">
 						<ul class='etabs'>
 						    <li class='tab'><button id="input_tab_button" onclick="showTab('input_tab')">输入</button></li>
-						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">运行</button></li>
+						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">查看运行</button></li>
 						    <li class='tab'><button id="output_tab_button" onclick="showTab('output_tab')">输出</button></li>						    
 					    </ul>  
 						<div id="input_tab" class="father_tab">				

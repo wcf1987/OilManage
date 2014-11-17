@@ -14,7 +14,7 @@
 </div>
 
 <div id="inputBase"  class="inputDataDiv">
-	<div class="tab-title">基础数据</div>
+	<!-- <div class="tab-title">基础数据</div> -->
 	<div id="input_base_div">
 	</div>
 </div>
