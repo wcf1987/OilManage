@@ -17,21 +17,21 @@
 
 
 <style>
-	#running-container { border:2px solid;width: 100%;height:auto;; padding: 0; clear: both; background-color:white}
+	#running-container {width: 100%;height:auto;padding: 0; clear: both; background-color:white}
 	#running-container>div{
 		padding:5px 5px;background-color:#fff;font-size:12px;font-weight:bold
 	}
 	#running-container>div>span{
 		background-color:#fff;
 		border-radius:3px;
-		border:2px solid;
+		/* border:2px solid; */
 		padding:2px;
 		margin-right:5px;
 	}
 	textarea{
 		width:100%;
 		font-size:14px;
-		height:30%;
+		height:100%;
 	}
 </style>
 

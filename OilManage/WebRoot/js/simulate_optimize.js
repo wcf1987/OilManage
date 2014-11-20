@@ -240,7 +240,13 @@ function showTab(type){
 	$(".father_tab").each(function(index,item){
 		$(item).hide();
 	});
+	$("#father_tab>ul>li").each(function(index,item){
+		
+		$(item).children("a").removeAttr("style");
+		
+	});
 	$("#"+type).show();
+	$("#"+type+"_button").css("background-color",'fff');
 	if(type=='run_tab'){
 //		if($("#curAlgID").val()==1||$("#curAlgID").val()==2||$("#curAlgID").val()==3||$("#curAlgID").val()==4){
 //			tabtools.load();
