@@ -1,15 +1,4 @@
 
-/*var sid = 1;
-var proid = 11;
-var algid = 27;
-var sheetDiv="#sheet1"
-var pageDiv="#pager1"
-var sheetgrid1 = new SheetGrid();
-
-sheetgrid1.GetDynamicCols(sid, algid);
-sheetgrid1.creategrid(proid,sheetDiv,pageDiv);
-//sheetgrid1.loadTableData();
-*/
 function SheetGrid() {
 	this.GetSheetName=function(sid,algid,inOrOut){
 		var sheetName="";
@@ -71,7 +60,7 @@ function SheetGrid() {
 			}
 		}).trigger("reloadGrid");
 	}
-	this.creategrid = function(proid,sheetDiv,pageDiv,delID) {
+	this.creategrid = function(proid,sheetDiv,pageDiv,delID,gridWidth) {
 		var temp = this;
 		this.proid = proid;
 		this.sheetgridpro = jQuery(sheetDiv).jqGrid({
@@ -140,7 +129,7 @@ function SheetGrid() {
 			multiselectWidth : 35, // 设置多选列宽度
 			rowNum : 10,// 每一页的行数
 			height : 'auto',
-			width : 1040,
+			width : gridWidth,//1040
 			rowList : [ 10, 20, 30 ],
 			pager : pageDiv,			
 			viewrecords : true,

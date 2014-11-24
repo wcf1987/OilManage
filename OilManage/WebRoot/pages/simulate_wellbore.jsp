@@ -111,14 +111,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 				
 					<div id="father_tab" class="tab-container" >
-					<!-- 	<ul class='etabs'>
-						    <li class='tab'><button id="input_tab_button" onclick="showTab('input_tab')">输入</button></li>
-						    <li class='tab'><button id="run_tab_button" onclick="showTab('run_tab')">查看运行</button></li>
-						    <li class='tab'><button id="output_tab_button" onclick="showTab('output_tab')">输出</button></li>						    
-					    </ul>  --> 
-				<!-- 	    <div  style="float:left;">
-							<img  style="width:100px"  src="images/jingtong.png" />
-						</div> -->
 						<div>
 						<div id="input_tab" class="father_tab">				
 							<div style="background-color:#fff;padding:5px;border:2px solid;height:40px;">
@@ -127,40 +119,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="saveExcel()">保存数据</button></div>						
 								<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>
 							</div>
-							<div id="inputBase"  class="inputDataDiv">
+							<div id="inputBase"  class="inputDataDiv" style="height:620px;">
+								<div  style="float:left;">
+									<img  style="width:400px;margin-top:60px"  src="images/jingtong.png" />
+								</div>
 								<!-- <div class="tab-title">基础数据</div> -->
-								<div id="input_base_div">
+								<div id="input_base_div" style="float:left;margin-left:80px;margin-bottom:20px;">
 								</div>
-							</div>
-							<div id="inputCondition" class="inputDataDiv" style="display:none">
-								<div class="tab-title">约束条件</div>
-								<div id="input_condition_div">
-								</div>
-							</div>
-							
-							<div id="inputFunction" class="inputDataDiv"  style="display:none">
-								<div class="tab-title">问题描述</div>
-								<div id="input_function_div">
-								</div>
-							</div>
+								<div style="margin-left:480px;">
+									<button onclick="runAlgWell()" style="margin-left:20px;float:left">计算井底流压</button>
+			    					<div style="float:left;margin-left:20px;margin-top:2px">结果：<input id="wellbore_res"/>(MPa)</div>
+			    				</div>
+							</div>					
 							<div id="inputGisMap" class="inputDataDiv" style="display:none">
 								<%@ include file="simulate_common/gismap.jsp" %>
 							</div>
 							<div id="inputDcMap" class="inputDataDiv" style="display:none">
 								<%@ include file="simulate_common/dcmodel.jsp" %>
 							</div>
+							
 			    		</div>
-			    		<div id="run_tab" class="father_tab" style="margin-top:42px;">
-			    			
-			    			<button onclick="run_load_output()" style="margin-top:20px;margin-left:20px">计算井底流压</button>
-						<%-- 	<%@ include file="simulate_common/run_tab.jsp" %> --%>
-			    		</div>
-			    		<div id="output_tab" class="father_tab">
-							<div id="outputBase" class="outputDataDiv" style="display:block">
-								<div id="output_base_div">
-								</div>
-							</div>				
-			    		</div>
+
 			    		</div>
 					</div>	            			
 										
@@ -185,10 +164,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
 </html>
 <script>
-function run_load_output(){
+function listLogWell()
+{	
+	$("#outputarea").text("");
 	$.ajax({
 		type:'post',
-		async: false,  
+		url:'listLog.action',
+		data:{
+			ID:$("#proID").val()
+		},
+		dataType:'json',
+		success:function(data){
+			if(data.status!=1){//如果算法运行结束，则停止日志刷新程序
+				window.clearInterval(intervalID);
+				$("#isRunning").hide();	
+				loadOutputWell();
+				alert("计算结束！");
+			}			
+	/* 		$.each(data.loginfo,function(index,log){
+				if(log!=null&&log!=""){
+					$("#outputarea").append(log.logTime.replace("T"," ")+" "+log.info+"\n");
+					
+				}	 	
+			});	
+			var d = $("#outputarea")[0].scrollHeight;
+			$("#outputarea").scrollTop(d); */
+		},
+		error:function(msg){
+			//$("#outputarea").append("通信失败！\n\r");
+			alert("通信失败！");
+			window.clearInterval(intervalID);
+		}
+	});
+
+}
+function runAlgWell(){
+	$.ajax({
+		type:'post',
 		url:'runAlgPro.action',
 		data:{
 			ID:$("#proID").val()
@@ -196,8 +208,8 @@ function run_load_output(){
 		dataType:'json',
 	    beforeSend:function(XMLHttpRequest){
 	    	$("#outputarea").text("");
-	    	intervalID=setInterval ("listLog()", 5000);//每隔一段时间去请求日志信息
-	    	//$("#isRunning").css({display:"block",top:"15%",left:"55%",position:"absolute"});
+	    	intervalID=setInterval ("listLogWell()", 5000);//每隔一段时间去请求日志信息
+	    	$("#isRunning").css({display:"block",top:"30%",left:"40%",position:"absolute"});
 	    
 	    },
 		success:function(data){				
@@ -212,23 +224,54 @@ function run_load_output(){
 			alert(msg);	
 		}
 	});
-	
+}
+function loadOutputWell(){
+	//location.href=window.location.pathname+"#output_tab";
+
 	var proid=$("#proID").val();
 	var sid = 1;
 	var algid = $("#curAlgID").val();
-	var outputSheetNum=$("#outputSheetNum").val();
+	//var outputSheetNum=$("#outputSheetNum").val();
 	var inOrOut="Out";
-	var sheetDiv = "#output-sheet";
+/* 	var sheetDiv = "#output-sheet";
 	var pageDiv = "#output-pager";
 	var delID="output-delsheet";
-	for(var i=0;i<outputSheetNum;i++){
+	 */
+	$.ajax({
+		url : 'listSheetContent.action',
+		type : 'post',
+		dataType : 'json',
+		data : {
+			sheetID : sid,
+			algID : algid,
+			InOrOut:inOrOut
+		},
+		async:false,
+		success : function(data) {
+			if(data.msg!=""){
+				alert(data.msg);
+			}else{
+			var res=data.content;
+			res=res[0]["值"];
+			$("#wellbore_res").val(res);
+			}
+
+		}
+		
+
+	});
+	
+/* 	for(var i=0;i<outputSheetNum;i++){
 		var sheetgrid = new SheetGrid();
 		sheetgrid.GetDynamicCols(i, algid,inOrOut);
 		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);		
 	}
 	var sheetGrid=new SheetGrid();
-	sheetGrid.reloadGrid();
+	sheetGrid.reloadGrid(); */
 }
+
+
+
 
 
 

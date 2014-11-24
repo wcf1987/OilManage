@@ -72,43 +72,60 @@ function initInputTab(){
 	}
 	for(var i=0;i<containerNum;i++){//分别构建几个container
 		var maxSheetNumTemp=maxSheetNum;
-		input_base_div_html="<div id='input-base-container"+i+"' class='tabs-container'><div id='input-base-panels"+i+"' class='panel-container'></div><ul id='input-base-ul"+i+"'></ul></div>";
-		$("#input_base_div").append(input_base_div_html);
 		if(i==containerNum-1&&lastTabSheetNum>0){//如果是最后一个container
 			maxSheetNumTemp=lastTabSheetNum;
 		}
 		var panels="";
 		var lis="";
-		for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
-			var sid=i*5+j;
-			var algid=$("#curAlgID").val();
-			var inOrOut="In";
-			var sheetgrid = new SheetGrid();
-			var sheetName=sheetgrid.GetSheetName(sid,algid,inOrOut);
-			if(sheetName=="障碍区"){//如果是障碍区的sheet序号
-				panels+="<div id='input-base-tab"+sid+"'>"+
-			  	"<table id='input-sheet"+sid+"' class='table table-striped table-bordered table-hover datatable' style='width:600px' ></table>"+
-				"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:600px' >"+
-					"<div id='input-pager"+sid+"' ></div></div>"+
-					"<button style='font-size:12px;height:22px;margin-right:10px;margin-top:5px;' onclick='showDikedAreaMap()'>地图</button></div>";
-			}else{
-				panels+="<div id='input-base-tab"+sid+"'>"+
-			  	"<table id='input-sheet"+sid+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
-				"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
-					"<div id='input-pager"+sid+"' ></div></div></div>";
+		var algid=$("#curAlgID").val();
+		if (algid==0){//如果是井筒流压计算
+			input_base_div_html="<div id='input-base-container"+i+"' class='tabs-container'><div id='input-base-panels"+i+"'></div><ul id='input-base-ul"+i+"'></ul></div>";
+			$("#input_base_div").append(input_base_div_html);
+			panels+="<div id='input-base-tab' style='width:520px;float:right'>"+
+		  	"<div><table id='input-sheet0' class='table table-striped table-bordered table-hover datatable' ></table>"+
+				"<div id='input-pager0' ></div></div>" +
+				"<div style='margin-top:20px'><table id='input-sheet1' class='table table-striped table-bordered table-hover datatable'></table>"+
+					"<div id='input-pager1' ></div></div>" +
+						"</div>";
+
+			var tempid="input-base-panels"+i;
+			$("#"+tempid).html(panels);
+		}else{
+			input_base_div_html="<div id='input-base-container"+i+"' class='tabs-container'><div id='input-base-panels"+i+"' class='panel-container'></div><ul id='input-base-ul"+i+"'></ul></div>";
+			$("#input_base_div").append(input_base_div_html);
+			for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
+				var sid=i*5+j;
+				var algid=$("#curAlgID").val();
+				var inOrOut="In";
+				var sheetgrid = new SheetGrid();
+				var sheetName=sheetgrid.GetSheetName(sid,algid,inOrOut);
+				if(sheetName=="障碍区"){//如果是障碍区的sheet序号
+					panels+="<div id='input-base-tab"+sid+"'>"+
+				  	"<table id='input-sheet"+sid+"' class='table table-striped table-bordered table-hover datatable' style='width:600px' ></table>"+
+					"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:600px' >"+
+						"<div id='input-pager"+sid+"' ></div></div>"+
+						"<button style='font-size:12px;height:22px;margin-right:10px;margin-top:5px;' onclick='showDikedAreaMap()'>地图</button></div>";
+				}else{
+					panels+="<div id='input-base-tab"+sid+"'>"+
+				  	"<table id='input-sheet"+sid+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
+					"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
+						"<div id='input-pager"+sid+"' ></div></div></div>";
+				}
+				//创建五个li
+				lis+="<li><a href='#input-base-tab"+sid+"'>"+sheetName+"</a></li>";		
 			}
-			//创建五个li
-			lis+="<li><a href='#input-base-tab"+sid+"'>"+sheetName+"</a></li>";		
+			var tempid="input-base-panels"+i;
+			$("#"+tempid).html(panels);
+			var tempid="input-base-ul"+i;
+			$("#"+tempid).html(lis);
+			var tempid="input-base-container"+i;
+			$("#input-base-container"+i+" ul li").css("width",100/maxSheetNumTemp+"%");
+			$('#'+tempid).easytabs({
+				animate: false
+			});	
 		}
-		var tempid="input-base-panels"+i;
-		$("#"+tempid).html(panels);
-		var tempid="input-base-ul"+i;
-		$("#"+tempid).html(lis);
-		var tempid="input-base-container"+i;
-		$("#input-base-container"+i+" ul li").css("width",100/maxSheetNumTemp+"%");
-		$('#'+tempid).easytabs({
-			animate: false
-		});	
+		
+	
 	}
 
 	/*

@@ -841,11 +841,15 @@ function openProject(proid){
 	var sheetDiv = "#input-sheet";
 	var pageDiv = "#input-pager";
 	var delID="input-delsheet";
+	var gridWidth=1040;//定义grid表格长度
+	if (algid==0){
+		gridWidth=520;
+	}
 	for(var i=0;i<inputSheetNum;i++){
 		var sheetgrid = new SheetGrid();
 
 		sheetgrid.GetDynamicCols(i, algid,inOrOut);
-		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);
+		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i,gridWidth);
 		
 	}
 	/*
