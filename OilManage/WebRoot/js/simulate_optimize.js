@@ -178,11 +178,11 @@ function loadOutput(way){
 	var sheetDiv = "#output-sheet";
 	var pageDiv = "#output-pager";
 	var delID="output-delsheet";
-	
+	var gridWidth=1040;
 	for(var i=0;i<outputSheetNum;i++){
 		var sheetgrid = new SheetGrid();
 		sheetgrid.GetDynamicCols(i, algid,inOrOut);
-		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);		
+		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i,gridWidth);		
 	}
 	var sheetGrid=new SheetGrid();
 	sheetGrid.reloadGrid();

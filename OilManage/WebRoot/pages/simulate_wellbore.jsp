@@ -244,7 +244,8 @@ function loadOutputWell(){
 		data : {
 			sheetID : sid,
 			algID : algid,
-			InOrOut:inOrOut
+			InOrOut:inOrOut,
+			proID : proid
 		},
 		async:false,
 		success : function(data) {
