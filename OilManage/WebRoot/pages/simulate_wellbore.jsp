@@ -229,7 +229,7 @@ function loadOutputWell(){
 	//location.href=window.location.pathname+"#output_tab";
 
 	var proid=$("#proID").val();
-	var sid = 1;
+	var sid = 0;
 	var algid = $("#curAlgID").val();
 	//var outputSheetNum=$("#outputSheetNum").val();
 	var inOrOut="Out";
