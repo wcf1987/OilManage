@@ -63,6 +63,62 @@ function SheetGrid() {
 	this.creategrid = function(proid,sheetDiv,pageDiv,delID,gridWidth) {
 		var temp = this;
 		this.proid = proid;
+		if( temp.algid==0){
+			temp.colModel[1]['editable']='False';
+			temp.colModel[2]['editable']='False';
+			this.sheetgridpro = jQuery(sheetDiv).jqGrid({
+				url : "listSheetContent.action",// 后端的数据交互程序，改为你的
+				datatype : "json",// 前后交互的格式是json数据
+				mtype : 'POST',// 交互的方式是发送httpget请求
+				postData : {
+					sheetID : temp.sid,
+					algID : temp.algid,
+					InOrOut:temp.inOrOut,
+					proID : temp.proid
+				}, 
+				// colNames : [ 'id', '项目名称', '上传时间', '地图查看', '编辑', '删除',
+				colNames : temp.colNames,// 表格的列名
+				colModel : temp.colModel,
+				cellEdit:true,
+				cellsubmit : 'remote',
+				cellurl : 'editSheetContent.action',				
+				beforeSubmitCell : function(rowid,celname,value,iRow,iCol) { 
+					var index_ID=temp.sheetgridpro.jqGrid("getRowData", iRow).Index_ID;
+					
+					var z={
+							proID:temp.proid,
+							sheetID:temp.sid,
+							algID : temp.algid,
+							InOrOut:temp.inOrOut,
+							Index_ID:index_ID,					
+							col_ID:iCol-1,
+							newValue:value					
+						};
+					return  z;
+					
+					} ,
+			
+				//autowidth : true,
+				multiselect : true, // 可多选，出现多选框
+				multiselectWidth : 35, // 设置多选列宽度
+				rowNum : 10,// 每一页的行数
+				height : 'auto',
+				width : gridWidth+1,//1040
+				rowList : [ 10, 20, 30 ],				
+				viewrecords : true,
+				jsonReader : {// 读取后端json数据的格式
+					root : "content",// 保存详细记录的名称
+					total : "total",// 总共有页
+					page : "page",// 当前是哪一页
+					records : "records",// 总共记录数
+					repeatitems : false
+				},
+				caption : temp.sheetName// 表格名称,
+				
+
+			});
+			return ;
+		}
 		this.sheetgridpro = jQuery(sheetDiv).jqGrid({
 			url : "listSheetContent.action",// 后端的数据交互程序，改为你的
 			datatype : "json",// 前后交互的格式是json数据
@@ -81,7 +137,7 @@ function SheetGrid() {
 			cellurl : 'editSheetContent.action',
 			beforeSubmitCell : function(rowid,celname,value,iRow,iCol) { 
 				var index_ID=temp.sheetgridpro.jqGrid("getRowData", iRow).Index_ID;
-				if(celname=='控制模式'){
+				/*if(celname=='控制模式'){
 					if(value=='Pressure'){
 						var ecol=getIndexOfArray(temp.colNames,"节点流量(m3/d)");
 						temp.sheetgridpro.jqGrid('setRowData', iRow,{"节点流量(m3/d)":""});
@@ -89,6 +145,7 @@ function SheetGrid() {
 					if(value=='Flow'){
 						var ecol=getIndexOfArray(temp.colNames,"节点压力(MPa)");
 						  temp.sheetgridpro.jqGrid('setRowData', iRow,{"节点压力(MPa)":""}); 
+					}
 					}
 					 $.ajax({ 
 				          type: "POST", 
@@ -108,9 +165,9 @@ function SheetGrid() {
 				        	
 				              
 				          } 
-				        });
+				        });*/
 					
-				}
+				
 				var z={
 						proID:temp.proid,
 						sheetID:temp.sid,
@@ -144,7 +201,7 @@ function SheetGrid() {
 			
 
 		});
-
+		
 		this.sheetgridpro.jqGrid('navGrid', pageDiv, {
 			
 			add : true,
