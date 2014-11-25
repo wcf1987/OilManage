@@ -252,8 +252,7 @@ function loadOutputWell(){
 			if(data.msg!=""){
 				alert(data.msg);
 			}else{
-			var res=data.content;
-			res=res[0]["值"];
+			var res=data.JDLY;
 			$("#wellbore_res").val(res);
 			}
 

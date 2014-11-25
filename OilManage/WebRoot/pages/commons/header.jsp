@@ -17,9 +17,16 @@ else{
     <!--  <div class="container"> -->
     <div class="navbar  navbar-static-top" role="navigation" style="">
     	<ul  class="nav navbar-nav" style="float:left;">
-    		<img style="width:20%;margin-left:0px;margin-top:20px;" alt="中联公司" src="images/zhonglian.png">
-    		<img style="width:15%;margin-left:10px;margin-top:20px;" alt="中联公司" src="images/zhongguoshiyoudaxue.png">
+    		<img style="width:20%;margin-left:500px;margin-top:20px;" alt="中联公司" src="images/zhonglian.png">
+    		<img style="width:15%;margin-left:10px;margin-top:20px;" alt="中国石油大学" src="images/zhongguoshiyoudaxue.png">
     	</ul>
+    	<!-- 	
+    	<ul class="nav navbar-nav" style="float:left;margin-top:55px;">
+    		<span>中联煤层气有限责任公司</span>
+    	</ul> -->
+    	<ul style="margin-left:-700px;float:left;margin-top:55px;font-weight:bold;font-family:微软雅黑;font-size:30px;color:rgba(61, 85, 120, 1)">
+			煤层气集输系统
+		</ul>
 		<ul style="margin-left:-200px;float:left;margin-top:55px;font-weight:bold;font-family:微软雅黑;font-size:30px;color:rgba(61, 85, 120, 1)">
 			煤层气集输系统
 		</ul>
