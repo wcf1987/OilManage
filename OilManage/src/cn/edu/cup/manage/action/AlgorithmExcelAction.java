@@ -419,6 +419,7 @@ public class AlgorithmExcelAction {
 			sheetContent.buildContent(1, 1);
 			content = sheetContent.getContent();
 			JDLY=content.get(0).get("值");
+			msg="";
 		}
 		//putFileExcel(excel);
 		return "SUCCESS";
