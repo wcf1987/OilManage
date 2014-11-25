@@ -253,7 +253,7 @@ function showTab(type){
 //			tabtools.load();
 //		}else{
 //			
-//		}
+//		}请求的参数页面超出范围
 //			initMapGis();
 //		  var proID=$("#proID").val();
 //		  var algID=$("#curAlgID").val();
