@@ -13,17 +13,11 @@ else{
  <div class="navbar-wrapper" style="margin-top:-35px">
     <!-- <div class="container"> -->
 	<div class="navbar  navbar-static-top" role="navigation" >
-	  	<ul  class="nav navbar-nav" style="float:left;">
-	  		<img style="width:30%;margin-left:100px;margin-top:20px;" alt="中联公司" src="images/zhonglian.png">
-	  	</ul>
-		<ul style="float:left;margin-top:35px;font-weight:bold;font-family:微软雅黑;font-size:18px;color:rgba(61, 85, 120, 1)">
-			煤层气集输系统
-		</ul>
-	  	<ul  class="nav navbar-nav" style="float:left;margin-top:40px;">
-	     		<!-- <li><img style="width:20%;" alt="中联公司" src="images/zhongguoshiyoudaxue.jpg"></li> -->
-	     		<li>系统时间：<span id="nowtime"></span></li>
-	     		<li><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/5人</span></span></li>
-	   </ul>
+		<ul  class="nav navbar-nav" style="margin-top:30px">
+    		<li style="margin-right:-650px;margin-left:350px"><img style="width:50%;" alt="煤层气集输系统" src="images/bothlogo3.png"></li>	
+    		<li style="margin-top:30px;">系统时间：<span id="nowtime"></span></li>
+	      	<li style="margin-top:30px;"><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/5人</span></span></li>
+    	</ul>
 	  </div>
     
       <div class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -41,7 +35,7 @@ else{
             </ul>
                        
 			<div class="text-center" style="margin-top:8px;margin-right:25px;" id="userId">
-				<div style="margin-left:5px;margin-top:5px;"><a class="logout" style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">注销</a></div>
+				<div style="margin-left:5px;margin-top:5px;"><a class="logout" style="margin-left:5px;margin-top:5px;float:right"id="exit" onclick="logout()">退出</a></div>
 			 <%--  <div style="color:#E8F6E2;float:right;margin-top:5px;">您好,<a class="logout" href='javascript:showModifyUserForm()'><%out.print(userlogin.getUsername());%>！</a></div>	 --%>
 			</div>
 		 </div>

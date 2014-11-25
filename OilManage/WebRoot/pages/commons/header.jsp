@@ -10,37 +10,18 @@ else{
 }
 %>
 <input style="display:none" id="authorID" value="<%out.print(userlogin.getUserid());%>"/>
-<!--  <img style="" src="images/logo_title.png"  alt="" />
-   -->
 
  <div class="navbar-wrapper" style="margin-top:-35px">
     <!--  <div class="container"> -->
     <div class="navbar  navbar-static-top" role="navigation" style="">
-    	<ul  class="nav navbar-nav" style="float:left;">
-    		<img style="width:20%;margin-left:500px;margin-top:20px;" alt="中联公司" src="images/zhonglian.png">
-    		<img style="width:15%;margin-left:10px;margin-top:20px;" alt="中国石油大学" src="images/zhongguoshiyoudaxue.png">
+    	<ul  class="nav navbar-nav" style="margin-top:30px">
+    		<li style="margin-right:-650px;margin-left:350px"><img style="width:50%;" alt="煤层气集输系统" src="images/bothlogo3.png"></li>	
+    		<li style="margin-top:30px;">系统时间：<span id="nowtime"></span></li>
+	      	<li style="margin-top:30px;"><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/5人</span></span></li>
     	</ul>
-    	<!-- 	
-    	<ul class="nav navbar-nav" style="float:left;margin-top:55px;">
-    		<span>中联煤层气有限责任公司</span>
-    	</ul> -->
-    	<ul style="margin-left:-700px;float:left;margin-top:55px;font-weight:bold;font-family:微软雅黑;font-size:30px;color:rgba(61, 85, 120, 1)">
-			煤层气集输系统
-		</ul>
-		<ul style="margin-left:-200px;float:left;margin-top:55px;font-weight:bold;font-family:微软雅黑;font-size:30px;color:rgba(61, 85, 120, 1)">
-			煤层气集输系统
-		</ul>
-    	<ul  class="nav navbar-nav" style="float:right;margin-top:70px;margin-right:30px">
-	      		<!-- <li><img style="width:20%;" alt="中联公司" src="images/zhongguoshiyoudaxue.jpg"></li> -->
-	      		<li>系统时间：<span id="nowtime"></span></li>
-	      		<li><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/5人</span></span></li>
-	    </ul>
     </div>
     <div class="navbar navbar-inverse navbar-static-top" role="navigation">
       <div class="container">
-   <!--      <div class="navbar-header">
-          <a class="navbar-brand" href="pages/home.jsp"><div style="color:#A9DBAF;font-weight:bold;font-family:微软雅黑;">煤层气集输系统</div></a>
-        </div> -->
 
         <div class="navbar-collapse collapse">
        		<ul class="nav navbar-nav">

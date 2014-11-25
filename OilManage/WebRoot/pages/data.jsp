@@ -172,10 +172,10 @@ $(document).ready(function(){
 
   </head>
      
-  <body>
+  <body id="body">
  
  	
-		<div>
+		<div id="head">
 		    <%@ include file="commons/header_admin.jsp" %>
 	  	</div> 	
 	  
