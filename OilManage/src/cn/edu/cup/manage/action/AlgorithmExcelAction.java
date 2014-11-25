@@ -407,12 +407,17 @@ public class AlgorithmExcelAction {
 		records = sheetContent.getSize()-1;
 		sheetContent.buildContent(page, rows);
 		content = sheetContent.getContent();
-
-		total = records / rows;
-		if (records % rows != 0) {
-			total++;
+		if(rows!=0){
+			total = records / rows;
+			if (records % rows != 0) {
+				total++;
+			}
 		}
+		
+		
 		if(this.algID==0&&this.InOrOut.equals("Out")&&this.sheetID==0){
+			sheetContent.buildContent(1, 1);
+			content = sheetContent.getContent();
 			JDLY=content.get(0).get("值");
 		}
 		//putFileExcel(excel);
