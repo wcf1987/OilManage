@@ -15,7 +15,7 @@ else{
     <!--  <div class="container"> -->
     <div class="navbar  navbar-static-top" role="navigation" style="">
     	<ul  class="nav navbar-nav" style="margin-top:30px">
-    		<li style="margin-right:-650px;margin-left:350px"><img style="width:50%;" alt="煤层气集输系统" src="images/bothlogo3.png"></li>	
+    		<li style="margin-right:-650px;margin-left:350px"><img style="width:50%;" alt="煤层气集输系统" src="images/bothlogo4.png"></li>	
     		<li style="margin-top:30px;">系统时间：<span id="nowtime"></span></li>
 	      	<li style="margin-top:30px;"><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/5人</span></span></li>
     	</ul>
@@ -39,17 +39,11 @@ else{
            	  <li class="dropdown-submenu">
                    <a tabindex="-1" href="javascript:;">管网模拟</a>
                    <ul class="dropdown-menu">
-                       <li><a tabindex="-1" href="pages/simulate_hydraulic.jsp">单相管网水力计算(不考虑热力)</a></li>
-                       <li><a tabindex="-1" href="pages/simulate_thermal.jsp">单相管网水力计算(考虑热力)</a></li>
+                       <li><a tabindex="-1" href="pages/simulate_hydraulic.jsp">单相管网水力计算1</a></li>
+                       <li><a tabindex="-1" href="pages/simulate_thermal.jsp">单相管网水力计算2</a></li>
                        <li><a tabindex="-1" href="pages/simulate_gas_solid.jsp">气固两相管网水力计算</a></li>
                        <li><a tabindex="-1" href="pages/simulate_gas_liquid.jsp">气液两相管网水力计算</a></li>                       
                        <li class="divider"></li>
-           <!--             <li class="dropdown-submenu">
-                           <a href="javascript:;">二级菜单</a>
-                           <ul class="dropdown-menu">
-                               <li><a href="javascript:;">三级菜单</a></li>
-                           </ul>
-                       </li> -->
                    </ul>
                </li>
                <li class="divider"></li>
@@ -64,23 +58,18 @@ else{
                系统优化<span class="caret"></span>
            </a>
            <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">              
-               <li><a href="pages/optimize_sysexpand.jsp">系统扩建设计</a></li>
-               <li class="divider"></li>
+               
                <li class="dropdown-submenu">
                    <a tabindex="-1" href="javascript:;">整装区块设计</a>
                    <ul class="dropdown-menu">
+                   	   <li><a tabindex="-1" href="pages/optimize_layout.jsp">布局设计</a></li>
+                   	   <li><a tabindex="-1" href="pages/optimize_parameter.jsp">参数设计</a></li>
                        <li><a tabindex="-1" href="pages/optimize_global.jsp">整体设计</a></li>
-                       <li><a tabindex="-1" href="pages/optimize_layout.jsp">布局设计</a></li>
-                       <li><a tabindex="-1" href="pages/optimize_parameter.jsp">参数设计</a></li>
                        <li class="divider"></li>
-                      <!--  <li class="dropdown-submenu">
-                           <a href="javascript:;">二级菜单</a>
-                           <ul class="dropdown-menu">
-                               <li><a href="javascript:;">三级菜单</a></li>
-                           </ul>
-                       </li> -->
                    </ul>
                </li>
+               <li class="divider"></li>
+               <li><a href="pages/optimize_sysexpand.jsp">系统扩建设计</a></li>            
            </ul>
        	</li>
        	

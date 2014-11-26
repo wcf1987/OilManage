@@ -92,7 +92,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row-fluid row-fluid2">
 					<div class="span12">
 					<div class="head">
-						<h2>单相管网水力计算(不考虑热力)</h2>
+						<h2>单相管网水力计算1</h2>
 						
 						<input id="tempStr1" style="display:none" value=""/>
 						<input id="tempStr2" style="display:none" value=""/>

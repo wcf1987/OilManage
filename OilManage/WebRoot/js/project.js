@@ -172,8 +172,8 @@ function list_project(){
 		add : false,
 		search:false,
 		del : false}).jqGrid('navButtonAdd',"#ProjectPager",{
-				title:'添加',
-				caption:"添加",
+				title:'新建',
+				caption:"新建",
 				id:"add_ProjectList",
 				onClickButton : function addModal(){
 						//createNewProject();	
