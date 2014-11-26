@@ -6,10 +6,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
- <%
-//User userlogin=(User)(session.getAttribute("user"));
-%> 
+  <head> 
     <base href="<%=basePath%>">
     
     <title>系统模拟</title>

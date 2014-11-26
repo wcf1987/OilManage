@@ -186,7 +186,7 @@ $(document).ready(function(){
 		<div class="container marketing condiv" style="width:1200px;">
 	    	
 	    	<div class="container-fluid">
-				<div class="row-fluid">
+				<div class="row-fluid row-fluid3">
 					<div class="span12">
 						<div class="tabbable" id="tabs-360872">
 							<ul class="nav nav-tabs">
@@ -238,6 +238,7 @@ $(document).ready(function(){
 			</div>
 	
 	    </div><!-- /.container -->
+	    <hr>
 	   <!--  <hr class="featurette-divider"> -->
       	<div id="footer">
 	        <%@ include file="commons/footer.jsp" %>

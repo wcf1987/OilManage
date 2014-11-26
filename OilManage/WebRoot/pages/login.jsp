@@ -215,9 +215,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 
-<div id="footer">
   <%@ include file="commons/footer.jsp" %>
-</div>
+
 
 
 

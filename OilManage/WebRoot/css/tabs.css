@@ -13,7 +13,7 @@
 .tab a.selected-tab { font-weight: bold; }
 
 /* Styles for Tabs on Side */
-#tab-side-container { background: #fff; border: solid 1px; height: 300px; }
+#tab-side-container { background: #fff; border: solid 1px; height: auto; }
 #tab-side-container ul { height: 300px; list-style: none; margin: 0; padding: 0; background: #ccc; float: left; border-right: solid 1px; }
 #tab-side-container ul li { width: 100px; margin: 0; padding: 0; text-align: center; }
 #tab-side-container ul li a { display: block; padding: 15px 0; outline: none; }

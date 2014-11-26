@@ -123,5 +123,10 @@ myactive{
 .row-fluid2{
 	margin-top:150px;
 }
+.row-fluid3{
+	margin-top:80px;
+}
 
-
+.navbar-collapse2{
+	max-height:none
+}

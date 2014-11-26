@@ -11,11 +11,11 @@ else{
 }
 %>
 <input style="display:none" id="authorID" value="<%out.print(userlogin.getUserid());%>"/>
- <div class="navbar-wrapper" style="margin-top:-35px">
+ <div class="navbar-wrapper" style="margin-top:-1px">
     <!-- <div class="container"> -->
 	<div class="navbar  navbar-static-top" role="navigation" >
 		<ul  class="nav navbar-nav" style="margin-top:30px">
-    		<li style="margin-right:-650px;margin-left:350px"><img style="width:50%;" alt="煤层气集输系统" src="images/bothlogo3.png"></li>	
+    		<li style="margin-right:-650px;margin-left:350px"><img style="width:50%;" alt="煤层气集输系统" src="images/bothlogo4.png"></li>	
     		<li style="margin-top:30px;">系统时间：<span id="nowtime"></span></li>
 	      	<li style="margin-top:30px;"><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/<%out.print(totalUser);%>人</span></li>
     	</ul>
@@ -31,7 +31,6 @@ else{
               <li><a id="data" href="pages/data.jsp">数据管理</a></li>
               <li><a id="algorithm" href="pages/algorithm.jsp">算法管理</a></li>
               <li><a id="admin" href="pages/admin.jsp">系统管理</a></li>
-		      <li><a id="about" href="pages/about.jsp">关于</a></li>	
 		      <li><a id="home" href="pages/home.jsp">返回首页</a></li>	     
             </ul>
                        

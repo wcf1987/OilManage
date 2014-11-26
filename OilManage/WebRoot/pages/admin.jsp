@@ -71,12 +71,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    
 		<div class="container marketing content condiv" style="width:1200px;">		
 			<div class="row">
-			  <div class="col-md-3 secondary-nav collapse navbar-collapse">
+			  <div class="col-md-3 secondary-nav collapse navbar-collapse2 navbar-collapse ">
 			    <div class="list-group docs-nav">
 			      <h3 class="list-group-heading" style="color:white;font-style:bold;font-size:20px;font-family:微软雅黑">系统管理</h3>
 			      
 			      
-			      <div id="tab-side-container" style="width:120%;">
+			      <div id="tab-side-container" style="width:120%;margin-top:50px;">
 					 <ul style="background:#F1EAEA;height:auto">
 					 	<li style="width:200px;"><a href="#side-tab1">角色管理</a></li>
 					 	<li style="width:200px;"><a href="#side-tab2">用户管理</a></li>
@@ -114,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      	
 		
 	    </div><!-- /.container -->
-	   	<hr class="featurette-divider">
+	   	<hr>
       	<div id="footer">
 	        <%@ include file="commons/footer.jsp" %>
 	    </div>
