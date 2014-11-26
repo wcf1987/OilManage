@@ -225,36 +225,7 @@ public class PhysicalDao {
 		_joint_string_sql(where,"t2","EName",eName);
 		_joint_string_sql(where,"t2","Description",description);
 		_joint_string_sql(where,"t2","iSOBasicUnit",iSOBasicUnit);
-		/*
-		if(cName!=null&&!cName.isEmpty()){
-			if(where.length()!=0)
-				where.append(" or ");
-			else
-				where.append(" where ");
-			where.append(" t2.CName=\"").append(cName).append("\"");
-		}
-		if(eName!=null&&!eName.isEmpty()){
-			if(where.length()!=0)
-				where.append(" or ");
-			else
-				where.append(" where ");
-			where.append("t2.EName=\"").append(eName).append("\"");
-		}
-		if(description!=null&&!description.isEmpty()){
-			if(where.length()!=0)
-				where.append(" or ");
-			else
-				where.append(" where ");
-			where.append("t2.Description=\"").append(description).append("\"");
-		}
-		if(iSOBasicUnit!=null&&!iSOBasicUnit.isEmpty()){
-			if(where.length()!=0)
-				where.append(" or ");
-			else
-				where.append(" where ");
-			where.append("t2.ISOBasicUnit=\"").append(iSOBasicUnit).append("\"");
-		}*/
-		//System.out.print(where);
+
 		String sql="select t2.ID,t2.CName,t2.EName,t2.Description,t2.ISOBasicUnit from T_Physical t2 "+where.toString()+" order by t2."+sidx+" "+sord;
 		SQLQuery q = session.createSQLQuery(sql);
 		q.setFirstResult((page-1)*rows);
@@ -263,9 +234,6 @@ public class PhysicalDao {
 		List<Physical> re=new ArrayList<Physical>();
 		for(int i=0;i<l.size();i++)
 		{
-			//TestDb user = (TestDb)l.get(i);
-			//System.out.println(user.getUsername());
-
 			  Object[] row = (Object[])l.get(i);
 			  
 			  Integer pid = (Integer)row[0];

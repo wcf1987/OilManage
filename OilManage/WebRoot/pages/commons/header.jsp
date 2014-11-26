@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
  <%
 User userlogin=(User)(session.getAttribute("user"));
+String totalUser=(String)session.getAttribute("totalUser");
 if (userlogin==null){
 response.sendRedirect("login.jsp");
 return;
@@ -17,7 +18,7 @@ else{
     	<ul  class="nav navbar-nav" style="margin-top:30px">
     		<li style="margin-right:-650px;margin-left:350px"><img style="width:50%;" alt="煤层气集输系统" src="images/bothlogo4.png"></li>	
     		<li style="margin-top:30px;">系统时间：<span id="nowtime"></span></li>
-	      	<li style="margin-top:30px;"><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/5人</span></span></li>
+	      	<li style="margin-top:30px;"><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/<%out.print(totalUser);%>人</span></span></li>
     	</ul>
     </div>
     <div class="navbar navbar-inverse navbar-static-top" role="navigation">

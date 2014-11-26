@@ -18,7 +18,13 @@ public class LoginAction extends ActionSupport{
 	String type;
 	UserDao userDAO;
 	String flag;
-	
+	int totalUser;
+	public int getTotalUser() {
+		return totalUser;
+	}
+	public void setTotalUser(int totalUser) {
+		this.totalUser = totalUser;
+	}
 	public UserDao getUserDAO() {
 		return userDAO;
 	}
@@ -80,13 +86,11 @@ public class LoginAction extends ActionSupport{
 		//add by zsy to log remote access ip
 //		userDAO.recordLogin(username,remoteip);//add by zsy
 		//above add by zsy to log remote access ip
-		
+		String totalUser=String.valueOf(userDAO.getCountUser());
         ActionContext actionContext = ActionContext.getContext();
         Map session = actionContext.getSession();
         session.put("user", user);
-		//System.out.println(getUsername());
-        //System.out.println(user.getUsername()+"已登录");
-		//System.out.println(getType());
+        session.put("totalUser", totalUser);
         userDAO.close();
 		return "succ";
 	}

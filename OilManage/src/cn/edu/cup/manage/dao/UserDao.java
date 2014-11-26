@@ -129,15 +129,16 @@ public class UserDao  {
 	}
 	
 
+	public int getCountUser(){
+		SQLQuery q = session.createSQLQuery("select count(*) from t_user");
+		Integer a=((BigInteger)q.uniqueResult()).intValue();
+		return a;
+	}
 	
 	public User searchUser(String name,String pass,String type){
-		
-		
-		
+	
 		User userR=null;
 		try {
-				
-				
 		        Query query = session.createSQLQuery("select * from t_user s where s.username=? and s.password=?");
 		        query.setParameter(0, name);
 		        query.setParameter(1, pass);
