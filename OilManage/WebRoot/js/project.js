@@ -134,7 +134,7 @@ function list_project(){
 							align : "center",
 							formatter : function(value, grid, rows) {
 								//alert(value);
-								//var z=32;
+								//var z=32;showData
 //								alert(value);exportInputExcel ExcelProject/
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"location.href='"
 										+ rows.profileOut + "'\">输出导出</a>";

@@ -213,10 +213,10 @@ public class AlgorithmExcelAction {
 	List<DeviceKV> deviceKV;
 	public String listDevice(){
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
-		if(name!=null&&this.InOrOut.equals("In")){
+		if(name!=null&&this.InOrOut.equals("In")&&excel!=null){
 			deviceKV=excel.getDiviceIn(type+"数据",name);
 		}
-		if(name!=null&&this.InOrOut.equals("Out")){
+		if(name!=null&&this.InOrOut.equals("Out")&&excel!=null){
 			FileExcel excelIn = FileExcelManager.getFileExcel(this.proID, this.algID, "In");
 			
 			deviceKV=excel.getDiviceOut(type+"数据",name,excelIn);
