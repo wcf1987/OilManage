@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		href="editor/assets/css/style.css" />
 	<link rel="stylesheet" media="screen" type="text/css"
 		href="editor/assets/css/minimap.css" />
-
+		
 	<script type="text/javascript" src="editor/assets/javascript/json2.js"></script>
 	<script type="text/javascript" src="editor/assets/javascript/jquery-1.11.0.min.js"></script>
 	<script src="js/jquery/jquery-migrate-1.2.1.js"></script>
