@@ -13,13 +13,14 @@ public class AlgorithmPro {
 	String statusS;
 	int runtime;
 	Date LastCalcEndTime;
-
+	String algName;
 	public AlgorithmPro(Integer id2, String proname, Integer aid,
 			String author, String description2, Date addTime,
 			Date lastCalcTime, Integer calcHisNum, String ProfileIn,
-			String ProfileOut, int status, int runtime, Date LastCalcEndTime) {
+			String ProfileOut, int status, int runtime, Date LastCalcEndTime,String algName1) {
 		// TODO Auto-generated constructor stub
 		this.ID = id2;
+		this.algName=algName1;
 		this.name = proname;
 		this.Pro_input_Num = 0;
 		this.authorID = aid;
@@ -46,6 +47,9 @@ public class AlgorithmPro {
 		this.runtime=runtime;
 		this.LastCalcEndTime=LastCalcEndTime;
 
+	}
+	public String getAlgName() {
+		return algName;
 	}
 	public String getStatusS() {
 		return statusS;

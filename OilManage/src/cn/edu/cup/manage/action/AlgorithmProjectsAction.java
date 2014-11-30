@@ -23,7 +23,7 @@ public class AlgorithmProjectsAction {
 	String name;
 	List<AlgorithmPro> dataList;
 	boolean exeSuccess;
-	private int algID;
+	private int algID=-1;
 	private int page;
 	private int records;
 	private int rows;

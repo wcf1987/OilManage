@@ -42,11 +42,17 @@ public class AlgorithmProDao {
 
 	public List<AlgorithmPro> getAlgorithmProsList(int algid, int page,
 			int rows, String sidx, String sord) {
-
-		SQLQuery q = session
-				.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime,t1.LastCalcTime ,t1.CalcHisNum,t1.ProfileIn,t1.ProfileOut,t1.status,t1.LastCalcEndTime,t1.runtime from t_projects t1,t_user t2 where t1.AuthorID=t2.ID and t1.Algorithm_ID=? order by t1."
+		SQLQuery q;
+		if(algid==-1){
+			 q = session
+					.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime,t1.LastCalcTime ,t1.CalcHisNum,t1.ProfileIn,t1.ProfileOut,t1.status,t1.LastCalcEndTime,t1.runtime,t3.Name as name1 from t_projects t1,t_user t2,t_algorithmscycle t3 where t1.AuthorID=t2.ID and t3.ID=t1.Algorithm_ID order by t1."
+							+ sidx + " " + sord);
+		}else{
+		 q = session
+				.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime,t1.LastCalcTime ,t1.CalcHisNum,t1.ProfileIn,t1.ProfileOut,t1.status,t1.LastCalcEndTime,t1.runtime,t3.Name as name1 from t_projects t1,t_user t2,t_algorithmscycle t3 where t1.AuthorID=t2.ID and t3.ID=t1.Algorithm_ID and t1.Algorithm_ID=? order by t1."
 						+ sidx + " " + sord);
 		q.setParameter(0, algid);
+		}
 		q.setFirstResult((page - 1) * rows);
 		q.setMaxResults(rows);
 		List l = q.list();
@@ -67,16 +73,16 @@ public class AlgorithmProDao {
 			Date lastCalcTime = (Date) row[6];
 			Integer CalcHisNum = (Integer) row[7];
 
-			String ProfileIn = (String) row[8];
-			String ProfileOut = (String) row[9];
+			String ProfileIn = FileExcelManager.ExcelProBaseDir+(String) row[8];
+			String ProfileOut = FileExcelManager.ExcelProBaseDir+(String) row[9];
 			int status = ((Integer) row[10]);
 			Date LastCalcEndTime = (Date) row[11];
 			int runtime = ((Integer) row[12]);
-			
+			String algName = (String) row[13];
 
 			AlgorithmPro p = new AlgorithmPro(id, proname, aid, author,
 					description, addTime, lastCalcTime, CalcHisNum,ProfileIn,
-					ProfileOut,status,runtime,LastCalcEndTime);
+					ProfileOut,status,runtime,LastCalcEndTime,algName);
 
 			re.add(p);
 		}
@@ -341,7 +347,7 @@ public class AlgorithmProDao {
 		HibernateSessionManager.getThreadLocalTransaction();
 		Date modifyTime = new Date();
 		SQLQuery q = session
-				.createSQLQuery("update t_projects t set t.LastCalcEndTime=now()  where t.ID=?");
+				.createSQLQuery("update t_projects t set t.LastCalcTime=now()  where t.ID=?");
 
 		q.setParameter(0, proid);
 		int re = q.executeUpdate();

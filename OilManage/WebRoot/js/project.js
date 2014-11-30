@@ -55,7 +55,7 @@ function list_project(){
 				postData : {
 					algID :$("#curAlgID").val()				
 				},
-				colNames : [ '编号', '名称', '描述','作者','添加时间','最后运行时间','运行状态','输入文件导出','输出文件导出','打开'],// 表格的列名
+				colNames : [ '编号','算法', '名称', '描述','作者','添加时间','最后运行时间','运行状态','输入文件导出','输出文件导出','打开'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -65,6 +65,14 @@ function list_project(){
 							sortable:true,
 							sorttype:'int'
 						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
+						{
+							name : 'algName',
+							index : 'algName',
+							width : 150,
+							align : "center",
+							sortable:true,
+							sorttype:'int'
+						},
 						{
 							name : 'name',
 							index : 'name',
@@ -115,8 +123,8 @@ function list_project(){
 							formatter : function(value, grid, rows,
 									state) {
 //								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"setInput('"
-										+ rows.ID + "')\">输入参数设置</a>"
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"location.href='"
+										+ rows.profileOut + "'\">输入导出</a>"
 							}
 						},
 						{				
@@ -124,11 +132,12 @@ function list_project(){
 							index : 'ProfileOut',
 							width :100,
 							align : "center",
-							formatter : function(value, grid, rows,
-									state) {
-//								alert(rows.ID);
-								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"viewOutput('"
-										+ rows.ID + "')\">输出结果</a>"
+							formatter : function(value, grid, rows) {
+								//alert(value);
+								//var z=32;
+//								alert(value);exportInputExcel ExcelProject/
+								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"location.href='"
+										+ rows.profileOut + "'\">输出导出</a>";
 							}
 						},
 						{				
