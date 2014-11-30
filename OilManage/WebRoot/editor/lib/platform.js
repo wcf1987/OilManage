@@ -291,7 +291,7 @@ var Platform=function(){
 		    nodeChildren=platform.selectPainting.p.getChildren().toArray();
 		    for(var i=0;i<nodeChildren.length;i++){
 		    	
-		    	if (checkPoint(nodeChildren[i].getAbsolutePosition(),platform.centerlayer)){
+		    	if ((!checkLinked(nodeChildren[i]))&&checkPoint(nodeChildren[i].getAbsolutePosition(),platform.centerlayer)){
 		    		nodeChildren[i].show();
 		    	}
 		    	else{

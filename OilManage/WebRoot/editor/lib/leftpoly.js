@@ -472,14 +472,14 @@ function() {
 				this.polyGroups[k].add(connPointsRight);
 				//this.polyGroups[k].add(PointRight);
 				
-				connPointsRight.hide();	
+				
 				
 				this.polyGroups[k].add(lineLeftSp);
 				this.polyGroups[k].add(connPointsLeftSp);
 				//this.polyGroups[k].add(PointRight);
 				
 				this.polys[k].hide();
-					
+				connPointsRight.hide();		
 				lineRight.hide();
 				
 				lineLeftSp.hide();
@@ -946,12 +946,15 @@ function() {
 		var rightCir=getRightPoint(g);
 		var points = platform.getAllChildren();
 		var re=null;
+		g.leftConnArray=new Array();
+		g.rightConnArray=new Array();
 		for (li = 0; li < points.length; li++) {
 			var tempL=getLeftPoint(points[li]);
 		
 			if (points[li]!=g&&checkCircle(rightCir, tempL,
 					leftpoly.radiusL*platform.selectPainting.scaleN * 2)) {
 				g.lock=true;
+				g.rightConnArray.push(points[li]);
 				points[li].lock=true;
 				re= {
 					g : points[li],
@@ -967,11 +970,14 @@ function() {
 				}
 			}
 		}
+		addLinked(g,re,'Right');
+		var points = platform.getAllChildren();
 		for (li = 0; li < points.length; li++) {
 			var tempR=getRightPoint(points[li]);
 			if (points[li]!=g&&checkCircle(leftCir, tempR,
 					leftpoly.radiusL*platform.selectPainting.scaleN  * 2)) {
 				g.lock=true;
+				g.leftConnArray.push(points[li]);
 				points[li].lock=true;
 				re= {
 						g : points[li],
@@ -987,7 +993,8 @@ function() {
 				}
 			}
 			
-		}		
+		}
+		addLinked(g,re,'Left');
 		return re;
 	}
 

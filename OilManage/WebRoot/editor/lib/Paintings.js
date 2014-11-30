@@ -42,6 +42,7 @@ var Paintings = function() {
 			if(types!=""){
 				point.TYPE=types;
 			}
+		
 			this.p.add(point);
 			setPointText(point,p['name']);
 			point.x(p.draw2DX);
@@ -114,7 +115,7 @@ var Paintings = function() {
 			var end=l['end'];
 			var startP=this.getPointByName(start);
 			var endP=this.getPointByName(end);
-			if(startP!=null&&endP!=null){
+			if(startP!=null&&endP!=null&&startP!=endP){
 				var	rc=getRightPoint(startP);
 				var	lc=getLeftPoint(endP);
 

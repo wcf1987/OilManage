@@ -45,7 +45,9 @@ function onMouseWheel(e, delta,dx,dy) {
 }
 
 function checkPoint(pos, rect) {
-	
+	if(pos==null){
+		return false;
+	}
 	var size = rect.size();
 	if (pos.x > rect.x() && pos.y > rect.y()
 			&& (pos.x < rect.x() + size.width)
@@ -338,6 +340,91 @@ function checkLinked(p){
 	}
 	return false;
 }
+function addLinked(g,re,way){
+	var temp;
+	var cp;
+	if(!checkAllPipe(g)){
+		return;
+	}
+	if(way=='Right'){
+		temp=g.rightConnArray;
+		cp=getRightPoint(g);
+	}
+	if(way=='Left'){
+		temp=g.leftConnArray;
+		cp=getLeftPoint(g);
+	}
+	var size=temp.length;
+	var key=0
+	for(var i=0;i<size;i++){
+		if(checkSpecial(temp[i])){
+			key=1;
+		}
+	}
+	for(var i=0;key==1&&i<size;i++){
+		if(checkLinked(temp[i])){
+			leftpoly.delPoint(temp[i].TYPE,temp[i].nameStr,temp[i]);
+			platform.selectPainting.hasChange();		
+			temp[i].destroy();			
+		}
+		
+	}
+	for(var i=0;i<size;i++){
+		if(checkLinked(temp[i])){
+			return;
+		}
+	}
+	if(size>0&&key==0){
+		var point;
+		var ptemp;
+		for(var i=0;i<leftpoly.polyGroups.length;i++){
+			if (leftpoly.polyGroups[i].TYPE=='设备连接点'){
+				ptemp=leftpoly.polyGroups[i];
+				break;
+			}
+		}
+		point=ptemp.clone();
+		var name='Node'+getMaxNum()+1;
+		
+		point.nameStr=name;
+		point.id(name);
+		point.TYPE='设备连接点';		
+		platform.selectPainting.p.add(point);	
+		
+		pos={
+				x:cp.getAbsolutePosition().x-((leftpoly.polywidth+1*leftpoly.polylineLength)*platform.selectPainting.scaleN),
+				y:cp.getAbsolutePosition().y-((leftpoly.polyhight/2)*platform.selectPainting.scaleN)
+			};
+		point.setAbsolutePosition(pos);					
+		
+		var cptest=getRightPoint(g);
+		var z=cptest.getAbsolutePosition();
+		//resizePoint(point);
+		platform.selectPainting.p.draw();
+		leftpoly.addPoint(point.TYPE,name,point);
+	}
+	
+	
+	
+}
+function	getMaxNum(){
+	var points = platform.getAllChildren();	
+	var max=0;
+	for (li = 0; li < points.length; li++) {
+		var temp=points[li].nameStr;
+		var index=temp.indexOf('Node');
+		var num=0;
+		if(index!=-1){
+			num=temp.substring(4);
+			if(num>max){
+				max=num;
+				}
+			}
+		}
+	return max;
+}
+
+
 function checkPipe(p){
 	if(p.TYPE=='集气增压站'||p.TYPE=='中央处理厂'||p.TYPE=='主动增压点'||p.TYPE=='离心压缩机'||p.TYPE=='往复式压缩机')
 	{
@@ -353,7 +440,7 @@ function checkQY(p){
 	return false;
 }
 function checkAllPipe(p){
-	if(p.TYPE=='集气增压站'||p.TYPE=='中央处理厂'||p.TYPE=='主动增压点'||p.TYPE=='离心压缩机'||p.TYPE=='往复式压缩机'||p.TYPE=='管道')
+	if(p.TYPE=='集气增压站'||p.TYPE=='中央处理厂'||p.TYPE=='主动增压点'||p.TYPE=='离心压缩机'||p.TYPE=='往复式压缩机'||p.TYPE=='管道'||p.TYPE=='阀'||p.TYPE=='过滤器')
 	{
 		return true;
 	}
