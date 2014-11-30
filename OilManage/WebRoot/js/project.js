@@ -124,7 +124,7 @@ function list_project(){
 									state) {
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"location.href='"
-										+ rows.profileOut + "'\">输入导出</a>"
+										+ rows.profileIn + "'\">输入导出</a>"
 							}
 						},
 						{				
