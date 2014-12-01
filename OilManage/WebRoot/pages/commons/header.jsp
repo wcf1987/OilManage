@@ -16,7 +16,7 @@ else{
     <!--  <div class="container"> -->
     <div class="navbar  navbar-static-top" role="navigation" style="">
     	<ul  class="nav navbar-nav" style="margin-top:30px">
-    		<li style="margin-right:-20%;margin-left:17%"><img style="width:50%;" alt="煤层气集输系统" src="images/bothlogo4.png"></li>	
+    		<li style="margin-right:-35%;margin-left:13%"><img style="width:50%;" alt="煤层气集输系统" src="images/bothlogo4.png"></li>	
     		<li style="margin-top:30px;">系统时间：<span id="nowtime"></span></li>
 	      	<li style="margin-top:30px;"><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/<%out.print(totalUser);%>人</span></span></li>
     	</ul>
@@ -78,7 +78,7 @@ else{
             <!--  <li><a id="map" href="pages/map.jsp">地图建模</a></li>
              <li><a id="diagram" href="pages/diagram.jsp">笛卡尔建模</a></li> -->
               
-       		<li><a id="data" href="pages/data.jsp">系统管理</a></li>  	               
+       		<li><a id="data" href="pages/project.jsp">系统管理</a></li>  	               
           	</ul>
             
            	<%if (userlogin!=null) {%>

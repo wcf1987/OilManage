@@ -55,7 +55,7 @@ function list_project(){
 				postData : {
 					algID :$("#curAlgID").val()				
 				},
-				colNames : [ '编号','算法', '名称', '描述','作者','添加时间','最后运行时间','运行状态','输入文件导出','输出文件导出','打开'],// 表格的列名
+				colNames : [ '编号','算法ID','算法', '名称', '描述','作者','添加时间','最后运行时间','运行状态','输入文件导出','输出文件导出','打开'],// 表格的列名
 				colModel : [
 						{
 							name : 'ID',
@@ -65,6 +65,15 @@ function list_project(){
 							sortable:true,
 							sorttype:'int'
 						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
+						{
+							name : 'algID',
+							index : 'algID',
+							width : 150,
+							align : "center",
+							sortable:true,
+							sorttype:'int',
+							hidden:true
+						},
 						{
 							name : 'algName',
 							index : 'algName',
@@ -149,7 +158,7 @@ function list_project(){
 									state) {
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"openProject("
-										+ rows.ID + ")\">打开</a>"
+										+ rows.ID+","+rows.algID + ")\">打开</a>"
 							}
 						}
 						],
@@ -174,8 +183,10 @@ function list_project(){
 				caption: "工程管理"//表格名称
 				
 			});
-
-//	datagrid.jqGrid('filterToolbar',{searchOperators:true});
+	var curl=window.location.pathname;
+	if(curl=="/OilManage/pages/project.jsp"){	
+		datagrid.setGridParam().hideCol("open");
+	}
 	datagrid.jqGrid('navGrid','#ProjectPager',{
 		edit : false,
 		add : false,
@@ -216,7 +227,7 @@ function add_project() {
 		success : function(data) {
 
 			alert('工程添加成功！');			
-			openProject(data.ID);			
+			openProject(data.ID,$("#curAlgID").val());			
 
 			$('#add_project_modal').modal('hide');
 			$("#ProjectList").trigger("reloadGrid");			
@@ -830,16 +841,42 @@ function createNewProject(){
 	window.location.href="pages/project_edit.jsp?projectID="+projectID+"&projectName="+projectName+"&backurl="+window.location.href; 
 }*/
 
-function openProject(proid){
+function openProject(proid,algID){
 	/*
 	 * sid第几个sheet
 	 * proid项目ID
 	 * algid功能ID
 	 */
+	/*var curl=window.location.pathname;
+	if(curl=="/OilManage/pages/project.jsp"){		
+		if(algID==0){
+			window.location.href='pages/simulate_wellbore.jsp';
+		}else if(algID==1){
+			window.location.href='pages/simulate_hydraulic.jsp';
+		}else if(algID==2){
+			window.location.href='pages/simulate_thermal.jsp';
+		}else if(algID==3){
+			window.location.href='pages/simulate_gas_solid.jsp';
+		}else if(algID==4){
+			window.location.href='pages/simulate_gas_liquid.jsp';
+		}else if(algID==6){
+			window.location.href='pages/optimize_sysexpand.jsp';
+		}else if(algID==7){
+			window.location.href='pages/optimize_global.jsp';
+		}else if(algID==8){
+			window.location.href='pages/optimize_layout.jsp';
+		}else if(algID==9){
+			window.location.href='pages/optimize_global.jsp';
+		}
+	}*/
+	
 	$("#proID").val(proid);
 	var sid = 1;
 	//var proid = 11;
 	var algid = $("#curAlgID").val();
+	if(algid==null){
+		algid=algID;
+	}
 	var inputSheetNum=$("#inputSheetNum").val();
 	var input_base_sheetNum=$("#input_base_sheetNum").val();
 	var input_function_sheetNum=$("#input_function_sheetNum").val();
@@ -861,41 +898,6 @@ function openProject(proid){
 		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i,gridWidth);
 		
 	}
-	/*
-	 * 获取基础数据
-	 */
-//	var sheetDiv = "#input-sheet";
-//	var pageDiv = "#input-pager";
-//	var delID="input-delsheet";
-//	for(var i=0;i<input_base_sheetNum;i++){
-//		var sheetgrid = new SheetGrid();
-//
-//		sheetgrid.GetDynamicCols(i, algid,inOrOut);
-//		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);
-//		
-//	}
-//	/*
-//	 * 获取条件约束数据
-//	 */
-//	var sheetDiv = "#input-condition-sheet";
-//	var pageDiv = "#input-condition-pager";
-//	var delID="input-condition-delsheet";
-//	for(var i=0;i<input_condition_sheetNum;i++){
-//		var sheetgrid = new SheetGrid();
-//
-//		sheetgrid.GetDynamicCols(i+input_base_sheetNum*1+input_function_sheetNum*1, algid,inOrOut);
-//		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);
-//		
-//	}
-//	/*
-//	 * 获取问题描述数据
-//	 */
-//	var sheetDiv = "#input-function-sheet";
-//	var pageDiv = "#input-function-pager";
-//	var delID="input-function-delsheet";
-//	var sheetgrid = new SheetGrid();
-//	sheetgrid.GetDynamicCols(input_base_sheetNum, algid,inOrOut);
-//	sheetgrid.creategrid(proid, sheetDiv+0, pageDiv+0,delID+0);
 		
 	$(".modal").modal('hide');
 }

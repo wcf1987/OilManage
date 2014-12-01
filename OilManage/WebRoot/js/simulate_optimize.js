@@ -34,7 +34,6 @@ function openProjectModal(){
 }
 
 function listProjectModal(){
-	
 	$('#list_project_modal>.modal-dialog').css({
 		 'margin-top': function () {
 		            return ($(window).height())/2-this.height/2;
@@ -45,7 +44,7 @@ function listProjectModal(){
 		        }
 		});
 	$('#list_project_modal').modal();
-	$('#load_modal').modal('hide');
+	$('#load_modal').modal('hide')
 }
 function uploadComplete(file, data, response) {
 	var tempJson = jQuery.parseJSON(data);
@@ -210,24 +209,30 @@ function exportOutputExcel(){
 function showData(type){
 	
 	if(type=="outputBase"||type=="outputFee"||type=="outputPosition"||type=="outputGisMap"){
-		initMapGis();//地图模型的加载
-		var proID=$("#proID").val();
-		var algID=$("#curAlgID").val();
-		showMap(proID,algID,'Out');	
+		if(type=="outputGisMap"){
+			initMapGis();//地图模型的加载
+			var proID=$("#proID").val();
+			var algID=$("#curAlgID").val();
+			showMap(proID,algID,'Out');	
+		}
 		$(".outputDataDiv").each(function(index,item){//tab切换
 			$(item).hide();
 		});
 		$("#"+type).show();
 	}else if(type=="inputBase"||type=="inputFunction"||type=="inputCondition"||type=="inputGisMap"||type=="inputDcMap"){
-		if($("#curAlgID").val()==1||$("#curAlgID").val()==2||$("#curAlgID").val()==3||$("#curAlgID").val()==4){//笛卡尔模型的加载
-			tabtools.load();
-		}else{
-			
+		if(type=="inputDcMap"){
+			if($("#curAlgID").val()==1||$("#curAlgID").val()==2||$("#curAlgID").val()==3||$("#curAlgID").val()==4){//笛卡尔模型的加载
+				tabtools.load();
+			}else{
+				
+			}
 		}
-		initMapGis();//地图模型的加载
-		var proID=$("#proID").val();
-		var algID=$("#curAlgID").val();
-		showMap(proID,algID,'In');	  
+		if(type=="inputGisMap"){
+			initMapGis();//地图模型的加载
+			var proID=$("#proID").val();
+			var algID=$("#curAlgID").val();
+			showMap(proID,algID,'In');	  
+		}
 		$(".inputDataDiv").each(function(index,item){//tab切换
 			$(item).hide();
 		});
