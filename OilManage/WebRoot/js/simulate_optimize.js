@@ -114,6 +114,7 @@ function runAlg(way){
 var intervalID=null;
 function showLogInter(){
 	if(intervalID==null){
+		listLog();
 	$("#outputarea").text("");
 	intervalID=setInterval ("listLog()", 5000);//每隔一段时间去请求日志信息
 	}

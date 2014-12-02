@@ -35,7 +35,8 @@ public class ProCalcManage {//工程计算进程管理类，控制计算进程ca
 	    		 return null;
 	    	 }
 	    	 if(thread.isAlive()==false){
-	    		 return null;
+	    		 ProjectInfo proinfo=thread.getProInfo();
+	    		 return proinfo.info.getLog();
 	    	 }else{
 	    		 ProjectInfo proinfo=thread.getProInfo();
 	    		 return proinfo.info.getLog();
