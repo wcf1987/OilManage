@@ -91,17 +91,18 @@ function runAlg(way){
 		dataType:'json',
 	    beforeSend:function(XMLHttpRequest){
 	    	//location.href=window.location.pathname+"#run_tab";
-	    	showLogInter();
-	    	if(way==0){
-	    	showTab("run_tab");
-	    }
-	    	$("#isRunning").css({display:"block",top:"15%",left:"55%",position:"absolute"});
-	    
+	    	
 	    },
 		success:function(data){				
 			//$("#isRunning").hide();		
 			if(data.msg==null||data.msg==""){
 				//alert("运行结束！")
+				showLogInter();
+		    	if(way==0){
+		    	showTab("run_tab");
+		    	}
+		    	$("#isRunning").css({display:"block",top:"15%",left:"55%",position:"absolute"});
+		    
 			}else{
 				alert(data.msg);
 			}					
