@@ -12,7 +12,7 @@ import cn.edu.cup.manage.dao.AlgorithmProDao;
 public class ProCalcManage {//工程计算进程管理类，控制计算进程calcThread
 	private ProCalcManage() {
 		threadMap=new HashMap<Integer, CalcThread>();
-		
+		threadIDMap=new HashMap<Long, CalcThread>();
 		
 		
 	}
@@ -63,11 +63,14 @@ public class ProCalcManage {//工程计算进程管理类，控制计算进程ca
 			
 			thread.setProInfo(proinfo);
 			thread.start();
+			long id=thread.getId();
 			threadMap.put(proinfo.getProid(), thread);
+			threadIDMap.put(id, thread);
 			//proinfo.save();
 			
 		}
 		Map<Integer,CalcThread> threadMap;//prodi:calcThread
+		Map<Long,CalcThread> threadIDMap;//prodi:calcThread
 		public void run(int proid) {
 			ProjectInfo proinfo=new ProjectInfo(proid);
 				
