@@ -45,11 +45,11 @@ public class AlgorithmProDao {
 		SQLQuery q;
 		if(algid==-1){
 			 q = session
-					.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime,t1.LastCalcTime ,t1.CalcHisNum,t1.ProfileIn,t1.ProfileOut,t1.status,t1.LastCalcEndTime,t1.runtime,t3.Name as name1 from t_projects t1,t_user t2,t_algorithmscycle t3 where t1.AuthorID=t2.ID and t3.ID=t1.Algorithm_ID order by t1."
+					.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime,t1.LastCalcTime ,t1.CalcHisNum,t1.ProfileIn,t1.ProfileOut,t1.status,t1.LastCalcEndTime,t1.runtime,t3.ID algID,t3.Name as name1 from t_projects t1,t_user t2,t_algorithmscycle t3 where t1.AuthorID=t2.ID and t3.ID=t1.Algorithm_ID order by t1."
 							+ sidx + " " + sord);
 		}else{
 		 q = session
-				.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime,t1.LastCalcTime ,t1.CalcHisNum,t1.ProfileIn,t1.ProfileOut,t1.status,t1.LastCalcEndTime,t1.runtime,t3.Name as name1 from t_projects t1,t_user t2,t_algorithmscycle t3 where t1.AuthorID=t2.ID and t3.ID=t1.Algorithm_ID and t1.Algorithm_ID=? order by t1."
+				.createSQLQuery("select t1.ID,t1.name,t1.Description,t1.AuthorID,t2.Username,t1.AddTime,t1.LastCalcTime ,t1.CalcHisNum,t1.ProfileIn,t1.ProfileOut,t1.status,t1.LastCalcEndTime,t1.runtime,t3.ID algID,t3.Name as name1 from t_projects t1,t_user t2,t_algorithmscycle t3 where t1.AuthorID=t2.ID and t3.ID=t1.Algorithm_ID and t1.Algorithm_ID=? order by t1."
 						+ sidx + " " + sord);
 		q.setParameter(0, algid);
 		}
@@ -78,11 +78,12 @@ public class AlgorithmProDao {
 			int status = ((Integer) row[10]);
 			Date LastCalcEndTime = (Date) row[11];
 			int runtime = ((Integer) row[12]);
-			String algName = (String) row[13];
+			Integer algID = ((Integer) row[13]);
+			String algName = (String) row[14];
 
 			AlgorithmPro p = new AlgorithmPro(id, proname, aid, author,
 					description, addTime, lastCalcTime, CalcHisNum,ProfileIn,
-					ProfileOut,status,runtime,LastCalcEndTime,algName);
+					ProfileOut,status,runtime,LastCalcEndTime,algID,algName);
 
 			re.add(p);
 		}

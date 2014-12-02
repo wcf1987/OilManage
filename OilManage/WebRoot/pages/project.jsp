@@ -7,17 +7,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-<%
-
-//User userlogin=(User)(session.getAttribute("user"));
-//if (userlogin==null){
-//response.sendRedirect("login.jsp");
-//return;
-//}
-//else{
-
-//}
-%> 
 
     <base href="<%=basePath%>">
     
@@ -30,22 +19,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	
 	<!-- Bootstrap -->
-   
-	<!--  <link rel="stylesheet" href="css/justified-nav.css">
-	-->
-	<link rel="stylesheet" href="js/upload/uploadify.css">
-	 
+	<link rel="stylesheet" href="js/upload/uploadify.css"> 
 	<link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/css/jquery-ui-1.10.3.custom.css" />
 	 
-	
 	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqGrid/css/ui.jqgrid.css" />
 	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/overcast/jquery.ui.theme.css" />  
 	 <link rel="stylesheet" type="text/css" media="screen" href="js/jqueryUI/themes/redmond/jquery.ui.theme.css" />
-	 
-	 
+	
 	 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	 <link rel="stylesheet" type="text/css" href="bootstrap/css/carousel.css">
-	<!--  <link rel="stylesheet" href="css/docs-5892f62386325d472ddefdaec9d29018.css">  -->
 	 <link rel="stylesheet" type="text/css" media="screen" href="css/tabs.css" />
 	<!-- 自定义 -->
 	
@@ -87,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   		<div id="head">
-		    <%@ include file="commons/header.jsp" %>
+		    <%@ include file="commons/header_admin.jsp" %>
 	</div>  
     	 <!-- Marketing messaging and featurettes
 	    ================================================== -->

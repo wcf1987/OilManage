@@ -28,7 +28,7 @@ else{
           </div> -->
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">              
-              <li><a id="data" href="pages/data.jsp">数据管理</a></li>
+              <li><a id="data" href="pages/project.jsp">工程管理</a></li>
               <li><a id="algorithm" href="pages/algorithm.jsp">算法管理</a></li>
               <li><a id="admin" href="pages/admin.jsp">系统管理</a></li>
 		      <li><a id="home" href="pages/home.jsp">返回首页</a></li>	     

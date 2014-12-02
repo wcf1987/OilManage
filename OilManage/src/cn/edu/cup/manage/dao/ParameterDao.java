@@ -50,16 +50,6 @@ public class ParameterDao {
 		return result;
 	}
 	
-	
-	
-	
-
-
-
-
-	
-	
-
 	public ParameterDao()
 	{	
 		session = HibernateSessionManager.getThreadLocalSession();
