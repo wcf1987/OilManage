@@ -343,12 +343,14 @@ public class AlgorithmProjectsAction {
 	
 		AlgorithmProDao dao = new AlgorithmProDao();
 		status=dao.getStatus(this.ID);
-		calcHisID = dao.getcalcLastest(this.ID);
-		loginfo=dao.getLogList(calcHisID);
+		//calcHisID = dao.getcalcLastest(this.ID);
+		//loginfo=dao.getLogList(calcHisID);
 		dao.close();
 		if(status==0){
 			status=1;
 		}
+		ProCalcManage pcm=ProCalcManage.getInstance();
+		loginfo=pcm.getLog(this.ID);		
 		return "SUCCESS";
 	}
 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.edu.cup.manage.business.AlgorithmPro;
+import cn.edu.cup.manage.business.LogInfo;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
 
 public class ProCalcManage {//工程计算进程管理类，控制计算进程calcThread
@@ -28,6 +29,18 @@ public class ProCalcManage {//工程计算进程管理类，控制计算进程ca
 	    	  
 				
 	      }
+	     public List<LogInfo> getLog(int proid){
+	    	 CalcThread thread=threadMap.get(proid);
+	    	 if(thread==null){
+	    		 return null;
+	    	 }
+	    	 if(thread.isAlive()==false){
+	    		 return null;
+	    	 }else{
+	    		 ProjectInfo proinfo=thread.getProInfo();
+	    		 return proinfo.info.getLog();
+	    	 }
+	     }
 	     public int getStatus(int proid){
 	    	 CalcThread thread=threadMap.get(proid);
 	    	 if(thread==null){

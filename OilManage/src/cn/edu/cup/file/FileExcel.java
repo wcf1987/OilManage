@@ -150,7 +150,18 @@ public class FileExcel {
 			return 1;
 		}
 		cell1_1 = row1.createCell(j - 1);
-		cell1_1.setCellValue(value);
+		if(Tools.getType(value)==3){
+			cell1_1.setCellType(Cell.CELL_TYPE_STRING);
+			cell1_1.setCellValue(value);
+		}if(Tools.getType(value)==1||Tools.getType(value)==2){
+			cell1_1.setCellType(Cell.CELL_TYPE_NUMERIC);
+			cell1_1.setCellValue(Double.valueOf(value));
+		}if(Tools.getType(value)==-1){
+			cell1_1.setCellType(Cell.CELL_TYPE_BLANK);
+			//cell1_1.setCellValue(null);
+		}
+		
+		
 		return 1;
 	}
 

@@ -5,6 +5,9 @@ import cn.edu.cup.file.FileExcelManager;
 public class CalcThread extends Thread {
 	ProjectInfo proinfo;
 	AlgorithmPlugTools alg;
+	public ProjectInfo getProInfo(){
+		return proinfo;
+	}
 	public void setProInfo(ProjectInfo proinfo) {
 		// TODO Auto-generated method stub
 		this.proinfo=proinfo;

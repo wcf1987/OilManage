@@ -3,14 +3,21 @@ package cn.edu.cup.algjarexcel;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import cn.edu.cup.manage.business.LogInfo;
 import cn.edu.cup.tools.Tools;
 
 public class RunInfoDetail extends RunInfo{
 	String fileInputPath;
 	String fileOutputPath;
 	ProjectInfo proinfo;
-
+	List<LogInfo> log=new ArrayList<LogInfo>();
+	public List<LogInfo> getLog(){
+		return log;
+	}
 	class MyOutputStream extends OutputStream{
 	    public void write(int arg0) throws IOException {
 	      // 写入指定的字节，忽略
@@ -78,8 +85,8 @@ public class RunInfoDetail extends RunInfo{
 	@Override
 	public String log(String info) {
 		// TODO Auto-generated method stub
-		proinfo.logInfo(info);
-
+		//proinfo.logInfo(info);
+		log.add(new LogInfo(new Date(), info));
 		return info;
 	}
 
