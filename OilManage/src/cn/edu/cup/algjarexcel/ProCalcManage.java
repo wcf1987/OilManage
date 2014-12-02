@@ -24,7 +24,7 @@ public class ProCalcManage {//工程计算进程管理类，控制计算进程ca
 	     }
 
 	      public void stopThread(int proid){
-	    	  CalcThread a=clearThread(proid);//根据proid从threadMap中将该进程剔除
+	    	  CalcThread a=threadMap.get(proid);//根据proid从threadMap中将该进程剔除
 	    	  a.stopByForce();//杀掉进程
 	    	  
 				

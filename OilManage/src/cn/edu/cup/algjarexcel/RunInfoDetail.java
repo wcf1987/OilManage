@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class RunInfoDetail extends RunInfo{
 	String fileInputPath;
 	String fileOutputPath;
 	ProjectInfo proinfo;
-	List<LogInfo> log=new ArrayList<LogInfo>();
+	List<LogInfo> log=Collections.synchronizedList(new ArrayList<LogInfo>());;
 	public List<LogInfo> getLog(){
 		return log;
 	}

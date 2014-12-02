@@ -81,7 +81,6 @@ function saveExcel(){
 		}
 	});
 }
-var intervalID;
 function runAlg(way){
 	$.ajax({
 		type:'post',
@@ -91,9 +90,8 @@ function runAlg(way){
 		},
 		dataType:'json',
 	    beforeSend:function(XMLHttpRequest){
-	    	$("#outputarea").text("");
-	    	intervalID=setInterval ("listLog()", 5000);//每隔一段时间去请求日志信息
 	    	//location.href=window.location.pathname+"#run_tab";
+	    	showLogInter();
 	    	if(way==0){
 	    	showTab("run_tab");
 	    }
@@ -112,6 +110,13 @@ function runAlg(way){
 			alert(msg);	
 		}
 	});
+}
+var intervalID=null;
+function showLogInter(){
+	if(intervalID==null){
+	$("#outputarea").text("");
+	intervalID=setInterval ("listLog()", 5000);//每隔一段时间去请求日志信息
+	}
 }
 function exportInputExcel(){
 	$.ajax({
@@ -146,6 +151,7 @@ function listLog()
 			if(data.status!=1){//如果算法运行结束，则停止日志刷新程序
 				window.clearInterval(intervalID);
 				$("#isRunning").hide();	
+				intervalID=null;
 			}			
 			$.each(data.loginfo,function(index,log){
 				if(log!=null&&log!=""){
@@ -159,6 +165,7 @@ function listLog()
 		error:function(msg){
 			$("#outputarea").append("通信失败！\n\r");
 			window.clearInterval(intervalID);
+			intervalID=null;
 		}
 	});
 
@@ -254,6 +261,8 @@ function showTab(type){
 	$("#"+type).show();
 	$("#"+type+"_button").css("background-color",'fff');
 	if(type=='run_tab'){
+		showLogInter();
+		
 //		if($("#curAlgID").val()==1||$("#curAlgID").val()==2||$("#curAlgID").val()==3||$("#curAlgID").val()==4){
 //			tabtools.load();
 //		}else{

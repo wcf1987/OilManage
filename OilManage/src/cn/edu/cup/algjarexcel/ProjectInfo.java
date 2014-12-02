@@ -77,7 +77,7 @@ public class ProjectInfo{
 		ProjectCalcHisDao dao1 = new ProjectCalcHisDao();
 		dao1.setProCalcEnd(hisID,status,info2);//更新计算历史
 		ProCalcManage calcM=ProCalcManage.getInstance();
-		calcM.clearThread(proid);//从map里面剔除该项目计算进程。
+		//calcM.clearThread(proid);//从map里面剔除该项目计算进程。
 		dao.close();
 		dao1.close();
 		

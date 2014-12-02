@@ -80,4 +80,5 @@ public abstract class AlgorithmPlugTools{
 			this.info.endsWithSuccess(info);
 		}
 	}
+
 }
