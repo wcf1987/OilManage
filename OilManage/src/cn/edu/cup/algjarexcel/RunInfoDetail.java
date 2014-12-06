@@ -15,7 +15,8 @@ public class RunInfoDetail extends RunInfo{
 	String fileInputPath;
 	String fileOutputPath;
 	ProjectInfo proinfo;
-	List<LogInfo> log=Collections.synchronizedList(new ArrayList<LogInfo>());;
+	//List<LogInfo> log=Collections.synchronizedList(new ArrayList<LogInfo>());
+	List<LogInfo> log=new ArrayList<LogInfo>();
 	public List<LogInfo> getLog(){
 		return log;
 	}
@@ -90,7 +91,10 @@ public class RunInfoDetail extends RunInfo{
 		//proinfo.logInfo(info);
 		long id=Thread.currentThread().getId();
 		CalcThread b=ProCalcManage.getInstance().threadIDMap.get(id);
-		b.proinfo.info.log.add(new LogInfo(new Date(), info));
+		synchronized (b.proinfo.info.log) {
+			b.proinfo.info.log.add(new LogInfo(new Date(), info));
+		}
+		
 		
 		return info;
 	}

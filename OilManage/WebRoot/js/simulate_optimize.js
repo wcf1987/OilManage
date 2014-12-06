@@ -97,6 +97,8 @@ function runAlg(way){
 			//$("#isRunning").hide();		
 			if(data.msg==null||data.msg==""){
 				//alert("运行结束！")
+				$("#outputarea").text("");
+				var logSize=0;
 				showLogInter();
 		    	if(way==0){
 		    	showTab("run_tab");
@@ -113,10 +115,11 @@ function runAlg(way){
 	});
 }
 var intervalID=null;
+var logSize=0;
 function showLogInter(){
 	if(intervalID==null){
 		listLog();
-	$("#outputarea").text("");
+	
 	intervalID=setInterval ("listLog()", 5000);//每隔一段时间去请求日志信息
 	}
 }
@@ -141,15 +144,17 @@ function exportInputExcel(){
 
 function listLog()
 {	
-	$("#outputarea").text("");
+	//$("#outputarea").text("");
 	$.ajax({
 		type:'post',
 		url:'listLog.action',
 		data:{
-			ID:$("#proID").val()
+			ID:$("#proID").val(),
+			logSize:logSize
 		},
 		dataType:'json',
 		success:function(data){
+			logSize=data.logSize;
 			if(data.status!=1){//如果算法运行结束，则停止日志刷新程序
 				window.clearInterval(intervalID);
 				$("#isRunning").hide();	

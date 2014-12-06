@@ -3,6 +3,9 @@ package cn.edu.cup.manage.business;
 import java.util.Date;
 
 public class LogInfo {
+	public LogInfo(){
+		
+	}
 	public LogInfo(Date time, String info2) {
 		// TODO Auto-generated constructor stub
 		 logTime=time;

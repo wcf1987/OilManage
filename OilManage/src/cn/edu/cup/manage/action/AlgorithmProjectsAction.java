@@ -1,15 +1,16 @@
 package cn.edu.cup.manage.action;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import cn.edu.cup.algjarexcel.AlgorithmPlugTools;
 import cn.edu.cup.algjarexcel.ProCalcManage;
 import cn.edu.cup.algjarexcel.ProjectInfo;
 import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.manage.business.LogInfo;
 import cn.edu.cup.manage.dao.AlgorithmProDao;
-import cn.edu.cup.tools.JarTools;
 
 public class AlgorithmProjectsAction {
 	int ID;
@@ -350,15 +351,40 @@ public class AlgorithmProjectsAction {
 			status=1;
 		}
 		ProCalcManage pcm=ProCalcManage.getInstance();
-		loginfo=pcm.getLog(this.ID);		
+		List<LogInfo> temp=pcm.getLog(this.ID);
+		if(temp!=null){
+		synchronized(temp){
+			loginfo=new ArrayList<LogInfo>(Arrays.asList(new LogInfo[temp.size()]));;
+			Collections.copy(loginfo, temp);
+		}	
+		int hasSendLog=logSize;
+		logSize=loginfo.size();
+		if(logSize-1>=hasSendLog){
+			if(logSize>hasSendLog+100){
+				hasSendLog=logSize-100;
+			}
+			loginfo=loginfo.subList(hasSendLog, logSize-1);}
+		else{
+			loginfo=new ArrayList<LogInfo>();
+		}
+		}
+		
 		return "SUCCESS";
+	}
+	public int logSize;
+	public int getLogSize() {
+		return logSize;
+	}
+
+	public void setLogSize(int logSize) {
+		this.logSize = logSize;
 	}
 
 	public int getCalcHisID() {
 		return calcHisID;
 	}
 
-	public List<LogInfo> getLoginfo() {
+	public  List<LogInfo> getLoginfo() {
 		return loginfo;
 	}
 }
