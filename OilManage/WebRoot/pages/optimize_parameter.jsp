@@ -96,15 +96,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<h2>参数设计</h2>
 						<input id="curAlgID" style="display:none" value="9"/>
 						<input id="proID" style="display:none" value=""/>
-						<input id="inputSheetNum" style="display:none" value="16"/>
+						<input id="inputSheetNum" style="display:none" value="15"/>
 						<input id="input_base_sheetNum" style="display:none" value="13"/>
 						<input id="input_function_sheetNum" style="display:none" value="1"/>
-						<input id="input_condition_sheetNum" style="display:none" value="2"/>
+						<input id="input_condition_sheetNum" style="display:none" value="1"/>
 						
 						<input id="outputSheetNum" style="display:none" value="9"/>
-						<input id="output_base_sheetNum" style="display:none" value="6"/>
+						<input id="output_base_sheetNum" style="display:none" value="3"/>
 						<input id="output_fee_sheetNum" style="display:none" value="2"/>
-						<input id="output_position_sheetNum" style="display:none" value="1"/>
+						<input id="output_position_sheetNum" style="display:none" value="4"/>
 						<!-- 
 						if (id = 0)，井底流压计算；if (id = 1)，单气相管网水力计算；if (id = 2)，单气相管网热力计算；if (id = 3)，气固两相管网水力计算；if (id = 4)，气液两相管网水力计算
 						 -->

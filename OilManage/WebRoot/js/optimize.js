@@ -94,7 +94,7 @@ function initInputTab(){
 			input_base_div_html="<div id='input-base-container"+i+"' class='tabs-container'><div id='input-base-panels"+i+"' class='panel-container'></div><ul id='input-base-ul"+i+"'></ul></div>";
 			$("#input_base_div").append(input_base_div_html);
 			for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
-				var sid=i*5+j;
+				var sid=i*maxSheetNum+j;
 				var algid=$("#curAlgID").val();
 				var inOrOut="In";
 				var sheetgrid = new SheetGrid();
@@ -149,7 +149,7 @@ function initInputTab(){
 		var panels="";
 		var lis="";
 		for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
-			var sid=input_base_sheetNum*1+i*5+j;
+			var sid=input_base_sheetNum*1+i*maxSheetNum+j;
 			var algid=$("#curAlgID").val();
 			var inOrOut="In";
 			var sheetgrid = new SheetGrid();
@@ -192,7 +192,7 @@ function initInputTab(){
 		var panels="";
 		var lis="";
 		for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
-			var sid=input_base_sheetNum*1+input_function_sheetNum*1+i*5+j;
+			var sid=input_base_sheetNum*1+input_function_sheetNum*1+i*maxSheetNum+j;
 			var algid=$("#curAlgID").val();
 			var inOrOut="In";
 			var sheetgrid = new SheetGrid();
@@ -246,7 +246,7 @@ function initOutputTab(){
 		var panels="";
 		var lis="";
 		for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
-			var sid=i*5+j;
+			var sid=i*maxSheetNum+j;
 			var algid=$("#curAlgID").val();
 			var inOrOut="Out";
 			var sheetgrid = new SheetGrid();
@@ -290,7 +290,7 @@ function initOutputTab(){
 		var panels="";
 		var lis="";
 		for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
-			var sid=output_base_sheetNum*1+i*5+j;
+			var sid=output_base_sheetNum*1+i*maxSheetNum+j;
 			var algid=$("#curAlgID").val();
 			var inOrOut="Out";
 			var sheetgrid = new SheetGrid();
@@ -334,7 +334,7 @@ function initOutputTab(){
 		var panels="";
 		var lis="";
 		for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
-			var sid=output_base_sheetNum*1+output_fee_sheetNum*1+i*5+j;
+			var sid=output_base_sheetNum*1+output_fee_sheetNum*1+i*maxSheetNum+j;
 			var algid=$("#curAlgID").val();
 			var inOrOut="Out";
 			var sheetgrid = new SheetGrid();

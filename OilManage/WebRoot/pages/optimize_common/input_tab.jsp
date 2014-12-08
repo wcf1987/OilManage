@@ -20,13 +20,13 @@
 	</div>
 </div>
 <div id="inputCondition" class="inputDataDiv" style="display:none">
-	<div class="tab-title">约束条件</div>
+	<!-- <div class="tab-title">约束条件</div> -->
 	<div id="input_condition_div">
 	</div>
 </div>
 
 <div id="inputFunction" class="inputDataDiv"  style="display:none">
-	<div class="tab-title">问题描述</div>
+	<!-- <div class="tab-title">问题描述</div> -->
 	<div id="input_function_div">
 	</div>
 </div>
