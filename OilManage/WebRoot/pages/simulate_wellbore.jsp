@@ -159,7 +159,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </body>
   
 </html>
-<script>
+<script >
 function listLogWell()
 {	
 	$("#outputarea").text("");
@@ -257,13 +257,6 @@ function loadOutputWell(){
 
 	});
 	
-/* 	for(var i=0;i<outputSheetNum;i++){
-		var sheetgrid = new SheetGrid();
-		sheetgrid.GetDynamicCols(i, algid,inOrOut);
-		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i);		
-	}
-	var sheetGrid=new SheetGrid();
-	sheetGrid.reloadGrid(); */
 }
 
 

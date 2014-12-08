@@ -153,7 +153,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		     keyboard:false,
 		     show:true
 		 }); */
-		 listProjectModal();	
+		 //listProjectModal();	
 	</script>		
 	<script type="text/javascript" src="js/optimize.js"></script>	 
   </body>

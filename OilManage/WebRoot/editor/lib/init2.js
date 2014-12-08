@@ -17,18 +17,10 @@ function initLight() {
 	tabtools=new TabTools(); 
 	
 	initMouseWheel();
-
-
-
-	/*$('#load_modal').modal({
-		     backdrop:'static',
-		     keyboard:false,
-		     show:true
-		 });*/
-	listProjectModal();	  
-
-
-		
+	var curl=window.location.pathname;
+	if(curl=="/OilManage/pages/simulate_wellbore.jsp"){
+		listProjectModal();	 
+	}
 
 }
 
