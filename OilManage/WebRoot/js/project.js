@@ -898,6 +898,6 @@ function openProject(proid,algID){
 		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i,gridWidth);
 		
 	}
-		
+	showTab('input_tab');	
 	$(".modal").modal('hide');
 }

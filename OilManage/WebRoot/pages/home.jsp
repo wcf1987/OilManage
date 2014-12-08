@@ -42,6 +42,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					  <p>煤层气模拟软件集管网，井筒，煤层气藏的储运输送的模拟软件，该软件将能够处理复杂的煤层气集输系统，可轻松使用屏幕拖放技术来创建模型，并且可以加载GIS铺垫SHAPEFILE地图文件，能够模拟单相、气液两相（或三相管流），识别系统瓶颈，模拟新井对系统的影响，可以加载CBM地下开产，对全气田进行模拟和预测。</p>
 					  <!-- <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p> -->
 					</div>
+					<div style="margin-left:50px;">
+						<div  style="float:left;border:2px solid">
+							<img  style="width:480px;height:400px;margin-top:0px"  src="images/moni.jpg" />
+						</div>
+						<div  style="float:left;margin-left:30px;border:2px solid">
+							<img  style="width:480px;height:400px;margin-top:0px"  src="images/youhua.jpg" />
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

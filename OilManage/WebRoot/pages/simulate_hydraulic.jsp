@@ -115,11 +115,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 					<div id="father_tab" class="tab-container">
 						<ul class='etabs'>
-						    <li class='tab'><a id="input_tab_button" style="background-color:fff" onclick="showTab('input_tab')">输入</a></li>
-						    <li class='tab'><a id="run_tab_button" onclick="showTab('run_tab')">查看运行</button></li>
+							<li class='tab'><a id="project_tab_button"  style="background-color:fff" onclick="showTab('project_tab')">工程管理</a></li>
+						    <li class='tab'><a id="input_tab_button" onclick="showTab('input_tab')">输入</a></li>
+						    <li class='tab'><a id="run_tab_button" onclick="showTab('run_tab')">查看运行</a></li>
 						    <li class='tab'><a id="output_tab_button" onclick="showTab('output_tab')">输出</a></li>						    
 					    </ul>  
-						<div id="input_tab" class="father_tab">				
+					     <div id="project_tab" class="father_tab">				
+							<%@ include file="simulate_common/project_tab.jsp" %>
+			    		</div>
+						<div id="input_tab" class="father_tab" style="display:none">				
 							<%@ include file="simulate_common/input_tab.jsp" %>
 			    		</div>
 			    		<div id="run_tab" class="father_tab" style="display:none">
