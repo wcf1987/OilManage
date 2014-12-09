@@ -2,7 +2,7 @@
 
 
 <footer style="color: #999999;padding: 40px;text-align: center;color:white;background-color:rgba(61, 85, 120, 1);">
-  		 &copy; 2013~<span id="thisyear">2014</span> 中国石油大学
+  		 &copy; 2013~<span id="thisyear">2014</span> 中国石油大学(北京)
 </footer>
 
 <script>
