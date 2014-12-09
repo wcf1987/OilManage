@@ -14,8 +14,8 @@ else{
  <div class="navbar-wrapper" style="margin-top:-1px">
     <!-- <div class="container"> -->
 	<div class="navbar  navbar-static-top" role="navigation" >
-		<ul  class="nav navbar-nav" style="margin-top:30px">
-    		<li style="margin-right:-20%;margin-left:17%"><img style="width:50%;" alt="煤层气集输系统" src="images/bothlogo4.png"></li>	
+		<ul  class="nav navbar-nav" style="margin-top:17px;margin-bottom:20px;margin-left:20%;width:1200px">
+    		<li style="margin-right:5%;margin-left:0%;width:50%"><img style="width:100%;" alt="煤层气集输系统" src="images/bothlogo4.png"></li>	
     		<li style="margin-top:30px;">系统时间：<span id="nowtime"></span></li>
 	      	<li style="margin-top:30px;"><span style="float:left">&nbsp;&nbsp;当前用户：</span><a  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></a><span style="float:right">/<%out.print(totalUser);%>人</span></li>
     	</ul>
