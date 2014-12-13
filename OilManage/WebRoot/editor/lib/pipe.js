@@ -139,22 +139,22 @@ function createY(cont){
 		return data;
 	}
 	for(var i=0;i<cont.length;i++){
-		datatemp.push( parseFloat(cont[i]['高程(m)']));
+		datatemp.push( toDecimal(parseFloat(cont[i]['高程(m)'])));
 	}
 	data.push(datatemp);
 	datatemp=new Array
 	for(var i=0;i<cont.length;i++){
-		datatemp.push(parseFloat(cont[i]['压力(MPa)']));
+		datatemp.push(toDecimal(parseFloat(cont[i]['压力(MPa)'])));
 	}
 	data.push(datatemp);
 	datatemp=new Array
 	for(var i=0;i<cont.length;i++){
-		datatemp.push(parseFloat(cont[i]['流量(m3/d)']));
+		datatemp.push(toDecimal(parseFloat(cont[i]['流量(m3/d)'])));
 	}
 	data.push(datatemp);
 	datatemp=new Array
 	for(var i=0;i<cont.length;i++){
-		datatemp.push(parseFloat(cont[i]['温度(℃)']));
+		datatemp.push(toDecimal(parseFloat(cont[i]['温度(℃)'])));
 	}
 	data.push(datatemp);
 	return data;
@@ -194,7 +194,7 @@ function drawPipeLines(XData,YData,container,pipeName){
 	            		
 	                    labels: {
 	                        formatter: function() {
-	                            return this.value +' (m)';
+	                            return this.value ;
 	                        },
 	                        style: {
 	                            color: '#003366'
@@ -220,7 +220,7 @@ function drawPipeLines(XData,YData,container,pipeName){
 	                    },
 	                    labels: {
 	                        formatter: function() {
-	                            return this.value +' (MPa)';
+	                            return this.value;
 	                        },
 	                        style: {
 	                            color: '#FF00FF'
@@ -239,7 +239,7 @@ function drawPipeLines(XData,YData,container,pipeName){
 	                    },
 	                    labels: {
 	                        formatter: function() {
-	                            return this.value +' (m3/d)';
+	                            return this.value ;
 	                        },
 	                        style: {
 	                            color: '#000066'
@@ -258,7 +258,7 @@ function drawPipeLines(XData,YData,container,pipeName){
 	                    },
 	                    labels: {
 	                        formatter: function() {
-	                            return this.value +' (℃)';
+	                            return this.value;
 	                        },
 	                        style: {
 	                            color: '#FFB6C1'

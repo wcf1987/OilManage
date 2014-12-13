@@ -15,7 +15,14 @@ function save(){
 	platform.update();
 	tabtools.save();
 }
-
+function toDecimal(x) {  
+    var f = parseFloat(x);  
+    if (isNaN(f)) {  
+        return;  
+    }  
+    f = Math.round(x*100)/100;  
+    return f;  
+} 
 function clickLoad(s){
 	if(s==1){
 		createNewModal(true);

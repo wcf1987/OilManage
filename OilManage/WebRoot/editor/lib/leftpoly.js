@@ -872,6 +872,11 @@ function() {
 		    //执行延时
 		    TimeFn = setTimeout(function(clickshape){
 		        //do function在此处写单击事件要执行的代码
+		    	if(leftpoly.clickshape.TYPE=='管道'){
+		    	$("#pipiShowText").show();
+		    	}else{
+		    		$("#pipiShowText").hide();
+		    	}
 				$("#contextmenu").show();
 		    },300);
 		}
