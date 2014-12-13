@@ -386,7 +386,7 @@
 				<param name="excludeProperties">id</param>
 			</result>
 		</action>
-		<action name="viewExcelMap" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+		<action name="viewExcelMap" class="cn.edu.cup.manage.action.AlgorithmExcelMapAction"
 			method="viewExcelMap">
 
 			<result name="SUCCESS" type="json">
@@ -394,14 +394,14 @@
 			</result>
 		</action>
 		
-		<action name="viewObstacle" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+		<action name="viewObstacle" class="cn.edu.cup.manage.action.AlgorithmExcelMapAction"
 			method="viewObstacle">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-		<action name="addObstacle" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+		<action name="addObstacle" class="cn.edu.cup.manage.action.AlgorithmExcelMapAction"
 			method="addObstacle">
 
 			<result name="SUCCESS" type="json">
@@ -409,42 +409,42 @@
 			</result>
 		</action>
 		
-		<action name="viewGUI" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+		<action name="viewGUI" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
 			method="viewGUI">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-		<action name="addPoint" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+		<action name="addPoint" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
 			method="addPoint">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-		<action name="delPoint" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+		<action name="delPoint" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
 			method="delPoint">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-		<action name="updateConn" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+		<action name="updateConn" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
 			method="updateConn">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-		<action name="listDevice" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+		<action name="listDevice" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
 			method="listDevice">
 
 			<result name="SUCCESS" type="json">
 
 			</result>
 		</action>
-				<action name="editDevice" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+				<action name="editDevice" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
 			method="editDevice">
 
 			<result name="SUCCESS" type="json">

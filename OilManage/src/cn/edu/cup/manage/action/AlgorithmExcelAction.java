@@ -103,22 +103,13 @@ public class AlgorithmExcelAction {
 		//FileExcelManager.reloadFileExcel(this.proID, this.algID, this.InOrOut);
 		return "SUCCESS";
 	}
-
-	public FileExcel putFileExcel(FileExcel e) {// 将excel内容放入缓存
-		
-
-		//String key = Tools.createKeyFromProAndALg(e.getProID(), e.getAlgID(),
-		//		e.getInOrOut());
-		//cacheList.put(key, e);
-		//session.put("ExcelCacheList", cacheList);
-		return e;
-	}
-	private Graphi graphi;
+	
+	/*private Graphi graphi;
 	public Graphi getGraphi() {
 		return graphi;
-	}
+	}*/
 
-	public String viewExcelMap(){
+/*	public String viewExcelMap(){
 		if(this.proID==0){
 			msg="你需要打开或新建一个工程";
 			return "SUCCESS";
@@ -128,8 +119,8 @@ public class AlgorithmExcelAction {
 		graphi=excel.getGisGraphi();
 	
 		return "SUCCESS";
-	}
-	String JSONData="";
+	}*/
+	/*String JSONData="";
 	public String getJSONData() {
 		return JSONData;
 	}
@@ -155,7 +146,7 @@ public class AlgorithmExcelAction {
 			e.printStackTrace();
 		}
 		return "SUCCESS";
-	}
+	}*//*
 	String type;
 	String name;
 	String YSJLS;
@@ -247,19 +238,19 @@ public class AlgorithmExcelAction {
 
 	public String getProName() {
 		return proName;
-	}
+	}*/
 
-	Map<String,List<Point>> obs;
-	public String viewObstacle(){
+	//Map<String,List<Point>> obs;
+	/*public String viewObstacle(){
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		
 		graphi=excel.getObstacleGraphi();
 		obs=excel.getObstacleMap();
 		return "SUCCESS";
-	}
-	List<Map<String,String>> poly;
-	String obsName;
-	public void setObsName(String obsName) {
+	}*/
+	//List<Map<String,String>> poly;
+	//String obsName;
+	/*public void setObsName(String obsName) {
 		this.obsName = obsName;
 	}
 
@@ -298,7 +289,7 @@ public class AlgorithmExcelAction {
 	}
 	public Map<String, List<Point>> getObs() {
 		return obs;
-	}
+	}*/
 
 	String msg;
 	List<String> sheetTile;
