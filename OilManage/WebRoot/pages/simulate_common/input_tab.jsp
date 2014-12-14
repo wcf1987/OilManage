@@ -25,8 +25,8 @@
 	</div>
 </div>
 <div id="inputGisMap" class="inputDataDiv" style="display:none">
-	<%@ include file="gismap.jsp" %>
+	<%@ include file="gismapIn.jsp" %>
 </div>
 <div id="inputDcMap" class="inputDataDiv" style="display:none">
-	<%@ include file="dcmodel.jsp" %>
+<%@ include file="dcmodel.jsp" %>
 </div>

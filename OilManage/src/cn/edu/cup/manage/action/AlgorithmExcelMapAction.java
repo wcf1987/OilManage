@@ -57,7 +57,7 @@ public class AlgorithmExcelMapAction {
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		
 		graphi=excel.getGisGraphi();
-	
+		
 		return "SUCCESS";
 	}
 	List<Map<String,String>> poly;

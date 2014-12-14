@@ -1,56 +1,45 @@
 
 
 var qj = new BMap.Icon("editor/icons/qijing.png",
-		new BMap.Size(40, 40), {
+		new BMap.Size(50, 50), {
 		anchor : new BMap.Size(20, 20)
 		});
-var fa = new BMap.Icon("editor/icons/fa.png", 
-		new BMap.Size(40, 40), {
-	anchor : new BMap.Size(20, 20)
-});
+
 var zyclc = new BMap.Icon("editor/icons/zhongyangchulichang.png", 
-		new BMap.Size(40, 40), {
+		new BMap.Size(50, 50), {
 	anchor : new BMap.Size(20, 20)
 });
 
 var qy = new BMap.Icon("editor/icons/waiyuanjiedian.png", 
-		new BMap.Size(40, 40), {
+		new BMap.Size(50, 50), {
 	anchor : new BMap.Size(20, 20)
 });
 var glq = new BMap.Icon("editor/icons/guolvqi.png", 
-		new BMap.Size(40, 40), {
+		new BMap.Size(50, 50), {
 	anchor : new BMap.Size(20, 20)
 });
 var fsd = new BMap.Icon("editor/icons/waifenshudian.png", 
-		new BMap.Size(40, 40), {
+		new BMap.Size(50, 50), {
 	anchor : new BMap.Size(20, 20)
 });
 
 var zdzyd = new BMap.Icon("editor/icons/zhudongzengyadian.png", 
-		new BMap.Size(40, 40), {
+		new BMap.Size(50, 50), {
 	anchor : new BMap.Size(20, 20)
 });
 var qzyhd = new BMap.Icon("editor/icons/qiaozhuangyehuadian.png", 
-		new BMap.Size(40, 40), {
+		new BMap.Size(50, 50), {
 	anchor : new BMap.Size(20, 20)
 });
 var fz = new BMap.Icon("editor/icons/fazu.png", 
-		new BMap.Size(40, 40), {
+		new BMap.Size(50, 50), {
 	anchor : new BMap.Size(20, 20)
 });
-
 var jqzyz = new BMap.Icon("images/icons/jiqizengyazhan.png", 
 		new BMap.Size(50,50), {
-	// 指定定位位置。
-	// 当标注显示在地图上时，其所指向的地理位置距离图标左上
-	// 角各偏移10像素和25像素。您可以看到在本例中该位置即是
-	// 图标中央下端的尖角位置。
 	anchor : new BMap.Size(25, 25)
-// 设置图片偏移。
-// 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
-// 需要指定大图的偏移位置，此做法与css sprites技术类似。
-// imageOffset: new BMap.Size(0, 0 - index * 25) // 设置图片偏移
-});
+}
+);
 function showMapIn(proid,algid,Inorout){
 	$.ajax({
 		type : 'POST',
@@ -61,7 +50,14 @@ function showMapIn(proid,algid,Inorout){
 			InOrOut:Inorout
 		},
 		success : function(data) {
+			if(data['graphi']['GISReal']==0){
+				mapGis.GISReal=false;
+			}else{
+				
+				mapGis.GISReal=true;
+			}
 			clearMap();
+			showWhiteLayer();
 			drawPointsGis(data,proid,algid,Inorout);
 			drawLines(data);
 			
@@ -78,9 +74,11 @@ function showMapOut(proid,algid,Inorout){
 		data : {
 			proID:proid,
 			algID:algid,
-			InOrOut:Inorout
+			InOrOut:"In"
 		},
 		success : function(data) {
+			clearMap();
+			showWhiteLayer();
 			drawPointsGis(data,proid,algid,Inorout);
 			drawLines(data);
 			
@@ -92,35 +90,36 @@ function showMapOut(proid,algid,Inorout){
 }
 function showMap(proid,algid,Inorout) {
 	if(Inorout=="In"){
+		mapGis=mapIn;
 		showMapIn(proid,algid,Inorout);
 	}else{
-		showMapIn(proid,algid,"In");//如果是查看输出地图，则先加载输入
-		showMapIn(proid,algid,Inorout);
+		mapGis=mapOut;
+		showMapOut(proid,algid,Inorout);//如果是查看输出地图，则先加载输入
+		//showMapIn(proid,algid,Inorout);
 	}
 }
 function clearMap(){
-	pointMap = {};
-	 markers = [];
+	mapGis.markerClusterer.clearMarkers();
+	mapGis.pointMap = {};
+	mapGis.markers = [];
 	 mapGis.clearOverlays();
 }
-var pointMap = {};
-var markers = [];
 var mapGis;
-var mapWforGPS;
-
-function initMapGis(){
-	if(mapGis==null){
-//	$("#showInputMap").bind("click",function(){
-//		  var proID=$("#proID").val();
-//		  var algID=$("#curAlgID").val();
-//		  showMap(proID,algID,'In');
-//		});
-//	$("#showOutputMap").bind("click",function(){
-//		  var proID=$("#proID").val();
-//		  var algID=$("#curAlgID").val();
-//		  showMap(proID,algID,'Out');
-//		});
-	mapGis = new BMap.Map("mapgis",{mapType: BMAP_HYBRID_MAP});
+var mapIn;
+var mapOut;
+function initMapGis(Inorout){
+	
+	
+		if(Inorout=="In"){
+			mapIn= new BMap.Map("mapgis"+Inorout,{mapType: BMAP_HYBRID_MAP});
+			mapGis=mapIn;
+		}else{
+			mapOut= new BMap.Map("mapgis"+Inorout,{mapType: BMAP_HYBRID_MAP});
+			mapGis=mapOut;
+		}
+	mapGis.pointMap = {};
+	mapGis.markers = [];
+	mapGis.Inorout=Inorout;
 	var point = new BMap.Point(116.404, 39.915);    //
 	mapGis.centerAndZoom(point,8);                     // 
 	mapGis.enableScrollWheelZoom();
@@ -128,29 +127,106 @@ function initMapGis(){
 	mapGis.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT}));
 	mapGis.addControl(new BMap.ScaleControl());
 	var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925));
-	 mapWforGPS = new BMapLib.MapWrapper(mapGis, BMapLib.COORD_TYPE_GPS); 
-
+	mapGis.mapWforGPS = new BMapLib.MapWrapper(mapGis, BMapLib.COORD_TYPE_GPS); 
 	mapGis.addOverlay(marker1);
-	var point = new BMap.Point(116.404, 39.915);
+	var point = new BMap.Point(116.404, 39.915);	
+	addSwith();
+	mapGis.markerClusterer = new BMapLib.MarkerClusterer(mapGis, {markers:mapGis.markers,isAverangeCenter:true,girdSize:120,maxZoom:14});
+	
 	}
+function addSwith(){
+
+	// 定义一个控件类,即function
+	function SwithControl(){
+	  // 默认停靠位置和偏移量
+	  this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+	  this.defaultOffset = new BMap.Size(400, 10);
+	 
 	}
+
+	// 通过JavaScript的prototype属性继承于BMap.Control
+	SwithControl.prototype = new BMap.Control();
+
+	// 自定义控件必须实现自己的initialize方法,并且将控件的DOM元素返回
+	// 在本方法中创建个div元素作为控件的容器,并将其添加到地图容器中
+	
+	SwithControl.prototype.initialize = function(mapGis){
+	  // 创建一个DOM元素
+	  var div = document.createElement("div");
+	  // 添加文字说明
+	 div.appendChild(document.createTextNode("结构图/GIS地图切换"));
+	  // 设置样式
+	  div.style.cursor = "pointer";
+	  div.style.border = "1px solid gray";
+	  div.style.backgroundColor = "white";
+	  // 绑定事件,点击一次放大两级
+	   
+	  div.onclick = function(e){
+		//map.setZoom(map.getZoom() + 2);
+		  showWhiteLayer();
+	  }
+	  // 添加DOM元素到地图中
+	  mapGis.getContainer().appendChild(div);
+	  // 将DOM元素返回
+	  return div;
+	}
+	
+	// 创建控件
+	var myswithCtrl = new SwithControl();
+	// 添加到地图当中
+	mapGis.addControl(myswithCtrl);
+}
+
+
+function showWhiteLayer(){
+	
+	if(mapGis.tileLayer==null){
+		mapGis.tileLayer = new BMap.TileLayer();
+		mapGis.tileLayer.getTilesUrl = function(tileCoord, zoom) {		
+		var url = 'images/white.png';     //根据当前坐标，选取合适的瓦片图
+		return url;
+		}
+		mapGis.tileLayer.whiteShow=false;
+	}
+	
+	if(mapGis.tileLayer.whiteShow){
+		if(!mapGis.GISReal){
+			alert("本组数据未包含大地坐标，无法显示地理坐标");
+			return;
+		}
+		mapGis.removeTileLayer(mapGis.tileLayer);
+		mapGis.tileLayer.whiteShow=false;
+		
+	}else{
+		mapGis.addTileLayer(mapGis.tileLayer);
+		mapGis.tileLayer.whiteShow=true;
+	}
+	
+}
 function drawPointsGis(data,proid,algid,Inorout){
 	
 	var jsonObject = data;
 	var pointArray = new Array();
 	var pMap = jsonObject['graphi']['points'];
-	var id = -1;
+	var id = 0;
 	for ( var i in pMap) {
 		
 		p = pMap[i];
-		pointMap[i] = new BMap.Point(p['longitude'], p['latitude']);
+		
+		mapGis.pointMap[i] = new BMap.Point(p['longitude'], p['latitude']);
+		
+		
 		//BMap.Convertor.translate(pointMap[i],0,translateCallback);  
 		if(p['type']=='管道'){
 			continue;
 		}
-		id++;
+		if(p['type']=='设备连接点'){
+			continue;
+		}
+		
 		if(id==0){
-			mapGis.centerAndZoom(pointMap[i], 15);
+			mapGis.centerAndZoom(mapGis.pointMap[i], 15);
+			id=1;
 		}
 		myicon = qj;
 		if (p['type'] == '井数据'||p['type'] == '井位置'||p['type'] == '气井') {
@@ -163,12 +239,12 @@ function drawPointsGis(data,proid,algid,Inorout){
 			myicon = fsd;
 		}
 		if (p['type'] == '阀') {
-			myicon = fa;
+			myicon = fz;
 		}
 		if (p['type'] == '过滤器') {
 			myicon = glq;
 		}
-		if (p['type'] == '阀组数据'||p['type'] == '阀组位置'||p['type'] == '阀组') {
+		if (p['type'] == '阀组数据'||p['type'] == '阀组位置'||p['type'] == '阀') {
 			myicon = fz;
 		}
 		if (p['type'] == '集气站数据'||p['type'] == '集气站位置'||p['type'] == '集气增压站') {
@@ -176,6 +252,19 @@ function drawPointsGis(data,proid,algid,Inorout){
 			
 		}
 
+		if (p['type']=='离心压缩机'||p['type']=='往复式压缩机'){
+			if(p['attribute']['设备位置']!=null&&p['attribute']['设备位置'].indexOf('JQZYZ')>-1){
+				myicon = jqzyz;;
+			}
+			if(p['attribute']['设备位置']!=null&&p['attribute']['设备位置'].indexOf('ZDZYD')>-1){
+				myicon = zdzyd;
+			}
+			if(p['attribute']['设备位置']!=null&&p['attribute']['设备位置'].indexOf('ZYCLC')>-1){
+				myicon = zyclc;
+			}
+		}
+		
+		
 		if (p['type'] == '中央处理厂数据'||p['type'] == '中央处理厂位置'||p['type'] == '中央处理厂') {
 			myicon = zyclc;
 		}
@@ -186,7 +275,7 @@ function drawPointsGis(data,proid,algid,Inorout){
 			myicon = qzyhd;
 		}
 		
-		var markertemp = new BMap.Marker(pointMap[i], {
+		var markertemp = new BMap.Marker(mapGis.pointMap[i], {
 			icon : myicon
 		});
 		
@@ -214,10 +303,13 @@ function drawPointsGis(data,proid,algid,Inorout){
 			getDeviceProper(this);
 			
 		});
-		mapWforGPS.addOverlay(markertemp);
-		//map.addOverlay(markertemp);
+		if(p['type']=='设备连接点'){
+			
+		}else{
+			mapGis.mapWforGPS.addOverlay(markertemp);
+		}
 		mapGis.enableScrollWheelZoom(false);
-		markers.push(markertemp);
+		mapGis.markers.push(markertemp);
 	}
 	
 
@@ -246,14 +338,16 @@ function getDeviceProper(markPoi){
 					for(var k2=0;k2<Prop.length;k2++){
 						s=s+Prop[k2]['name']+" : "+Prop[k2]['value'] + "<br>";
 					}
-					s = s + "经度:" + this.long + "<br>"
-					s = s+ "纬度:" + this.lati + "<br>"
+					if(this.long!=undefined){
+						s = s + "经度:" + this.long + "<br>"
+						s = s+ "纬度:" + this.lati + "<br>"
+					}
+					
 					var opts = {
 							width : 300, // 信息窗口宽度
-							height : 250, // 信息窗口高度
-							title : "节点信息", // 信息窗口标题
-							enableMessage : true,// 设置允许信息窗发送短息
-							message : ""
+							height : 350, // 信息窗口高度
+							title : "节点信息" // 信息窗口标题
+						
 						}
 					
 					var infoWindow = new BMap.InfoWindow(s, opts);
@@ -272,59 +366,59 @@ function drawLines(data){
 		var polyline ;
 		if (l['type'] == '连接') {
 			// alert(pointMap[l['start']]);
-			pointemp[0] = pointMap[l['start']];
-			pointemp[1] = pointMap[l['end']];
+			pointemp[0] = mapGis.pointMap[l['start']];
+			pointemp[1] = mapGis.pointMap[l['end']];
 			polyline= new BMap.Polyline(pointemp, {
 				strokeColor : "red",
 				strokeWeight : 3,
 				strokeOpacity : 0.5
 			});
 			//map.addOverlay(polyline);
-			addArrow1(polyline, 5, Math.PI / 7);
+			//addArrow1(polyline, 5, Math.PI / 7);
 		}
 		if (l['type'] == '井阀组连接') {
 			// alert(pointMap[l['start']]);
-			pointemp[0] = pointMap[l['start']];
-			pointemp[1] = pointMap[l['end']];
+			pointemp[0] = mapGis.pointMap[l['start']];
+			pointemp[1] = mapGis.pointMap[l['end']];
 			polyline= new BMap.Polyline(pointemp, {
 				strokeColor : "red",
 				strokeWeight : 3,
 				strokeOpacity : 0.5
 			});
 			//map.addOverlay(polyline);
-			addArrow1(polyline, 5, Math.PI / 7);
+			//addArrow1(polyline, 5, Math.PI / 7);
 		}
 		if (l['type'] == '阀组集气站连接') {
-			pointemp[0] = pointMap[l['start']];
-			pointemp[1] = pointMap[l['end']];
+			pointemp[0] = mapGis.pointMap[l['start']];
+			pointemp[1] = mapGis.pointMap[l['end']];
 			polyline = new BMap.Polyline(pointemp, {
 				strokeColor : "blue",
 				strokeWeight : 6,
 				strokeOpacity : 0.5
 			});
 			//map.addOverlay(polyline);
-			addArrow2(polyline, 5, Math.PI / 7)
+			//addArrow2(polyline, 5, Math.PI / 7)
 		}
 		if (l['type'] == '集气站中央处理厂连接') {
-			pointemp[0] = pointMap[l['start']];
-			pointemp[1] = pointMap[l['end']];
+			pointemp[0] = mapGis.pointMap[l['start']];
+			pointemp[1] = mapGis.pointMap[l['end']];
 			polyline = new BMap.Polyline(pointemp, {
 				strokeColor : "yellow",
 				strokeWeight : 9,
 				strokeOpacity : 0.5
 			});
 			//map.addOverlay(polyline);
-			addArrow2(polyline, 5, Math.PI / 7)
+			//addArrow2(polyline, 5, Math.PI / 7)
 		}
 		if (l['type'] == '管段连接') {
-			pointemp[0] = pointMap[l['start']];
-			pointemp[1] = pointMap[l['end']];
+			pointemp[0] = mapGis.pointMap[l['start']];
+			pointemp[1] = mapGis.pointMap[l['end']];
 			polyline = new BMap.Polyline(pointemp, {
 				strokeColor : "red",
 				strokeWeight : 3,
 				strokeOpacity : 0.5
 			});
-			addArrow2(polyline, 5, Math.PI / 7)
+			//addArrow2(polyline, 5, Math.PI / 7)
 		}
 		var s = "<span style='font-size:14px;font-weight:bold'>管道信息</span><br>";
 		s=s+ "类别:" + p['type']  + "<br>";
@@ -356,10 +450,9 @@ function drawLines(data){
 		});
 		mapGis.addOverlay(polyline);
 		mapGis.enableScrollWheelZoom(false);
-		markers.push(polyline);
+		mapGis.markers.push(polyline);
 	}
-	var markerClusterer = new BMapLib.MarkerClusterer(mapGis, {markers:markers,isAverangeCenter:true,girdSize:120,maxZoom:14});
-	
+	mapGis.markerClusterer.addMarkers(mapGis.markers);
 }
 
 function addArrow2(polyline, length, angleValue) { // 绘制箭头的函数
@@ -475,101 +568,3 @@ function addArrow1(polyline, length, angleValue) { // 绘制箭头的函数
 	}
 }
 
-
-/*function viewMap(data) {
-	mapGis.clearOverlays();
-	var markers = [];
-	var jsonObject = data;
-	// alert(jsonObject['re']);
-	// alert(jsonObject['graphi']);
-	var pointArray = new Array();
-	var pMap = jsonObject['graphi']['points'];
-	var pLine = jsonObject['graphi']['lines'];
-	// alert(pMap['JIQIZHAN']['name']);
-	var id = -1;
-	pointMap = {};
-	
-	for ( var i in pMap) {
-		id++;
-		p = pMap[i];
-
-		pointArray[id] = new BMap.Point(p['longitude'], p['latitude'])
-		pointMap[i] = pointArray[id];
-		if (p['type'] == 'jingkou') {
-			myicon = myjingkou;
-			typestr = '井口'
-		}
-		if (p['type'] == 'fazu') {
-			myicon = myfazu;
-			typestr = '阀组'
-		}
-		if (p['type'] == 'jiqizhan') {
-			myicon = myjiqizhan;
-			typestr = '集气站'
-		}
-		var markertemp = new BMap.Marker(pointArray[id], {
-			icon : myicon
-		});
-		
-		var s = Array();
-		s[i] = "类别:" + typestr + "<br>"
-		s[i] = s[i] + "名称:" + p['name'] + "<br>"
-		s[i] = s[i] + "大地坐标X:" + p['geodeticCoordinatesX'] + "<br>"
-		s[i] = s[i] + "大地坐标Y:" + p['geodeticCoordinatesY'] + "<br>"
-		s[i] = s[i] + "经度:" + p['longitude'] + "<br>"
-		s[i] = s[i] + "纬度:" + p['latitude'] + "<br>"
-
-		var opts = {
-			width : 300, // 信息窗口宽度
-			height : 300, // 信息窗口高度
-			title : "", // 信息窗口标题
-			enableMessage : true,// 设置允许信息窗发送短息
-			message : ""
-		}
-		var infoWindow = new BMap.InfoWindow(s[i], opts); // 创建信息窗口对象
-		// map.openInfoWindow(infoWindow,pointArray[i]); //开启信息窗口
-		markertemp.setTitle(s[i])
-		markertemp.addEventListener("click", function(data) {
-			temp = this.getTitle()
-			var infoWindow = new BMap.InfoWindow(temp, opts);
-			this.openInfoWindow(infoWindow);
-		});
-		mapGis.addOverlay(markertemp);
-		mapGis.enableScrollWheelZoom(false);
-		markers.push(markertemp);
-	}
-	var markerClusterer = new BMapLib.MarkerClusterer(mapGis, {markers:markers,isAverangeCenter:true,girdSize:120,maxZoom:13});
-
-	mapGis.centerAndZoom(pointArray[0], 15);
-	for ( var lkey in pLine) {
-		var l = pLine[lkey];
-		var pointemp = new Array();
-		if (l['type'] == '1') {
-			// alert(pointMap[l['start']]);
-			pointemp[0] = pointMap[l['start']];
-			pointemp[1] = pointMap[l['end']];
-			var polyline = new BMap.Polyline(pointemp, {
-				strokeColor : "red",
-				strokeWeight : 3,
-				strokeOpacity : 0.5
-			});
-			mapGis.addOverlay(polyline);
-			addArrow1(polyline, 5, Math.PI / 7);
-		}
-		if (l['type'] == '2') {
-			pointemp[0] = pointMap[l['start']];
-			pointemp[1] = pointMap[l['end']];
-			var polyline = new BMap.Polyline(pointemp, {
-				strokeColor : "blue",
-				strokeWeight : 6,
-				strokeOpacity : 0.5
-			});
-			mapGis.addOverlay(polyline);
-			addArrow2(polyline, 5, Math.PI / 7)
-		}
-			}
-}
-
-
-
-*/

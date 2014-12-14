@@ -20,7 +20,7 @@ function toDecimal(x) {
     if (isNaN(f)) {  
         return;  
     }  
-    f = Math.round(x*100)/100;  
+    f = Math.round(x*10000000)/10000000;  
     return f;  
 } 
 function clickLoad(s){

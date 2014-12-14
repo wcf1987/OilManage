@@ -12,6 +12,6 @@
 	</div>
 </div>
 <div id="outputGisMap" class="outputDataDiv" style="display:none">
-	<%@ include file="gismap.jsp" %>
+	<%@ include file="gismapOut.jsp" %>
 </div>
 

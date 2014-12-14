@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -247,7 +248,43 @@ public class FileExcel {
 		Graphi a = new Graphi();
 		a.setPoints(getGisPoints());
 		a.setLines(getGisLines());
-
+		Collection<Point> names=a.getPoints().values();
+		for(Iterator<Point> temp=names.iterator();temp.hasNext();){
+			Point t=temp.next();
+			if(t.getLatitude()<20&&t.getLongitude()<20){
+				a.setGISReal(0);
+				break;
+			}
+		}
+		double Xmax=0;
+		double Xmin=100000000;
+		double Ymax=0;
+		double Ymin=100000000;
+		if(a.getGISReal()==0){
+			for(Iterator<Point> temp=names.iterator();temp.hasNext();){
+				Point t=temp.next();
+				if(t.getGeodeticCoordinatesX()>Xmax){
+					Xmax=t.getGeodeticCoordinatesX();
+				}
+				if(t.getGeodeticCoordinatesX()<Xmin&&t.getGeodeticCoordinatesX()!=0){
+					Xmin=t.getGeodeticCoordinatesX();
+				}
+				if(t.getGeodeticCoordinatesY()>Ymax){
+					Ymax=t.getGeodeticCoordinatesY();
+				}
+				if(t.getGeodeticCoordinatesY()<Ymin&&t.getGeodeticCoordinatesY()!=0){
+					Ymin=t.getGeodeticCoordinatesY();
+				}
+			}
+			double Xc=0.02/(Xmax-Xmin);
+			double Yc=0.02/(Ymax-Ymin);
+			for(Iterator<Point> temp=names.iterator();temp.hasNext();){
+				Point t=temp.next();				
+				t.setLongitude((t.getGeodeticCoordinatesX()-Xmin)*Xc);
+				t.setLatitude((t.getGeodeticCoordinatesY()-Ymin)*Yc);
+			}
+			
+		}
 		return a;
 	}
 

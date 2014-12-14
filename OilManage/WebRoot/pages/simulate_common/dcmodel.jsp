@@ -60,9 +60,9 @@
 	
 	</div>		
 </div>
-<div id="simulate_gismap" style="display:none">
+<%-- <div id="simulate_gismap" style="display:none">
  <%@ include file="gismap.jsp" %> 
-</div>
+</div> --%>
 		<!--The import panel-->
 <div id="import-dialog"
 	style="background-color: white; display: none; margin-top: auto; margin-bottom: auto;">

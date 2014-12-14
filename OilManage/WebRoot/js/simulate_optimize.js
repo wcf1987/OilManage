@@ -224,7 +224,7 @@ function showData(type){
 	
 	if(type=="outputBase"||type=="outputFee"||type=="outputPosition"||type=="outputGisMap"){
 		if(type=="outputGisMap"){
-			initMapGis();//地图模型的加载
+			initMapGis("Out");//地图模型的加载
 			var proID=$("#proID").val();
 			var algID=$("#curAlgID").val();
 			showMap(proID,algID,'Out');	
@@ -242,7 +242,7 @@ function showData(type){
 			}
 		}
 		if(type=="inputGisMap"){
-			initMapGis();//地图模型的加载
+			initMapGis("In");//地图模型的加载
 			var proID=$("#proID").val();
 			var algID=$("#curAlgID").val();
 			showMap(proID,algID,'In');	  

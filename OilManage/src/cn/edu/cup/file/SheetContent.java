@@ -419,10 +419,11 @@ public class SheetContent {
 					//e.setName(lineStr.get(this.sheetTitle.get("名称")));
 					continue;
 
-				}else{				
+				}else{						
 				if(t.equalsIgnoreCase("CentCompressor")){
 					e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
 					e.setType("离心压缩机");
+					
 				}
 				if(t.equalsIgnoreCase("ReciCompressor")){
 					e.setName(lineStr.get(this.sheetTitle.get("设备名称")));
@@ -438,10 +439,11 @@ public class SheetContent {
 				}
 				SheetContent a=f.getSheetByName(f,e.getType()+"数据");
 				int row=getExcelDataIndex(a, a.getTitleByName("名称"), lineStr.get(this.sheetTitle.get("设备名称")));
-				//int col=a.getTitleByName("X坐标(m)");
-				double x=0;
-				//col=a.getTitleByName("Y坐标(m)");
-				double y=0;
+				int col=a.getTitleByName("X坐标(m)");
+				double x=Double.valueOf(a.getExcelData(a, row, col));
+				
+				col=a.getTitleByName("Y坐标(m)");
+				double y=Double.valueOf(a.getExcelData(a, row, col));
 				
 				//Map attr1=a.getAttribute(a.sheetContent.get(row));
 				//e.addAttr(attr1);
@@ -450,6 +452,12 @@ public class SheetContent {
 				e.setGeodeticCoordinatesX(x);
 				e.setGeodeticCoordinatesY(y);
 				e.getLatLonFromGeo();
+				
+				if(row>-1){
+					Map attr1=a.getAttribute(a.sheetContent.get(row));
+					e.addAttr(attr1);
+					}
+				
 				}
 				
 				//e.addAttr(getAttribute(lineStr));

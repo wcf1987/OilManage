@@ -56,7 +56,7 @@ function SheetGrid() {
 				sheetID : temp.sid,
 				algID : temp.algid,
 				InOrOut:temp.inOrOut,
-				proID : temp.proid
+				proID : $("#proID").val()
 			}
 		}).trigger("reloadGrid");
 	}
@@ -74,7 +74,7 @@ function SheetGrid() {
 					sheetID : temp.sid,
 					algID : temp.algid,
 					InOrOut:temp.inOrOut,
-					proID : temp.proid
+					proID : $("#proID").val()
 				}, 
 				// colNames : [ 'id', '项目名称', '上传时间', '地图查看', '编辑', '删除',
 				colNames : temp.colNames,// 表格的列名
@@ -86,7 +86,7 @@ function SheetGrid() {
 					var index_ID=temp.sheetgridpro.jqGrid("getRowData", iRow).Index_ID;
 					
 					var z={
-							proID:temp.proid,
+							proID:$("#proID").val(),
 							sheetID:temp.sid,
 							algID : temp.algid,
 							InOrOut:temp.inOrOut,
@@ -127,7 +127,7 @@ function SheetGrid() {
 				sheetID : temp.sid,
 				algID : temp.algid,
 				InOrOut:temp.inOrOut,
-				proID : temp.proid
+				proID : $("#proID").val()
 			}, 
 			// colNames : [ 'id', '项目名称', '上传时间', '地图查看', '编辑', '删除',
 			colNames : temp.colNames,// 表格的列名
@@ -169,7 +169,7 @@ function SheetGrid() {
 					
 				
 				var z={
-						proID:temp.proid,
+						proID:$("#proID").val(),
 						sheetID:temp.sid,
 						algID : temp.algid,
 						InOrOut:temp.inOrOut,
@@ -230,7 +230,7 @@ function SheetGrid() {
 				data={
 					'postMap':posdata	
 				}
-				return {postMap:JSON.stringify(posdata),proID:temp.proid,
+				return {postMap:JSON.stringify(posdata),proID:$("#proID").val(),
 					sheetID:temp.sid,Index_ID:-1,algID : temp.algid,InOrOut:temp.inOrOut}; 
 				},
 				afterSubmit : function(response, postdata) 
@@ -308,7 +308,7 @@ function SheetGrid() {
 	deleteSheet=function(data) {
 		var maptemp={};
 		var grid=data.data[0];
-		maptemp["proID"]=grid.proid;
+		maptemp["proID"]=$("#proID").val();
 		maptemp["sheetID"]=grid.sid;
 		maptemp["algID"]=grid.algid;
 		maptemp["InOrOut"]=grid.inOrOut;

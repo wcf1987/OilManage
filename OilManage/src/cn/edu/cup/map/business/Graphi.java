@@ -7,6 +7,13 @@ import java.util.Map;
 
 
 public class Graphi {
+	int GISReal;
+	public int getGISReal() {
+		return GISReal;
+	}
+	public void setGISReal(int gISReal) {
+		GISReal = gISReal;
+	}
 	Map<String,Point> points;
 	List<Line> lines;
 	/*public List getJSON(){
