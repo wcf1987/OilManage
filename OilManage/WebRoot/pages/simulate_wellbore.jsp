@@ -80,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
 	</div>  
-		<div class="container marketing condiv" style="width:1200px;margin-top:30px;">
+		<div class="container marketing condiv" style="width:1200px;margin-top:1px;">
 	    	
 	    	<div class="container-fluid">
 				<div class="row-fluid row-fluid2">
@@ -106,38 +106,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						 -->
 					</div>
 					
-				
-					<div id="father_tab" class="tab-container" >
-						<div>
-						<div id="input_tab" class="father_tab">				
-							<div style="background-color:#fff;padding:5px;border:2px solid;height:40px;">
-								<div style="float:left;height:30px;width:120px;margin-right:10px;"><input type="file" name="importExcel" id="importExcel"/></div> 
-								<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="saveExcel()">保存数据</button></div>						
-								<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>
-							</div>
-							<div id="inputBase"  class="inputDataDiv" style="height:620px;">
-								<div  style="float:left;">
-									<img  style="width:400px;margin-top:60px"  src="images/jingtong.png" />
-								</div>
-								<!-- <div class="tab-title">基础数据</div> -->
-								<div id="input_base_div" style="float:left;margin-left:80px;margin-bottom:20px;">
-								</div>
-								<div style="margin-left:480px;">
-									<button onclick="runAlgWell()" style="margin-left:20px;float:left">计算井底流压</button>
-			    					<div style="float:left;margin-left:20px;margin-top:2px">结果：<input id="wellbore_res"/>(MPa)</div>
-			    				</div>
-							</div>					
-							<div id="inputGisMap" class="inputDataDiv" style="display:none">
-								<%@ include file="simulate_common/gismap.jsp" %>
-							</div>
-							<div id="inputDcMap" class="inputDataDiv" style="display:none">
-								<%@ include file="simulate_common/dcmodel.jsp" %>
-							</div>
-							
+					<div id="father_tab" class="tab-container">
+						<ul class='etabs'>
+							<li class='tab'><a id="project_tab_button"  style="background-color:fff" onclick="showTab('project_tab')">工程管理</a></li>
+						    <li class='tab'><a id="input_tab_button" onclick="showTab('input_tab')">输入</a></li>						  					    
+					    </ul>  
+					     <div id="project_tab" class="father_tab">				
+							<%@ include file="simulate_common/project_tab.jsp" %>
 			    		</div>
-
+						<div id="input_tab" class="father_tab" style="display:none">									   			
+								<div style="background-color:#fff;padding:5px;border:2px solid;height:40px;">
+									<div style="float:left;height:30px;width:120px;margin-right:10px;"><input type="file" name="importExcel" id="importExcel"/></div> 
+									<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="saveExcel()">保存数据</button></div>						
+									<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>
+								</div>
+								<div id="inputBase"  class="inputDataDiv" style="height:620px;">
+									<div  style="float:left;">
+										<img  style="width:400px;margin-top:60px"  src="images/jingtong.png" />
+									</div>
+									<!-- <div class="tab-title">基础数据</div> -->
+									<div id="input_base_div" style="float:left;margin-left:80px;margin-bottom:20px;">
+									</div>
+									<div style="margin-left:480px;">
+										<button onclick="runAlgWell()" style="margin-left:20px;float:left">计算井底流压</button>
+				    					<div style="float:left;margin-left:20px;margin-top:2px">结果：<input id="wellbore_res"/>(MPa)</div>
+				    				</div>
+								</div>					
+								<div id="inputGisMap" class="inputDataDiv" style="display:none">
+									<%@ include file="simulate_common/gismap.jsp" %>
+								</div>
+								<div id="inputDcMap" class="inputDataDiv" style="display:none">
+									<%@ include file="simulate_common/dcmodel.jsp" %>
+								</div>
 			    		</div>
-					</div>	            			
+					</div>	         			
 										
 					</div>
 				</div>
@@ -159,7 +161,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </body>
   
 </html>
-<script >
+<script>
 function listLogWell()
 {	
 	$("#outputarea").text("");

@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    
 		<div class="container marketing condiv" style="width:1200px;">
 	    	
-	    	<div class="container-fluid">
+	    	<div class="container-fluid-admin">
 				<div class="row-fluid row-fluid3">
 					<div class="span12">
 						

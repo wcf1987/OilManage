@@ -39,15 +39,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row-fluid row-fluid2">
 				    <div class="jumbotron" style="">
 					  <h2>系统说明</h2>
-					  <p>煤层气模拟软件集管网，井筒，煤层气藏的储运输送的模拟软件，该软件将能够处理复杂的煤层气集输系统，可轻松使用屏幕拖放技术来创建模型，并且可以加载GIS铺垫SHAPEFILE地图文件，能够模拟单相、气液两相（或三相管流），识别系统瓶颈，模拟新井对系统的影响，可以加载CBM地下开产，对全气田进行模拟和预测。</p>
-					  <!-- <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p> -->
+					  <p style="text-align:left">系统模拟，能够处理复杂的煤层气集输系统，可轻松使用屏幕拖放技术来创建模型，模拟单相、多相流，从而对全气田进行模拟。</p>
+					  <p style="text-align:left">系统优化，以系统模拟为基础，处理复杂大规模的煤层气系统，进行多种结构下的布局设计和参数设计，优选系统集输方式</p>
 					</div>
 					<div style="margin-left:50px;">
-						<div  style="float:left;border:2px solid">
-							<img  style="width:480px;height:400px;margin-top:0px"  src="images/moni.jpg" />
+						<div  style="float:left;">
+							<img  style="width:480px;height:400px;margin-top:0px;border:2px solid"  src="images/moni.jpg" />
+							<p style="text-align:center">系统模拟</p>
 						</div>
-						<div  style="float:left;margin-left:30px;border:2px solid">
-							<img  style="width:480px;height:400px;margin-top:0px"  src="images/youhua.jpg" />
+						<div  style="float:left;margin-left:30px;">
+							<img  style="width:480px;height:400px;margin-top:0px;border:2px solid"  src="images/youhua.jpg" />
+							<p style="text-align:center">系统优化</p>
 						</div>
 					</div>
 				</div>
