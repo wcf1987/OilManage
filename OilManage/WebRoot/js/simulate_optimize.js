@@ -288,7 +288,15 @@ function showTab(type){
 		var inputSheetNum=$("#inputSheetNum").val();
 		var sheetDiv = "#input-sheet";
 		for(var i=0;i<inputSheetNum;i++){//刷新5个表格
-	    	$(sheetDiv+i).trigger("reloadGrid");
+	    	$(sheetDiv+i).jqGrid("setGridParam", {
+				postData : {
+					sheetID : i,
+					algID : $("#curAlgID").val(),
+					InOrOut:"In",
+					proID : $("#proID").val()
+				}
+			}).trigger("reloadGrid");
+			//$(sheetDiv+i).loadTableData();
 	    }
 	}
 }

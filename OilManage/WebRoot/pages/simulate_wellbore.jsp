@@ -133,10 +133,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    				</div>
 								</div>					
 								<div id="inputGisMap" class="inputDataDiv" style="display:none">
-									<%@ include file="simulate_common/gismap.jsp" %>
+									
 								</div>
 								<div id="inputDcMap" class="inputDataDiv" style="display:none">
-									<%@ include file="simulate_common/dcmodel.jsp" %>
+									
 								</div>
 			    		</div>
 					</div>	         			

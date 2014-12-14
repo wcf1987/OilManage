@@ -12,6 +12,7 @@ import cn.edu.cup.manage.dao.AlgorithmProDao;
 import cn.edu.cup.map.business.Graphi;
 import cn.edu.cup.map.business.Line;
 import cn.edu.cup.tools.GraphiTools;
+import cn.edu.cup.tools.Tools;
 
 public class AlgorithmExcelGraphiAction {
 	int algID;
@@ -145,6 +146,7 @@ public class AlgorithmExcelGraphiAction {
 	List<DeviceKV> deviceKV;
 	public String listDevice(){
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
+		if(excel.getType(this.algID)==1){
 		if(name!=null&&this.InOrOut.equals("In")&&excel!=null){
 			deviceKV=excel.getDiviceIn(type+"数据",name);
 		}
@@ -152,6 +154,16 @@ public class AlgorithmExcelGraphiAction {
 			FileExcel excelIn = FileExcelManager.getFileExcel(this.proID, this.algID, "In");
 			
 			deviceKV=excel.getDiviceOut(type+"数据",name,excelIn);
+		}
+		}else{
+			if(name!=null&&this.InOrOut.equals("In")&&excel!=null){
+				deviceKV=excel.getDiviceOptIn(type+"数据",name);
+			}
+			if(name!=null&&this.InOrOut.equals("Out")&&excel!=null){
+				FileExcel excelIn = FileExcelManager.getFileExcel(this.proID, this.algID, "In");
+				
+				deviceKV=excel.getDiviceOptOut(type,name,excelIn);
+			}	
 		}
 		return "SUCCESS";
 	}

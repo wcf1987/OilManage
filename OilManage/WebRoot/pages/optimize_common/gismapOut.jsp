@@ -10,14 +10,14 @@
  	<!-- Three columns of text below the carousel -->
   	<div class="row" style="margin-bottom:0px;">
 
-  		<div id="mapgis" class="img-rounded" style="border:3px solid #333300;box-shadow:12px 12px 10px #333300;border-radius: 11px"></div>
+  		<div id="mapgisOut" class="img-rounded" style="border:3px solid #333300;box-shadow:12px 12px 10px #333300;border-radius: 11px"></div>
   	</div><!-- /.row -->
 
 
 </div><!-- /.container -->
 
 <style type="text/css">
-#mapgis {
+#mapgisOut	 {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;

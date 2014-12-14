@@ -756,7 +756,60 @@ public class FileExcel {
 		return a;
 
 	}
+	public List<DeviceKV> getDiviceOptOut(String type, String name,
+			FileExcel excelIn) {
+		Point e = new Point();
+		List<DeviceKV> a = new ArrayList<>();
 
+		
+		
+		SheetContent sheet = getSheetByName(this, type);
+		int row = sheet.getExcelDataIndex(sheet,
+				sheet.getTitleByName("名称"), name);
+		List<String> line = sheet.sheetContent.get(row);
+		Map<String, String> map = sheet.getAttribute(line);
+		List<String> list = sheet.sheetContent.get(0);
+		list = list.subList(1, list.size());
+		for (Iterator<String> iter = list.iterator(); iter.hasNext();) {
+			String key = iter.next();
+			String value = map.get(key);
+			DeviceKV KV = new DeviceKV();
+			KV.setName(key);
+			KV.setValue(value);
+			if (key.equals("序号") || key.equals("隶属关系")) {
+				continue;
+			}
+			a.add(KV);
+		}
+		
+		
+		return a;
+
+	}
+	public List<DeviceKV> getDiviceOptIn(String type, String name) {
+
+		Point e = new Point();
+		List<DeviceKV> a = new ArrayList<>();		
+		SheetContent sheet = getSheetByName(this, "井数据");
+		int row = sheet.getExcelDataIndex(sheet,sheet.getTitleByName("名称"), name);
+			List<String> line = sheet.sheetContent.get(row);
+			Map<String, String> map = sheet.getAttribute(line);
+			List<String> list = sheet.sheetContent.get(0);
+			list = list.subList(1, list.size());
+			for (Iterator<String> iter = list.iterator(); iter.hasNext();) {
+				String key = iter.next();
+				String value = map.get(key);
+				DeviceKV KV = new DeviceKV();
+				KV.setName(key);
+				KV.setValue(value);
+				if (key.equals("序号") || key.equals("隶属关系")) {
+					continue;
+				}
+				a.add(KV);
+			}	
+		return a;
+
+	}
 	public List<DeviceKV> getDiviceIn(String type, String name) {
 		Point e = new Point();
 		List<DeviceKV> a = new ArrayList<>();

@@ -77,6 +77,12 @@ function showMapOut(proid,algid,Inorout){
 			InOrOut:"In"
 		},
 		success : function(data) {
+			if(data['graphi']['GISReal']==0){
+				mapGis.GISReal=false;
+			}else{
+				
+				mapGis.GISReal=true;
+			}
 			clearMap();
 			showWhiteLayer();
 			drawPointsGis(data,proid,algid,Inorout);
@@ -88,14 +94,75 @@ function showMapOut(proid,algid,Inorout){
 	});
 
 }
+function showMapOptIn(proid,algid,Inorout){
+
+	$.ajax({
+		type : 'POST',
+		url : 'viewExcelMap.action',
+		data : {
+			proID:proid,
+			algID:algid,
+			InOrOut:"In"
+		},
+		success : function(data) {
+			if(data['graphi']['GISReal']==0){
+				mapGis.GISReal=false;
+			}else{
+				
+				mapGis.GISReal=true;
+			}
+			clearMap();
+			showWhiteLayer();
+			drawPointsGis(data,proid,algid,"In");	
+			drawPicked(data,proid,algid,"In");
+			
+		}
+
+	});
+}
+function drawPicked(data,proid,algid,Inorout){
+	
+}
+function showMapOptOut(proid,algid,Inorout){
+
+	showMapOptIn(proid,algid,Inorout);
+	$.ajax({
+		type : 'POST',
+		url : 'viewExcelMap.action',
+		data : {
+			proID:proid,
+			algID:algid,
+			InOrOut:"Out"
+		},
+		success : function(data) {
+			if(data['graphi']['GISReal']==0){
+				mapGis.GISReal=false;
+			}else{
+				
+				mapGis.GISReal=true;
+			}
+			drawPointsGis(data,proid,algid,Inorout);
+			drawLines(data);			
+		}
+	});
+}
 function showMap(proid,algid,Inorout) {
 	if(Inorout=="In"){
 		mapGis=mapIn;
 		showMapIn(proid,algid,Inorout);
+		if(algid>4){
+			showMapOptIn(proid,algid,Inorout);
+		}else{
+			showMapIn(proid,algid,Inorout);
+		}
 	}else{
 		mapGis=mapOut;
-		showMapOut(proid,algid,Inorout);//如果是查看输出地图，则先加载输入
+		if(algid>4){
+			showMapOptOut(proid,algid,Inorout);
+		}else{
+			showMapOut(proid,algid,Inorout);//如果是查看输出地图，则先加载输入
 		//showMapIn(proid,algid,Inorout);
+		}
 	}
 }
 function clearMap(){
@@ -292,8 +359,12 @@ function drawPointsGis(data,proid,algid,Inorout){
 		// map.openInfoWindow(infoWindow,pointArray[i]); //开启信息窗口
 		markertemp.contStr=s;
 		markertemp.proID=proid;
-		markertemp.algID=algid;
+		markertemp.algID=algid;		
+		
 		markertemp.InOrOut=Inorout;
+		if(p['type']=='井数据'){
+			markertemp.InOrOut='In';
+		}
 		markertemp.type=p['type'];
 		markertemp.point_name=p['name'];
 		markertemp.long=p['longitude'];

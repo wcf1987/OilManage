@@ -630,7 +630,7 @@ public class SheetContent {
 				}
 				e.setStart(lineStr.get(this.sheetTitle.get("管段顶点1")));
 				e.setEnd(lineStr.get(this.sheetTitle.get("管段顶点2")));
-				e.setLength(lineStr.get(this.sheetTitle.get("管段长度（km）")));
+				//e.setLength(lineStr.get(this.sheetTitle.get("管段长度（km）")));
 				e.setType(this.Name);
 				e.setAttribute(getAttribute(lineStr));
 				temp.add(e);

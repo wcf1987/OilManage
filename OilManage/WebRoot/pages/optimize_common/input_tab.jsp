@@ -31,7 +31,7 @@
 	</div>
 </div>
 <div id="inputGisMap" class="inputDataDiv" style="display:none">
-	<%@ include file="gismap.jsp" %>
+	<%@ include file="gismapIn.jsp" %>
 </div>
 <%@ include file="./dikedmap.jsp" %>
 <script type="text/javascript">
