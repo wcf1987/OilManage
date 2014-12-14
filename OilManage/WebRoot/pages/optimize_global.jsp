@@ -89,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="head">
 		    <%@ include file="commons/header.jsp" %>
 	</div>  
-		<div class="container marketing condiv" style="width:1200px;margin-top:30px;">
+		<div class="container marketing condiv" style="width:1200px;margin-top:1px;">
 	    	
 	    	<div class="container-fluid">
 				<div class="row-fluid row-fluid2">

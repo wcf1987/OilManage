@@ -17,10 +17,10 @@ function initLight() {
 	tabtools=new TabTools(); 
 	
 	initMouseWheel();
-	var curl=window.location.pathname;
-	if(curl=="/OilManage/pages/simulate_wellbore.jsp"){
-		listProjectModal();	 
-	}
+//	var curl=window.location.pathname;
+//	if(curl=="/OilManage/pages/simulate_wellbore.jsp"){
+//		listProjectModal();	 
+//	}
 
 }
 

@@ -898,10 +898,10 @@ function openProject(proid,algID){
 		sheetgrid.creategrid(proid, sheetDiv+i, pageDiv+i,delID+i,gridWidth);
 		
 	}
-	var curl=window.location.pathname;
-	if(curl!="/OilManage/pages/simulate_wellbore.jsp"){
+//	var curl=window.location.pathname;
+//	if(curl!="/OilManage/pages/simulate_wellbore.jsp"){
 		showTab('input_tab');	
-	}
+//	}
 	
-	$(".modal").modal('hide');
+	//$(".modal").modal('hide');
 }
