@@ -239,17 +239,76 @@ function initMapGis(Inorout) {
 	});
 
 };
+function sumTransGPS(dataAll,data,start,len,callback1){
+	
+	var pMap=dataAll['graphi']['points'];
+	var dataIndex=0;
+	var index = 0;
+	for ( var i in pMap) {
+		
+		var p = pMap[i];// 一个point
+		
+		if(index>=start&&index<start+len){
+			
+			p.longitude = data.result[dataIndex].x;
+			p.latitude = data.result[dataIndex].y;
+			dataIndex++;
+		}
+			
+		index++;
+		if(index>=start+len){
+				break;
+		}
+		
+
+	}	
+
+	dataAll.GPSSum=dataAll.GPSSum-len;
+	//alert(dataAll.pathSum);
+	if(dataAll.GPSSum==0){
+		callback1(dataAll, dataAll['proID'], dataAll['algID'], dataAll['inOrOut']);
+	}
+}
 function TranslateGPS(dataAll, proid, algid, Inorout, callback1) {
+	dataAll.GPSSum = Object.keys(dataAll['graphi']['points']).length ;
+
 	var xy = ''
 	var listp = dataAll['graphi']['points'];
+	var start=0;
+	var len=0;
 	for ( var i in listp) {
 		if (xy != '') {
 			xy = xy + ';';
 		}
 		xy = xy + listp[i].longitude + "," + listp[i].latitude;
+		len++;
+		start++;
+		if(len>=90){
+			TransGPSNet(xy,start-len,dataAll, proid, algid, Inorout, callback1);
+			xy='';
+			len=0;
+		}
 	}
+	if(len>0){
+		TransGPSNet(xy,start-len,dataAll, proid, algid, Inorout, callback1);		
+	}	
+};
+function TransGPSNet(xy,start,dataAll, proid, algid, Inorout, callback1){
+	var cb=(function(i,dataall) {
+		
+		return function(data){
+			if (data.status != 0) {
+				
+				sumTransGPS(dataall, data,i,0,callback1);
+			}else{
+				
+				sumTransGPS(dataall, data,i,data.result.length,callback1);
+			}			
+		}
+	})(start,dataAll);
 	$.ajax({
-		type : 'GET',
+		crossOrigin: true,
+		type : 'POST',
 		url : 'http://api.map.baidu.com/geoconv/v1/',
 		data : {
 			coords : xy,
@@ -262,23 +321,10 @@ function TranslateGPS(dataAll, proid, algid, Inorout, callback1) {
 		jsonp : "callback",
 		// 自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
 		callback : "success",
-		// 成功获取跨域服务器上的json数据后,会动态执行这个callback函数
-		success : function(data) {
-			if (data.status != 0) {
-				callback1(dataAll, proid, algid, Inorout);
-			}
-			var xyResult = new Array();
-			var index = 0;
-			for ( var i in listp) {
-				listp[i].longitude = data.result[index].x;
-				listp[i].latitude = data.result[index].y;
-				index++;
-			}
-			callback1(dataAll, proid, algid, Inorout);
-
-		}
+		// 成功获取跨域服务器上的json数据后,会动态执行这个callback函数		
+		success : cb
 	});
-};
+}
 
 function TranslateGPSObs(dataAll, proid, algid, Inorout, callback1) {
 
