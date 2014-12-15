@@ -421,7 +421,7 @@ public class FileExcel {
 		return a;
 	}
 	public void updatePointGPS(Collection<Point> names){
-		double Xmax=0;
+		/*double Xmax=0;
 		double Xmin=100000000;
 		double Ymax=0;
 		double Ymin=100000000;
@@ -439,13 +439,13 @@ public class FileExcel {
 			if(t.getGeodeticCoordinatesY()<Ymin&&t.getGeodeticCoordinatesY()!=0){
 				Ymin=t.getGeodeticCoordinatesY();
 			}
-		}
-		double Xc=0.02/(Xmax-Xmin);
-		double Yc=0.02/(Ymax-Ymin);
+		}*/
+		double Xc=0.00001;
+		double Yc=0.00001;
 		for(Iterator<Point> temp=names.iterator();temp.hasNext();){
 			Point t=temp.next();				
-			t.setLongitude((t.getGeodeticCoordinatesX()-Xmin)*Xc+116);
-			t.setLatitude((t.getGeodeticCoordinatesY()-Ymin)*Yc+39);
+			t.setLongitude((t.getGeodeticCoordinatesX())*Xc+116);
+			t.setLatitude((t.getGeodeticCoordinatesY())*Yc+39);
 		}
 		
 	}
