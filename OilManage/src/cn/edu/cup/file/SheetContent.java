@@ -637,6 +637,7 @@ public class SheetContent {
 			}
 			
 		}
+	
 		/*if(getName().indexOf("管道")!=-1){			 
 			for(int i=1;i<this.sheetContent.size();i++){
 				Line e=new Line();
@@ -723,6 +724,53 @@ public class SheetContent {
 		a.setPoints(points);
 		return a;
 	}
+	public Map<String, List<Point>> getPathMap() {
+		
+		Map<String, List<Point>> pointsMap=new HashMap<String,List<Point>>();
+		String lastName="";
+		Point lastPoint=null;
+		Point startPoint=null;
+		String name="";
+		List<Point> a=new ArrayList<>();
+		for(int i=1;i<this.sheetContent.size();i++){
+			List<String> lineStr=this.sheetContent.get(i);
+			Point e=new Point();
+			Line line=new Line();
+			e.setGeodeticCoordinatesX(getAttrLike(lineStr,"X"));
+			e.setGeodeticCoordinatesY(getAttrLike(lineStr,"Y"));
+			
+			String name1=lineStr.get(this.sheetTitle.get("路径名称"));
+	
+			if(name1==null||name1.equals("")){
+				
+			}else{
+				name=name1;
+			}
+			e.setName(Tools.getUUID());
+			e.setType(name);
+		
+			if(startPoint==null){
+				startPoint=e;
+			}
+			if(lastName.equals(name)){
+				a.add(e);
+				
+			}else{
+				if(startPoint!=e){
+				
+				pointsMap.put(e.getType(), a);
+				a=new ArrayList<Point>();
+				a.add(e);
+				startPoint=e;
+				}
+				lastName=name;
+				
+			}
+			lastPoint=e;
+		}
+		pointsMap.put(lastPoint.getType(), a);
+		return pointsMap;
+	}
 	public Map<String, List<Point>> getObstacleMap() {
 		
 		Map<String, List<Point>> pointsMap=new HashMap<String,List<Point>>();
@@ -737,7 +785,7 @@ public class SheetContent {
 			Line line=new Line();
 			e.setGeodeticCoordinatesX(getAttrLike(lineStr,"X"));
 			e.setGeodeticCoordinatesY(getAttrLike(lineStr,"Y"));
-			e.getLatLonFromGeo();
+			
 			String name1=lineStr.get(this.sheetTitle.get("名称"));
 	
 			if(name1==null||name1.equals("")){

@@ -16,6 +16,18 @@ public class AlgorithmExcelMapAction {
 	int algID;
 
 	String msg;
+	public String getObsName() {
+		return obsName;
+	}
+	public void setObsName(String obsName) {
+		this.obsName = obsName;
+	}
+	public Map<String, List<Point>> getObs() {
+		return obs;
+	}
+	public void setObs(Map<String, List<Point>> obs) {
+		this.obs = obs;
+	}
 	int proID;
 	String InOrOut = "";
 	public int getAlgID() {
@@ -63,6 +75,10 @@ public class AlgorithmExcelMapAction {
 	List<Map<String,String>> poly;
 	String obsName;
 	Map<String,List<Point>> obs;
+	Map<String,List<Point>> path;
+	public Map<String, List<Point>> getPath() {
+		return path;
+	}
 	public void setPoly(String poly) {
 		poly=poly.replace("[", "");
 		poly=poly.replace("]", "");
@@ -91,8 +107,15 @@ public class AlgorithmExcelMapAction {
 	public String viewObstacle(){
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		
-		graphi=excel.getObstacleGraphi();
+		//graphi=excel.getObstacleGraphi();
 		obs=excel.getObstacleMap();
+		return "SUCCESS";
+	}
+	public String viewPath(){
+		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
+		
+		//graphi=excel.getPathGraphi();
+		path=excel.getPathGraphi();
 		return "SUCCESS";
 	}
 	public String addObstacle(){

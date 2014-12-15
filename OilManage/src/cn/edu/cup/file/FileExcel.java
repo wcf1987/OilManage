@@ -256,34 +256,9 @@ public class FileExcel {
 				break;
 			}
 		}
-		double Xmax=0;
-		double Xmin=100000000;
-		double Ymax=0;
-		double Ymin=100000000;
+
 		if(a.getGISReal()==0){
-			for(Iterator<Point> temp=names.iterator();temp.hasNext();){
-				Point t=temp.next();
-				if(t.getGeodeticCoordinatesX()>Xmax){
-					Xmax=t.getGeodeticCoordinatesX();
-				}
-				if(t.getGeodeticCoordinatesX()<Xmin&&t.getGeodeticCoordinatesX()!=0){
-					Xmin=t.getGeodeticCoordinatesX();
-				}
-				if(t.getGeodeticCoordinatesY()>Ymax){
-					Ymax=t.getGeodeticCoordinatesY();
-				}
-				if(t.getGeodeticCoordinatesY()<Ymin&&t.getGeodeticCoordinatesY()!=0){
-					Ymin=t.getGeodeticCoordinatesY();
-				}
-			}
-			double Xc=0.02/(Xmax-Xmin);
-			double Yc=0.02/(Ymax-Ymin);
-			for(Iterator<Point> temp=names.iterator();temp.hasNext();){
-				Point t=temp.next();				
-				t.setLongitude((t.getGeodeticCoordinatesX()-Xmin)*Xc);
-				t.setLatitude((t.getGeodeticCoordinatesY()-Ymin)*Yc);
-			}
-			
+			updatePointGPS(names);
 		}
 		return a;
 	}
@@ -412,7 +387,68 @@ public class FileExcel {
 
 		return a;
 	}
+	
+	public Map<String, List<Point>> getPathGraphi() {
+		Map<String, List<Point>> a = new HashMap<String, List<Point>>();
+		for (int i = 0; i < this.excleContent.size(); i++) {
 
+			SheetContent temp = this.excleContent.get(i);
+
+			if (temp.getName().equals("路径")) {
+				a = temp.getPathMap();
+			}
+
+		}
+
+		Collection<List<Point>> names1=a.values();
+		int tempReal=1;
+		Collection<Point> names=new ArrayList<Point>();
+		for(Iterator<List<Point>> temp=names1.iterator();temp.hasNext();){
+			List<Point> t=temp.next();
+			names.addAll(t);
+		}
+		for(Iterator<Point> temp=names.iterator();temp.hasNext();){
+			Point t=temp.next();
+			if(t.getLatitude()<20&&t.getLongitude()<20){
+				tempReal=0;
+				break;
+			}
+		}
+		
+		if(tempReal==0){
+			updatePointGPS(names);
+		}
+		return a;
+	}
+	public void updatePointGPS(Collection<Point> names){
+		double Xmax=0;
+		double Xmin=100000000;
+		double Ymax=0;
+		double Ymin=100000000;
+		for(Iterator<Point> temp=names.iterator();temp.hasNext();){
+			Point t=temp.next();
+			if(t.getGeodeticCoordinatesX()>Xmax){
+				Xmax=t.getGeodeticCoordinatesX();
+			}
+			if(t.getGeodeticCoordinatesX()<Xmin&&t.getGeodeticCoordinatesX()!=0){
+				Xmin=t.getGeodeticCoordinatesX();
+			}
+			if(t.getGeodeticCoordinatesY()>Ymax){
+				Ymax=t.getGeodeticCoordinatesY();
+			}
+			if(t.getGeodeticCoordinatesY()<Ymin&&t.getGeodeticCoordinatesY()!=0){
+				Ymin=t.getGeodeticCoordinatesY();
+			}
+		}
+		double Xc=0.02/(Xmax-Xmin);
+		double Yc=0.02/(Ymax-Ymin);
+		for(Iterator<Point> temp=names.iterator();temp.hasNext();){
+			Point t=temp.next();				
+			t.setLongitude((t.getGeodeticCoordinatesX()-Xmin)*Xc+116);
+			t.setLatitude((t.getGeodeticCoordinatesY()-Ymin)*Yc+39);
+		}
+		
+	}
 	public Map<String, List<Point>> getObstacleMap() {
 		Map<String, List<Point>> a = new HashMap<String, List<Point>>();
 		for (int i = 0; i < this.excleContent.size(); i++) {
@@ -423,6 +459,26 @@ public class FileExcel {
 				a = temp.getObstacleMap();
 			}
 
+		}
+
+		Collection<List<Point>> names1=a.values();
+		int tempReal=1;
+		Collection<Point> names=new ArrayList<Point>();
+		for(Iterator<List<Point>> temp=names1.iterator();temp.hasNext();){
+			List<Point> t=temp.next();
+			names.addAll(t);
+		}
+		for(Iterator<Point> temp=names.iterator();temp.hasNext();){
+			Point t=temp.next();
+			if(t.getLatitude()<20&&t.getLongitude()<20){
+				tempReal=0;
+				break;
+			}
+		}
+		
+		if(tempReal==0){
+			updatePointGPS(names);
+			
 		}
 		return a;
 	}

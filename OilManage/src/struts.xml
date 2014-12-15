@@ -393,7 +393,13 @@
 
 			</result>
 		</action>
-		
+		<action name="viewPath" class="cn.edu.cup.manage.action.AlgorithmExcelMapAction"
+			method="viewPath">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
 		<action name="viewObstacle" class="cn.edu.cup.manage.action.AlgorithmExcelMapAction"
 			method="viewObstacle">
 

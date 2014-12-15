@@ -137,35 +137,7 @@ function SheetGrid() {
 			cellurl : 'editSheetContent.action',
 			beforeSubmitCell : function(rowid,celname,value,iRow,iCol) { 
 				var index_ID=temp.sheetgridpro.jqGrid("getRowData", iRow).Index_ID;
-				/*if(celname=='控制模式'){
-					if(value=='Pressure'){
-						var ecol=getIndexOfArray(temp.colNames,"节点流量(m3/d)");
-						temp.sheetgridpro.jqGrid('setRowData', iRow,{"节点流量(m3/d)":""});
-					}
-					if(value=='Flow'){
-						var ecol=getIndexOfArray(temp.colNames,"节点压力(MPa)");
-						  temp.sheetgridpro.jqGrid('setRowData', iRow,{"节点压力(MPa)":""}); 
-					}
-					}
-					 $.ajax({ 
-				          type: "POST", 
-				          url: "editSheetContent.action", 
-				          data: {
-								proID:temp.proid,
-								sheetID:temp.sid,
-								algID : temp.algid,
-								InOrOut:temp.inOrOut,
-								Index_ID:index_ID,					
-								col_ID:ecol,
-								newValue:""					
-							},    
-				          
-				          success: function(msg){ 
-				        	
-				        	
-				              
-				          } 
-				        });*/
+				
 					
 				
 				var z={
