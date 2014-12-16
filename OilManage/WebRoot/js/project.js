@@ -192,6 +192,12 @@ function list_project(){
 		add : false,
 		search:false,
 		del : false}).jqGrid('navButtonAdd',"#ProjectPager",{
+				title:'删除',
+				caption:"删除",	
+				id:"delete_ProjectList",
+				onClickButton:deleteProject,
+				position:"first"
+			}).jqGrid('navButtonAdd',"#ProjectPager",{
 				title:'新建',
 				caption:"新建",
 				id:"add_ProjectList",
@@ -202,12 +208,6 @@ function list_project(){
 				position:"first"
 			
 		
-			}).jqGrid('navButtonAdd',"#ProjectPager",{
-				title:'删除',
-				caption:"删除",	
-				id:"delete_ProjectList",
-				onClickButton:deleteProject,
-				position:"first"
 			});
 }
 /*
@@ -812,6 +812,12 @@ function loadAuthorOptions(){
 		}
 	});
 	}
+
+function openProjectModal(){
+	$('#add_project_modal').modal();
+	$('#list_project_modal').modal('hide');
+	createNewProject();
+}
 
 function createNewProject(){
 	//loadAuthorOptions();//加载作者选项		

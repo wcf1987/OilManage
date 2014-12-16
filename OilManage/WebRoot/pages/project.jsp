@@ -471,8 +471,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      </div>
 		      <div class="modal-body">
 		     	 <form id="addProjectForm" action="addAlgPro.action" method="post"> 
-		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">
-		      		
+		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table">	      		
 		      			<tr>
 		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >名称:</label></td>
 				            <td><input id="name" type="text" class="input2" name="name" maxlength="30"/><em style="color:red">*</em></td>
@@ -480,15 +479,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      			<tr>
 		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >描述：</label></td>
 		      				<td><input id="Description" type="text" class="input2" name="Description" maxlength="10" /><em style="color:red">*</em></td>
-		      			</tr>
-		      			<tr>
-		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;">作者：</label></td>
-		      				<td>		      					 
-					        	<select id="authorID" name=authorID>		                  
-			              		</select>
-		 						<em style="color:red">*</em>    						
-		      				</td>
-		      			</tr> 	    				
+		      			</tr> 				
 				   </table>
 				   <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

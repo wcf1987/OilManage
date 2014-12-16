@@ -27,11 +27,11 @@ $().ready(function(){
 	
 	
 	}); 
-function openProjectModal(){
-	$('#add_project_modal').modal();
-	$('#list_project_modal').modal('hide');
-	createNewProject();
-}
+//function openProjectModal(){
+//	$('#add_project_modal').modal();
+//	$('#list_project_modal').modal('hide');
+//	createNewProject();
+//}
 
 function listProjectModal(){
 	$('#list_project_modal>.modal-dialog').css({
