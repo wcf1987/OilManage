@@ -62,7 +62,7 @@ function showMapOptOut(data, proid, algid, Inorout) {
 	showWhiteLayer();
 	drawPointsGis(data, proid, algid, Inorout);
 	showObstacle();
-	//showPath();
+	showPath();
 	//drawPointsGis(data, proid, algid, Inorout);
 	drawLines(data);
 	mapGis.markerClusterer.addMarkers(mapGis.markers);
@@ -157,6 +157,7 @@ function getMapOptOut(proid, algid, Inorout) {
 			if (data['graphi']['GISReal'] == 0) {
 				mapGis.GISReal = false;
 				// showMapSimIn(data,proid,algid,Inorout);
+				//drawPointsPath(data);
 				TranslateGPS(data, proid, algid, Inorout, showMapOptOut);
 			} else {
 
@@ -238,17 +239,76 @@ function initMapGis(Inorout) {
 	});
 
 };
+function sumTransGPS(dataAll,data,start,len,callback1){
+	
+	var pMap=dataAll['graphi']['points'];
+	var dataIndex=0;
+	var index = 0;
+	for ( var i in pMap) {
+		
+		var p = pMap[i];// 一个point
+		
+		if(index>=start&&index<start+len){
+			
+			p.longitude = data.result[dataIndex].x;
+			p.latitude = data.result[dataIndex].y;
+			dataIndex++;
+		}
+			
+		index++;
+		if(index>=start+len){
+				break;
+		}
+		
+
+	}	
+
+	dataAll.GPSSum=dataAll.GPSSum-len;
+	//alert(dataAll.pathSum);
+	if(dataAll.GPSSum==0){
+		callback1(dataAll, dataAll['proID'], dataAll['algID'], dataAll['inOrOut']);
+	}
+}
 function TranslateGPS(dataAll, proid, algid, Inorout, callback1) {
+	dataAll.GPSSum = Object.keys(dataAll['graphi']['points']).length ;
+
 	var xy = ''
 	var listp = dataAll['graphi']['points'];
+	var start=0;
+	var len=0;
 	for ( var i in listp) {
 		if (xy != '') {
 			xy = xy + ';';
 		}
 		xy = xy + listp[i].longitude + "," + listp[i].latitude;
+		len++;
+		start++;
+		if(len>=90){
+			TransGPSNet(xy,start-len,dataAll, proid, algid, Inorout, callback1);
+			xy='';
+			len=0;
+		}
 	}
+	if(len>0){
+		TransGPSNet(xy,start-len,dataAll, proid, algid, Inorout, callback1);		
+	}	
+};
+function TransGPSNet(xy,start,dataAll, proid, algid, Inorout, callback1){
+	var cb=(function(i,dataall) {
+		
+		return function(data){
+			if (data.status != 0) {
+				
+				sumTransGPS(dataall, data,i,0,callback1);
+			}else{
+				
+				sumTransGPS(dataall, data,i,data.result.length,callback1);
+			}			
+		}
+	})(start,dataAll);
 	$.ajax({
-		type : 'GET',
+		crossOrigin: true,
+		type : 'POST',
 		url : 'http://api.map.baidu.com/geoconv/v1/',
 		data : {
 			coords : xy,
@@ -261,23 +321,10 @@ function TranslateGPS(dataAll, proid, algid, Inorout, callback1) {
 		jsonp : "callback",
 		// 自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
 		callback : "success",
-		// 成功获取跨域服务器上的json数据后,会动态执行这个callback函数
-		success : function(data) {
-			if (data.status != 0) {
-				callback1(dataAll, proid, algid, Inorout);
-			}
-			var xyResult = new Array();
-			var index = 0;
-			for ( var i in listp) {
-				listp[i].longitude = data.result[index].x;
-				listp[i].latitude = data.result[index].y;
-				index++;
-			}
-			callback1(dataAll, proid, algid, Inorout);
-
-		}
+		// 成功获取跨域服务器上的json数据后,会动态执行这个callback函数		
+		success : cb
 	});
-};
+}
 
 function TranslateGPSObs(dataAll, proid, algid, Inorout, callback1) {
 
@@ -344,71 +391,6 @@ function TranslateGPSObs(dataAll, proid, algid, Inorout, callback1) {
 
 };
 
-function TranslateGPSPath(dataAll, proid, algid, Inorout, callback1) {
-
-
-	var jsonObject = dataAll;
-	// var pointArray = new Array();
-	var pMap = jsonObject['path'];
-	var xy = '';
-	for ( var i in pMap) {
-
-		ps = pMap[i];// 一个障碍
-		var tempPoints = new Array();
-
-		for ( var k = 0; k < ps.length; k++) {
-			p = ps[k];
-			// var bp=new BMap.Point(p['longitude'], p['latitude']);
-			if (xy != '') {
-				xy = xy + ';';
-			}
-			xy = xy + p.longitude + "," + p.latitude;
-		}
-
-	}
-	console.log(length(xy));
-	$.ajax({
-		type : 'POST',
-		url : 'http://api.map.baidu.com/geoconv/v1/',
-		data : {
-			coords : xy,
-			from : 1,
-			to : 5,
-			ak : '4bfe7b8632739c89a1b8e95529da1d97'
-		},
-		dataType : "jsonp",
-		// 传递给请求处理程序，用以获得jsonp回调函数名的参数名(默认为:callback)
-		jsonp : "callback",
-		// 自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
-		callback : "success",
-		// 成功获取跨域服务器上的json数据后,会动态执行这个callback函数
-		success : function(data) {
-
-			if (data.status != 0) {
-				callback1(dataAll, proid, algid, Inorout);
-			}
-			var xyResult = new Array();
-			var index = 0;
-
-			for ( var i in pMap) {
-
-				ps = pMap[i];// 一个障碍
-				var tempPoints = new Array();
-
-				for ( var k = 0; k < ps.length; k++) {
-					p = ps[k];
-					p.longitude = data.result[index].x;
-					p.latitude = data.result[index].y;
-					index++;
-				}
-
-			}
-			callback1(dataAll, proid, algid, Inorout);
-
-		}
-	});
-
-};
 function addSwith() {
 
 	// 定义一个控件类,即function
@@ -492,11 +474,11 @@ function drawPointsGis(data, proid, algid, Inorout) {
 		if (p['type'] == '管道') {
 			continue;
 		}
+		
+		mapGis.pointMap[i] = new BMap.Point(p['longitude'], p['latitude']);
 		if (p['type'] == '设备连接点') {
 			continue;
 		}
-		mapGis.pointMap[i] = new BMap.Point(p['longitude'], p['latitude']);
-
 		if (id == 0) {
 			mapGis.centerAndZoom(mapGis.pointMap[i], 15);
 			id = 1;
@@ -756,27 +738,7 @@ function showObstacle() {
 	});
 
 }
-function showPath() {
-	var proid = $("#proID").val();
-	var algid = $("#curAlgID").val();
-	var Inorout = "Out";
-	$.ajax({
-		type : 'POST',
-		url : 'viewPath.action',
-		data : {
-			proID : proid,
-			algID : algid,
-			InOrOut : Inorout
-		},
-		success : function(data) {
-			TranslateGPSPath(data, proid, algid, Inorout, drawPointsPath);
-			// drawPointsDiked(data);
-			// drawLines(data);
-		}
 
-	});
-
-}
 function drawPointsDiked(data) {
 
 	for ( var obsName in data['obs']) {
@@ -805,10 +767,148 @@ function drawPointsDiked(data) {
 		mapGis.addOverlay(polygon);
 	}
 };
+function showPath() {
+	var proid = $("#proID").val();
+	var algid = $("#curAlgID").val();
+	var Inorout = "Out";
+	
+	$.ajax({
+		type : 'POST',
+		url : 'viewPath.action',
+		data : {
+			proID : proid,
+			algID : algid,
+			InOrOut : Inorout
+		},
+		success : function(data) {	
+			var len=0;
+			var pMap=data['path'];
+			for ( var i in pMap) {
+				
+				var ps = pMap[i];// 一个障碍
+				
+				for ( var k = 0; k < ps.length; k++) {
+					len++;
+				}
+			}
+			data.pathSum=len;
+			TranslateGPSPath(data, proid, algid, Inorout, sumTrans);			
+		}
+
+	});
+
+}
+function TranslateGPSPath(dataAll, proid, algid, Inorout, callback1) {
+	
+
+	var jsonObject = dataAll;
+	// var pointArray = new Array();
+	var pMap = jsonObject['path'];
+	var xy = '';
+	var start=0;
+	var len=0;
+	//alert(dataAll.pathSum);
+	len=0;
+	for ( var i in pMap) {
+		
+		ps = pMap[i];// 一个障碍
+		var tempPoints = new Array();
+		
+		for ( var k = 0; k < ps.length; k++) {
+			p = ps[k];
+			// var bp=new BMap.Point(p['longitude'], p['latitude']);
+			if (xy != '') {
+				xy = xy + ';';
+			}
+			xy = xy + p.longitude + "," + p.latitude;
+			len++;
+			start++;
+			if(len>=90){
+				TransGPSPathNet(xy,start-len,dataAll, proid, algid, Inorout, callback1);
+				xy='';
+				len=0;
+			}
+		}
+		
+		
+		
+	}
+	if(len>0){
+		TransGPSPathNet(xy,start-len,dataAll, proid, algid, Inorout, callback1);		
+	}
+}
+function TransGPSPathNet(xy,start,dataAll, proid, algid, Inorout, callback1){
+	var cb=(function(i,dataall) {
+		
+		return function(data){
+			if (data.status != 0) {
+				
+				callback1(dataall, data,i,0);
+			}else{
+				
+				callback1(dataall, data,i,data.result.length);
+			}			
+		}
+	})(start,dataAll);
+	$.ajax({
+		crossOrigin: true,
+		type : 'POST',
+		url : 'http://api.map.baidu.com/geoconv/v1/',
+		data : {
+			coords : xy,
+			from : 1,
+			to : 5,
+			ak : '4bfe7b8632739c89a1b8e95529da1d97'
+		},
+		dataType : "jsonp",
+		// 传递给请求处理程序，用以获得jsonp回调函数名的参数名(默认为:callback)
+		jsonp : "callback",
+		// 自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+		callback : "success",
+		// 成功获取跨域服务器上的json数据后,会动态执行这个callback函数		
+		success : cb
+	});
+
+}
+	//console.log(length(xy));
+
+
+
+
+function sumTrans(dataAll,data,start,len,mapgis){
+	
+	var xyResult = new Array();
+	var index = 0;
+	var pMap=dataAll['path'];
+	var dataIndex=0;
+	for ( var i in pMap) {
+		
+		ps = pMap[i];// 一个path
+		for ( var k = 0; k < ps.length; k++) {
+			if(index>=start&&index<start+len){
+				p = ps[k];
+				p.longitude = data.result[dataIndex].x;
+				p.latitude = data.result[dataIndex].y;
+				dataIndex++;
+			}
+			
+			index++;
+			if(index>=start+len){
+				break;
+			}
+		}
+
+	}
+	dataAll.pathSum=dataAll.pathSum-len;
+	//alert(dataAll.pathSum);
+	if(dataAll.pathSum==0){
+		drawPointsPath(dataAll);
+	}
+}
 function drawPointsPath(data) {
 
-	for ( var obsName in data['path']) {
-		var xyResults = data['path'][obsName];
+	for ( var pathName in data['path']) {
+		var xyResults = data['path'][pathName];
 		var k = -1;
 		var pointsTemp = new Array();
 		for ( var index in xyResults) {
@@ -819,7 +919,7 @@ function drawPointsPath(data) {
 			pointsTemp.push(point);
 			if (k == 0) {
 				var secRingCenter = point;
-				var secRingLabel2 = new BMap.Label(obsName, {
+				var secRingLabel2 = new BMap.Label(pathName, {
 					offset : new BMap.Size(10, -20),
 					position : secRingCenter
 				});
