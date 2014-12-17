@@ -94,8 +94,8 @@ public class AlgorithmExcelMapAction {
 			 temp.setLatitude(Double.valueOf(lat));
 			 temp.setLongitude(Double.valueOf(lng));
 			 temp.getGeoFromLatLon();
-			 p.put("X坐标 (m)",String.valueOf(temp.getGeodeticCoordinatesX()) );
-			 p.put("Y坐标 (m)",String.valueOf(temp.getGeodeticCoordinatesY()) );
+			 p.put("X坐标(m)",String.valueOf(temp.getGeodeticCoordinatesX()) );
+			 p.put("Y坐标(m)",String.valueOf(temp.getGeodeticCoordinatesY()) );
 			
 			//this.poly = null;
 			this.poly.add(p); 
@@ -122,7 +122,7 @@ public class AlgorithmExcelMapAction {
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
 		excel.getObstacleSheet().addObstacle(this.poly,this.obsName);
 		//saveExcel();
-		viewObstacle();
+		//viewObstacle();
 		return "SUCCESS";
 	}
 }

@@ -56,6 +56,7 @@ function showMapOptIn(data, proid, algid, Inorout) {
 	drawPointsGis(data,proid,algid,"In");
 	showObstacle();
 	mapGis.markerClusterer.addMarkers(mapGis.markers);
+
 };
 function showMapOptOut(data, proid, algid, Inorout) {
 	clearMap();

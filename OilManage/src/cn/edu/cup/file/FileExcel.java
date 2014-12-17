@@ -444,8 +444,12 @@ public class FileExcel {
 		double Yc=0.00001;
 		for(Iterator<Point> temp=names.iterator();temp.hasNext();){
 			Point t=temp.next();				
+			if(t.getGeodeticCoordinatesX()>1000000&&t.getGeodeticCoordinatesY()>10000000){
+				t.getLatLonFromGeo();
+			}else{
 			t.setLongitude((t.getGeodeticCoordinatesX())*Xc+116);
 			t.setLatitude((t.getGeodeticCoordinatesY())*Yc+39);
+			}
 		}
 		
 	}

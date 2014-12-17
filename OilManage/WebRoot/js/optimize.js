@@ -364,7 +364,7 @@ function showDikedAreaMap(){//显示障碍区地图
 		var proid=$("#proID").val();
 		var algid=$("#curAlgID").val();
 		initdiked();
-		showObstacle();
+		showObstacleAlone();
 	}else{
 		$("#dikedAreaMap").hide();
 		

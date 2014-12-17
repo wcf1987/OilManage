@@ -815,7 +815,9 @@ public class SheetContent {
 			}
 			lastPoint=e;
 		}
+		if(lastPoint!=null){
 		pointsMap.put(lastPoint.getType(), a);
+		}
 		return pointsMap;
 	}
 
@@ -833,8 +835,8 @@ public class SheetContent {
 			}else{
 				p.put("名称", "");
 				p.put("顶点数量","");
+				
 			}
-			
 			addRow(p);
 		}
 		
