@@ -230,10 +230,13 @@ public class FileExcel {
 
 	public void coverFromImport(FileExcel importExcle) {
 		List<SheetContent> list = importExcle.getExcelContent();
-		for (int i = 0; i < list.size()&&i <this.excleContent.size(); i++) {
-			SheetContent temp = this.excleContent.get(i);
-			if (temp.getName().equals(list.get(i).getName())) {
-				this.excleContent.get(i).coveredByImport(list.get(i));
+		for (int i = 0; i < list.size(); i++) {
+			
+			//SheetContent temp = this.excleContent.get(i);
+			String name=list.get(i).getName();
+			SheetContent temp = this.getSheetByName(name);
+			if (temp!=null) {
+				temp.coveredByImport(list.get(i));
 			}
 		}
 
@@ -506,6 +509,18 @@ public class FileExcel {
 	public SheetContent getSheetByName(FileExcel excel, String name) {
 		for (int i = 0; i < excel.excleContent.size(); i++) {
 
+			SheetContent temp = excel.excleContent.get(i);
+
+			if (temp.getName().equals(name)) {
+				return temp;
+			}
+
+		}
+		return null;
+	}
+	public SheetContent getSheetByName(String name) {
+		for (int i = 0; i < this.excleContent.size(); i++) {
+
 			SheetContent temp = this.excleContent.get(i);
 
 			if (temp.getName().equals(name)) {
@@ -515,7 +530,6 @@ public class FileExcel {
 		}
 		return null;
 	}
-
 	public int getTypeCodeByName(String Name) {
 		if (Name.equalsIgnoreCase("气井数据") || Name.equalsIgnoreCase("气源数据")
 				|| Name.equalsIgnoreCase("分输点数据") || Name.equals("设备连接点数据"))
