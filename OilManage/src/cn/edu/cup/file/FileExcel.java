@@ -157,6 +157,7 @@ public class FileExcel {
 		}if(Tools.getType(value)==1||Tools.getType(value)==2){
 			cell1_1.setCellType(Cell.CELL_TYPE_NUMERIC);
 			cell1_1.setCellValue(Double.valueOf(value));
+			//cell1_1.setCellValue(value);
 		}if(Tools.getType(value)==-1){
 			cell1_1.setCellType(Cell.CELL_TYPE_BLANK);
 			//cell1_1.setCellValue(null);
@@ -1026,7 +1027,7 @@ public class FileExcel {
 			return a+"中，"+b+"要是数字";
 
 		}
-		if (temp <= 0) {
+		if (temp < 0) {
 			return a+"中，"+b+"要大于0";
 		}
 		return "OK";
@@ -1121,27 +1122,36 @@ public class FileExcel {
 					return re;
 				}
 				
+				
 				stemp = sheet.getExcelData(sheet, rowList.get(i),
 						sheet.getTitleByName("上游节点"));
 				int row2=sheet2.getExcelDataIndex(sheet2, sheet.getTitleByName("名称"), stemp);
-				stemp = sheet2.getExcelData(sheet, row2,
+				
+				stemp = sheet2.getExcelData(sheet2, row2,
+						sheet2.getTitleByName("控制模式"));
+				if(stemp.equals("Pressure")){
+				stemp = sheet2.getExcelData(sheet2, row2,
 						sheet2.getTitleByName("节点压力(MPa)"));
 				
 				re=checkNum(stemp,"过滤器","上游节点压力");
 				if(!re.equals("OK")){
 					return re;
 				}
-				
+				}
 				stemp = sheet.getExcelData(sheet, rowList.get(i),
 						sheet.getTitleByName("下游节点"));
 				row2=sheet2.getExcelDataIndex(sheet2, sheet.getTitleByName("名称"), stemp);
-				stemp = sheet2.getExcelData(sheet, row2,
+				
+				stemp = sheet2.getExcelData(sheet2, row2,
+						sheet2.getTitleByName("控制模式"));
+				if(stemp.equals("Pressure")){
+				stemp = sheet2.getExcelData(sheet2, row2,
 						sheet2.getTitleByName("节点压力(MPa)"));
 				re=checkNum(stemp,"过滤器","下游节点压力");
 				if(!re.equals("OK")){
 					return re;
 				}
-
+				}
 			}
 		}
 		return "OK";
@@ -1178,6 +1188,10 @@ public class FileExcel {
 				stemp = sheet.getExcelData(sheet, rowList.get(i),
 						sheet.getTitleByName("上游节点"));
 				int row2=sheet2.getExcelDataIndex(sheet2, sheet.getTitleByName("名称"), stemp);
+				
+				stemp = sheet2.getExcelData(sheet2, row2,
+						sheet2.getTitleByName("控制模式"));
+				if(stemp.equals("Pressure")){
 				stemp = sheet2.getExcelData(sheet, row2,
 						sheet2.getTitleByName("节点压力(MPa)"));
 				
@@ -1185,17 +1199,21 @@ public class FileExcel {
 				if(!re.equals("OK")){
 					return re;
 				}
-
+				}
 				stemp = sheet.getExcelData(sheet, rowList.get(i),
 						sheet.getTitleByName("下游节点"));
 				row2=sheet2.getExcelDataIndex(sheet2, sheet.getTitleByName("名称"), stemp);
+				
+				stemp = sheet2.getExcelData(sheet2, row2,
+						sheet2.getTitleByName("控制模式"));
+				if(stemp.equals("Pressure")){
 				stemp = sheet2.getExcelData(sheet, row2,
 						sheet2.getTitleByName("节点压力(MPa)"));
 				re=checkNum(stemp,"阀","下游节点压力");
 				if(!re.equals("OK")){
 					return re;
 				}
-
+				}
 			}
 		}
 		return "OK";

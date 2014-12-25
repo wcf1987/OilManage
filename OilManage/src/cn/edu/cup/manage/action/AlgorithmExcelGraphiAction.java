@@ -146,6 +146,9 @@ public class AlgorithmExcelGraphiAction {
 	List<DeviceKV> deviceKV;
 	public String listDevice(){
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
+		if(excel==null){
+			return "SUCCESS";
+		}
 		if(excel.getType(this.algID)==1){
 		if(name!=null&&this.InOrOut.equals("In")&&excel!=null){
 			deviceKV=excel.getDiviceIn(type+"数据",name);
