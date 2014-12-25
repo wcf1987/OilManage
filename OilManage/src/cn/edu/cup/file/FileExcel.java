@@ -207,8 +207,10 @@ public class FileExcel {
 		} finally {
 			try {
 				out.close();
-			} catch (IOException e) {
+				
+			} catch (Exception e) {
 				// System.out.println(e.toString());
+				return -1;
 			}
 		}
 
