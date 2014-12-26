@@ -637,7 +637,7 @@ function() {
 			
 			
 		}
-		leftpoly.showALLConnedPoints();
+		
 		platform.draw();
 	}
 	this.cloneFun = function(e) {
@@ -686,18 +686,18 @@ function() {
 				this.x((this.x() - (poss.x/platform.selectPainting.scaleN)));
 				this.y((this.y() - (poss.y/platform.selectPainting.scaleN)));
 				leftpoly.updateLines();
-				platform.draw();
+				
 				
 			}
-			leftpoly.showALLConnedPoints();
+			//leftpoly.showALLConnedPoints();
 		} else {
 			if(platform.selectPainting!=null){
 			this.destroy();// 不在中间画布就摧毁
 			}
 
 		}
-
-		leftpoly.showALLConnedPoints();
+		checkConn(this);
+		//leftpoly.showALLConnedPoints();
 		platform.draw();
 
 	};
@@ -789,13 +789,15 @@ function() {
 						} else if (text == '解除锁定') {		
 							clickshape.lock=false;	
 							platform.selectPainting.hasChange();	
-							$("#contextmenu").hide();		
+							$("#contextmenu").hide();	
+							platform.selectPainting.delConnect(clickshape);
 							platform.selectPainting.p.draw();
 						} else	if (text == '删除该节点') {
 							leftpoly.delPoint(clickshape.TYPE,clickshape.nameStr,clickshape);
 							platform.selectPainting.hasChange();		
 							clickshape.destroy();
-							leftpoly.showALLConnedPoints();
+							//leftpoly.showALLConnedPoints();
+							platform.selectPainting.delConnect(clickshape);
 							$("#contextmenu").hide();		
 							platform.draw();
 						} else if (text == '更改颜色') {
@@ -896,7 +898,7 @@ function() {
 		platform.draw();
 		platform.setConnShowed(true);
 	}
-	this.showALLConnedPoints = function() {
+/*	this.showALLConnedPoints = function() {
 		var points = platform.getAllChildren();
 		for (i1 = 0; i1 < points.length; i1++) {
 			var right=getRightPoint(points[i1]);
@@ -909,7 +911,7 @@ function() {
 			checkConn(points[i1]);
 		}
 		
-	}
+	}*/
 /*	hideALLConnPoints = function() {//隐藏所有连接点
 		points = platform.getAllChildren();
 		for (i1 = 0; i1 < points.length; i1++) {
@@ -961,6 +963,8 @@ function() {
 				g.lock=true;
 				g.rightConnArray.push(points[li]);
 				points[li].lock=true;
+				
+				platform.selectPainting.addConnect(g,points[li]);
 				re= {
 					g : points[li],
 					right : 0,
@@ -984,6 +988,7 @@ function() {
 				g.lock=true;
 				g.leftConnArray.push(points[li]);
 				points[li].lock=true;
+				platform.selectPainting.addConnect(points[li],g);
 				re= {
 						g : points[li],
 						right : tempR,

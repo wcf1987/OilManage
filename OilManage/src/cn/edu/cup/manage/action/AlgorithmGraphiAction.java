@@ -133,6 +133,7 @@ public class AlgorithmGraphiAction {
 		dao.close();
 		return "SUCCESS";
 	}
+
 	public int getCycleID() {
 		return CycleID;
 	}

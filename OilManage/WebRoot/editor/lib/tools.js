@@ -409,6 +409,21 @@ function addLinked(g,re,way){
 		//resizePoint(point);
 		platform.selectPainting.p.draw();
 		leftpoly.addPoint(point.TYPE,name,point);
+		
+			if(way=='Right'){
+				platform.selectPainting.addConnect(g,point);
+				for(var i=0;i<size;i++){
+					platform.selectPainting.addConnect(point,temp[i]);
+				}
+			}
+			if(way=='Left'){
+				platform.selectPainting.addConnect(point,g);
+				for(var i=0;i<size;i++){
+					platform.selectPainting.addConnect(temp[i],point);
+				}
+			}
+			
+		
 	}
 	
 	
@@ -479,6 +494,43 @@ function searchGrid(grid1,colname,colvalue){
 		}
 	}
 	return -1;
+}
+function setConned(g,cir){
+	if(checkLinked(g)){
+		g.lock=true;
+		return ;
+	}
+	if(checkSpecial(g)||checkLinked(g)){
+		var	rc=getRightPoint(g);
+		var	lc=getLeftPoint(g);
+		rc.show();
+		lc.show();
+		rc.fill('yellow');
+		lc.fill('yellow');
+		
+	}else{
+		cir.show();
+		cir.fill('yellow');
+	}
+	g.lock=true;
+}
+function setDisConned(g){
+	if(checkLinked(g)){
+		g.lock=false;
+		return ;
+	}
+	if(checkSpecial(g)||checkLinked(g)){
+		var	rc=getRightPoint(g);
+		var	lc=getLeftPoint(g);
+		rc.show();
+		lc.show();
+		rc.fill('red');
+		lc.fill('red');
+	}else{
+		cir.show();
+		cir.fill('red');
+	}
+	g.lock=false;
 }
 function optimizeInit(){
 //	listProjectModal();

@@ -8,7 +8,7 @@ var Paintings = function() {
 	this.ID=0;
 	this.name;//项目名称
 	this.index=-1;//初始化序列号为-1
-
+	this.connects=new Array;
 	this.drawPoints=function(data){
 		
 		var jsonObject = data;
@@ -26,14 +26,6 @@ var Paintings = function() {
 			if(ptemp==null){
 				continue;
 			}
-			//if(ptemp=='其他'){
-			//	delLinesInDraw(pLine,p['name']);
-			//	continue;
-			//}
-			//if(p['attribute']['隶属关系']!=null&&p['attribute']['隶属关系']=='管道'){
-			//	delLinesInDraw(pLine,p['name']);
-			//	continue;
-			//}
 			point=ptemp.clone();
 			point.nameStr=p['name'];
 			point.id(p['name']);
@@ -48,9 +40,8 @@ var Paintings = function() {
 			point.x(p.draw2DX);
 			point.y(p.draw2DY);	
 			rotateSpesail(point);		
-			leftpoly.showALLConnPoints();
 			resizePoint(point);
-			this.p.draw();
+
 		}
 		return pLine;
 
@@ -127,6 +118,7 @@ var Paintings = function() {
 					var  r=getRightLine(startP);						
 					movePoint(rc,dis,startP.rotation());							
 					drawLine(r,dis,startP.rotation());	
+					
 				}else{
 					var dis={
 							x:(rc.getAbsolutePosition().x-lc.getAbsolutePosition().x)/this.scaleN,
@@ -134,51 +126,31 @@ var Paintings = function() {
 						}
 					var  l=getLeftLine(endP);						
 					movePoint(lc,dis,endP.rotation());							
-					drawLine(l,dis,endP.rotation());	
+					drawLine(l,dis,endP.rotation());
+				
 				}
-				this.p.draw();
+				this.addConnect(startP,endP);
+				
+				
 			}				
 		}		
 	}
 	this.addGraphi=function(data){
+		this.connects=new Array;
 		var pline=this.drawPoints(data);
 		this.drawLines(pline);
-		leftpoly.showALLConnedPoints();
 		this.p.draw();
 	}
 	this.hasChange=function(){
 		this.changed=true;
 		var $index=this.index;
-	/*	$("input[name='paintingIndex']").each(function($index){//去掉改变标识*
-            if($(this).val()==$index){
-            	var $showobj=$(this).parent().find("a[name='show']");
-            	if($showobj.children("span[name='change']").length==0){
-            		$showobj.append("<span name='change'>*</span>");
-            	}            	
-            }
-         });*/
 		var showobj=$("#"+this.ID).parent().find("a[name='show']");
     	if(showobj.children("span[name='change']").length==0){
     		showobj.append("<span name='change'>*</span>");
     	}
-//		if($("#paintingTabs>.active > a:first").children().length==0){
-//			$("#paintingTabs>.active > a:first").append("<span name='change'>*</span>");
-//		}	
 	}
 	this.clearChange=function(){
 		this.changed=false;
-//		if($("#paintingTabs>.active > a:first").children().length!=0){
-//			$("#paintingTabs>.active > a:first").children().remove();
-//		}
-/*		var $index=this.index;
-		$("input[name='paintingIndex']").each(function($index){//去掉改变标识*
-            if($(this).val()==$index){
-            	var $changeobj=$(this).parent().find("span[name='change']");
-            	if($changeobj.length!=0){
-            		$changeobj.remove();
-            	}	
-            }
-         });*/
 		var $changeobj=$("#"+this.ID).parent().find("span[name='change']");	
     	if($changeobj.length!=0){
     		$changeobj.remove();
@@ -194,7 +166,7 @@ var Paintings = function() {
 			leftpoly.initPoint(pointslist[z]);
 		}
 	}
-	this.connects=new Array;
+	
 	this.addPoints=function(p){
 		this.points.push(p);
 	}
@@ -214,15 +186,15 @@ var Paintings = function() {
 	
 	this.updateConnects=function(){
 
-		this.connects=new Array;
-		points1 = this.p.getChildren();
+		//this.connects=new Array;
+		/*points1 = this.p.getChildren();
 		for (l2 = 0; l2 < points1.length; l2++) {
 			this.checkConn(points1[l2]);
-		}
+		}*/
 		//this.Connstr=this.connects.toJSONString();
 		
 	}
-	this.checkConn = function(g) {
+/*	this.checkConn = function(g) {
 		tempArray = g.getChildren(function(node) {
 			return node.getName() == 'connPointsLeft'
 					|| node.getName() == 'connPointsRight'
@@ -241,11 +213,11 @@ var Paintings = function() {
 			//&&checkSpecial(points[li])
 			if (points[li]!=g&&(checkSpecial(points[li])||checkLinked(points[li]))&&checkCircle(tempArray[0], tempArray2[1],
 					tempArray[0].radius() )) {
-				this.addConnect(g.nameStr,points[li],g);				
+				this.addConnectByName(g.nameStr,points[li],g);				
 			}
 			if (points[li]!=g&&(checkSpecial(points[li])||checkLinked(points[li]))&&checkCircle(tempArray[1], tempArray2[0],
 					tempArray[0].radius())) {
-				this.addConnect(g.nameStr,g,points[li]);
+				this.addConnectByName(g.nameStr,g,points[li]);
 				
 			}
 		}
@@ -253,8 +225,8 @@ var Paintings = function() {
 		return re;
 	}
 		
-	}
-	this.addConnect=function(name,a,b){
+	}*/
+	this.addConnectByName=function(name,a,b){
 		for(var l3=0;l3<this.connects.length;l3++){
 			if(this.connects[l3].name==name&&this.connects[l3].name==a.nameStr){
 				this.connects[l3].right=b.nameStr;
@@ -272,9 +244,35 @@ var Paintings = function() {
 			this.connects.push(temp);
 		
 	}
-	
-	this.delConnect=function(a,b){
-		this.connects.remove({left:a,right:b});
+	this.addConnect=function(a,b){
+		var name='';
+		if(a==b){
+			return ;
+		}
+		if(checkAllPipe(a)&&checkAllPipe(b)){
+			return ;
+		}
+		if (checkSpecial(a)||checkLinked(a)) {
+			name=b.nameStr;				
+		}else{
+			name=a.nameStr;				
+		}
+		var	rc=getRightPoint(a);
+		var	lc=getLeftPoint(b);
+		setConned(a,rc);
+		setConned(b,lc)
+
+		this.addConnectByName(name,a,b);
+		
+	}
+	this.delConnect=function(a){
+		for(var i=this.connects.length-1;i>=0;i--){
+			var temp=this.connects[i];
+			if(temp.left==a.nameStr||temp.right==a.nameStr||temp.name==a.nameStr){
+				this.connects.splice(i, 1);
+			}
+		}
+		
 	}
 /*	this.delConnectByOne=function(a){
 		for(var i=0;i<this.connects.length;i++){

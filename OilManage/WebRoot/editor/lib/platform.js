@@ -475,7 +475,7 @@ var Platform=function(){
 				document.body.style.cursor = 'default';
 			});
 		}
-		leftpoly.showALLConnedPoints();
+		
 		/*
 		 *加载模型后为每个元素添加 事件  结束
 		 */

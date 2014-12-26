@@ -186,9 +186,7 @@ public class AlgorithmExcelGraphiAction {
 	public List<Line> getConn() {
 		return conn;
 	}
-	public void setConn(List<Line> conn) {
-		this.conn = conn;
-	}
+
 	public String getNewValue() {
 		return newValue;
 	}
