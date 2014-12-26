@@ -680,11 +680,33 @@ public class FileExcel {
 		if (getTypeCodeByName(type) == 3) {
 			a = getSheetByName(this, type);
 			row = a.getExcelDataIndex(a, a.getTitleByName("名称"), name);
-			if (row == -1) {
+			
+			SheetContent b = getSheetByName(this, "管段连接");
+			int row2 = b.getExcelDataIndex(b, b.getTitleByName("设备名称"), name);
+			
+			
+			if (row == -1&& row2 == -1) {
 				Map<String, String> p = new HashMap<String, String>();
 				p.put("名称", name);
-				row = a.addRow(p);
-				return -1;
+				row = a.addRow(p);		
+
+					
+
+					Map<String, String> p1 = new HashMap<String, String>();
+					p1.put("设备名称", name);
+					p1.put("名称", name);
+
+					if (type.equals("阀数据")) {
+						p1.put("管段类型", "Valve");
+					}
+					if (type.equals("过滤器数据")) {
+						p1.put("管段类型", "Filter");
+					}
+					row2 = b.addRow(p1);
+					return -1;
+				
+				
+				
 			} else {
 				return row;
 			}
