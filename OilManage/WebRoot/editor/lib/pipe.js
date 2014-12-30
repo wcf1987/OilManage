@@ -176,7 +176,7 @@ function drawPipeLines(XData,YData,container,pipeName){
 	            subtitle: {
 	                text: pipeName+'管道沿线参数分布图',
 	                x: -20,
-	                stype:{ "color": "#000000", "fontSize": "26px"}
+	                style:{ "color": "#000000", "fontSize": "26px"}
 	            },
 	            xAxis: {
 	               categories: XData,
@@ -184,8 +184,13 @@ function drawPipeLines(XData,YData,container,pipeName){
 	               title: {
 		                text: '管道长度(m)',
 		                x: -20, // center
-		                stype:{ "color": "#000000", "fontSize": "18px"}
-		            }
+		                style:{ "color": "#000000", "fontSize": "18px"}
+		            },
+	            labels: {                    
+                    style: {
+                        color: '#000000'
+                    }
+                }
 	            },
 	            yAxis: [
 	            	{ //高程(m)
