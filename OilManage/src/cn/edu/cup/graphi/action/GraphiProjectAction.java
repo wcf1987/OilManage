@@ -13,4 +13,8 @@ public class GraphiProjectAction {
 	public String modifyGraphiProjects(){
 		return "SUCCESS";
 	}
+	int proID;
+	public String getGraphiByProID(){
+		return "SUCCESS";	
+	}
 }

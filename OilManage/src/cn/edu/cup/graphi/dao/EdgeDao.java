@@ -20,7 +20,7 @@ public class EdgeDao {
 			HibernateSessionManager.closeThreadLocalSession();
 		}
 
-	public GraphiProjectsDao()
+	public EdgeDao()
 	{	
 		session = HibernateSessionManager.getThreadLocalSession();
 	
