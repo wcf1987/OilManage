@@ -927,7 +927,7 @@ function drawPointsPath(data) {
 				secRingLabel2.setStyle({
 					"padding" : "2px"
 				});
-				mapGis.addOverlay(secRingLabel2);
+				//mapGis.addOverlay(secRingLabel2);
 			}
 		}
 		var polygon = new BMap.Polygon(pointsTemp,  {
