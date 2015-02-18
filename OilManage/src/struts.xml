@@ -6,6 +6,11 @@
 	<constant name="struts.multipart.saveDir" value="/upload"></constant>
 	
 	<package name="user" extends="struts-default">
+		<!-- UserManage Begin -->
+		<action name="login" method="login" class="cn.edu.cup.manage.action.LoginAction">
+			<result name="succ" type="redirect">/pages/home.jsp</result>
+			<result name="fail" type="redirect">/pages/login.jsp</result>
+		</action>
 		
 		
 	
@@ -14,11 +19,752 @@
 	
 	<!--指定action的扩展名 -->
 	<package name="default" extends="struts-default">
-	
+		<action name="ice" class="cn.edu.cup.test.iceTest">
+			<result name="SUCCESS">/test.jsp</result>
+		</action>
 	</package>
 	<package name="json" extends="json-default">
 
+	<!--user manage -->
+		<action name="logout" method="logout" class="cn.edu.cup.manage.action.LoginAction">
+			<result type="json">				
+			</result>
+		</action>
+		<action name="register" method="execute" class="cn.edu.cup.manage.action.RegisterAction">
+			<result type="json">				
+			</result>
+		</action>
+		
+		<action name="listUser" class="cn.edu.cup.manage.action.UserAction" method="list">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="delUser" class="cn.edu.cup.manage.action.UserAction" method="delUser">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="listUserNoRole" class="cn.edu.cup.manage.action.UserAction" method="listUserNoRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		
+		<action name="listRole" class="cn.edu.cup.manage.action.RoleAction" method="listRoles">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="listAlgByRole" class="cn.edu.cup.manage.action.RoleAction" method="listAlgByRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="listUserByRole" class="cn.edu.cup.manage.action.RoleAction" method="listUserByRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="addRole" class="cn.edu.cup.manage.action.RoleAction" method="addRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="delRole" class="cn.edu.cup.manage.action.RoleAction" method="delRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="addUserRole" class="cn.edu.cup.manage.action.RoleAction" method="addUserRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="delUserRole" class="cn.edu.cup.manage.action.RoleAction" method="delUserRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="addAlgRole" class="cn.edu.cup.manage.action.RoleAction" method="addAlgRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="delAlgRole" class="cn.edu.cup.manage.action.RoleAction" method="delAlgRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		
+		
+	<!--user manage -->
+			
+			
+		<action name="map" class="cn.edu.cup.map.action.MapAction">
+			<result name="SUCCESS" type="json">
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+		<action name="uploadMap" class="cn.edu.cup.map.action.UploadAction"
+			method="uploadFile">
+			<param name="savePath">/upload</param>
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+		<action name="listMap" class="cn.edu.cup.map.action.MapListAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+		<action name="viewMap" class="cn.edu.cup.map.action.MapListAction"
+			method="viewMap">
+
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+		<action name="delMap" class="cn.edu.cup.map.action.MapListAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addMap" class="cn.edu.cup.map.action.MapListAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+
+		<action name="listMeasure" class="cn.edu.cup.manage.action.MeasureAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="updateMeasure" class="cn.edu.cup.manage.action.MeasureAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">			</result>
+		</action>
+		<action name="delMeasure" class="cn.edu.cup.manage.action.MeasureAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addMeasure" class="cn.edu.cup.manage.action.MeasureAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+
+		<action name="listPhysical" class="cn.edu.cup.manage.action.PhysicalAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updatePhysical" class="cn.edu.cup.manage.action.PhysicalAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+		<action name="delPhysical" class="cn.edu.cup.manage.action.PhysicalAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addPhysical" class="cn.edu.cup.manage.action.PhysicalAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+<param name="excludeProperties">id</param>
+			
+			</result>
+		</action>
+		<action name="listPhysicalStyle" class="cn.edu.cup.manage.action.MeasureAction"
+			method="listPhysicalStyle">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+
+		<action name="listParameter" class="cn.edu.cup.manage.action.ParametersManageAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+				<action name="listParameterByCondition" class="cn.edu.cup.manage.action.ParametersManageAction"
+			method="listByCondition">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		
+		<action name="updateParameter" class="cn.edu.cup.manage.action.ParametersManageAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delParameter" class="cn.edu.cup.manage.action.ParametersManageAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addParameter" class="cn.edu.cup.manage.action.ParametersManageAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		<action name="uploadAlgorithm" class="cn.edu.cup.manage.action.UploadAction"
+			method="uploadFile">
+			<param name="savePath">/uploadAlgorithm</param>
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+		<action name="listAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
+			method="update">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		
+		<action name="viewAlgorithmDetail" class="cn.edu.cup.manage.action.AlgorithmsCycleAction" method="viewDetail">
+			<result name="SUCCESS" type="json"></result>
+		</action>
+		<action name="delAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addAlgorithmsCycle" class="cn.edu.cup.manage.action.AlgorithmsCycleAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		<action name="listAlgorithmInputs" class="cn.edu.cup.manage.action.AlgorithmInputAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateAlgorithmInput" class="cn.edu.cup.manage.action.AlgorithmInputAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delAlgorithmInput" class="cn.edu.cup.manage.action.AlgorithmInputAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addAlgorithmInput" class="cn.edu.cup.manage.action.AlgorithmInputAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		
+		<action name="listAlgorithmOutputs" class="cn.edu.cup.manage.action.AlgorithmOutputAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateAlgorithmOutput" class="cn.edu.cup.manage.action.AlgorithmOutputAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delAlgorithmOutput" class="cn.edu.cup.manage.action.AlgorithmOutputAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addAlgorithmOutput" class="cn.edu.cup.manage.action.AlgorithmOutputAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		<!-- excel配置-->
+				<action name="listSheetTitle" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="listSheetTitle">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+				<action name="listSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="listSheetContent">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+				<action name="delSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="delSheetContent">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+			<action name="editSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="editSheetContent">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+			<action name="addSheetContent" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="addSheetContent">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="saveExcel" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="saveExcel">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="exportFile" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="exportFile">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="uploadExcel" class="cn.edu.cup.manage.action.AlgorithmExcelAction"
+			method="uploadExcel">
+			<param name="savePath">/uploadTemp</param>
+			<result name="SUCCESS" type="json">
+
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+		<action name="viewExcelMap" class="cn.edu.cup.manage.action.AlgorithmExcelMapAction"
+			method="viewExcelMap">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="viewPath" class="cn.edu.cup.manage.action.AlgorithmExcelMapAction"
+			method="viewPath">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="viewObstacle" class="cn.edu.cup.manage.action.AlgorithmExcelMapAction"
+			method="viewObstacle">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addObstacle" class="cn.edu.cup.manage.action.AlgorithmExcelMapAction"
+			method="addObstacle">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		<action name="viewGUI" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
+			method="viewGUI">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addPoint" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
+			method="addPoint">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delPoint" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
+			method="delPoint">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="updateConn" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
+			method="updateConn">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="listDevice" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
+			method="listDevice">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+				<action name="editDevice" class="cn.edu.cup.manage.action.AlgorithmExcelGraphiAction"
+			method="editDevice">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+			
+		</action>
+				<action name="listPipe" class="cn.edu.cup.manage.action.AlgorithmPipeAction"
+			method="listPipe">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		<!-- 算法图形输出配置-->
+		
+		
+		<action name="listGraphiByAlgID" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="listGraphiByAlgID">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateGraphi" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="updateGraphi">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delGraphi" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="delGraphi">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addGraphi" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="addGraphi">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		
+				<action name="listGraphiDetailByGraphID" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="listGraphiDetailByGraphID">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+
+		<action name="delGraphiDetail" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="delGraphiDetail">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addGraphiDetail" class="cn.edu.cup.manage.action.AlgorithmGraphiAction"
+			method="addGraphiDetail">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		
+		
+		<action name="getProGraphi" class="cn.edu.cup.manage.action.ProjectOutputsAction"
+			method="ProGraphiByGraphID">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<!-- 算法图形输出配置 -->
+		
+		
+		<!-- 工程 -->
+		<action name="listAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="selectAlg" class="cn.edu.cup.manage.action.AlgorithmProjectsAction" method="selectAlg">
+			<result name="SUCCESS" type="json"></result>
+		</action>
+		<action name="searchProAlg" class="cn.edu.cup.manage.action.AlgorithmProjectsAction" method="searchProAlg">
+			<result name="SUCCESS" type="json"></result>
+		</action>
+		<action name="runAlgPro" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="runAlg">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="listLog" class="cn.edu.cup.manage.action.AlgorithmProjectsAction"
+			method="listLog">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		
+		<action name="listProOutputs" class="cn.edu.cup.manage.action.ProjectOutputsAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		
+		<action name="searchProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
+			method="search">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="listProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+				<action name="delProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addProInputs" class="cn.edu.cup.manage.action.ProjectInputsAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="Calclist" class="cn.edu.cup.manage.action.ProjectCalcHisAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+				<action name="Calcinputlist" class="cn.edu.cup.manage.action.ProjectCalcHisAction"
+			method="getInputslist">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+				<action name="Calcoutputlist" class="cn.edu.cup.manage.action.ProjectCalcHisAction"
+			method="getOutputslist">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<!-- 工程end -->
+		<!-- GUI start -->
 	
+		<action name="listGUIPro" class="cn.edu.cup.gui.action.GUIAction"
+			method="list">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="updateGUIPro" class="cn.edu.cup.gui.action.GUIAction"
+			method="update">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="delGUIPro" class="cn.edu.cup.gui.action.GUIAction"
+			method="delete">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addGUIPro" class="cn.edu.cup.gui.action.GUIAction"
+			method="add">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="viewGUIPro" class="cn.edu.cup.gui.action.GUIAction"
+			method="getView">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		<action name="listPointPra" class="cn.edu.cup.gui.action.GUIAction"
+			method="listPointPra">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="editPointPra" class="cn.edu.cup.gui.action.GUIAction"
+			method="updatePointPra">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<!-- GUI end -->
+		
+			<!-- GUI point type Config start  -->
+		<action name="uploadTypeIcon" class="cn.edu.cup.manage.action.UploadTypeIconAction"
+			method="uploadTypeIcon">
+			<param name="savePath">/editor/icons</param>
+			<result name="SUCCESS" type="json">
+				<param name="excludeProperties">id</param>
+			</result>
+		</action>
+		
+		<action name="listPointType" class="cn.edu.cup.manage.action.GUIPointTypeAction"
+			method="listPointType">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="addPointType" class="cn.edu.cup.manage.action.GUIPointTypeAction"
+			method="addPointType">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="delPointType" class="cn.edu.cup.manage.action.GUIPointTypeAction"
+			method="delPointType">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		
+		<!-- GUI point type Config end  -->
+		
+		
+		<!-- GUI point proper Config start  -->
+		<action name="listPointProper" class="cn.edu.cup.manage.action.GUIProperAction"
+			method="listPointProper">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		<action name="addPointProper" class="cn.edu.cup.manage.action.GUIProperAction"
+			method="addPointProper">
+
+			<result name="SUCCESS" type="json">
+
+			</result>
+		</action>
+		
+		<action name="delPointProper" class="cn.edu.cup.manage.action.GUIProperAction"
+			method="delPointProper">
+
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<!-- GUI point proper Config end  -->
+		
+		
+		<action name="testData" class="cn.edu.cup.map.action.TableAction">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="tableAdd" class="cn.edu.cup.map.action.TableAddAction">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="tableDelete" class="cn.edu.cup.map.action.TableDeleteAction">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		<action name="tableEdit" class="cn.edu.cup.map.action.TableEditAction">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
 
 	</package>
 </struts>
