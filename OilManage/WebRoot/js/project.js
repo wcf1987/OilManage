@@ -266,10 +266,10 @@ function deleteProject() {
           url: "delAlgPro.action", 
           data: selectedIDs, 
           beforeSend: function() { 
-               $().message("正在请求..."); 
+              // $("#ProjectList").message("正在请求..."); 
           }, 
           error:function(){ 
-               $().message("请求失败..."); 
+               $("#ProjectList").message("请求失败..."); 
           }, 
           
           success: function(msg){ 
