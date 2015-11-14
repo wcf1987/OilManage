@@ -26,7 +26,7 @@ import cn.edu.cup.tools.Tools;
 
 public class AlgorithmExcelAction {
 	
-	
+
 	int algID;
 	int sheetID;
 	int proID;
