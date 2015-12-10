@@ -1,17 +1,15 @@
 <%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
-
-<div style="background-color:#fff;padding:5px;height:40px;">						
-	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="showData('inputBase')">输入基础数据</button>
-	</div>	
-	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="showData('inputFunction')">选择问题描述</button>
-	</div>	
-	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="showData('inputCondition')">输入约束条件</button>
-	</div>	
-	<div style="float:left;height:30px;width:120px;margin-right:10px;"><input type="file" name="importExcel" id="importExcel"/></div> 
-	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="saveExcel()">保存数据</button></div>						
-	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="runAlg(0)">运行</button></div>						
-	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="exportInputExcel()">导出输入数据</button></div>
-	<div style="float:left"><button style="font-size:12px;height:22px;margin-right:10px;margin-top:5px;" onclick="showData('inputGisMap')">输入地图显示</button></div>
+<div class="pd10">
+	<div class="btn-group">
+		<div class="btn-group"><input type="file" name="importExcel" id="importExcel" /></div>
+		<button class="btn btn-sm btn-primary" type="button" onclick="showData('inputBase')">输入基础数据</button>
+		<button class="btn btn-sm btn-primary" type="button" onclick="showData('inputFunction')">选择问题描述</button>
+		<button class="btn btn-sm btn-primary" type="button" onclick="showData('inputCondition')">输入约束条件</button>
+		<button class="btn btn-sm btn-primary" type="button" onclick="saveExcel()">保存数据</button>
+		<button class="btn btn-sm btn-primary" type="button" onclick="exportInputExcel()">导出输入数据</button>
+		<button class="btn btn-sm btn-primary" type="button" onclick="showData('inputGisMap')">输入地图显示</button>
+		<button class="btn btn-sm btn-primary" type="button" onclick="runAlg(0)">运行</button>
+	</div>					
 </div>
 
 <div id="inputBase"  class="inputDataDiv">

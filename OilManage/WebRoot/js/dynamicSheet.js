@@ -158,7 +158,7 @@ function SheetGrid() {
 			multiselectWidth : 35, // 设置多选列宽度
 			rowNum : 10,// 每一页的行数
 			height : 'auto',
-			width : gridWidth,//1040
+			width : $(document).width()-64,//1040
 			rowList : [ 10, 20, 30 ],
 			pager : pageDiv,			
 			viewrecords : true,
@@ -169,6 +169,13 @@ function SheetGrid() {
 				records : "records",// 总共记录数
 				repeatitems : false
 			},
+			loadComplete : function() {
+				var table = this;
+				setTimeout(function(){
+					updatePagerIcons(table);
+					enableTooltips(table);
+				}, 0);
+			},
 			caption : temp.sheetName// 表格名称,
 			
 
@@ -177,7 +184,13 @@ function SheetGrid() {
 		this.sheetgridpro.jqGrid('navGrid', pageDiv, {
 			
 			add : true,
+			addtext:'添加',
+			addicon:'ace-icon fa fa-pencil-square blue',
 			edit : false,
+			refreshicon:'ace-icon fa fa-refresh green',
+			refreshtext:'刷新',
+			searchtext:'查找',
+			searchicon:'ace-icon fa fa-search blue',
 			del : false
 		},{},{
 			addCaption: "添加记录",
@@ -218,6 +231,7 @@ function SheetGrid() {
 			title : '删除',
 			caption : "删除",
 			id : delID,
+			buttonicon : 'ace-icon fa fa-times red',
 			position : "first"
 		});
 		/*

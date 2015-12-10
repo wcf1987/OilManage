@@ -103,7 +103,7 @@ function runAlg(way){
 		    	if(way==0){
 		    	showTab("run_tab");
 		    	}
-		    	$("#isRunning").css({display:"block",top:"15%",left:"55%",position:"absolute"});
+		    	$("#isRunning").css({display:"block",top:"20%",left:"50%",'margin-left':'-200px',position:"absolute"});
 		    
 			}else{
 				alert(data.msg);
@@ -262,11 +262,13 @@ function showTab(type){
 	});
 	$("#father_tab>ul>li").each(function(index,item){
 		
-		$(item).children("a").removeAttr("style");
+		//$(item).children("a").removeAttr("style");
+		$(item).removeClass('active');
 		
 	});
 	$("#"+type).show();
-	$("#"+type+"_button").css("background-color",'fff');
+	$("#"+type+"_button").parent().addClass('active');
+	//$("#"+type+"_button").css({"background-color":'#fff','color':'#4c718a !important'});
 	if(type=='run_tab'){
 		showLogInter();
 		

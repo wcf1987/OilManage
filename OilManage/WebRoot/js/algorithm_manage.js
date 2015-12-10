@@ -120,6 +120,13 @@ $(
 					records: "records",//总共记录数
 					repeatitems: false
 				},
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function(){
+						updatePagerIcons(table);
+						enableTooltips(table);
+					}, 0);
+				},
 				caption: "算法管理"//表格名称
 					
 //				gridComplete: function(){
@@ -139,9 +146,76 @@ $(
 		edit : false,
 		add : false,
 		search:false,
+		refreshicon:'ace-icon fa fa-refresh green',
+		refreshtext:'刷新',
 		del : false}).jqGrid('navButtonAdd',"#AlgorithmPager",{
-				title:'添加',
-				caption:"添加",
+			title:'删除',
+			caption:"删除",
+			buttonicon : 'ace-icon fa fa-times red',
+			id:"delete_AlgorithmList",
+			onClickButton:deleteAlgorithm,
+			position:"first"
+		}).jqGrid('navButtonAdd',"#AlgorithmPager",{
+			title:'编辑',
+			caption:"编辑",
+			buttonicon : 'ace-icon fa fa-pencil-square blue',
+			id:"edit_AlgorithmList",
+			onClickButton : function addModal(){
+//				alert(1);
+				 var sels = $("#AlgorithmList").jqGrid('getGridParam','selarrrow'); 				
+				    if(sels==""){ 
+				       //$().message("请选择要删除的项！"); 
+				       alert("请选择编辑的项!");
+				    }else if(sels.length>1){
+				    	alert("只能选择一项！");
+				    }else{ 
+				    	var selectedID=sels[0];
+				    	var rowData = $("#AlgorithmList").jqGrid("getRowData", selectedID);
+			        	var ID=rowData.ID;
+			        	
+						// 配置对话框
+						loadAuthorOptions();//加载作者选项
+						$('#uploadAlgorithmModal').modal();
+			        	$("#algname").text(rowData.name);
+			        	$("#Description").text(rowData.Description);
+			        	$("#authorIDSelect").text(rowData.authorName);
+//			        	$("#className").val(rowData);
+//			        	$("#algorithmfile").val(rowData);
+						$("#addAlgorithmForm").validate({
+							debug:true,
+							onsubmit:true,
+							onfocusout:false,
+							onkeyup:true,
+							rules:{
+								name:{
+									required:true
+								},
+								authorID:{
+									required:true
+								}
+							},
+							messages:{
+								name:{
+									required:"名称不能为空！",
+								},							
+								authorID:{
+									required:"请选择作者！"
+								}
+							},
+							submitHandler:function(){		
+								    	edit_algorithm(ID);								
+							}
+						});
+				    }
+
+			},
+			
+			position:"first"
+	
+		}).jqGrid('navButtonAdd',"#AlgorithmPager",{
+				title:'新建',
+				caption:"新建",
+				buttonicon : 'ace-icon fa fa-pencil-square blue',
 				id:"add_AlgorithmList",
 				onClickButton : function addModal(){
 					// 配置对话框
@@ -175,71 +249,9 @@ $(
 						
 				
 				},
-				position:"last"
+				position:"first"
 			
 		
-			}).jqGrid('navButtonAdd',"#AlgorithmPager",{
-				title:'编辑',
-				caption:"编辑",
-				id:"edit_AlgorithmList",
-				onClickButton : function addModal(){
-//					alert(1);
-					 var sels = $("#AlgorithmList").jqGrid('getGridParam','selarrrow'); 				
-					    if(sels==""){ 
-					       //$().message("请选择要删除的项！"); 
-					       alert("请选择编辑的项!");
-					    }else if(sels.length>1){
-					    	alert("只能选择一项！");
-					    }else{ 
-					    	var selectedID=sels[0];
-					    	var rowData = $("#AlgorithmList").jqGrid("getRowData", selectedID);
-				        	var ID=rowData.ID;
-				        	
-							// 配置对话框
-							loadAuthorOptions();//加载作者选项
-							$('#uploadAlgorithmModal').modal();
-				        	$("#algname").text(rowData.name);
-				        	$("#Description").text(rowData.Description);
-				        	$("#authorID").text(rowData.authorName);
-//				        	$("#className").val(rowData);
-//				        	$("#algorithmfile").val(rowData);
-							$("#addAlgorithmForm").validate({
-								debug:true,
-								onsubmit:true,
-								onfocusout:false,
-								onkeyup:true,
-								rules:{
-									name:{
-										required:true
-									},
-									authorID:{
-										required:true
-									}
-								},
-								messages:{
-									name:{
-										required:"名称不能为空！",
-									},							
-									authorID:{
-										required:"请选择作者！"
-									}
-								},
-								submitHandler:function(){		
-									    	edit_algorithm(ID);								
-								}
-							});
-					    }
-
-				},
-				
-				position:"last"
-		
-			}).jqGrid('navButtonAdd',"#AlgorithmPager",{
-				title:'删除',
-				caption:"删除",	
-				id:"delete_AlgorithmList",
-				onClickButton:deleteAlgorithm,
-				position:"last"
 			});
 	
 	
@@ -319,7 +331,7 @@ function add_algorithm() {
 		data : {
 			name:$("#algname").val(),
 			Description : $("#Description").val(),
-			authorID:$("#authorID").val(),
+			authorID:$("#authorIDSelect").val(),
 			filePath : hideFilePath,
 			className:$("#className").val()
 		},
@@ -348,7 +360,7 @@ function edit_algorithm(selectedID) {
 			ID:selectedID,
 			name:$("#algname").val(),
 			Description : $("#Description").val(),
-			authorID:$("#authorID").val(),
+			authorID:$("#authorIDSelect").val(),
 			filePath : hideFilePath,
 			className:$("#className").val()
 		},
@@ -868,8 +880,10 @@ function loadAuthorOptions(){
 			var items="";
 			$.each(data.dataList,function(i,user){
 				items+= "<option value=\"" + user.userid + "\">" + user.username + "</option>"; 
+//				$("select[name='authorID']").append("<option value=\"" + user.userid + "\">" + user.username + "</option>");
 			});
-			$("#authorID").html(items);
+			$("#authorIDSelect").html(items);
+//			$("select[name='authorID']").html(items);
 		}
 	});
 	}

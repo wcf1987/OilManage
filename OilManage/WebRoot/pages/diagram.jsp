@@ -110,19 +110,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</a> 
 							<img class="separator" src="editor/assets/images/toolbar_separator.gif"
 								border="0" width="1" height="16" /> <input type="checkbox" checked=true
-								onclick="showGrid();" id="gridCheckbox" title="Show grid" /> <span
-								class="toolbarText">Show grid</span> <img class="separator"
+								onclick="showGrid();" id="gridCheckbox" title="显示网格" /> <span
+								class="toolbarText">显示网格</span> <img class="separator"
 								src="editor/assets/images/toolbar_separator.gif" border="0" width="1"
 								height="16" /> <input type="checkbox" onclick="snapToGrid();"
-								id="snapCheckbox" title="Snap elements to grid" /> <span
-								class="toolbarText">Snap to grid</span> <img class="separator"
+								id="snapCheckbox" title="对齐网格" /> <span
+								class="toolbarText">对齐网格</span> <img class="separator"
 								src="editor/assets/images/toolbar_separator.gif" border="0" width="1"
 								height="16" /> <a href="javascript:action('front');"
 								title="Move to front"><img src="editor/assets/images/icon_front.gif"
 								border="0" />
 							</a> <img class="separator" src="editor/assets/images/toolbar_separator.gif"
 								border="0" width="1" height="16" /> <a
-								href="javascript:action('back');" title="Move to back"><img
+								href="javascript:action('back');" title="返回"><img
 								src="editor/assets/images/icon_back.gif" border="0" />
 							</a> <img class="separator" src="editor/assets/images/toolbar_separator.gif"
 								border="0" width="1" height="16" /> <a

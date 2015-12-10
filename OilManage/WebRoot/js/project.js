@@ -165,7 +165,7 @@ function list_project(){
 //				autowidth:true,
 				rowNum:10,//每一页的行数
 				height: 'auto',
-				width:1070,
+				width:$(document).width()-64,//1070
 				rowList:[10,20,30],
 				pager: '#ProjectPager',
 				sortname: 'ID',
@@ -180,6 +180,13 @@ function list_project(){
 					records: "records",//总共记录数
 					repeatitems: false
 				},
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function(){
+						updatePagerIcons(table);
+						enableTooltips(table);
+					}, 0);
+				},
 				caption: "工程管理"//表格名称
 				
 			});
@@ -191,16 +198,20 @@ function list_project(){
 		edit : false,
 		add : false,
 		search:false,
+		refreshicon:'ace-icon fa fa-refresh green',
+		refreshtext:'刷新',
 		del : false}).jqGrid('navButtonAdd',"#ProjectPager",{
 				title:'删除',
 				caption:"删除",	
 				id:"delete_ProjectList",
+				buttonicon : 'ace-icon fa fa-times red',
 				onClickButton:deleteProject,
 				position:"first"
 			}).jqGrid('navButtonAdd',"#ProjectPager",{
 				title:'新建',
 				caption:"新建",
 				id:"add_ProjectList",
+				buttonicon : 'ace-icon fa fa-pencil-square blue',
 				onClickButton : function addModal(){
 						//createNewProject();	
 						openProjectModal();
@@ -825,8 +836,10 @@ function createNewProject(){
 	$("#addProjectForm").validate({
 		debug:true,
 		onsubmit:true,
-		onfocusout:false,
-		onkeyup:true,
+		//onfocusout:false,
+		//onfocusin:function(element){$(element).valid();},
+		onfocusout:function(element){$(element).valid();},
+		onkeyup:function(element){$(element).valid();},
 		rules:{
 			name:{
 				required:true

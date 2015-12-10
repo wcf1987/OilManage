@@ -21,11 +21,11 @@ public class RoleAction {
 	int userRoleID;
 	int algRoleID;
 
-	private int page;
-	private int records;
-	private int rows;
-	private int rowNum;
-	private int total;
+	private int page;//第几页
+	private int records;//总记录数
+	private int rows;//每行多少个
+	private int rowNum;//
+	private int total;//多少页
 	private String sidx;
 	private String sord;
 	private int id;
@@ -49,6 +49,21 @@ public class RoleAction {
 	}
 	public void setRecords(int records) {
 		this.records = records;
+	}
+	public void setRows(int rows) {
+		this.rows = rows;
+	}
+
+	public int getRows() {
+		return rows;
+	}
+
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
+	}
+
+	public int getRowNum() {
+		return rowNum;
 	}
 	public int getTotal() {
 		return total;
@@ -111,10 +126,10 @@ public class RoleAction {
 	}
 	public String listRoles(){		
 		RoleDao dao=new RoleDao();
-		roleList=dao.getRolesList();
+		roleList=dao.getRolesList(page, rows, sidx, sord);
 		records=dao.getCountRole();
 
-		if(records!=0&&rows!=0){
+		if(records!=0&& rows!=0){
 		total=records/rows;
 			if(records%rows!=0){
 				total++;

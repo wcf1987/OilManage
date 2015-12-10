@@ -178,9 +178,12 @@ public class RoleDao {
 	}
 
 
-	public List<RoleBase> getRolesList() {
+	public List<RoleBase> getRolesList(int page,
+			int rows, String sidx, String sord) {
 		// TODO Auto-generated method stub
 		SQLQuery q = session.createSQLQuery("select t.id,t.RoleName,t.RoleDescription from t_roles t");
+		q.setFirstResult((page - 1) * rows);
+		q.setMaxResults(rows);
 		List l = q.list();
 //		this.close();
 		List<RoleBase> re=new ArrayList<RoleBase>();

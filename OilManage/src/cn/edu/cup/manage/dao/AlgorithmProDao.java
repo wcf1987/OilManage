@@ -93,9 +93,17 @@ public class AlgorithmProDao {
 
 	public int getCountAlgorithms(int algid) {
 		// TODO Auto-generated method stub
-		String sql = "select count(*) from t_projects t2 where t2.Algorithm_ID=?";
-		SQLQuery q = session.createSQLQuery(sql);
-		q.setParameter(0, algid);
+		String sql = "";
+		SQLQuery q;
+		if(algid == -1){
+			sql = "select count(*) from t_projects t2";
+			q = session.createSQLQuery(sql);
+		}else{
+			sql = "select count(*) from t_projects t2 where t2.Algorithm_ID=?";
+			q = session.createSQLQuery(sql);
+			q.setParameter(0, algid);
+		}
+		
 		Integer count = ((BigInteger) q.uniqueResult()).intValue();
 		return count;
 

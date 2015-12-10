@@ -29,7 +29,7 @@ $(
 //						editurl:"editData.action",
 						rowNum:10,//每一页的行数
 						height: 'auto',
-						width:800,
+						width:$(document).width()-80,
 						rowList:[10,20,30],
 						pager: '#RolePager',
 						sortname: 'roleID',
@@ -43,6 +43,13 @@ $(
 						page: "page",//当前是哪一页
 						records: "records",//总共记录数
 						repeatitems: false
+						},
+						loadComplete : function() {
+							var table = this;
+							setTimeout(function(){
+								updatePagerIcons(table);
+								enableTooltips(table);
+							}, 0);
 						},
 						caption: "角色列表",//表格名称,
 //						gridComplete: function(){
@@ -67,9 +74,19 @@ $(
 				edit : false,
 				add : false,
 				search:false,
+				refreshicon:'ace-icon fa fa-refresh green',
+				refreshtext:'刷新',
 				del : false}).jqGrid('navButtonAdd',"#RolePager",{
-						title:'添加',
-						caption:"添加",
+					title:'删除',
+					caption:"删除",	
+					id:"delete_role",
+					buttonicon : 'ace-icon fa fa-times red',
+					onClickButton:deleteRole,
+					position:"first"
+				}).jqGrid('navButtonAdd',"#RolePager",{
+						title:'新建',
+						caption:"新建",
+						buttonicon : 'ace-icon fa fa-pencil-square blue',
 						id:"add_RoleList",
 						onClickButton : function addModal(){
 							// 配置对话框
@@ -94,12 +111,6 @@ $(
 									}
 								});
 						},
-						position:"first"
-					}).jqGrid('navButtonAdd',"#RolePager",{
-						title:'删除',
-						caption:"删除",	
-						id:"delete_role",
-						onClickButton:deleteRole,
 						position:"first"
 					});
 		/**
@@ -150,7 +161,7 @@ $(
 							hidden:true
 						}
 						],
-				width:800,
+				width:520,
 			   	rowNum:10,
 			   	rowList:[10,20,30],
 			   	pager: '#UserByRolePager',
@@ -159,6 +170,13 @@ $(
 			    sortorder: "desc",
 			    multiselect: true,  //可多选，出现多选框 
 			    multiselectWidth: 35, //设置多选列宽度 
+			    loadComplete : function() {
+					var table = this;
+					setTimeout(function(){
+						updatePagerIcons(table);
+						enableTooltips(table);
+					}, 0);
+				},
 				caption: "用户列表",
 				jsonReader: {//读取后端json数据的格式
 					root: "userList",//保存详细记录的名称
@@ -173,9 +191,12 @@ $(
 					edit : false,
 					add : false,
 					search:false,
+					refreshicon:'ace-icon fa fa-refresh green',
+					refreshtext:'刷新',
 					del : false}).jqGrid('navButtonAdd',"#UserByRolePager",{
 							title:'添加',
 							caption:"添加",
+							buttonicon : 'ace-icon fa fa-pencil-square blue',
 							id:"add_UserRole",
 							onClickButton : function addModal(){
 									loadUserOptions();
@@ -206,6 +227,7 @@ $(
 							title:'删除',
 							caption:"删除",	
 							id:"del_UserRole",
+							buttonicon : 'ace-icon fa fa-times red',
 							onClickButton:delUserRole,
 							position:"first"
 						});
@@ -258,7 +280,7 @@ $(
 								hidden:true
 							}
 							],
-					width:800,
+					width:520,
 				   	rowNum:10,
 				   	rowList:[10,20,30],
 				   	pager: '#AlgByRolePager',
@@ -267,6 +289,13 @@ $(
 				    sortorder: "desc",
 				    multiselect: true,  //可多选，出现多选框 
 				    multiselectWidth: 35, //设置多选列宽度 
+				    loadComplete : function() {
+						var table = this;
+						setTimeout(function(){
+							updatePagerIcons(table);
+							enableTooltips(table);
+						}, 0);
+					},
 					caption: "算法列表",
 					jsonReader: {//读取后端json数据的格式
 						root: "algList",//保存详细记录的名称
@@ -281,6 +310,8 @@ $(
 				edit : false,
 				add : false,
 				search:false,
+				refreshicon:'ace-icon fa fa-refresh green',
+				refreshtext:'刷新',
 				del : false}).jqGrid('navButtonAdd',"#AlgByRolePager",{
 						title:'添加',
 						caption:"添加",
@@ -312,7 +343,8 @@ $(
 						position:"first"
 					}).jqGrid('navButtonAdd',"#AlgByRolePager",{
 						title:'删除',
-						caption:"删除",	
+						caption:"删除",
+						buttonicon : 'ace-icon fa fa-times red',
 						id:"del_AlgRole",
 						onClickButton:delAlgRole,
 						position:"first"
@@ -379,7 +411,7 @@ $(
 //					editurl:"editData.action",
 					rowNum:10,//每一页的行数
 					height: 'auto',
-					width:800,
+					width:$(document).width()-80,
 					rowList:[10,20,30],
 					pager: '#UserPager',
 					sortname: 'userid',
@@ -393,6 +425,13 @@ $(
 					page: "page",//当前是哪一页
 					records: "records",//总共记录数
 					repeatitems: false
+					},
+					loadComplete : function() {
+						var table = this;
+						setTimeout(function(){
+							updatePagerIcons(table);
+							enableTooltips(table);
+						}, 0);
 					},
 					caption: "用户列表",//表格名称,
 					jsonReader : {// 读取后端json数据的格式
@@ -408,9 +447,12 @@ $(
 				edit : false,
 				add : false,
 				search:false,
+				refreshicon:'ace-icon fa fa-refresh green',
+				refreshtext:'刷新',
 				del : false}).jqGrid('navButtonAdd',"#UserPager",{
 						title:'删除',
 						caption:"删除",	
+						buttonicon : 'ace-icon fa fa-times red',
 						id:"delete_user",
 						onClickButton:deleteUser,
 						position:"first"

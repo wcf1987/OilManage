@@ -102,6 +102,13 @@
 					CycleID:CycleID,
 					repeatitems: false
 				},
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function(){
+						updatePagerIcons(table);
+						enableTooltips(table);
+					}, 0);
+				},
 				caption: "输出图管理"//表格名称	            
 				
 			});
@@ -110,11 +117,21 @@
 		edit : false,
 		add : false,
 		search:false,
+		refreshicon:'ace-icon fa fa-refresh green',
+		refreshtext:'刷新',
 		del : false});
 		 this.datagridGraph.jqGrid('navButtonAdd',"#GraphiPager",{
-				title:'添加',
-				caption:"添加",
+				title:'删除',
+				caption:"删除",	
+				buttonicon : 'ace-icon fa fa-times red',
+				id:"delete_GraphiList",
+				onClickButton:deleteGraphi,
+				position:"first"
+			}).jqGrid('navButtonAdd',"#GraphiPager",{
+				title:'新建',
+				caption:"新建",
 				id:"add_Graphi",
+				buttonicon : 'ace-icon fa fa-pencil-square blue',
 				onClickButton : function addModal(){
 					// 配置对话框
 					//loadAuthorOptions();//加载作者选项
@@ -141,7 +158,7 @@
 						
 				
 				},
-				position:"last"
+				position:"first"
 			
 		
 			});
@@ -202,13 +219,14 @@
 				position:"last"
 		
 			});*/
-		 this.datagridGraph.jqGrid('navButtonAdd',"#GraphiPager",{
+/*		 this.datagridGraph.jqGrid('navButtonAdd',"#GraphiPager",{
 				title:'删除',
 				caption:"删除",	
+				buttonicon : 'ace-icon fa fa-times red',
 				id:"delete_GraphiList",
 				onClickButton:deleteGraphi,
-				position:"last"
-			});
+				position:"second"
+			});*/
 	}//function end;
 	
 //添加新输出图
