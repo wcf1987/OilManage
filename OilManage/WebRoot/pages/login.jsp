@@ -190,7 +190,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="password" name="reg_password" class="form-control" placeholder="密码" />
+														<input type="password" name="regpassword" class="form-control" placeholder="密码" />
 														<i class="ace-icon fa fa-lock"></i>
 													</span>
 												</label>
@@ -284,17 +284,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			else{
 				$form.find("input[name='username']").parent().next().remove();
-				verify--;
+				//verify--;
 			}
-			if($form.find("input[name='reg_password']").val()==''){
-				$row = $form.find("input[name='reg_password']").parent();
+			if($form.find("input[name='regpassword']").val()==''){
+				$row = $form.find("input[name='regpassword']").parent();
 				$row.next().remove();
 				$row.after("<span class='smaller-80 red'>密码不能为空！</span>");
 				verify++;
 			}
 			else{
-				$form.find("input[name='reg_password']").parent().next().remove();
-				verify--;
+				$form.find("input[name='regpassword']").parent().next().remove();
+				//verify--;
 			}
 			if($form.find("input[name='conpassword']").val()==''){
 				$row = $form.find("input[name='conpassword']").parent();
@@ -304,17 +304,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			else{
 				$form.find("input[name='conpassword']").parent().next().remove();
-				verify--;
+				//verify--;
 			}
 			
-			if(verify){//验证失败
+			if(verify!=0){//验证失败
+				alert(verify);
 				return false;
 			}
 			else{//验证ok
 				$form.find("span.smaller-80").remove();
 				$.post("register.action",$form.serialize(),function(data){
 					if(data.success==true){
-						$.dialog.alert('注册成功！');
+						alert('注册成功！');
 						window.location.reload();
 					}else{
 						$.dialog.alert('注册失败！'+data.errorMessage);

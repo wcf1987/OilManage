@@ -356,7 +356,7 @@ $(
 					url : "listUser.action",// 后端的数据交互程序，改为你的
 					datatype : "json",// 前后交互的格式是json数据
 					mtype : 'POST',// 交互的方式是发送httpget请求						
-					colNames : [ '用户名','添加时间','上次登录时间','登录次数','角色ID'],// 表格的列名
+					colNames : [ '用户名','添加时间','登录次数','角色ID'],// 表格的列名
 					colModel : [
 							{
 								name : 'username',
@@ -380,20 +380,20 @@ $(
 									}
 								}
 							},
-							{
-								name:'lastLoginTime',
-								index:'lastLoginTime',
-								width:200,
-								sortable:true,
-								formatter : function(value, grid, rows,
-										state) {
-									if(rows.lastLoginTime!=null){
-										return rows.lastLoginTime.replace("T"," ");
-									}else{
-										return "";
-									}
-								}
-							},
+//							{
+//								name:'lastLoginTime',
+//								index:'lastLoginTime',
+//								width:200,
+//								sortable:true,
+//								formatter : function(value, grid, rows,
+//										state) {
+//									if(rows.lastLoginTime!=null){
+//										return rows.lastLoginTime.replace("T"," ");
+//									}else{
+//										return "";
+//									}
+//								}
+//							},
 							{
 								name:'loginTimes',
 								index:'loginTimes',
