@@ -868,8 +868,8 @@ function() {
 				 }
 				});//找出元件group中除了连接点外的真正的图形
 			$("#contextmenu").css({
-				top : clickshape.getAbsolutePosition().y+250,//300
-				left : clickshape.getAbsolutePosition().x + ($(window).width()-1200)/2+1*shapes[0].width(),//450
+				top : clickshape.getAbsolutePosition().y+180,//250,//300
+				left : clickshape.getAbsolutePosition().x+15,// + ($(window).width()-1200)/2+1*shapes[0].width(),//-1200 //450
 			});
 		    //执行延时
 		    TimeFn = setTimeout(function(clickshape){
