@@ -161,7 +161,7 @@ $(
 							hidden:true
 						}
 						],
-				width:520,
+				width:820,
 			   	rowNum:10,
 			   	rowList:[10,20,30],
 			   	pager: '#UserByRolePager',
@@ -280,7 +280,7 @@ $(
 								hidden:true
 							}
 							],
-					width:520,
+					width:820,
 				   	rowNum:10,
 				   	rowList:[10,20,30],
 				   	pager: '#AlgByRolePager',
@@ -315,6 +315,7 @@ $(
 				del : false}).jqGrid('navButtonAdd',"#AlgByRolePager",{
 						title:'添加',
 						caption:"添加",
+						buttonicon : 'ace-icon fa fa-pencil-square blue',
 						id:"add_AlgRole",
 						onClickButton : function addModal(){
 								loadAlgOptions();

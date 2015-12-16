@@ -91,7 +91,7 @@ public class UserDao  {
 	public int addUser(String username,String password){
 		Date time = new Date();
 		HibernateSessionManager.getThreadLocalTransaction();
-		Query q = session.createSQLQuery("insert into T_User (username,password, addTime) values (?,?,?)");
+		Query q = session.createSQLQuery("insert into T_User (username,password, addTime, LoginTimes) values (?,?,?,0)");
 		q.setParameter(0, username);
 		q.setParameter(1, password);
 		q.setParameter(2,time);
@@ -155,7 +155,7 @@ public class UserDao  {
 					  int id = (Integer) row[0];
 					  String username = (String)row[1];  
 					  String password = (String)row[2];
-					  int loginTimes = (Integer)row[5];
+					  int loginTimes = (Integer)(row[5]==null?0:row[5]);
 					  User user=new User();
 					  user.setUserid(id);
 					  user.setUsername(username);

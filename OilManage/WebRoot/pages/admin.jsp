@@ -112,14 +112,14 @@
 	<!-- 根据角色查看用户列表的模态框 -->   	
 	<div class="modal fade" id="listUserByRole_modal">
 	  <div class="modal-dialog">
-	    <div class="modal-content" style="width:870">
+	    <div class="modal-content" style="width:870px;">
 	      <div class="modal-header">
 	        <button type="button" id="listUserByRole_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">用户管理</h4> 
 	      </div>
 	      <div class="modal-body">  
-	      	<div class="container-fluid">
-				<div class="row-fluid">
+	      	<div class="container_row">
+				<div class="row">
 					<div class="span12">
 						<input name="selRoleID" id="selRoleID" type="text" style="display:none"/>
 						<table id="UserByRoleList" class="table table-striped table-bordered table-hover datatable " ></table>
@@ -163,14 +163,14 @@
 	<!-- 根据角色查看算法列表的模态框 -->   	
 	<div class="modal fade" id="listAlgByRole_modal">
 	  <div class="modal-dialog">
-	    <div class="modal-content" style="width:870">
+	    <div class="modal-content" style="width:870px">
 	      <div class="modal-header">
 	        <button type="button" id="listAlgByRole_modal_close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">算法管理</h4> 
 	      </div>
 	      <div class="modal-body">  
-	      	<div class="container-fluid">
-				<div class="row-fluid">
+	      	<div class="container-row">
+				<div class="row">
 					<div class="span12">
 						<input name="selRoleID" id="selRoleID" type="text" style="display:none"/>
 						<table id="AlgByRoleList" class="table table-striped table-bordered table-hover datatable " ></table>
