@@ -49,7 +49,7 @@ public class AlgorithmGraphiDao {
 			  Object[] row = (Object[])l.get(i);;
 			  int id = ((Integer)row[0]);
 			  int graphiType = ((Integer)row[1]);
-			  String graphiName = ((String)row[2]).toString();
+			  String graphiName = ((String)(row[2]==null?"":row[2])).toString();
 			  AlgorithmGraphi p=new AlgorithmGraphi(id,CycleID,graphiType,graphiName);
 			  re.add(p);
 		}
