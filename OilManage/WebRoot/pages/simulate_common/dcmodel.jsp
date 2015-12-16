@@ -28,25 +28,7 @@
 	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
 		<input type="checkbox" checked=true onclick="showGrid();" id="gridCheckbox" title="显示网格" />
 		<span class="toolbarText">显示网格</span> 
-	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
-		<input type="checkbox" onclick="snapToGrid();" id="snapCheckbox" title="对齐网格" /> 
-		<span class="toolbarText">对齐网格</span> 
-	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
-	<a href="javascript:action('front');" title="Move to front">
-		<img src="editor/assets/images/icon_front.gif" border="0" />
-	</a> 
-	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
-	<a href="javascript:action('back');" title="返回">
-		<img src="editor/assets/images/icon_back.gif" border="0" />
-	</a>
-	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
-	<a href="javascript:action('moveforward');" title="Move (one level) to front">
-		<img src="editor/assets/images/icon_forward.gif" border="0" />
-	</a>
-	<img class="separator" src="editor/assets/images/toolbar_separator.gif" border="0" width="1" height="16" /> 
-	<a href="javascript:changeGIS();" title="切换画布">
-		<img src="editor/icons/changeGIS.jpg" border="0" alt="Container" />
-	</a> 
+	
 </div>
 <div id="editor" style="background-color:#F6F6F6">
 	<input id="selectedID" style="display: none;"/> 
