@@ -29,7 +29,15 @@ public class AlgorithmGraphiAction {
 		AlgorithmGraphiDao dao=new AlgorithmGraphiDao();
 		
 		listGraphi=dao.getAlgGraphiList(this.CycleID);
+		
+		records=dao.getCountAlgGraphi(this.CycleID);
 
+		if(records!=0&&rows!=0){
+			total=records/rows;
+			if(records%rows!=0){
+				total++;
+			}
+		}
 
 		dao.close();
 		return "SUCCESS";
@@ -40,6 +48,15 @@ public class AlgorithmGraphiAction {
 		AlgorithmGraphiDao dao=new AlgorithmGraphiDao();
 		
 		listGraphiDetail=dao.getAlgGraphiDetailList(this.GraphiID);
+		
+		records=dao.getCountAlgGraphiDetail(this.GraphiID);
+
+		if(records!=0&&rows!=0){
+			total=records/rows;
+			if(records%rows!=0){
+				total++;
+			}
+		}
 
 
 		dao.close();

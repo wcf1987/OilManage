@@ -34,7 +34,15 @@ public class AlgorithmGraphiDao {
 		session = HibernateSessionManager.getThreadLocalSession();
 	
 	}
-
+	
+	public int getCountAlgGraphi(int CycleID){
+		String sql="select count(*) from t_algorithmgraph t where t.CycleID=? ";
+		
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, CycleID);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
+	}
 	public List<AlgorithmGraphi> getAlgGraphiList(int CycleID) {
 		SQLQuery q = session.createSQLQuery("select t.id,t.graphType,t.graphname from t_algorithmgraph t where t.CycleID=? order by t.graphType asc");
 		q.setParameter(0, CycleID);
@@ -55,6 +63,15 @@ public class AlgorithmGraphiDao {
 		}
 		
 		return re;
+	}
+	
+	public int getCountAlgGraphiDetail(int GraphiID){
+		String sql="select count(*) from t_graphdetail t,t_parameters t1,t_measure t2  where t.ParamID=t1.ID and t1.measureID=t2.ID and t.graphid=? ";
+		
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, GraphiID);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
 	}
 	
 	public List<AlgorithmGraphiDetail> getAlgGraphiDetailList(int GraphiID) {
