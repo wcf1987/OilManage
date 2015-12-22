@@ -1,10 +1,11 @@
 
 $(
 	
-
-	
 	function() {
 		
+		$("#input_tab_button").parent().css("display","none");	
+		$("#run_tab_button").parent().css("display","none");	
+		$("#output_tab_button").parent().css("display","none");	
 		
 		$("li>input").blur(function() {
 			alert("test");
@@ -861,34 +862,29 @@ function createNewProject(){
 }*/
 
 function openProject(proid,algID){
-	/*
-	 * sid第几个sheet
-	 * proid项目ID
-	 * algid功能ID
-	 */
-	/*var curl=window.location.pathname;
-	if(curl=="/OilManage/pages/project.jsp"){		
-		if(algID==0){
-			window.location.href='pages/simulate_wellbore.jsp';
-		}else if(algID==1){
-			window.location.href='pages/simulate_hydraulic.jsp';
-		}else if(algID==2){
-			window.location.href='pages/simulate_thermal.jsp';
-		}else if(algID==3){
-			window.location.href='pages/simulate_gas_solid.jsp';
-		}else if(algID==4){
-			window.location.href='pages/simulate_gas_liquid.jsp';
-		}else if(algID==6){
-			window.location.href='pages/optimize_sysexpand.jsp';
-		}else if(algID==7){
-			window.location.href='pages/optimize_global.jsp';
-		}else if(algID==8){
-			window.location.href='pages/optimize_layout.jsp';
-		}else if(algID==9){
-			window.location.href='pages/optimize_global.jsp';
+	var valide = 1;
+	$.ajax({//测试项目是否是部署前的项目，若是，则项目失效，输入输出文件已经不存在，将禁止用户打开。
+		url:'listSheetContent.action',
+		type:'post',
+		dataType:'json',
+		async:'false',
+		data:{
+			sheetID:0,
+			algID:algID,
+			InOrOut:"In",
+			proID : proid
+		},
+		async:false,
+		success:function(data){
+			if(data.msg!=null && data.msg!=""){//如果读取excel失败
+				valide = 0;
+				alert("由于服务器重新部署，该工程已经失效，禁止打开，请新建工程！");
+			}
 		}
-	}*/
-	
+	});
+	if(valide == 0){
+		return;
+	}
 	$("#proID").val(proid);
 	var sid = 1;
 	//var proid = 11;

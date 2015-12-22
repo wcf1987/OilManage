@@ -72,9 +72,13 @@ function saveExcel(){
 		},
 		dataType:'json',
 		success:function(data){
-			alert("保存成功！");
-			var sheetGrid=new SheetGrid();
-			sheetGrid.reloadGrid();
+			if(data.msg!=null && data.msg !=""){
+				alert(data.msg);
+			}else{
+				alert("保存成功！");
+				var sheetGrid=new SheetGrid();
+				sheetGrid.reloadGrid();
+			}
 		},
 		error:function(msg){
 			alert(msg);
@@ -257,17 +261,30 @@ function showData(type){
 }
 
 function showTab(type){
+	
 	$(".father_tab").each(function(index,item){
 		$(item).hide();
 	});
 	$("#father_tab>ul>li").each(function(index,item){
-		
 		//$(item).children("a").removeAttr("style");
 		$(item).removeClass('active');
-		
+		if(type == "project_tab"){
+			$(item).css("display","none");
+		}else{
+			$(item).css("display","true");
+			$("#project_tab_button").css({"background-color":"#7A8389","border-width":"5px"});
+		}
 	});
+//	if(type == "project_tab"){
+//		$("#father_tab>ul>li").each(function(index,item){
+//			//$(item).children("a").removeAttr("style");
+//			$(item).css("display","none");
+//		});
+//	}
 	$("#"+type).show();
-	$("#"+type+"_button").parent().addClass('active');
+	$("#"+type+"_button").parent().addClass('active').css({
+		"display":"true",
+		});
 	//$("#"+type+"_button").css({"background-color":'#fff','color':'#4c718a !important'});
 	if(type=='run_tab'){
 		showLogInter();

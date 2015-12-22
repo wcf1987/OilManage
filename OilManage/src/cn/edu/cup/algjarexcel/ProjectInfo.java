@@ -106,7 +106,9 @@ public class ProjectInfo{
    public int hisID;
 public String checkInputStatus() {
 	FileExcel excel = FileExcelManager.getFileExcel(this.proid, this.alg_ID, "In");
-	
+	if(excel == null){
+		return "输入不正确，无法运行！";
+	}
 	return excel.checkStatus();
 	
 
