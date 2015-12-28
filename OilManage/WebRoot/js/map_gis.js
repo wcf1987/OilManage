@@ -448,10 +448,17 @@ function showWhiteLayer() {
 	}
 
 	if (mapGis.tileLayer.whiteShow) {
+<<<<<<< HEAD
+		/*if (!mapGis.GISReal) {
+			alert("本组数据未包含大地坐标，无法显示地理坐标");
+			return;
+		}*/
+=======
 //		if (!mapGis.GISReal) {
 //			alert("本组数据未包含大地坐标，无法显示地理坐标");
 //			return;
 //		}
+>>>>>>> refs/remotes/origin/feature-newUI
 		mapGis.removeTileLayer(mapGis.tileLayer);
 		mapGis.tileLayer.whiteShow = false;
 

@@ -1,5 +1,6 @@
 package cn.edu.cup.manage.dao;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +14,6 @@ import cn.edu.cup.algjar.CalcInfo;
 import cn.edu.cup.algjarexcel.RunInfoDetail;
 import cn.edu.cup.file.FileExcel;
 import cn.edu.cup.file.FileExcelManager;
-import cn.edu.cup.manage.action.AlgorithmExcelAction;
 import cn.edu.cup.manage.business.AlgorithmPro;
 import cn.edu.cup.manage.business.AlgorithmsCycle;
 import cn.edu.cup.manage.business.LogInfo;
@@ -147,10 +147,24 @@ public class AlgorithmProDao {
 
 	public int deletePro(int id) {
 		HibernateSessionManager.getThreadLocalTransaction();
+		String filein=getProFileByID(id,"In");
+		String fileout=getProFileByID(id,"Out");
+		filein=Tools.getWebRoot() +FileExcelManager.ExcelProBaseDir+filein;
+		fileout=Tools.getWebRoot()+FileExcelManager.ExcelProBaseDir+fileout;
+		File temp1=new File(filein);
+		if(temp1.exists()){
+		temp1.delete();		}
+		
+		File temp2=new File(fileout);
+		if(temp2.exists()){
+		temp2.delete();
+		}
 		SQLQuery q = session
 				.createSQLQuery("delete from t_projects where ID=?");
 		q.setParameter(0, id);
 		int re = q.executeUpdate();
+		
+		
 		// tx.commit();
 		return re;
 
@@ -215,6 +229,44 @@ public class AlgorithmProDao {
 		return alg;
 	}
 
+	public String getProFileByID(int pro_id, String InOrOut) {
+		String sql;
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		if(InOrOut.equals("In")){
+			 sql = "select t2.profilein from t_projects t2 where  t2.ID=? ";
+		}else{
+			 sql = "select t2.profileout from t_projects t2 where  t2.ID=? ";
+		}		
+		
+		SQLQuery q2 = session.createSQLQuery(sql);
+		q2.setParameter(0, pro_id);
+		String file ="";
+		List l = q2.list();
+		for (int i = 0; i < l.size(); i++) {
+			// TestDb user = (TestDb)l.get(i);
+			// System.out.println(user.getUsername());
+
+			
+			
+
+			 file = (String)l.get(i);
+			
+
+			
+		}
+
+
+		return file;
+	}
+	
 	public String getAlgorithmClass(int pro_id) {
 		String sql = "select t2.ClassName from t_projects t,t_algorithmscycle t2 where  t.id=? and t2.ID=t.Algorithm_id";
 		SQLQuery q2 = session.createSQLQuery(sql);
