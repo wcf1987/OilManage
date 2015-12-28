@@ -1,14 +1,20 @@
-<%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*,com.opensymphony.xwork2.ActionContext" pageEncoding="UTF-8"%>
 <%
 String uri = request.getRequestURI();
 String spath = request.getServletPath();
 User userlogin=(User)(session.getAttribute("user"));
 String totalUser=(String)session.getAttribute("totalUser");
+int sessionNum = 0;
 if (userlogin==null){
 response.sendRedirect("login.jsp");
 return;
 }
 else{
+	  Map  application1 = ActionContext.getContext().getApplication();
+      
+      // 在application范围由一个HashSet集保存所有的session
+      HashSet sessions = (HashSet) application1.get("sessions");
+      sessionNum = sessions.size();
 }
 %>
 
@@ -40,8 +46,8 @@ else{
 			<!-- #section:basics/navbar.dropdown -->
 			<div class="navbar-buttons navbar-header pull-right  collapse navbar-collapse" role="navigation">
 				<ul class="nav ace-nav">
-					<li class="light-blue" style="border-left:0px #4b4545"><span style="float:left">&nbsp;&nbsp;当前用户：</span>
-						<span  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></span>
+					<li class="light-blue" ><span style="float:left">&nbsp;&nbsp;当前在线客户端数量：</span>
+						<span  style="padding:0;float:left"><%out.print(sessionNum);%></span>
 						<span class="pdr10" style="float:right">/<%out.print(totalUser);%>人</span>
 					</li>
 				
