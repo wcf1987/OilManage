@@ -40,6 +40,11 @@ else{
 			<!-- #section:basics/navbar.dropdown -->
 			<div class="navbar-buttons navbar-header pull-right  collapse navbar-collapse" role="navigation">
 				<ul class="nav ace-nav">
+					<li class="light-blue" style="border-left:0px #4b4545"><span style="float:left">&nbsp;&nbsp;当前用户：</span>
+						<span  style="padding:0;float:left"><%out.print(userlogin.getUsername());%></span>
+						<span class="pdr10" style="float:right">/<%out.print(totalUser);%>人</span>
+					</li>
+				
 					<li class="light-blue">
 						<span class="pdr10">系统时间：<span id="nowtime"></span></span>
 						<script type="text/javascript">
