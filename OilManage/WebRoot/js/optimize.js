@@ -91,7 +91,7 @@ function initInputTab(){
 			var tempid="input-base-panels"+i;
 			$("#"+tempid).html(panels);
 		}else{
-			input_base_div_html="<div id='input-base-container"+i+"' class='tabs-container'><div id='input-base-panels"+i+"' class='panel-container'></div><ul id='input-base-ul"+i+"'></ul></div>";
+			input_base_div_html="<div id='input-base-container"+i+"' class='tabs-container'><ul id='input-base-ul"+i+"'></ul><div id='input-base-panels"+i+"' class='panel-container'></div></div>";
 			$("#input_base_div").append(input_base_div_html);
 			for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
 				var sid=i*maxSheetNum+j;
