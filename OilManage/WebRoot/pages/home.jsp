@@ -28,11 +28,11 @@
 						<p class="" style="font-size:14px;">系统优化，以系统模拟为基础，处理复杂大规模的煤层气系统，进行多种结构下的布局设计和参数设计，优选系统集输方式</p>
 					</div><!-- /.col -->
 					<div class="col-xs-6 center">
-						<img  style="width:480px;height:400px;margin-top:0px;border:2px solid"  src="images/moni.jpg" />
+						<img  onclick="showSimulateItems()" style="width:480px;height:400px;margin-top:0px;border:2px solid"  src="images/moni.jpg" />
 						<h4 class="center">系统模拟</h4>
 					</div>
 					<div class="col-xs-6 center">
-						<img  style="width:480px;height:400px;margin-top:0px;border:2px solid"  src="images/youhua.jpg" />
+						<img   onclick="showOptimizeItems()" style="width:480px;height:400px;margin-top:0px;border:2px solid"  src="images/youhua.jpg" />
 						<h4 class="center">系统优化</h4>
 					</div>
 				</div><!-- /.row -->
@@ -41,6 +41,116 @@
 
 		<%@ include file="commons/footer.jsp" %>
 	</div><!-- /.main-container -->
+	
+	
+		<!-- 选择模拟算法模态框 -->   	
+	<div class="modal fade" id="simulate_modal">
+	  <div class="modal-dialog">
+	    <div class="modal-content" style="text-align:center">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">请选择一种模拟算法</h4>
+	      </div>
+	      <div class="modal-body">
+			<ul class="submenu">
+					<li>
+						<a href="pages/simulate_hydraulic.jsp">
+							<i class="menu-icon fa fa-caret-right"></i>
+							单相管网水力计算1
+						</a>
+						<b class="arrow"></b>
+					</li>
 
+					<li>
+						<a href="pages/simulate_thermal.jsp">
+							<i class="menu-icon fa fa-caret-right"></i>
+							单相管网水力计算2
+						</a>
+						<b class="arrow"></b>
+					</li>
+
+					<li>
+						<a href="pages/simulate_gas_solid.jsp">
+							<i class="menu-icon fa fa-caret-right"></i>
+							气固两相管网水力计算
+						</a>
+						<b class="arrow"></b>
+					</li>
+
+					<li>
+						<a href="pages/simulate_gas_liquid.jsp">
+							<i class="menu-icon fa fa-caret-right"></i>
+							气液两相管网水力计算
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li>
+						<a href="pages/simulate_wellbore.jsp">
+							<i class="menu-icon fa fa-caret-right"></i>
+							井底流压计算
+						</a>
+						<b class="arrow"></b>
+					</li>
+				</ul>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!-- 选择模拟算法模态框 -->   	
+	<div class="modal fade" id="optimize_modal">
+	  <div class="modal-dialog">
+	    <div class="modal-content" style="text-align:center">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">请选择一种优化算法</h4>
+	      </div>
+	      <div class="modal-body">
+			<ul class="submenu">
+				<li>
+					<a href="pages/optimize_layout.jsp">
+						<i class="menu-icon fa fa-caret-right"></i>
+						布局设计
+					</a>
+					<b class="arrow"></b>
+				</li>
+				<li>
+					<a href="pages/optimize_parameter.jsp">
+						<i class="menu-icon fa fa-caret-right"></i>
+						参数设计
+					</a>
+					<b class="arrow"></b>
+				</li>
+				<li>
+					<a href="pages/optimize_global.jsp">
+						<i class="menu-icon fa fa-caret-right"></i>
+						整体设计
+					</a>
+					<b class="arrow"></b>
+				</li>
+				<li>
+					<a href="pages/optimize_sysexpand.jsp">
+						<i class="menu-icon fa fa-caret-right"></i>
+						系统扩建设计
+					</a>
+					<b class="arrow"></b>
+				</li>
+			</ul>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </body>
 </html>
+<script>
+function showSimulateItems(){
+	$('#simulate_modal').modal();	
+}
+function showOptimizeItems(){
+	$('#optimize_modal').modal();	
+}
+</script>
+<style>
+li {list-style-type:none;}
+
+</style>

@@ -68,7 +68,10 @@ public class AlgorithmExcelAction {
 
 	public String uploadExcel() {
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);// 从缓存或者文件里面读取excel内容
-
+		if(excel == null){
+			msg = "上传失败，项目原始文件不存在！由于服务器重新部署，该历史工程已失效，请创建新的工程。";
+			return "SUCCESS";
+		}
 		FileExcel importExcle = new FileExcel();
 		try {
 		String fileTemp = FileExcelManager.uploadTemp
@@ -96,9 +99,14 @@ public class AlgorithmExcelAction {
 
 	public String saveExcel() {//保存到文件
 		FileExcel excel = FileExcelManager.getFileExcel(this.proID, this.algID, this.InOrOut);
-		int re = excel.saveExcel();
+		int re = 0;
+		if(excel == null){
+			msg = "保存失败，文件不存在，该工程已经失效，请新建工程！";
+		}else{
+		    re = excel.saveExcel();
+		}
 		if (re == -1) {
-			msg = "保存失败，请检查数据结构";
+			msg = "保存失败，请检查数据结构！";
 		}
 		//FileExcelManager.reloadFileExcel(this.proID, this.algID, this.InOrOut);
 		return "SUCCESS";

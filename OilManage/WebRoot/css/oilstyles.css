@@ -48,7 +48,7 @@
 .etabs .tab.active{padding-top:0 !important;top:0 !important;}
 .etabs .tab.active a{background-color:#fff !important;color:#4c718a !important;}
 
-.tabs-container ul{margin-top:-1px !important;}
+.tabs-container ul{margin-top:-1px !important;padding-bottom:30px;}
 .tabs-container ul li{background-color:#eff3f8 !important;border:1px solid #7db4d8 !important;}
-.tabs-container ul li.active{border-top:1px solid #fff !important;}
+.tabs-container ul li.active{border-bottom:1px solid #7db4d8 !important;}/*#7db4d8替换 #fff，不改变下边的颜色*/
 .tabs-container ul li a.active{background-color:#fff !important;}

@@ -44,7 +44,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/hibernate-core-4.2.8.Final.jar">
+	<classpathentry kind="lib" path="libs/hibernate-core-4.2.8.Final.jar" sourcepath="C:/Users/zsy/.m2/repository/org/hibernate/hibernate-core/4.2.8.Final/hibernate-core-4.2.8.Final-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
@@ -195,12 +195,12 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-		<classpathentry kind="lib" path="libs/stax-api-1.0.1.jar">
+	<classpathentry kind="lib" path="libs/stax-api-1.0.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-		<classpathentry kind="lib" path="libs/xmlbeans-2.6.0.jar">
+	<classpathentry kind="lib" path="libs/xmlbeans-2.6.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>

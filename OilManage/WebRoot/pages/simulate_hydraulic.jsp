@@ -84,8 +84,8 @@
 					<input id="input_function_sheetNum" style="display:none" value="0"/>
 					<input id="input_condition_sheetNum" style="display:none" value="0"/>
 					
-					<input id="outputSheetNum" style="display:none" value="12"/>
-					<input id="output_base_sheetNum" style="display:none" value="12"/>
+					<input id="outputSheetNum" style="display:none" value="13"/>
+					<input id="output_base_sheetNum" style="display:none" value="13"/>
 					<input id="output_fee_sheetNum" style="display:none" value="0"/>
 					<input id="output_position_sheetNum" style="display:none" value="0"/>
 					<!-- 

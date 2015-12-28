@@ -206,13 +206,19 @@ public class RoleDao {
 		Integer count=((BigInteger)q.uniqueResult()).intValue();
 		return count;
 	}
-
+	public int getCountAlgsByRole(int roleID){
+		String sql="select count(*) from t_roles t1,t_algrole t2,t_algorithmscycle t3 where t1.ID=t2.role_id and t2.algorithm_id=t3.ID and t1.ID=? ";
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, roleID);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
+	}
 	public List<AlgRoleBase> getAlgsListByRole(int roleID) {
 		// TODO Auto-generated method stub
 				SQLQuery q = session.createSQLQuery("select t2.id id,t1.id roleid,t1.RoleName,t3.ID algid,t3.Name,t3.Description from t_roles t1,t_algrole t2,t_algorithmscycle t3 where t1.ID=t2.role_id and t2.algorithm_id=t3.ID and t1.ID=?");
 				q.setParameter(0, roleID);
 				List l = q.list();
-				this.close();
+//				this.close();
 				List<AlgRoleBase> re=new ArrayList<AlgRoleBase>();
 				for(int i=0;i<l.size();i++)
 				{
@@ -232,12 +238,20 @@ public class RoleDao {
 	
 	}
 
+	public int getCountUsersByRole(int roleID) {
+		// TODO Auto-generated method stub
+		String sql="select count(*) from t_roles t1,t_userrole t2,t_user t3 where t1.ID=t2.role_id and t2.user_id=t3.ID and t1.ID=? ";
+		SQLQuery q = session.createSQLQuery(sql);
+		q.setParameter(0, roleID);
+		Integer count=((BigInteger)q.uniqueResult()).intValue();
+		return count;
 
+	}
 	public List<User> getUsersListByRole(int roleID) {
 		SQLQuery q = session.createSQLQuery("select t2.id ,t1.id roleID,t1.RoleName,t3.ID userID,t3.Username from t_roles t1,t_userrole t2,t_user t3 where t1.ID=t2.role_id and t2.user_id=t3.ID and t1.ID=?");
 		q.setParameter(0, roleID);
 		List l = q.list();
-		this.close();
+//		this.close();
 		List<User> re=new ArrayList<User>();
 		for(int i=0;i<l.size();i++)
 		{

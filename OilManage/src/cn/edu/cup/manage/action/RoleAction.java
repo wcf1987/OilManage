@@ -141,12 +141,29 @@ public class RoleAction {
 	public String listAlgByRole(){		
 		RoleDao dao=new RoleDao();
 		algList=dao.getAlgsListByRole(roleID);
+		
+		records=dao.getCountAlgsByRole(roleID);
+		if(records!=0&& rows!=0){
+		total=records/rows;
+			if(records%rows!=0){
+				total++;
+			}
+		}
+		
 		dao.close();
 		return "SUCCESS";
 	}
 	public String listUserByRole(){		
 		RoleDao dao=new RoleDao();
 		userList=dao.getUsersListByRole(roleID);
+		
+		records=dao.getCountUsersByRole(roleID);
+		if(records!=0&& rows!=0){
+		total=records/rows;
+			if(records%rows!=0){
+				total++;
+			}
+		}
 		dao.close();
 		return "SUCCESS";
 	}
