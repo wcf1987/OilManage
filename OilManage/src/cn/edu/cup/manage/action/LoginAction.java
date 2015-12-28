@@ -1,16 +1,18 @@
 package cn.edu.cup.manage.action;
 
+import java.util.HashSet;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 
+import cn.edu.cup.manage.business.User;
+import cn.edu.cup.manage.dao.UserDao;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
-import cn.edu.cup.manage.dao.UserDao;
-import cn.edu.cup.manage.business.User;
 
 public class LoginAction extends ActionSupport{
 	String  username;
@@ -92,16 +94,46 @@ public class LoginAction extends ActionSupport{
         session.put("user", user);
         session.put("totalUser", totalUser);
         userDAO.close();
+
+        Map  application = ActionContext.getContext().getApplication();
+            
+            // 在application范围由一个HashSet集保存所有的session
+        HashSet sessions = (HashSet) application.get("sessions");
+        if (sessions == null) {
+             sessions = new HashSet();
+             application.put("sessions", sessions);
+            }
+            
+            // 新创建的session均添加到HashSet集中 系统时间
+            sessions.add(session);
+            System.out.println("用户"+user.getUsername()+"登录系统");
+            // 可以在别处从application范围中取出sessions集合
+            // 然后使用sessions.size()获取当前活动的session数，即为“在线人数”
+   
 		return "succ";
 	}
 	public String logout(){
 		ActionContext actionContext = ActionContext.getContext();
         Map session = actionContext.getSession();
+        User user=(User)session.get("user");
         session.remove("user");
 //		HttpServletRequest request = null;
 //		request.getSession().removeAttribute("user");
         flag="true";
- 
+        
+        Map  application = ActionContext.getContext().getApplication();
+        
+        // 在application范围由一个HashSet集保存所有的session
+        HashSet sessions = (HashSet) application.get("sessions");
+        if (sessions != null) {
+        	  
+            // 销毁的session均从HashSet集中移除
+            sessions.remove(session);
+            System.out.println("用户"+user.getUsername()+"手动登出");
+        	
+        }
+        
+        
 		return SUCCESS;
 	}
 	
