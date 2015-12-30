@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <base href="<%=basePath%>">
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="./css/bootstrap.min.css" />
 <link rel="stylesheet" href="./css/font-awesome.min.css" />
@@ -308,7 +308,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			
 			if(verify!=0){//验证失败
-				alert(verify);
 				return false;
 			}
 			else{//验证ok
