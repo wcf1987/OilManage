@@ -661,7 +661,10 @@ function() {
 						$('#add_ysj_modal').modal();
 						return;
 					}else{						
-						var name=prompt("请输入元件名称","");
+						
+						//var name=prompt("请输入元件名称","");
+						//元件名称采用随机数生成
+						var name="node"+parseInt(Math.random()*1000);
 						//leftpoly.addPointByInput(this,name);
 					}
 					var po=this;
