@@ -666,6 +666,8 @@ function() {
 						//元件名称采用随机数生成
 						var name="node"+parseInt(Math.random()*1000);
 						//leftpoly.addPointByInput(this,name);
+						//元件名采用按顺序生成
+						var name="node"+getNodeNextID();
 					}
 					var po=this;
 					if(name==null||name==''){

@@ -10,6 +10,23 @@ function createNewModal(isFirst){
 function listGUIProGrid(isFirst){
 	tabtools.listGUIProGrid(isFirst);
 }
+function getNodeNextID(){
+	var i=0;
+	platform.selectPainting.updatePoints();
+	//var tempp=platform.selectPainting.p
+	var points1 = platform.selectPainting.points;
+	for (li = 0; li < points1.length; li++) {
+		var str1=points1[li].nameStr;
+		if(str1.toLowerCase().indexOf("node")>-1){
+			var str2=str1.substr(4)
+			if(!isNaN(parseInt(str2))&&i<parseInt(str2)){
+				i=parseInt(str2);
+			}
+			
+		}
+	}
+	return i+1;
+}
 function save(){
 
 	platform.update();
