@@ -69,6 +69,7 @@
 						<a href="pages/home.jsp">首页</a>
 					</li>
 					<li class="active">井底流压计算</li>
+					<li><span id="project_name_show"></span></li>
 				</ul>
 			</div>
 			<div class="page-content">

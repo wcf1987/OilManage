@@ -76,6 +76,7 @@
 						<a href="javascript:;">系统优化</a>
 					</li>
 					<li class="active">参数设计</li>
+					<li><span id="project_name_show"></span></li>
 				</ul>
 			</div>
 			<div class="page-content">

@@ -159,14 +159,14 @@ function list_project(){
 									state) {
 //								alert(rows.ID);
 								return "<a href=\"javascript:void(0)\" style=\"color:#798991\" onclick=\"openProject("
-										+ rows.ID+","+rows.algID + ")\">打开</a>"
+										+ rows.ID+","+rows.algID + ",'"+rows.name+"')\">打开</a>"
 							}
 						}
 						],
 //				autowidth:true,
 				rowNum:10,//每一页的行数
 				height: 'auto',
-				width:$(document).width()-64,//1070
+				width:$("#father_tab").width()-40,//1070
 				rowList:[10,20,30],
 				pager: '#ProjectPager',
 				sortname: 'ID',
@@ -239,7 +239,7 @@ function add_project() {
 		success : function(data) {
 
 			alert('工程添加成功！');			
-			openProject(data.ID,$("#curAlgID").val());			
+			openProject(data.ID,$("#curAlgID").val(),$("#name").val());			
 
 			$('#add_project_modal').modal('hide');
 			$("#ProjectList").trigger("reloadGrid");			
@@ -861,8 +861,9 @@ function createNewProject(){
 	window.location.href="pages/project_edit.jsp?projectID="+projectID+"&projectName="+projectName+"&backurl="+window.location.href; 
 }*/
 
-function openProject(proid,algID){
+function openProject(proid,algID,proname){
 	var valide = 1;
+	var proname = proname || '';//wcl add
 	$.ajax({//测试项目是否是部署前的项目，若是，则项目失效，输入输出文件已经不存在，将禁止用户打开。
 		url:'listSheetContent.action',
 		type:'post',
@@ -886,6 +887,7 @@ function openProject(proid,algID){
 		return;
 	}
 	$("#proID").val(proid);
+	if(proname) $("#project_name_show").text(proname);//wcl add
 	var sid = 1;
 	//var proid = 11;
 	var algid = $("#curAlgID").val();
@@ -902,7 +904,7 @@ function openProject(proid,algID){
 	var sheetDiv = "#input-sheet";
 	var pageDiv = "#input-pager";
 	var delID="input-delsheet";
-	var gridWidth=1040;//定义grid表格长度
+	var gridWidth=$("#father_tab").width()-200||1040;//定义grid表格长度
 	if (algid==0){
 		gridWidth=520;
 	}

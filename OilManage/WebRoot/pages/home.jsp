@@ -23,17 +23,36 @@
 				</div><!-- /.page-header -->
 
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="col-xs-12 center">
 						<p class="" style="font-size:14px;">系统模拟，能够处理复杂的煤层气集输系统，可轻松使用屏幕拖放技术来创建模型，模拟单相、多相流，从而对全气田进行模拟。</p>
-						<p class="" style="font-size:14px;">系统优化，以系统模拟为基础，处理复杂大规模的煤层气系统，进行多种结构下的布局设计和参数设计，优选系统集输方式</p>
+						<p class="" style="font-size:14px;">系统优化，以系统模拟为基础，处理复杂大规模的煤层气系统，进行多种结构下的布局设计和参数设计，优选系统集输方式。&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
 					</div><!-- /.col -->
-					<div class="col-xs-6 center">
-						<img  onclick="showSimulateItems()" style="width:480px;height:400px;margin-top:0px;border:2px solid"  src="images/moni.jpg" />
-						<h4 class="center">系统模拟</h4>
+					<div class="col-xs-6 align-right clearfix">
+						<div class="dropup dropdown-hover" style="width:480px;float:right;margin-right:10px;">
+							<img style="width:480px;height:400px;margin-top:0px;border:2px solid"  src="images/moni.jpg" />
+							<ul class="dropdown-menu pull-left" style="right:2px;bottom:67%;left:inherit;text-align:left;">
+								<li><a href="pages/simulate_hydraulic.jsp"><i class="menu-icon fa fa-caret-right"></i>单相管网水力计算1</a></li>
+								<li><a href="pages/simulate_thermal.jsp"><i class="menu-icon fa fa-caret-right"></i>单相管网水力计算2</a></li>
+								<li><a href="pages/simulate_gas_solid.jsp"><i class="menu-icon fa fa-caret-right"></i>气固两相管网水力计算</a></li>
+								<li><a href="pages/simulate_gas_liquid.jsp"><i class="menu-icon fa fa-caret-right"></i>气液两相管网水力计算</a></li>
+								<li><a href="pages/simulate_wellbore.jsp"><i class="menu-icon fa fa-caret-right"></i>井底流压计算</a></li>
+							</ul>
+							<h4 class="center">系统模拟</h4>
+						</div>
+						
 					</div>
-					<div class="col-xs-6 center">
-						<img   onclick="showOptimizeItems()" style="width:480px;height:400px;margin-top:0px;border:2px solid"  src="images/youhua.jpg" />
-						<h4 class="center">系统优化</h4>
+					<div class="col-xs-6 align-left clearfix">
+						<div class="dropup dropdown-hover" style="width:480px;float:left;margin-left:10px;">
+							<img style="width:480px;height:400px;margin-top:0px;border:2px solid"  src="images/youhua.jpg" />
+							<ul class="dropdown-menu pull-left" style="left:inherit;right:inherit;bottom:73%;text-align:left;">
+								<li><a href="pages/optimize_layout.jsp"><i class="menu-icon fa fa-caret-right"></i> 布局设计 </a><b class="arrow"></b></li> 
+								<li><a href="pages/optimize_parameter.jsp"><i class="menu-icon fa fa-caret-right"></i> 参数设计 </a><b class="arrow"></b></li> 
+								<li><a href="pages/optimize_global.jsp"><i class="menu-icon fa fa-caret-right"></i> 整体设计 </a><b class="arrow"></b></li> 
+								<li><a href="pages/optimize_sysexpand.jsp"><i class="menu-icon fa fa-caret-right"></i> 系统扩建设计 </a><b class="arrow"></b></li> 
+							</ul>
+							<h4 class="center">系统优化</h4>
+						</div>
+						
 					</div>
 				</div><!-- /.row -->
 			</div><!-- /.page-content -->

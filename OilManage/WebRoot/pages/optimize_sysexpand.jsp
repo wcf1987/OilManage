@@ -72,6 +72,7 @@
 						<a href="pages/home.jsp">首页</a>
 					</li>
 					<li class="active">系统扩建设计</li>
+					<li><span id="project_name_show"></span></li>
 				</ul>
 			</div>
 			<div class="page-content">

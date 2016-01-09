@@ -7,9 +7,13 @@
 .logo-cbm{background:url(../images/logo_cbm.png) no-repeat 50% 50%;}
 .logo-zl{background:url(../images/logo_zl.png) no-repeat 50% 50%;width:44px;}
 
-.page-header{margin-top:0 !important;}
+.page-header{margin-top:0 !important;display:none;}
 .nav{padding:0 40px;}
+.sidebar.h-sidebar{margin-top:3px;}
+.h-sidebar.sidebar-fixed + .main-content{padding-top:50px;}
+.breadcrumbs{background-color:#fff;}
 .sidebar.h-sidebar .nav-list>li>a{padding:10px 24px !important;}
+.sidebar.h-sidebar .nav-list>li>a>.menu-icon{display:inline-block !important;*display:inline;*zoom:1;margin:1px 0;}
 /*.sidebar.h-sidebar .nav-list>li>a>.menu-icon{display:none !important;}*/
 .sidebar.h-sidebar + .main-content .breadcrumbs{margin:0;}
 .tab-container .panel-container{border:1px solid #d5e3ef !important;}
@@ -52,3 +56,8 @@
 .tabs-container ul li{background-color:#eff3f8 !important;border:1px solid #7db4d8 !important;}
 .tabs-container ul li.active{border-bottom:1px solid #7db4d8 !important;}/*#7db4d8替换 #fff，不改变下边的颜色*/
 .tabs-container ul li a.active{background-color:#fff !important;}
+
+#input_tab{padding-left:160px;position:relative;}
+#input_tab .pd10{left:0;width:160px;position:absolute;}
+#input_tab .pd10 .btn-group .btn{display:block;float:none;width:140px;text-align:left;}
+#input_tab .uploadify{margin-bottom:0;}

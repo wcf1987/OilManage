@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*,cn.edu.cup.manage.business.*" pageEncoding="UTF-8"%>
 <div class="pd10">
 	<div class="btn-group">
-		<div class="btn-group"><input type="file" name="importExcel" id="importExcel" /></div>
+		<div class="btn btn-sm btn-primary"><input type="file" name="importExcel" id="importExcel" /></div>
 		<button class="btn btn-sm btn-primary" type="button" onclick="showData('inputBase')">输入基础数据</button>
 		<button class="btn btn-sm btn-primary" type="button" onclick="showData('inputFunction')">选择问题描述</button>
 		<button class="btn btn-sm btn-primary" type="button" onclick="showData('inputCondition')">输入约束条件</button>

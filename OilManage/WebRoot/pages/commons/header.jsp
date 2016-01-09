@@ -31,10 +31,13 @@ else{
 				<a href="pages/home.jsp" class="navbar-brand">
 					<small>
 						<i class="logo28 logo-zl"></i>
-						中联煤层气有限责任公司·中国石油大学（北京）
+						中联煤层气有限责任公司 ·
+					</small>
+					<small>
+						<i class="logo28 logo-cbm"></i></i>
+						中国石油大学（北京） ·
 					</small>
 					<small class="ml10">
-						<i class="logo28 logo-cbm"></i>
 						煤层气集输系统
 					</small>
 				</a>
@@ -46,7 +49,7 @@ else{
 			<!-- #section:basics/navbar.dropdown -->
 			<div class="navbar-buttons navbar-header pull-right  collapse navbar-collapse" role="navigation">
 				<ul class="nav ace-nav">
-					<li class="light-blue" ><span style="float:left">&nbsp;&nbsp;当前在线客户端数量：</span>
+					<li class="light-blue" ><span style="float:left">&nbsp;&nbsp;当前在线：</span>
 						<span  style="padding:0;float:left"><%out.print(sessionNum);%></span>
 						<span class="pdr10" style="float:right">/<%out.print(totalUser);%>人</span>
 					</li>

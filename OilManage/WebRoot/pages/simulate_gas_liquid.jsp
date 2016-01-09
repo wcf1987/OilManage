@@ -72,6 +72,7 @@
 						<a href="javascript:;">系统模拟</a>
 					</li>
 					<li class="active">气液两相管网水力计算</li>
+					<li><span id="project_name_show"></span></li>
 				</ul>
 			</div>
 			<div class="page-content">

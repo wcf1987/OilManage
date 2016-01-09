@@ -67,6 +67,7 @@
 						<a href="javascript:;">系统模拟</a>
 					</li>
 					<li class="active">单相管网水力计算1</li>
+					<li><span id="project_name_show"></span></li>
 				</ul>
 			</div>
 			<div class="page-content">
@@ -100,7 +101,7 @@
 								<li class='tab active'><a id="project_tab_button"  onclick="showTab('project_tab')">工程管理</a></li>
 							    <li class='tab'><a id="input_tab_button" onclick="showTab('input_tab')">输入</a></li>
 							    <li class='tab'><a id="run_tab_button" onclick="showTab('run_tab')">查看运行</a></li>
-							    <li class='tab'><a id="output_tab_button" onclick="showTab('output_tab')">输出</a></li>						    
+							    <li class='tab'><a id="output_tab_button" onclick="showTab('output_tab')">输出</a></li>			    
 						    </ul>  
 						     <div id="project_tab" class="father_tab">				
 								<%@ include file="simulate_common/project_tab.jsp" %>

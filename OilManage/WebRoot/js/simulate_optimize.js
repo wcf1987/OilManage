@@ -195,7 +195,7 @@ function loadOutput(way){
 	var sheetDiv = "#output-sheet";
 	var pageDiv = "#output-pager";
 	var delID="output-delsheet";
-	var gridWidth=1040;
+	var gridWidth=$("#output_tab").width()-40||1040;
 	for(var i=0;i<outputSheetNum;i++){
 		var sheetgrid = new SheetGrid();
 		sheetgrid.GetDynamicCols(i, algid,inOrOut);
@@ -269,6 +269,7 @@ function showTab(type){
 		//$(item).children("a").removeAttr("style");
 		$(item).removeClass('active');
 		if(type == "project_tab"){
+			$("#project_name_show").text("");
 			$(item).css("display","none");
 		}else{
 			$(item).css("display","true");

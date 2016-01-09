@@ -158,7 +158,7 @@ function SheetGrid() {
 			multiselectWidth : 35, // 设置多选列宽度
 			rowNum : 10,// 每一页的行数
 			height : 'auto',
-			width : $(document).width()-64,//1040
+			width : gridWidth,//1040
 			rowList : [ 10, 20, 30 ],
 			pager : pageDiv,			
 			viewrecords : true,
