@@ -53,8 +53,8 @@ public class Point {
 	}
 	public void getLatLonFromGeo(){
 		double a[]=CoordinateConversion.GaussProjInvCal(this.GeodeticCoordinatesX,this.GeodeticCoordinatesY);
-		this.latitude=a[0];
-		this.Longitude=a[1];
+		this.latitude=a[1];
+		this.Longitude=a[0];
 	}
 	public void getGeoFromLatLon(){
 		double temp[] = CoordinateConversion.GaussProjCal(this.latitude, this.Longitude);

@@ -255,6 +255,7 @@ public class FileExcel {
 		a.setPoints(getGisPoints());
 		a.setLines(getGisLines());
 		Collection<Point> names=a.getPoints().values();
+		a.setGISReal(1);
 		for(Iterator<Point> temp=names.iterator();temp.hasNext();){
 			Point t=temp.next();
 			if(t.getLatitude()<20&&t.getLongitude()<20){

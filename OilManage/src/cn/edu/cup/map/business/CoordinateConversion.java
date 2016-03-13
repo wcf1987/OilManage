@@ -53,8 +53,14 @@ public class CoordinateConversion
 		f = 1 / 298.257; // 80年西安坐标系参数
 
 		ZoneWide = 3; // //3度带宽
+		if (X<1000000L){
+			X=19000000L+X;
+		}
 		ProjNo = (int) (X / 1000000L); // 查找带号
 		// 判断带号，如果大于23说明是3度带宽，否则是6度带宽
+		if (X<1000000L){
+			
+		}
 		if (ProjNo > 23) {
 
 			longitude0 = ProjNo * ZoneWide;
