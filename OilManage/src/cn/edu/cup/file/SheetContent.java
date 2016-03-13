@@ -267,9 +267,15 @@ public class SheetContent {
 				if(getAttrLike(lineStr,"X")==null){
 					return points;
 				}
+				if(getAttrLike(lineStr,"X")<500){
+					e.setLatitude(getAttrLike(lineStr,"X"));
+					e.setLongitude(getAttrLike(lineStr,"Y"));
+					e.getGeoFromLatLon();
+				}else{
 				e.setGeodeticCoordinatesX(getAttrLike(lineStr,"X"));
 				e.setGeodeticCoordinatesY(getAttrLike(lineStr,"Y"));
 				e.getLatLonFromGeo();
+				}
 				points.put(e.getName(),e);
 			}
 		}
@@ -392,9 +398,16 @@ public class SheetContent {
 					Y="0";
 				}
 				//e.addAttr("高程(m)", z);
-				e.setGeodeticCoordinatesX(Double.valueOf(X));
-				e.setGeodeticCoordinatesY(Double.valueOf(Y));
-				e.getLatLonFromGeo();
+				if(Double.valueOf(X)<500){
+					e.setLatitude(Double.valueOf(X));
+					e.setLongitude(Double.valueOf(Y));
+					e.getGeoFromLatLon();
+				}else{
+					e.setGeodeticCoordinatesX(Double.valueOf(X));
+					e.setGeodeticCoordinatesY(Double.valueOf(Y));
+					e.getLatLonFromGeo();
+				}
+				
 				points.put(e.getName(),e);
 			}
 		}
