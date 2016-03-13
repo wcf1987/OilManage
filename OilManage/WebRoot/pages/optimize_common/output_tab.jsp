@@ -14,16 +14,17 @@
 	<div id="output_base_div">
 	</div>
 </div>
-<div id="outputFee" class="outputDataDiv" style="display:none">
-<!-- 	<div class="tab-title">费用数据</div> -->
-	<div id="output_fee_div">
-	</div>
-</div>
 <div id="outputPosition" class="outputDataDiv"  style="display:none">
 <!-- 	<div class="tab-title">站点</div> -->
 	<div id="output_position_div">
 	</div>
 </div>
+<div id="outputFee" class="outputDataDiv" style="display:none">
+<!-- 	<div class="tab-title">费用数据</div> -->
+	<div id="output_fee_div">
+	</div>
+</div>
+
 <div id="outputGisMap" class="outputDataDiv" style="display:none">
 	<%@ include file="gismapOut.jsp" %>
 </div>
