@@ -1,0 +1,4 @@
+map_gis.js 
+暂时改为
+mapGis.tileLayer.whiteShow = true;//被改了，应该是false
+	}
