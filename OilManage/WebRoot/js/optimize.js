@@ -270,6 +270,50 @@ function initOutputTab(){
 		});	
 	}
 	
+	
+	 // 站点数据tab创建
+	 
+	$("#output_position_div").html("");
+	var output_position_div_html="";
+	var maxSheetNum=5;//每个container里放几个tab
+	var containerNum=parseInt(output_position_sheetNum/maxSheetNum)+1;//分几个container，一个container里面放5个tab
+	var lastTabSheetNum=output_position_sheetNum%maxSheetNum;//最后一个container中的tab数量(sheet)
+	if(lastTabSheetNum==0){
+		containerNum-=1;
+	}
+	for(var i=0;i<containerNum;i++){//分别构建几个container
+		var maxSheetNumTemp=maxSheetNum;
+		output_position_div_html="<div id='output-position-container"+i+"' class='tabs-container'><div id='output-position-panels"+i+"' class='panel-container'></div><ul id='output-position-ul"+i+"'></ul></div>";
+		$("#output_position_div").append(output_position_div_html);
+		if(i==containerNum-1&&lastTabSheetNum>0){//如果是最后一个container
+			maxSheetNumTemp=lastTabSheetNum;
+		}
+		var panels="";
+		var lis="";
+		for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
+			var sid=output_base_sheetNum*1+i*maxSheetNum+j;
+			var algid=$("#curAlgID").val();
+			var inOrOut="Out";
+			var sheetgrid = new SheetGrid();
+			var sheetName=sheetgrid.GetSheetName(sid,algid,inOrOut);
+	
+			panels+="<div id='output-position-tab"+sid+"'>"+
+		  	"<table id='output-sheet"+sid+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
+			"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
+				"<div id='output-pager"+sid+"' ></div></div></div>";
+			//创建五个li
+			lis+="<li><a href='#output-position-tab"+sid+"'>"+sheetName+"</a></li>";		
+		}
+		var tempid="output-position-panels"+i;
+		$("#"+tempid).html(panels);
+		var tempid="output-position-ul"+i;
+		$("#"+tempid).html(lis);
+		var tempid="output-position-container"+i;
+		$("#output-position-container"+i+" ul li").css("width",100/maxSheetNumTemp+"%");
+		$('#'+tempid).easytabs({
+			animate: false
+		});	
+	}
 	 //费用数据tab创建
 	 
 	$("#output_fee_div").html("");
@@ -290,7 +334,7 @@ function initOutputTab(){
 		var panels="";
 		var lis="";
 		for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
-			var sid=output_base_sheetNum*1+i*maxSheetNum+j;
+			var sid=output_base_sheetNum*1+5+i*maxSheetNum+j;
 			var algid=$("#curAlgID").val();
 			var inOrOut="Out";
 			var sheetgrid = new SheetGrid();
@@ -314,49 +358,6 @@ function initOutputTab(){
 		});	
 	}
 	
-	 // 站点数据tab创建
-	 
-	$("#output_position_div").html("");
-	var output_position_div_html="";
-	var maxSheetNum=5;//每个container里放几个tab
-	var containerNum=parseInt(output_position_sheetNum/maxSheetNum)+1;//分几个container，一个container里面放5个tab
-	var lastTabSheetNum=output_position_sheetNum%maxSheetNum;//最后一个container中的tab数量(sheet)
-	if(lastTabSheetNum==0){
-		containerNum-=1;
-	}
-	for(var i=0;i<containerNum;i++){//分别构建几个container
-		var maxSheetNumTemp=maxSheetNum;
-		output_position_div_html="<div id='output-position-container"+i+"' class='tabs-container'><div id='output-position-panels"+i+"' class='panel-container'></div><ul id='output-position-ul"+i+"'></ul></div>";
-		$("#output_position_div").append(output_position_div_html);
-		if(i==containerNum-1&&lastTabSheetNum>0){//如果是最后一个container
-			maxSheetNumTemp=lastTabSheetNum;
-		}
-		var panels="";
-		var lis="";
-		for(var j=0;j<maxSheetNumTemp;j++){//创建五个tab
-			var sid=output_base_sheetNum*1+output_fee_sheetNum*1+i*maxSheetNum+j;
-			var algid=$("#curAlgID").val();
-			var inOrOut="Out";
-			var sheetgrid = new SheetGrid();
-			var sheetName=sheetgrid.GetSheetName(sid,algid,inOrOut);
-	
-			panels+="<div id='output-position-tab"+sid+"'>"+
-		  	"<table id='output-sheet"+sid+"' class='table table-striped table-bordered table-hover datatable' style='width:1230px' ></table>"+
-			"<div style='box-shadow:2px 2px 10px #333300;border-radius: 11px;width:1230px' >"+
-				"<div id='output-pager"+sid+"' ></div></div></div>";
-			//创建五个li
-			lis+="<li><a href='#output-position-tab"+sid+"'>"+sheetName+"</a></li>";		
-		}
-		var tempid="output-position-panels"+i;
-		$("#"+tempid).html(panels);
-		var tempid="output-position-ul"+i;
-		$("#"+tempid).html(lis);
-		var tempid="output-position-container"+i;
-		$("#output-position-container"+i+" ul li").css("width",100/maxSheetNumTemp+"%");
-		$('#'+tempid).easytabs({
-			animate: false
-		});	
-	}
 }
 function showDikedAreaMap(){//显示障碍区地图
 	if($("#dikedAreaMap").css("display")=="none"){
