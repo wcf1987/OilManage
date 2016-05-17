@@ -258,7 +258,7 @@ public class FileExcel {
 		a.setGISReal(1);
 		for(Iterator<Point> temp=names.iterator();temp.hasNext();){
 			Point t=temp.next();
-			if(t.getLatitude()<20&&t.getLongitude()<20){
+			if(t.getLatitude()<20||t.getLongitude()<20||t.getLatitude()>180||t.getLongitude()>180){
 				a.setGISReal(0);
 				break;
 			}
@@ -451,11 +451,11 @@ public class FileExcel {
 		double Yc=0.00001;
 		for(Iterator<Point> temp=names.iterator();temp.hasNext();){
 			Point t=temp.next();				
-			if(t.getGeodeticCoordinatesX()>1000000&&t.getGeodeticCoordinatesY()>10000000){
+			/*if(t.getGeodeticCoordinatesX()>1000000&&t.getGeodeticCoordinatesY()>10000000){
 				t.getLatLonFromGeo();
-			}else{
-			t.setLongitude((t.getGeodeticCoordinatesX())*Xc+116);
-			t.setLatitude((t.getGeodeticCoordinatesY())*Yc+39);
+			}else*/{
+			t.setLongitude((t.getLongitude())*Xc+116);
+			t.setLatitude((t.getLatitude())*Yc+39);
 			}
 		}
 		
