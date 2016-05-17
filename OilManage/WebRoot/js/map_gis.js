@@ -444,7 +444,7 @@ function showWhiteLayer() {
 			var url = 'images/white.png'; // 根据当前坐标，选取合适的瓦片图
 			return url;
 		}
-		mapGis.tileLayer.whiteShow = false;
+		mapGis.tileLayer.whiteShow = true;//被改了，应该是false
 	}
 
 	if (mapGis.tileLayer.whiteShow) {
